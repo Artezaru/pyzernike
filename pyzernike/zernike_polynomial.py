@@ -5,7 +5,7 @@ from .radial_polynomial import radial_polynomial
 
 def zernike_polynomial(rho: numpy.ndarray, theta: numpy.ndarray, n: int, m: int, rho_derivative: int = 0, theta_derivative: int = 0, default: float = numpy.nan) -> numpy.ndarray:
     r"""
-    Computes the Zernike polynomial :math:`Z_{n}^{m}(\rho)` for :math:`\rho \leq 1`.
+    Computes the Zernike polynomial :math:`Z_{n}^{m}(\rho, \theta)` for :math:`\rho \leq 1`.
 
     The Zernike polynomial is defined as follows:
 

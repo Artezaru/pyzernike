@@ -136,11 +136,11 @@ def radial_polynomial(rho: numpy.ndarray, n: int, m: int, derivative: int = 0, d
     rho_pow = lambda p: numpy.power(rho_valid, p)
 
     if n <= 5:
-        output_flat[valid_mask] = litteral_radial_polynomial(rho_valid, n, m, default=default)
+        output_flat[valid_mask] = litteral_radial_polynomial(rho_valid, n, m, derivative=derivative, default=default)
     elif n <= 10:
-        output_flat[valid_mask] = symbolic_radial_polynomial(rho_valid, n, m, default=default)
+        output_flat[valid_mask] = symbolic_radial_polynomial(rho_valid, n, m, derivative=derivative, default=default)
     else:
-        output_flat[valid_mask] = global_radial_polynomial(rho_valid, n, m, default=default)
+        output_flat[valid_mask] = global_radial_polynomial(rho_valid, n, m, derivative=derivative, default=default)
 
     # Reshape the output array
     output = output_flat.reshape(shape)

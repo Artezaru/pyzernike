@@ -4,6 +4,12 @@ Welcome to pyzernike's documentation!
 Description of the package
 --------------------------
 
+``pyzernike`` is a Python package to compute Zernike polynomials and their derivatives. 
+
+.. image:: ../../pyzernike/ressources/pyramid.png
+   :alt: Zernike polynomials for :math:`n \leq 5`
+   :width: 800px
+   :align: center
 
 Contents
 --------

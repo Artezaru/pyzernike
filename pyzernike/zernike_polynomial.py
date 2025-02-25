@@ -82,7 +82,7 @@ def zernike_polynomial(rho: numpy.ndarray, theta: numpy.ndarray, n: int, m: int,
     .. code-block:: python
 
         import numpy
-        from pyzernike import zernike_polynomial
+        from pyzernike import zernike_polynomial # or from pyzernike import Z
         rho = numpy.linspace(0, 1, 100)
         theta = numpy.linspace(0, 2*numpy.pi, 100)
         zernike_polynomial(rho, theta, 2, 0)
@@ -92,7 +92,7 @@ def zernike_polynomial(rho: numpy.ndarray, theta: numpy.ndarray, n: int, m: int,
     .. code-block:: python
 
         import numpy
-        from pyzernike import zernike_polynomial
+        from pyzernike import zernike_polynomial # or from pyzernike import Z
         rho = numpy.linspace(0, 1, 100)
         theta = numpy.linspace(0, 2*numpy.pi, 100)
         zernike_polynomial(rho, theta, 2, 0, rho_derivative=1)

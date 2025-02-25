@@ -87,18 +87,18 @@ def radial_polynomial(rho: numpy.ndarray, n: int, m: int, derivative: int = 0, d
     .. code-block:: python
 
         import numpy
-        from pyzernike import global_radial_polynomial
+        from pyzernike import radial_polynomial # or from pyzernike import R
         rho = numpy.linspace(0, 1, 100)
-        global_radial_polynomial(rho, 2, 0)
+        radial_polynomial(rho, 2, 0)
 
     returns the radial Zernike polynomial :math:`R_{2}^{0}(\rho)` for :math:`\rho \leq 1`.
 
     .. code-block:: python
 
         import numpy
-        from pyzernike import global_radial_polynomial
+        from pyzernike import radial_polynomial # or from pyzernike import R
         rho = numpy.linspace(0, 1, 100)
-        global_radial_polynomial(rho, 2, 0, derivative=1)
+        radial_polynomial(rho, 2, 0, derivative=1)
     
     returns the first derivative of the radial Zernike polynomial :math:`R_{2}^{0}(\rho)` for :math:`\rho \leq 1`.
     """

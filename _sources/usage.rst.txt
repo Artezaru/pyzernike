@@ -3,7 +3,7 @@ Usage
 
 The package ``pyzernike`` is a Python package to compute Zernike polynomials and their derivatives.
 
-To compute the Zernike polynomials :math:`Z_{n,m}`, you can use the following functions:
+To compute the Zernike polynomials :math:`Z_{n}^{m}`, use the following code:
 
 .. code-block:: python
 

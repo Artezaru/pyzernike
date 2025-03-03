@@ -30,7 +30,7 @@ setup(
     long_description=read_long_description(), # Update the long description as necessary
     long_description_content_type="text/markdown",  # Format of the long description
     url="https://github.com/Artezaru/pyzernike.git",  # URL to the package's homepage
-    packages=find_packages(),  # Automatically find packages in the directory
+    packages=find_packages(exclude=["tests", "tests.*"]),  # Automatically find packages in the directory
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: Apache Software License",

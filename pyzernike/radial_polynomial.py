@@ -79,13 +79,11 @@ def radial_polynomial(rho: numpy.ndarray, n: int, m: int, rho_derivative: int = 
     -------
     numpy.ndarray
         The radial Zernike polynomial with the same shape as :math:`\rho`.
-        If n and m are lists of integers, the output array will have a new last dimension with the size of the number of pairs.
 
     Raises
     ------
     TypeError
         If the rho values are not a numpy array.
-        If n and m are not integers or lists of integers with the same size.
         If the rho_derivative is not an integer.
     ValueError
         If the rho_derivative is negative.

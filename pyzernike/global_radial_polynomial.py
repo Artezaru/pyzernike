@@ -32,7 +32,7 @@ def global_radial_polynomial(rho: numpy.ndarray, n: int, m: int, rho_derivative:
 
         \frac{(n-k)!}{k! ((n+m)/2 - k)! ((n-m)/2 - k)!} = \text{exp} (\text{gammaln}(n-k+1) - \text{gammaln}(k+1) - \text{gammaln}((n+m)/2 - k + 1) - \text{gammaln}((n-m)/2 - k + 1))
     
-    if :math:`\rho ` is not in :math:`0 \leq \rho \leq 1` or :math`\rho` is numpy.nan, the output is set to the default value (numpy.nan by default).
+    if :math:`\rho` is not in :math:`0 \leq \rho \leq 1` or :math:`\rho` is numpy.nan, the output is set to the default value (numpy.nan by default).
 
     .. seealso::
 

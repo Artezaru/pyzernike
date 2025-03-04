@@ -21,7 +21,7 @@ def litteral_radial_polynomial(rho: numpy.ndarray, n: int, m: int, rho_derivativ
 
         \frac{d^{a}R_{n}^{m}(\rho)}{d\rho^{a}} = \sum_{k=0}^{(n-m)/2} \frac{(-1)^k (n-k)!}{k! ((n+m)/2 - k)! ((n-m)/2 - k)!} (n-2k) (n-2k-1) \ldots (n-2k-a+1) \rho^{n-2k-a}
 
-    if :math:`\rho ` is not in :math:`0 \leq \rho \leq 1` or :math`\rho` is numpy.nan, the output is set to the default value (numpy.nan by default).
+    if :math:`\rho` is not in :math:`0 \leq \rho \leq 1` or :math:`\rho` is numpy.nan, the output is set to the default value (numpy.nan by default).
 
     This function only include litteral computation of the polynomials for :math:`n \leq 5`.
 

@@ -35,7 +35,7 @@ def radial_polynomial(rho: numpy.ndarray, n: int, m: int, rho_derivative: int = 
 
         \frac{(n-k)!}{k! ((n+m)/2 - k)! ((n-m)/2 - k)!} = \text{exp} (\text{gammaln}(n-k+1) - \text{gammaln}(k+1) - \text{gammaln}((n+m)/2 - k + 1) - \text{gammaln}((n-m)/2 - k + 1))
     
-    if :math:`\rho ` is not in :math:`0 \leq \rho \leq 1` or :math`\rho` is numpy.nan, the output is set to the default value (numpy.nan by default).
+    if :math:`\rho` is not in :math:`0 \leq \rho \leq 1` or :math:`\rho` is numpy.nan, the output is set to the default value (numpy.nan by default).
 
     According to the value of :math:`n`, the function will call the appropriate function to compute the radial Zernike polynomial.
 

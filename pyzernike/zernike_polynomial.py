@@ -25,7 +25,7 @@ def zernike_polynomial(rho: numpy.ndarray, theta: numpy.ndarray, n: int, m: int,
 
     If :math:`|m| > n` or :math:`n < 0`, or :math:`(n - m)` is odd, the output is a zeros array with the same shape as :math:`\rho`.
 
-    If :math:`\rho` is not in :math:`0 \leq \rho \leq 1` or :math:`\rho` is numpy.nan, the output is set to the default value (numpy.nan by default).
+    if :math:`\rho` is not in :math:`0 \leq \rho \leq 1` or :math:`\rho` is numpy.nan, the output is set to the default value (numpy.nan by default).
 
     .. note::
 

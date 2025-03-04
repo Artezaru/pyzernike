@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>pyzernike.litteral_radial_polynomial &#8212; pyzernike 1.0.5 documentation</title>
+    <title>pyzernike.litteral_radial_polynomial &#8212; pyzernike 1.0.6 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=d55fa986"></script>
+    <script src="../_static/documentation_options.js?v=e2a723ec"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -111,7 +111,7 @@
   
   
   
-    <p class="title logo__title">pyzernike 1.0.5 documentation</p>
+    <p class="title logo__title">pyzernike 1.0.6 documentation</p>
   
 </a></div>
     
@@ -332,7 +332,7 @@
 <p>The derivative of order (derivative (a)) of the radial Zernike polynomial is defined as follows :</p>
 <div class="math notranslate nohighlight">
 \[\frac{d^{a}R_{n}^{m}(\rho)}{d\rho^{a}} = \sum_{k=0}^{(n-m)/2} \frac{(-1)^k (n-k)!}{k! ((n+m)/2 - k)! ((n-m)/2 - k)!} (n-2k) (n-2k-1) \ldots (n-2k-a+1) \rho^{n-2k-a}\]</div>
-<p>if <span class="math notranslate nohighlight">\(\rho ` is not in :math:`0 \leq \rho \leq 1\)</span> or :math`rho` is numpy.nan, the output is set to the default value (numpy.nan by default).</p>
+<p>if <span class="math notranslate nohighlight">\(\rho\)</span> is not in <span class="math notranslate nohighlight">\(0 \leq \rho \leq 1\)</span> or <span class="math notranslate nohighlight">\(\rho\)</span> is numpy.nan, the output is set to the default value (numpy.nan by default).</p>
 <p>This function only include litteral computation of the polynomials for <span class="math notranslate nohighlight">\(n \leq 5\)</span>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>

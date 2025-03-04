@@ -5,7 +5,7 @@ from .global_radial_polynomial import global_radial_polynomial
 from .litteral_radial_polynomial import litteral_radial_polynomial
 from .symbolic_radial_polynomial import symbolic_radial_polynomial
 
-def radial_polynomial(rho: numpy.ndarray, n: int, m: int, derivative: int = 0, default: float = numpy.nan) -> numpy.ndarray:
+def radial_polynomial(rho: numpy.ndarray, n: int, m: int, rho_derivative: int = 0, default: float = numpy.nan) -> numpy.ndarray:
     r"""
     Computes the radial Zernike polynomial :math:`R_{n}^{m}(\rho)` for :math:`\rho \leq 1`.
 
@@ -39,6 +39,12 @@ def radial_polynomial(rho: numpy.ndarray, n: int, m: int, derivative: int = 0, d
 
     According to the value of :math:`n`, the function will call the appropriate function to compute the radial Zernike polynomial.
 
+    .. seealso::
+
+        - For :math:`n \leq 5`, the function :func:`pyzernike.litteral_radial_polynomial` is used.
+        - For :math:`5 < n \leq 10`, the function :func:`pyzernike.symbolic_radial_polynomial` is used.
+        - For :math:`n > 10`, the function :func:`pyzernike.global_radial_polynomial` is used.
+
     .. note::
 
         The alias ``R`` is available for this function.
@@ -47,9 +53,7 @@ def radial_polynomial(rho: numpy.ndarray, n: int, m: int, derivative: int = 0, d
 
             from pyzernike import R
 
-    .. seealso::
-
-        For :math:`n > 10`, the function :func:`pyzernike.global_radial_polynomial` is used.
+    The output array as the same shape as the input array :math:`\rho`.
 
     Parameters
     ----------
@@ -57,29 +61,34 @@ def radial_polynomial(rho: numpy.ndarray, n: int, m: int, derivative: int = 0, d
         The rho values.
     
     n : int
-        The order of the Zernike polynomial.
+        The order of the Zernike polynomial
 
     m : int
         The degree of the Zernike polynomial.
-    
-    derivative : int, optional
-        The order of the derivative. The default is 0.
+
+    rho_derivative : int, optional
+        The order of the rho_derivative. The default is 0.
 
     default : float, optional
         The default value for invalid rho values. The default is numpy.nan.
+
+    Npool : int, optional
+        The number of pools for the parallel computation. The default is 4.
     
     Returns
     -------
     numpy.ndarray
-        The radial Zernike polynomial.
-    
+        The radial Zernike polynomial with the same shape as :math:`\rho`.
+        If n and m are lists of integers, the output array will have a new last dimension with the size of the number of pairs.
+
     Raises
     ------
     TypeError
-        If the rho values are not a numpy array or if n and m are not integers.
-        If the derivative is not an integer.
+        If the rho values are not a numpy array.
+        If n and m are not integers or lists of integers with the same size.
+        If the rho_derivative is not an integer.
     ValueError
-        If the derivative is negative.
+        If the rho_derivative is negative.
 
     Examples
     --------
@@ -98,51 +107,29 @@ def radial_polynomial(rho: numpy.ndarray, n: int, m: int, derivative: int = 0, d
         import numpy
         from pyzernike import radial_polynomial # or from pyzernike import R
         rho = numpy.linspace(0, 1, 100)
-        radial_polynomial(rho, 2, 0, derivative=1)
+        radial_polynomial(rho, 2, 0, rho_derivative=1)
     
-    returns the first derivative of the radial Zernike polynomial :math:`R_{2}^{0}(\rho)` for :math:`\rho \leq 1`.
+    returns the first rho_derivative of the radial Zernike polynomial :math:`R_{2}^{0}(\rho)` for :math:`\rho \leq 1`.
     """
     # Check the input parameters
     if not isinstance(rho, numpy.ndarray):
         raise TypeError("Rho values must be a numpy array.")
     if not isinstance(n, numbers.Integral) or not isinstance(m, numbers.Integral):
         raise TypeError("n and m must be integers.")
-    if not isinstance(derivative, numbers.Integral) or derivative < 0:
-        raise TypeError("The derivative must be a non-negative integer.")
+    if not isinstance(rho_derivative, numbers.Integral) or rho_derivative < 0:
+        raise TypeError("The rho_derivative must be a non-negative integer.")
     if not isinstance(default, numbers.Real):
         raise TypeError("The default value must be a real number.")
 
-    # Case of n < 0, m < 0, n < m, or (n - m) is odd
     if n < 0 or m < 0 or n < m or (n - m) % 2 != 0:
         output = numpy.zeros_like(rho)
         return output
     
-    # flatten the rho values to handle multiple dimensions
-    shape = rho.shape
-    rho_flat = rho.flatten()
-    
-    # Create the mask for valid rho values
-    unit_circle_mask = numpy.logical_and(0 <= rho_flat, rho_flat <= 1)
-    nan_mask = numpy.isnan(rho_flat)
-    valid_mask = numpy.logical_and(unit_circle_mask, ~nan_mask)
-
-    # Initialize the output array
-    output_flat = numpy.full_like(rho_flat, default)
-
-    # Compute for valid rho values
-    rho_valid = rho_flat[valid_mask]
-
-    # Power of rho
-    rho_pow = lambda p: numpy.power(rho_valid, p)
-
     if n <= 5:
-        output_flat[valid_mask] = litteral_radial_polynomial(rho_valid, n, m, derivative=derivative, default=default)
+        output = litteral_radial_polynomial(rho, n, m, rho_derivative, default)
     elif n <= 10:
-        output_flat[valid_mask] = symbolic_radial_polynomial(rho_valid, n, m, derivative=derivative, default=default)
+        output = symbolic_radial_polynomial(rho, n, m, rho_derivative, default)
     else:
-        output_flat[valid_mask] = global_radial_polynomial(rho_valid, n, m, derivative=derivative, default=default)
-
-    # Reshape the output array
-    output = output_flat.reshape(shape)
-    return output
+        output = global_radial_polynomial(rho, n, m, rho_derivative, default)
     
+    return output

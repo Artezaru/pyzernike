@@ -3,7 +3,7 @@ import numbers
 import sympy
 from scipy.special import factorial
 
-def litteral_radial_polynomial(rho: numpy.ndarray, n: int, m: int, derivative: int = 0, default: float = numpy.nan) -> numpy.ndarray:
+def litteral_radial_polynomial(rho: numpy.ndarray, n: int, m: int, rho_derivative: int = 0, default: float = numpy.nan) -> numpy.ndarray:
     r"""
     Computes the radial Zernike polynomial :math:`R_{n}^{m}(\rho)` for :math:`\rho \leq 1`.
 
@@ -44,8 +44,8 @@ def litteral_radial_polynomial(rho: numpy.ndarray, n: int, m: int, derivative: i
     m : int
         The degree of the Zernike polynomial.
     
-    derivative : int, optional
-        The order of the derivative. The default is 0.
+    rho_derivative : int, optional
+        The order of the rho_derivative. The default is 0.
 
     default : float, optional
         The default value for invalid rho values. The default is numpy.nan.
@@ -59,17 +59,17 @@ def litteral_radial_polynomial(rho: numpy.ndarray, n: int, m: int, derivative: i
     ------
     TypeError
         If the rho values are not a numpy array or if n and m are not integers.
-        If the derivative is not an integer.
+        If the rho_derivative is not an integer.
     ValueError
-        If the order of the derivative is negative.
+        If the order of the rho_derivative is negative.
     """
     # Check the input parameters
     if not isinstance(rho, numpy.ndarray):
         raise TypeError("Rho values must be a numpy array.")
     if not isinstance(n, numbers.Integral) or not isinstance(m, numbers.Integral):
         raise TypeError("n and m must be integers.")
-    if not isinstance(derivative, numbers.Integral) or derivative < 0:
-        raise TypeError("The order of the derivative must be a positive integer.")
+    if not isinstance(rho_derivative, numbers.Integral) or rho_derivative < 0:
+        raise TypeError("The order of the rho_derivative must be a positive integer.")
     if not isinstance(default, numbers.Real):
         raise TypeError("The default value must be a real number.")
 
@@ -104,10 +104,10 @@ def litteral_radial_polynomial(rho: numpy.ndarray, n: int, m: int, derivative: i
     use_global = False
 
     # ---------------------------------------------------------------------------------
-    # --------------------------- derivative = 0 --------------------------------------
+    # --------------------------- rho_derivative = 0 --------------------------------------
     # ---------------------------------------------------------------------------------
 
-    if derivative == 0:
+    if rho_derivative == 0:
 
         if n == 0 and m == 0:
             output_flat[valid_mask] = 1.0
@@ -144,10 +144,10 @@ def litteral_radial_polynomial(rho: numpy.ndarray, n: int, m: int, derivative: i
 
 
     # ---------------------------------------------------------------------------------
-    # --------------------------- derivative = 1 --------------------------------------
+    # --------------------------- rho_derivative = 1 --------------------------------------
     # ---------------------------------------------------------------------------------
 
-    elif derivative == 1:
+    elif rho_derivative == 1:
 
         if n <= 0:
             output_flat[valid_mask] = 0.0
@@ -182,10 +182,10 @@ def litteral_radial_polynomial(rho: numpy.ndarray, n: int, m: int, derivative: i
             use_global = True
 
     # ---------------------------------------------------------------------------------
-    # --------------------------- derivative = 2 --------------------------------------
+    # --------------------------- rho_derivative = 2 --------------------------------------
     # ---------------------------------------------------------------------------------
 
-    elif derivative == 2:
+    elif rho_derivative == 2:
 
         if n <= 1:
             output_flat[valid_mask] = 0.0
@@ -217,10 +217,10 @@ def litteral_radial_polynomial(rho: numpy.ndarray, n: int, m: int, derivative: i
             use_global = True
 
     # ---------------------------------------------------------------------------------
-    # --------------------------- derivative = 3 --------------------------------------
+    # --------------------------- rho_derivative = 3 --------------------------------------
     # ---------------------------------------------------------------------------------
 
-    elif derivative == 3:
+    elif rho_derivative == 3:
 
         if n <= 2:
             output_flat[valid_mask] = 0.0
@@ -247,10 +247,10 @@ def litteral_radial_polynomial(rho: numpy.ndarray, n: int, m: int, derivative: i
             use_global = True
 
     # ---------------------------------------------------------------------------------
-    # --------------------------- derivative = 4 --------------------------------------
+    # --------------------------- rho_derivative = 4 --------------------------------------
     # ---------------------------------------------------------------------------------
 
-    elif derivative == 4:
+    elif rho_derivative == 4:
 
         if n <= 3:
             output_flat[valid_mask] = 0.0
@@ -272,10 +272,10 @@ def litteral_radial_polynomial(rho: numpy.ndarray, n: int, m: int, derivative: i
             use_global = True
 
     # ---------------------------------------------------------------------------------
-    # --------------------------- derivative = 5 --------------------------------------
+    # --------------------------- rho_derivative = 5 --------------------------------------
     # ---------------------------------------------------------------------------------
 
-    elif derivative == 5:
+    elif rho_derivative == 5:
 
         if n <= 4:
             output_flat[valid_mask] = 0.0
@@ -290,7 +290,7 @@ def litteral_radial_polynomial(rho: numpy.ndarray, n: int, m: int, derivative: i
             use_global = True
 
     # ---------------------------------------------------------------------------------
-    # --------------------------- derivative > 5 --------------------------------------
+    # --------------------------- rho_derivative > 5 --------------------------------------
     # --------------------------------------------------------------------------------- 
     
     else:
@@ -298,6 +298,6 @@ def litteral_radial_polynomial(rho: numpy.ndarray, n: int, m: int, derivative: i
 
     # Compute the output
     if use_global:
-        output_flat[valid_mask] = global_radial_polynomial(rho_valid, n, m, derivative=derivative, default=default)
+        output_flat[valid_mask] = global_radial_polynomial(rho_valid, n, m, rho_derivative=rho_derivative, default=default)
     output = output_flat.reshape(shape)
     return output

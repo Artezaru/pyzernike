@@ -4,7 +4,7 @@ import sympy
 from scipy.special import factorial
 from .global_radial_polynomial import global_radial_polynomial
 
-def symbolic_radial_polynomial(rho: numpy.ndarray, n: int, m: int, derivative: int = 0, default: float = numpy.nan) -> numpy.ndarray:
+def symbolic_radial_polynomial(rho: numpy.ndarray, n: int, m: int, rho_derivative: int = 0, default: float = numpy.nan) -> numpy.ndarray:
     r"""
     Computes the radial Zernike polynomial :math:`R_{n}^{m}(\rho)` for :math:`\rho \leq 1`.
 
@@ -45,8 +45,8 @@ def symbolic_radial_polynomial(rho: numpy.ndarray, n: int, m: int, derivative: i
     m : int
         The degree of the Zernike polynomial.
     
-    derivative : int, optional
-        The order of the derivative. The default is 0.
+    rho_derivative : int, optional
+        The order of the rho_derivative. The default is 0.
 
     default : float, optional
         The default value for invalid rho values. The default is numpy.nan.
@@ -60,17 +60,17 @@ def symbolic_radial_polynomial(rho: numpy.ndarray, n: int, m: int, derivative: i
     ------
     TypeError
         If the rho values are not a numpy array or if n and m are not integers.
-        If the derivative is not an integer.
+        If the rho_derivative is not an integer.
     ValueError
-        If the order of the derivative is negative.
+        If the order of the rho_derivative is negative.
     """
     # Check the input parameters
     if not isinstance(rho, numpy.ndarray):
         raise TypeError("Rho values must be a numpy array.")
     if not isinstance(n, numbers.Integral) or not isinstance(m, numbers.Integral):
         raise TypeError("n and m must be integers.")
-    if not isinstance(derivative, numbers.Integral) or derivative < 0:
-        raise TypeError("The order of the derivative must be a positive integer.")
+    if not isinstance(rho_derivative, numbers.Integral) or rho_derivative < 0:
+        raise TypeError("The order of the rho_derivative must be a positive integer.")
     if not isinstance(default, numbers.Real):
         raise TypeError("The default value must be a real number.")
 
@@ -186,11 +186,11 @@ def symbolic_radial_polynomial(rho: numpy.ndarray, n: int, m: int, derivative: i
     
     # Compute the output
     if use_global:
-        output_flat[valid_mask] = global_radial_polynomial(rho_valid, n, m, derivative=derivative)
+        output_flat[valid_mask] = global_radial_polynomial(rho_valid, n, m, rho_derivative=rho_derivative)
     else:
-        # Compute the derivative
-        if derivative > 0:
-            expression = sympy.diff(expression, x, derivative)
+        # Compute the rho_derivative
+        if rho_derivative > 0:
+            expression = sympy.diff(expression, x, rho_derivative)
 
         # Convert the sympy expression to a numpy function
         func = sympy.lambdify(x, expression, 'numpy')

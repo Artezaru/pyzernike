@@ -2,7 +2,7 @@ import numpy
 import numbers
 from scipy.special import gammaln
 
-def global_radial_polynomial(rho: numpy.ndarray, n: int, m: int, derivative: int = 0, default: float = numpy.nan) -> numpy.ndarray:
+def global_radial_polynomial(rho: numpy.ndarray, n: int, m: int, rho_derivative: int = 0, default: float = numpy.nan) -> numpy.ndarray:
     r"""
     Computes the radial Zernike polynomial :math:`R_{n}^{m}(\rho)` for :math:`\rho \leq 1`.
 
@@ -49,8 +49,8 @@ def global_radial_polynomial(rho: numpy.ndarray, n: int, m: int, derivative: int
     m : int
         The degree of the Zernike polynomial.
     
-    derivative : int, optional
-        The order of the derivative. The default is 0.
+    rho_derivative : int, optional
+        The order of the rho_derivative. The default is 0.
 
     default : float, optional
         The default value for invalid rho values. The default is numpy.nan.
@@ -64,9 +64,9 @@ def global_radial_polynomial(rho: numpy.ndarray, n: int, m: int, derivative: int
     ------
     TypeError
         If the rho values are not a numpy array or if n and m are not integers.
-        If the derivative is not an integer.
+        If the rho_derivative is not an integer.
     ValueError
-        If the derivative is negative.
+        If the rho_derivative is negative.
 
     Examples
     --------
@@ -85,17 +85,17 @@ def global_radial_polynomial(rho: numpy.ndarray, n: int, m: int, derivative: int
         import numpy
         from pyzernike import global_radial_polynomial
         rho = numpy.linspace(0, 1, 100)
-        global_radial_polynomial(rho, 2, 0, derivative=1)
+        global_radial_polynomial(rho, 2, 0, rho_derivative=1)
     
-    returns the first derivative of the radial Zernike polynomial :math:`R_{2}^{0}(\rho)` for :math:`\rho \leq 1`.
+    returns the first rho_derivative of the radial Zernike polynomial :math:`R_{2}^{0}(\rho)` for :math:`\rho \leq 1`.
     """
     # Check the input parameters
     if not isinstance(rho, numpy.ndarray):
         raise TypeError("Rho values must be a numpy array.")
     if not isinstance(n, numbers.Integral) or not isinstance(m, numbers.Integral):
         raise TypeError("n and m must be integers.")
-    if not isinstance(derivative, numbers.Integral) or derivative < 0:
-        raise TypeError("The order of the derivative must be a positive integer.")
+    if not isinstance(rho_derivative, numbers.Integral) or rho_derivative < 0:
+        raise TypeError("The order of the rho_derivative must be a positive integer.")
     if not isinstance(default, numbers.Real):
         raise TypeError("The default value must be a real number.")
 
@@ -128,19 +128,19 @@ def global_radial_polynomial(rho: numpy.ndarray, n: int, m: int, derivative: int
     sign = 1 - 2 * (k % 2)
     k_coef = sign * numpy.exp(log_k_coef)
 
-    if derivative == 0:
+    if rho_derivative == 0:
         coef = k_coef
     else:
         # Create a 2D array for (n - 2k - i)
-        i = numpy.arange(derivative)
+        i = numpy.arange(rho_derivative)
         term_matrix = (n - 2 * k)[:, None] - i
 
-        # Compute the product over the derivative axis
-        derivative_coef = numpy.prod(term_matrix, axis=1)
-        coef = k_coef * derivative_coef
+        # Compute the product over the rho_derivative axis
+        rho_derivative_coef = numpy.prod(term_matrix, axis=1)
+        coef = k_coef * rho_derivative_coef
 
     # Compute the rho power
-    exponent = n - 2 * k - derivative
+    exponent = n - 2 * k - rho_derivative
     exponent_positive_mask = exponent > 0
     exponent_0_mask = exponent == 0
     exponent_negative_mask = exponent < 0

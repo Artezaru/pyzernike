@@ -82,7 +82,7 @@ def pyramid(self, N: int = 5, radial: bool = False, rho_derivative: int = 0, the
                 n = int(n)
 
                 if radial:
-                    Z = radial_polynomial(rho, n, m, derivative=rho_derivative, default= numpy.nan)
+                    Z = radial_polynomial(rho, n, m, rho_derivative=rho_derivative, default= numpy.nan)
                 else:
                     Z = zernike_polynomial(rho, theta, n, m, rho_derivative=rho_derivative, theta_derivative=theta_derivative, default= numpy.nan)
 

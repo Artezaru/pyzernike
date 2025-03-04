@@ -20,7 +20,7 @@ def test_global_radial_polynomial_R42(n, m, derivative, explicit_func):
     rho_test = np.linspace(0, 1, 100)
 
     # Compute using global_radial_polynomial
-    computed = global_radial_polynomial(rho_test, n, m, derivative=derivative)
+    computed = global_radial_polynomial(rho_test, n, m, rho_derivative=derivative)
 
     # Compute explicit result
     expected = explicit_func(rho_test)

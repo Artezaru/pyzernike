@@ -19,10 +19,10 @@ def test_symbolic_vs_global_radial_polynomial_multiple(n, m, derivative):
     rho_test = np.random.rand(10)
 
     # Compute using global_radial_polynomial
-    global_result = global_radial_polynomial(rho_test, n, m, derivative=derivative)
+    global_result = global_radial_polynomial(rho_test, n, m, rho_derivative=derivative)
 
     # Compute using symbolic_radial_polynomial
-    litteral_result = symbolic_radial_polynomial(rho_test, n, m, derivative=derivative)
+    litteral_result = symbolic_radial_polynomial(rho_test, n, m, rho_derivative=derivative)
 
     # Assert that the results match within tolerance
     assert np.allclose(global_result, litteral_result, atol=1e-8), (

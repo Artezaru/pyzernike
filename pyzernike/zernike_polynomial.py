@@ -25,7 +25,7 @@ def zernike_polynomial(rho: numpy.ndarray, theta: numpy.ndarray, n: int, m: int,
 
     If :math:`|m| > n` or :math:`n < 0`, or :math:`(n - m)` is odd, the output is a zeros array with the same shape as :math:`\rho`.
 
-    If :math:`\rho ` is not in :math:`0 \leq \rho \leq 1` or :math`\rho` is numpy.nan, the output is set to the default value (numpy.nan by default).
+    If :math:`\rho` is not in :math:`0 \leq \rho \leq 1` or :math:`\rho` is numpy.nan, the output is set to the default value (numpy.nan by default).
 
     .. note::
 
@@ -138,7 +138,7 @@ def zernike_polynomial(rho: numpy.ndarray, theta: numpy.ndarray, n: int, m: int,
     theta_valid = theta_flat[valid_mask]
 
     # Compute the radial polynomial
-    radial_valid = radial_polynomial(rho_valid, n, abs(m), derivative=rho_derivative)
+    radial_valid = radial_polynomial(rho_valid, n, abs(m), rho_derivative=rho_derivative)
 
     # Compute the cosine or sine term
     if m == 0:

@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>pyzernike.symbolic_radial_polynomial &#8212; pyzernike 1.0.4 documentation</title>
+    <title>pyzernike.symbolic_radial_polynomial &#8212; pyzernike 1.0.5 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=71272d9f"></script>
+    <script src="../_static/documentation_options.js?v=d55fa986"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -111,7 +111,7 @@
   
   
   
-    <p class="title logo__title">pyzernike 1.0.4 documentation</p>
+    <p class="title logo__title">pyzernike 1.0.5 documentation</p>
   
 </a></div>
     
@@ -323,7 +323,7 @@
 <h1>pyzernike.symbolic_radial_polynomial<a class="headerlink" href="#pyzernike-symbolic-radial-polynomial" title="Link to this heading">#</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="pyzernike.symbolic_radial_polynomial">
-<span class="sig-prename descclassname"><span class="pre">pyzernike.</span></span><span class="sig-name descname"><span class="pre">symbolic_radial_polynomial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rho</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">derivative</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">nan</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../_modules/pyzernike/symbolic_radial_polynomial.html#symbolic_radial_polynomial"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyzernike.symbolic_radial_polynomial" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pyzernike.</span></span><span class="sig-name descname"><span class="pre">symbolic_radial_polynomial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rho</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho_derivative</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">nan</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../_modules/pyzernike/symbolic_radial_polynomial.html#symbolic_radial_polynomial"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyzernike.symbolic_radial_polynomial" title="Link to this definition">#</a></dt>
 <dd><p>Computes the radial Zernike polynomial <span class="math notranslate nohighlight">\(R_{n}^{m}(\rho)\)</span> for <span class="math notranslate nohighlight">\(\rho \leq 1\)</span>.</p>
 <p>The radial Zernike polynomial is defined as follows:</p>
 <div class="math notranslate nohighlight">
@@ -348,7 +348,7 @@
 <li><p><strong>rho</strong> (<em>numpy.ndarray</em>) – The rho values.</p></li>
 <li><p><strong>n</strong> (<em>int</em>) – The order of the Zernike polynomial.</p></li>
 <li><p><strong>m</strong> (<em>int</em>) – The degree of the Zernike polynomial.</p></li>
-<li><p><strong>derivative</strong> (<em>int</em><em>, </em><em>optional</em>) – The order of the derivative. The default is 0.</p></li>
+<li><p><strong>rho_derivative</strong> (<em>int</em><em>, </em><em>optional</em>) – The order of the rho_derivative. The default is 0.</p></li>
 <li><p><strong>default</strong> (<em>float</em><em>, </em><em>optional</em>) – The default value for invalid rho values. The default is numpy.nan.</p></li>
 </ul>
 </dd>
@@ -361,8 +361,8 @@
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>TypeError</strong> – If the rho values are not a numpy array or if n and m are not integers.
-    If the derivative is not an integer.</p></li>
-<li><p><strong>ValueError</strong> – If the order of the derivative is negative.</p></li>
+    If the rho_derivative is not an integer.</p></li>
+<li><p><strong>ValueError</strong> – If the order of the rho_derivative is negative.</p></li>
 </ul>
 </dd>
 </dl>

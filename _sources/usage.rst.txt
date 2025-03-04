@@ -21,7 +21,7 @@ To compute the second derivatives of the Zernike polynomials :math:`Z_{n,m}` wit
 
 .. code-block:: python
 
-    from pyzernike import zernike_derivative
+    from pyzernike import zernike_polynomial
     import numpy as np
 
     rho = np.linspace(0, 1, 100)
@@ -29,6 +29,6 @@ To compute the second derivatives of the Zernike polynomials :math:`Z_{n,m}` wit
 
     n = 3
     m = 1
-    Z_31_drho_drho = zernike_derivative(rho, theta, n, m, rho_derivative=2)
+    Z_31_drho_drho = zernike_polynomial(rho, theta, n, m, rho_derivative=2)
 
 

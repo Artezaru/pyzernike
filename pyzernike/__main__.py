@@ -1,3 +1,5 @@
+from .pyramid import pyramid
+
 def __main__() -> None:
     r"""
     Main entry point of the package.
@@ -8,7 +10,7 @@ def __main__() -> None:
         pyzernike
         
     """
-    raise NotImplementedError("The main entry point is not implemented yet.")
+    pyramid()
 
 def __main_gui__() -> None:
     r"""

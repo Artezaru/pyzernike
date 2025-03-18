@@ -24,6 +24,16 @@ The documentation is divided into the following sections:
    ./usage
 
 
+A terminal commmand is created to plot the zernike pyramid. The command is called `pyzernike` and can be used as follows:
+
+.. code-block:: bash
+
+    pyzernike
+
+.. image:: ../../pyzernike/ressources/pyramid.png
+    :align: center
+
+
 Author
 ------
 

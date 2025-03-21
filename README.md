@@ -8,7 +8,7 @@
 
 ## Authors
 
-- Artezaru <artezaru.websites@proton.me>
+- Artezaru <artezaru.github@proton.me>
 
 - **Git Plateform**: https://github.com/Artezaru/pyzernike.git
 - **Online Documentation**: https://Artezaru.github.io/pyzernike

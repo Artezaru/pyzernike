@@ -30,3 +30,4 @@ def test_global_radial_polynomial_R42(n, m, derivative, explicit_func):
         f"Mismatch in R_{n}^{m} derivative order {derivative}.\n"
         f"Max difference: {np.abs(computed - expected).max()}"
     )
+

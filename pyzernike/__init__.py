@@ -6,6 +6,8 @@ from .radial_polynomial import radial_polynomial
 R = radial_polynomial
 from .zernike_polynomial import zernike_polynomial
 Z = zernike_polynomial
+from .xy_zernike_polynomial import xy_zernike_polynomial
+Zxy = xy_zernike_polynomial
 from .pyramid import pyramid
 
 
@@ -18,5 +20,7 @@ __all__ = [
     "R",
     "zernike_polynomial",
     "Z",
+    "xy_zernike_polynomial",
+    "Zxy",
     "pyramid"
 ]

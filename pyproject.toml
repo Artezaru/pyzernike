@@ -24,7 +24,7 @@ include = ["pyzernike", "pyzernike*"]
 exclude = ["laboratory", "laboratory.*", "tests", "tests*", "examples", "examples*"]
 
 [tool.setuptools.package-data]
-"pyzernike.ressources" = ["*"]
+"pyzernike.resources" = ["*"]
 
 [project.scripts]
 pyzernike = "pyzernike.__main__:__main__"

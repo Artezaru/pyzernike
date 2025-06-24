@@ -4,7 +4,7 @@
 
 `pyzernike` is a Python package to compute Zernike polynomials and their derivatives. 
 
-![Pyramid](./pyzernike/ressources/pyramid.png)
+![Pyramid](./pyzernike/resources/pyramid.png)
 
 ## Authors
 

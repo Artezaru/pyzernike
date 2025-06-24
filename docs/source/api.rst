@@ -16,6 +16,7 @@ The package ``pyzernike`` is composed of the following functions, classes, and m
    ./api_doc/litteral_radial_polynomial
    ./api_doc/radial_polynomial
    ./api_doc/zernike_polynomial
+   ./api_doc/xy_zernike_polynomial
    ./api_doc/pyramid
 
 To learn how to use the package effectively, refer to the documentation :doc:`../usage`.

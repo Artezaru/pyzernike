@@ -3,7 +3,7 @@ import numbers
 from scipy.special import factorial
 from .zernike_polynomial import zernike_polynomial
 
-def xy_zernike_polynomial(x: numpy.ndarray, y: numpy.ndarray, n: int, m: int, x_derivative: int = 0, y_derivative: int = 0, default: float = numpy.nan, A: float = 1.0, B: float = 1.0, x0: float = 0.0, y0: float = 0.0, alpha: float = 0.0, h: float = 0.0, theta1: float = 0.0, theta2: float = 2 * numpy.pi) -> numpy.ndarray:
+def xy_zernike_polynomial(x: numpy.ndarray, y: numpy.ndarray, n: int, m: int, x_derivative: int = 0, y_derivative: int = 0, default: float = numpy.nan, Rx: float = 1.0, Ry: float = 1.0, x0: float = 0.0, y0: float = 0.0, alpha: float = 0.0, h: float = 0.0, theta1: float = 0.0, theta2: float = 2 * numpy.pi) -> numpy.ndarray:
     r"""
     Computes the Extended Zernike polynomial :math:`Z_{n}^{m}(x, y)` on a extended domain.
 
@@ -13,24 +13,24 @@ def xy_zernike_polynomial(x: numpy.ndarray, y: numpy.ndarray, n: int, m: int, x_
 
     .. seealso::
 
-        For the mathematical development of the method, see the paper `Generalization of Zernike polynomials for regular portions of circles and ellipses` by Rafael Navarro, José L. López, José A. Díaz, and Ester Pérez Sinusía.
+        For the mathematical development of the method, see the paper `Generalization of Zernike polynomials for regular portions of circles and ellipses` by Rafael Navarro, José L. López, José Rx. Díaz, and Ester Pérez Sinusía.
         The associated paper is available in the resources folder of the package.
 
         Download the PDF : :download:`PDF <../../../pyzernike/resources/Navarro and al. Generalization of Zernike polynomials for regular portions of circles and ellipses.pdf>`
 
     The user must provide the x and y coordinates of the points where the polynomial is evaluated and the parameters of the extended domain G:
 
-    - :math:`A` and :math:`B` are the lenght of the semi-axis of the ellipse (outer boundary).
+    - :math:`R_x` and :math:`R_y` are the lenght of the semi-axis of the ellipse (outer boundary noted A and B on the figure).
     - :math:`x_0` and :math:`y_0` are the coordinates of the center of the ellipse.
     - :math:`\alpha` is the rotation angle of the ellipse in radians.
-    - :math:`h=\frac{a}{A}=\frac{b}{B}` defining the inner boundary of the ellipse.
+    - :math:`h=\frac{a}{R_x}=\frac{b}{R_y}` defining the inner boundary of the ellipse.
     - :math:`\theta_1` and :math:`\theta_2` are the angles defining the sector of the ellipse where the polynomial is described.
 
     .. figure:: ../../../pyzernike/resources/extended_parameters.png
         :width: 400px
         :align: center
 
-        The parameters to define the extended domain of the Zernike polynomial.
+        The parameters to define the extended domain of the Zernike polynomial. ``A`` and ``B`` are the semi-major and semi-minor axes of the ellipse, respectively, they correspond to :math:`R_x` and :math:`R_y`.
 
     The applied mapping is as follows:
 
@@ -42,11 +42,11 @@ def xy_zernike_polynomial(x: numpy.ndarray, y: numpy.ndarray, n: int, m: int, x_
 
     .. math::
 
-        r = \sqrt{\left(\frac{X}{A}\right)^{2} + \left(\frac{Y}{B}\right)^{2}}
+        r = \sqrt{\left(\frac{X}{R_x}\right)^{2} + \left(\frac{Y}{R_y}\right)^{2}}
 
     .. math::
 
-        \theta = \text{atan2} (\frac{Y}{B}, \frac{X}{A})
+        \theta = \text{atan2} (\frac{Y}{R_y}, \frac{X}{R_x})
 
     .. math::
 
@@ -82,11 +82,11 @@ def xy_zernike_polynomial(x: numpy.ndarray, y: numpy.ndarray, n: int, m: int, x_
 
     .. math::
 
-        \frac{\partial \rho_{eq}}{\partial z} = \frac{1}{1 - h} \frac{1}{r} \left(\frac{X}{A^2} \frac{\partial X}{\partial z} + \frac{Y}{B^2} \frac{\partial Y}{\partial z}\right)
+        \frac{\partial \rho_{eq}}{\partial z} = \frac{1}{1 - h} \frac{1}{r} \left(\frac{X}{R_x^2} \frac{\partial X}{\partial z} + \frac{Y}{R_y^2} \frac{\partial Y}{\partial z}\right)
 
     .. math::
 
-        \frac{\partial \theta_{eq}}{\partial z} = \frac{2 \pi}{\theta_2 - \theta_1} \frac{1}{A B r^2} \left(X \frac{\partial Y}{\partial z} - Y \frac{\partial X}{\partial z}\right)
+        \frac{\partial \theta_{eq}}{\partial z} = \frac{2 \pi}{\theta_2 - \theta_1} \frac{1}{R_x R_y r^2} \left(X \frac{\partial Y}{\partial z} - Y \frac{\partial X}{\partial z}\right)
 
     Parameters
     ----------
@@ -111,10 +111,10 @@ def xy_zernike_polynomial(x: numpy.ndarray, y: numpy.ndarray, n: int, m: int, x_
     default : float, optional
         The default value for invalid rho values. The default is numpy.nan.
 
-    A : float, optional
+    Rx : float, optional
         The length of the semi-major axis of the ellipse (outer boundary). The default is 1.0. Must be greater than 0.
 
-    B : float, optional
+    Ry : float, optional
         The length of the semi-minor axis of the ellipse (outer boundary). The default is 1.0. Must be greater than 0.
     
     x0 : float, optional
@@ -145,11 +145,11 @@ def xy_zernike_polynomial(x: numpy.ndarray, y: numpy.ndarray, n: int, m: int, x_
     TypeError
         If the x or y values are not a numpy array or if n and m are not integers.
         If the derivative is not an integer.
-        If A, B, alpha, h, theta1, or theta2 are not valid types.
+        If Rx, Ry, alpha, h, theta1, or theta2 are not valid types.
     ValueError
         If the derivative is negative.
         If x and y do not have the same shape.
-        If A, B, alpha, h, theta1, or theta2 are not in the valid ranges.
+        If Rx, Ry, alpha, h, theta1, or theta2 are not in the valid ranges.
 
     Examples
     --------
@@ -165,7 +165,7 @@ def xy_zernike_polynomial(x: numpy.ndarray, y: numpy.ndarray, n: int, m: int, x_
         y = numpy.linspace(-10, 10, 100)
         X, Y = numpy.meshgrid(x, y)
 
-        zernike = xy_zernike_polynomial(X, Y, 2, 0, A=10, B=10, x0=0.0, y0=0.0) # Shape similar to X and Y
+        zernike = xy_zernike_polynomial(X, Y, 2, 0, Rx=10, Ry=10, x0=0.0, y0=0.0) # Shape similar to X and Y
 
     The first derivative with respect to y is given by:
 
@@ -177,26 +177,26 @@ def xy_zernike_polynomial(x: numpy.ndarray, y: numpy.ndarray, n: int, m: int, x_
         x = numpy.linspace(-10, 10, 100)
         y = numpy.linspace(-10, 10, 100)
         X, Y = numpy.meshgrid(x, y)
-        zernike_derivative_y = xy_zernike_polynomial(X, Y, 2, 0, y_derivative=1, A=10, B=10, x0=0.0, y0=0.0) # Shape similar to X and Y
+        zernike_derivative_y = xy_zernike_polynomial(X, Y, 2, 0, y_derivative=1, Rx=10, Ry=10, x0=0.0, y0=0.0) # Shape similar to X and Y
 
 
     For a full circle with a radius of R and centered at (x_0, y_0), the value of the zernike polynomial :math:`Z_{2}^{0}` at the point (x, y) is given by:
 
     .. code-block:: python
 
-        Zxy(x, y, n, m, A=R, B=R, x0=x_0, y0=y_0)
+        Zxy(x, y, n, m, Rx=R, Ry=R, x0=x_0, y0=y_0)
 
-    For an ellipse with semi-major axis A and semi-minor axis B, centered at (x_0, y_0) and rotated by an angle alpha, the value of the zernike polynomial :math:`Z_{2}^{0}` at the point (x, y) is given by:
-
-    .. code-block:: python
-
-        Zxy(x, y, n, m, A=A, B=B, x0=x_0, y0=y_0, alpha=alpha)
-
-    For a annular sector of the ellipse with semi-major axis A and semi-minor axis B, centered at (x_0, y_0), rotated by an angle alpha, and an aspect ratio h, the value of the zernike polynomial :math:`Z_{2}^{0}` at the point (x, y) is given by:
+    For an ellipse with semi-major axis Rx and semi-minor axis Ry, centered at (x_0, y_0) and rotated by an angle alpha, the value of the zernike polynomial :math:`Z_{2}^{0}` at the point (x, y) is given by:
 
     .. code-block:: python
 
-        Zxy(x, y, n, m, A=A, B=B, x0=x_0, y0=y_0, alpha=alpha, h=h)
+        Zxy(x, y, n, m, Rx=Rx, Ry=Ry, x0=x_0, y0=y_0, alpha=alpha)
+
+    For a annular sector of the ellipse with semi-major axis Rx and semi-minor axis Ry, centered at (x_0, y_0), rotated by an angle alpha, and an aspect ratio h, the value of the zernike polynomial :math:`Z_{2}^{0}` at the point (x, y) is given by:
+
+    .. code-block:: python
+
+        Zxy(x, y, n, m, Rx=Rx, Ry=Ry, x0=x_0, y0=y_0, alpha=alpha, h=h)
 
     """
     # Check the input parameters
@@ -216,10 +216,10 @@ def xy_zernike_polynomial(x: numpy.ndarray, y: numpy.ndarray, n: int, m: int, x_
         raise TypeError("The default value must be a real number.")
     
     # Check the parameters for the extended domain
-    if not isinstance(A, numbers.Real) or A <= 0:
-        raise TypeError("A must be a positive real number.")
-    if not isinstance(B, numbers.Real) or B <= 0:
-        raise TypeError("B must be a positive real number.")
+    if not isinstance(Rx, numbers.Real) or Rx <= 0:
+        raise TypeError("Rx must be a positive real number.")
+    if not isinstance(Ry, numbers.Real) or Ry <= 0:
+        raise TypeError("Ry must be a positive real number.")
     if not isinstance(x0, numbers.Real):
         raise TypeError("x0 must be a real number.")
     if not isinstance(y0, numbers.Real):
@@ -257,8 +257,8 @@ def xy_zernike_polynomial(x: numpy.ndarray, y: numpy.ndarray, n: int, m: int, x_
     Y = - numpy.sin(alpha) * x_centered + numpy.cos(alpha) * y_centered
 
     # Compute the equivalent polar coordinates
-    r_prim = numpy.sqrt((X / A) ** 2 + (Y / B) ** 2)
-    theta_prim = numpy.arctan2(Y / B, X / A)
+    r_prim = numpy.sqrt((X / Rx) ** 2 + (Y / Ry) ** 2)
+    theta_prim = numpy.arctan2(Y / Ry, X / Rx)
 
     # Angular convertion in 0 to 2*pi range
     theta_prim_2pi = theta_prim % (2 * numpy.pi)
@@ -313,15 +313,15 @@ def xy_zernike_polynomial(x: numpy.ndarray, y: numpy.ndarray, n: int, m: int, x_
         output_flat[valid_mask] = zernike_polynomial(rho_eq[valid_mask], theta_eq[valid_mask], n, m, rho_derivative=0, theta_derivative=0, default=default)
 
     elif (x_derivative, y_derivative) == (1, 0):
-        rho_derivative = (1 / (1 - h)) * (1 / r_prim[valid_mask]) * ( (X[valid_mask] / A**2) * numpy.cos(alpha) - (Y[valid_mask] / B**2) * numpy.sin(alpha))
-        theta_derivative = (2 * numpy.pi / (theta2 - theta1)) * (1 / (A * B * r_prim[valid_mask]**2)) * ( - X[valid_mask] * numpy.sin(alpha) - Y[valid_mask] * numpy.cos(alpha))
+        rho_derivative = (1 / (1 - h)) * (1 / r_prim[valid_mask]) * ( (X[valid_mask] / Rx**2) * numpy.cos(alpha) - (Y[valid_mask] / Ry**2) * numpy.sin(alpha))
+        theta_derivative = (2 * numpy.pi / (theta2 - theta1)) * (1 / (Rx * Ry * r_prim[valid_mask]**2)) * ( - X[valid_mask] * numpy.sin(alpha) - Y[valid_mask] * numpy.cos(alpha))
         zernike_rho_derivative = zernike_polynomial(rho_eq[valid_mask], theta_eq[valid_mask], n, m, rho_derivative=1, theta_derivative=0, default=default)
         zernike_theta_derivative = zernike_polynomial(rho_eq[valid_mask], theta_eq[valid_mask], n, m, rho_derivative=0, theta_derivative=1, default=default)
         output_flat[valid_mask] = zernike_rho_derivative * rho_derivative + zernike_theta_derivative * theta_derivative
 
     elif (x_derivative, y_derivative) == (0, 1):
-        rho_derivative = (1 / (1 - h)) * (1 / r_prim[valid_mask]) * ( (X[valid_mask] / A**2) * numpy.sin(alpha) + (Y[valid_mask] / B**2) * numpy.cos(alpha))
-        theta_derivative = (2 * numpy.pi / (theta2 - theta1)) * (1 / (A * B * r_prim[valid_mask]**2)) * ( X[valid_mask] * numpy.cos(alpha) - Y[valid_mask] * numpy.sin(alpha))
+        rho_derivative = (1 / (1 - h)) * (1 / r_prim[valid_mask]) * ( (X[valid_mask] / Rx**2) * numpy.sin(alpha) + (Y[valid_mask] / Ry**2) * numpy.cos(alpha))
+        theta_derivative = (2 * numpy.pi / (theta2 - theta1)) * (1 / (Rx * Ry * r_prim[valid_mask]**2)) * ( X[valid_mask] * numpy.cos(alpha) - Y[valid_mask] * numpy.sin(alpha))
         zernike_rho_derivative = zernike_polynomial(rho_eq[valid_mask], theta_eq[valid_mask], n, m, rho_derivative=1, theta_derivative=0, default=default)
         zernike_theta_derivative = zernike_polynomial(rho_eq[valid_mask], theta_eq[valid_mask], n, m, rho_derivative=0, theta_derivative=1, default=default)
         output_flat[valid_mask] = zernike_rho_derivative * rho_derivative + zernike_theta_derivative * theta_derivative

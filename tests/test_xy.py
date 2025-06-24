@@ -21,7 +21,7 @@ def test_extended_versus_circular(n, m):
     x = rho_test * np.cos(theta_test)
     y = rho_test * np.sin(theta_test)
 
-    extended = Zxy(x, y, n, m, A=rho_bound, B=rho_bound)
+    extended = Zxy(x, y, n, m, Rx=rho_bound, Ry=rho_bound)
 
     # Assert that the results match within tolerance
     classic_nans = np.isnan(classic)

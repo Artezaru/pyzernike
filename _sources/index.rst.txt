@@ -11,6 +11,8 @@ Contents
 
 The documentation is divided into the following sections:
 
+Toto truc
+
 - **Installation**: This section describes how to install the package.
 - **API Reference**: This section contains the documentation of the package's API.
 - **Usage**: This section contains the documentation of how to use the package.
@@ -30,7 +32,7 @@ A terminal commmand is created to plot the zernike pyramid. The command is calle
 
     pyzernike
 
-.. image:: ../../pyzernike/ressources/pyramid.png
+.. image:: ../../pyzernike/resources/pyramid.png
     :align: center
 
 

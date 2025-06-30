@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>pyzernike.symbolic_radial_polynomial &#8212; pyzernike 0.0.10 documentation</title>
+    <title>pyzernike.radial_symbolic &#8212; pyzernike 1.0.0 documentation</title>
   
   
   
@@ -38,15 +38,15 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=a83ce22a"></script>
+    <script src="../_static/documentation_options.js?v=8d563738"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'api_doc/symbolic_radial_polynomial';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api_doc/radial_symbolic';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="pyzernike.litteral_radial_polynomial" href="litteral_radial_polynomial.html" />
-    <link rel="prev" title="pyzernike.global_radial_polynomial" href="global_radial_polynomial.html" />
+    <link rel="next" title="pyzernike.zernike_polynomial" href="zernike_polynomial.html" />
+    <link rel="prev" title="pyzernike.radial_polynomial" href="radial_polynomial.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -111,7 +111,7 @@
   
   
   
-    <p class="title logo__title">pyzernike 0.0.10 documentation</p>
+    <p class="title logo__title">pyzernike 1.0.0 documentation</p>
   
 </a></div>
     
@@ -267,11 +267,12 @@
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">API:</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="global_radial_polynomial.html">pyzernike.global_radial_polynomial</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">pyzernike.symbolic_radial_polynomial</a></li>
-<li class="toctree-l1"><a class="reference internal" href="litteral_radial_polynomial.html">pyzernike.litteral_radial_polynomial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core_polynomial.html">pyzernike.core_polynomial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core_symbolic.html">pyzernike.core_symbolic</a></li>
 <li class="toctree-l1"><a class="reference internal" href="radial_polynomial.html">pyzernike.radial_polynomial</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">pyzernike.radial_symbolic</a></li>
 <li class="toctree-l1"><a class="reference internal" href="zernike_polynomial.html">pyzernike.zernike_polynomial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zernike_symbolic.html">pyzernike.zernike_symbolic</a></li>
 <li class="toctree-l1"><a class="reference internal" href="xy_zernike_polynomial.html">pyzernike.xy_zernike_polynomial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pyramid.html">pyzernike.pyramid</a></li>
 </ul>
@@ -317,7 +318,7 @@
     
     <li class="breadcrumb-item"><a href="../api.html" class="nav-link">API Reference</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">pyzernike.symbolic_radial_polynomial</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">pyzernike.radial_symbolic</span></li>
   </ul>
 </nav>
 </div>
@@ -334,53 +335,79 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="pyzernike-symbolic-radial-polynomial">
-<h1>pyzernike.symbolic_radial_polynomial<a class="headerlink" href="#pyzernike-symbolic-radial-polynomial" title="Link to this heading">#</a></h1>
+  <section id="pyzernike-radial-symbolic">
+<h1>pyzernike.radial_symbolic<a class="headerlink" href="#pyzernike-radial-symbolic" title="Link to this heading">#</a></h1>
 <dl class="py function">
-<dt class="sig sig-object py" id="pyzernike.symbolic_radial_polynomial">
-<span class="sig-prename descclassname"><span class="pre">pyzernike.</span></span><span class="sig-name descname"><span class="pre">symbolic_radial_polynomial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rho</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho_derivative</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">nan</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../_modules/pyzernike/symbolic_radial_polynomial.html#symbolic_radial_polynomial"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyzernike.symbolic_radial_polynomial" title="Link to this definition">#</a></dt>
-<dd><p>Computes the radial Zernike polynomial <span class="math notranslate nohighlight">\(R_{n}^{m}(\rho)\)</span> for <span class="math notranslate nohighlight">\(\rho \leq 1\)</span>.</p>
+<dt class="sig sig-object py" id="pyzernike.radial_symbolic">
+<span class="sig-prename descclassname"><span class="pre">pyzernike.</span></span><span class="sig-name descname"><span class="pre">radial_symbolic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Integral</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Integral</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho_derivative</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Integral</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_skip</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Expr</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pyzernike/radial_symbolic.html#radial_symbolic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyzernike.radial_symbolic" title="Link to this definition">#</a></dt>
+<dd><p>Compute the symbolic expression of the radial Zernike polynomial <span class="math notranslate nohighlight">\(R_{n}^{m}(\rho)\)</span> for <span class="math notranslate nohighlight">\(\rho \leq 1\)</span>.</p>
 <p>The radial Zernike polynomial is defined as follows:</p>
 <div class="math notranslate nohighlight">
 \[R_{n}^{m}(\rho) = \sum_{k=0}^{(n-m)/2} \frac{(-1)^k (n-k)!}{k! ((n+m)/2 - k)! ((n-m)/2 - k)!} \rho^{n-2k}\]</div>
 <p>if <span class="math notranslate nohighlight">\(n &lt; 0\)</span>, <span class="math notranslate nohighlight">\(m &lt; 0\)</span>, <span class="math notranslate nohighlight">\(n &lt; m\)</span>, or <span class="math notranslate nohighlight">\((n - m)\)</span> is odd, the output is a zeros array with the same shape as <span class="math notranslate nohighlight">\(\rho\)</span>.</p>
-<p>The derivative of order (derivative (a)) of the radial Zernike polynomial is defined as follows :</p>
+<p>The derivative of order (derivative (a)) of the radial Zernike polynomial is defined as follows:</p>
 <div class="math notranslate nohighlight">
 \[\frac{d^{a}R_{n}^{m}(\rho)}{d\rho^{a}} = \sum_{k=0}^{(n-m)/2} \frac{(-1)^k (n-k)!}{k! ((n+m)/2 - k)! ((n-m)/2 - k)!} (n-2k) (n-2k-1) \ldots (n-2k-a+1) \rho^{n-2k-a}\]</div>
-<p>if <span class="math notranslate nohighlight">\(\rho\)</span> is not in <span class="math notranslate nohighlight">\(0 \leq \rho \leq 1\)</span> or <span class="math notranslate nohighlight">\(\rho\)</span> is numpy.nan, the output is set to the default value (numpy.nan by default).</p>
-<p>This function use sympy symbolic computation for the litteral expression of the <span class="math notranslate nohighlight">\(n \leq 10\)</span> radial Zernike polynomial.</p>
+<p>This function allows to compute several radial Zernike polynomials at once for different orders and degrees given as sequences. The output is a list of numpy arrays, each containing the expression of the radial Zernike polynomial for the corresponding order and degree.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If <span class="math notranslate nohighlight">\(n &gt; 10\)</span>, the function <a class="reference internal" href="global_radial_polynomial.html#pyzernike.global_radial_polynomial" title="pyzernike.global_radial_polynomial"><code class="xref py py-func docutils literal notranslate"><span class="pre">pyzernike.global_radial_polynomial()</span></code></a> is used.</p>
+<p>The symbol <cite>x</cite> is used to represent the radial coordinate <span class="math notranslate nohighlight">\(\rho\)</span> in the symbolic expression.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For developers, the <code class="docutils literal notranslate"><span class="pre">_skip</span></code> parameter is used to skip the checks for the input parameters. This is useful for internal use where the checks are already done.
+In this case :</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">n</span></code>, <code class="docutils literal notranslate"><span class="pre">m</span></code> and <code class="docutils literal notranslate"><span class="pre">rho_derivative</span></code> must be given as sequence of integers with the same length and valid values.</p></li>
+</ul>
+<p>See also <a class="reference internal" href="core_symbolic.html#pyzernike.core_symbolic" title="pyzernike.core_symbolic"><code class="xref py py-func docutils literal notranslate"><span class="pre">pyzernike.core_symbolic()</span></code></a> for more details on the input parameters.</p>
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p>the function <a class="reference internal" href="radial_polynomial.html#pyzernike.radial_polynomial" title="pyzernike.radial_polynomial"><code class="xref py py-func docutils literal notranslate"><span class="pre">pyzernike.radial_polynomial()</span></code></a> is preferred for better performance.</p>
+<p><a class="reference internal" href="zernike_symbolic.html#pyzernike.zernike_symbolic" title="pyzernike.zernike_symbolic"><code class="xref py py-func docutils literal notranslate"><span class="pre">pyzernike.zernike_symbolic()</span></code></a> for computing the symbolic expressions of Zernike polynomials.</p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>rho</strong> (<em>numpy.ndarray</em>) – The rho values.</p></li>
-<li><p><strong>n</strong> (<em>int</em>) – The order of the Zernike polynomial.</p></li>
-<li><p><strong>m</strong> (<em>int</em>) – The degree of the Zernike polynomial.</p></li>
-<li><p><strong>rho_derivative</strong> (<em>int</em><em>, </em><em>optional</em>) – The order of the rho_derivative. The default is 0.</p></li>
-<li><p><strong>default</strong> (<em>float</em><em>, </em><em>optional</em>) – The default value for invalid rho values. The default is numpy.nan.</p></li>
+<li><p><strong>n</strong> (<em>Sequence</em><em>[</em><em>Integral</em><em>]</em>) – A list of the radial order(s) of the Zernike polynomial(s) to compute.</p></li>
+<li><p><strong>m</strong> (<em>Sequence</em><em>[</em><em>Integral</em><em>]</em>) – A list of the radial degree(s) of the Zernike polynomial(s) to compute.</p></li>
+<li><p><strong>rho_derivative</strong> (<em>Optional</em><em>[</em><em>Sequence</em><em>[</em><em>Integral</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – A list of the order(s) of the radial derivative(s) to compute.
+If None, is it assumed that rho_derivative is 0 for all polynomials.</p></li>
+<li><p><strong>_skip</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, the checks for the input parameters are skipped. This is useful for internal use where the checks are already done.
+The default is False.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The radial Zernike polynomial.</p>
+<dd class="field-even"><p>A list of symbolic expressions containing the radial Zernike polynomial values for each order and degree
+Each expression is a sympy expression that can be evaluated for specific values of <span class="math notranslate nohighlight">\(\rho\)</span>.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>numpy.ndarray</p>
+<dd class="field-odd"><p>List[sympy.Expr]</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>TypeError</strong> – If the rho values are not a numpy array or if n and m are not integers.
-    If the rho_derivative is not an integer.</p></li>
-<li><p><strong>ValueError</strong> – If the order of the rho_derivative is negative.</p></li>
+<li><p><strong>TypeError</strong> – If the rho values are not a numpy array or if n and m are not integers.</p></li>
+<li><p><strong>ValueError</strong> – If the lengths of n and m are not the same.</p></li>
 </ul>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
+<p>Compute the expression of the radial Zernike polynomial <span class="math notranslate nohighlight">\(R_{2}^{0}(\rho)\)</span>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyzernike</span><span class="w"> </span><span class="kn">import</span> <span class="n">radial_symbolic</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">radial_symbolic</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">m</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">expression</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># result is a list, we take the first element</span>
+</pre></div>
+</div>
+<p>Then evaluate the expression for a specific value of <span class="math notranslate nohighlight">\(\rho\)</span>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sympy</span>
+<span class="n">rho</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="c1"># `x` represents the radial coordinate in the symbolic expression</span>
+
+<span class="n">func</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">lambdify</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">expression</span><span class="p">,</span> <span class="s1">&#39;numpy&#39;</span><span class="p">)</span>
+<span class="n">evaluated_result</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">rho</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </section>
@@ -396,20 +423,20 @@
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="global_radial_polynomial.html"
+       href="radial_polynomial.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">pyzernike.global_radial_polynomial</p>
+        <p class="prev-next-title">pyzernike.radial_polynomial</p>
       </div>
     </a>
     <a class="right-next"
-       href="litteral_radial_polynomial.html"
+       href="zernike_polynomial.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">pyzernike.litteral_radial_polynomial</p>
+        <p class="prev-next-title">pyzernike.zernike_polynomial</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -432,7 +459,7 @@
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyzernike.symbolic_radial_polynomial"><code class="docutils literal notranslate"><span class="pre">symbolic_radial_polynomial()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyzernike.radial_symbolic"><code class="docutils literal notranslate"><span class="pre">radial_symbolic()</span></code></a></li>
 </ul>
   </nav></div>
 
@@ -440,7 +467,7 @@
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="../_sources/api_doc/symbolic_radial_polynomial.rst.txt"
+      <li><a href="../_sources/api_doc/radial_symbolic.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div></div>

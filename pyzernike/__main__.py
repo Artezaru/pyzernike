@@ -1,4 +1,4 @@
-from .pyramid import pyramid
+from .deprecated.pyramid import pyramid
 
 def __main__() -> None:
     r"""

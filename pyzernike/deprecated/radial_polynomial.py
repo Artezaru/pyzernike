@@ -1,8 +1,11 @@
 import numpy
 import numbers
-from scipy.special import gammaln
+from scipy.special import factorial
+from .global_radial_polynomial import global_radial_polynomial
+from .litteral_radial_polynomial import litteral_radial_polynomial
+from .symbolic_radial_polynomial import symbolic_radial_polynomial
 
-def global_radial_polynomial(rho: numpy.ndarray, n: int, m: int, rho_derivative: int = 0, default: float = numpy.nan) -> numpy.ndarray:
+def radial_polynomial(rho: numpy.ndarray, n: int, m: int, rho_derivative: int = 0, default: float = numpy.nan) -> numpy.ndarray:
     r"""
     Computes the radial Zernike polynomial :math:`R_{n}^{m}(\rho)` for :math:`\rho \leq 1`.
 
@@ -34,9 +37,23 @@ def global_radial_polynomial(rho: numpy.ndarray, n: int, m: int, rho_derivative:
     
     if :math:`\rho` is not in :math:`0 \leq \rho \leq 1` or :math:`\rho` is numpy.nan, the output is set to the default value (numpy.nan by default).
 
+    According to the value of :math:`n`, the function will call the appropriate function to compute the radial Zernike polynomial.
+
     .. seealso::
 
-        For n and m smaller than 10, the function :func:`pyzernike.radial_polynomial` is faster.
+        - For :math:`n \leq 5`, the function :func:`pyzernike.litteral_radial_polynomial` is used.
+        - For :math:`5 < n \leq 10`, the function :func:`pyzernike.symbolic_radial_polynomial` is used.
+        - For :math:`n > 10`, the function :func:`pyzernike.global_radial_polynomial` is used.
+
+    .. note::
+
+        The alias ``R`` is available for this function.
+
+        .. code-block:: python
+
+            from pyzernike import R
+
+    The output array as the same shape as the input array :math:`\rho`.
 
     Parameters
     ----------
@@ -44,26 +61,29 @@ def global_radial_polynomial(rho: numpy.ndarray, n: int, m: int, rho_derivative:
         The rho values.
     
     n : int
-        The order of the Zernike polynomial.
+        The order of the Zernike polynomial
 
     m : int
         The degree of the Zernike polynomial.
-    
+
     rho_derivative : int, optional
         The order of the rho_derivative. The default is 0.
 
     default : float, optional
         The default value for invalid rho values. The default is numpy.nan.
+
+    Npool : int, optional
+        The number of pools for the parallel computation. The default is 4.
     
     Returns
     -------
     numpy.ndarray
-        The radial Zernike polynomial.
-    
+        The radial Zernike polynomial with the same shape as :math:`\rho`.
+
     Raises
     ------
     TypeError
-        If the rho values are not a numpy array or if n and m are not integers.
+        If the rho values are not a numpy array.
         If the rho_derivative is not an integer.
     ValueError
         If the rho_derivative is negative.
@@ -74,18 +94,18 @@ def global_radial_polynomial(rho: numpy.ndarray, n: int, m: int, rho_derivative:
     .. code-block:: python
 
         import numpy
-        from pyzernike import global_radial_polynomial
+        from pyzernike import radial_polynomial # or from pyzernike import R
         rho = numpy.linspace(0, 1, 100)
-        global_radial_polynomial(rho, 2, 0)
+        radial_polynomial(rho, 2, 0)
 
     returns the radial Zernike polynomial :math:`R_{2}^{0}(\rho)` for :math:`\rho \leq 1`.
 
     .. code-block:: python
 
         import numpy
-        from pyzernike import global_radial_polynomial
+        from pyzernike import radial_polynomial # or from pyzernike import R
         rho = numpy.linspace(0, 1, 100)
-        global_radial_polynomial(rho, 2, 0, rho_derivative=1)
+        radial_polynomial(rho, 2, 0, rho_derivative=1)
     
     returns the first rho_derivative of the radial Zernike polynomial :math:`R_{2}^{0}(\rho)` for :math:`\rho \leq 1`.
     """
@@ -95,68 +115,15 @@ def global_radial_polynomial(rho: numpy.ndarray, n: int, m: int, rho_derivative:
     if not isinstance(n, numbers.Integral) or not isinstance(m, numbers.Integral):
         raise TypeError("n and m must be integers.")
     if not isinstance(rho_derivative, numbers.Integral) or rho_derivative < 0:
-        raise TypeError("The order of the rho_derivative must be a positive integer.")
+        raise TypeError("The rho_derivative must be a non-negative integer.")
     if not isinstance(default, numbers.Real):
         raise TypeError("The default value must be a real number.")
-
-    # Case of n < 0, m < 0, n < m, or (n - m) is odd
-    if n < 0 or m < 0 or n < m or (n - m) % 2 != 0:
-        output = numpy.zeros_like(rho)
-        return output
-
-    # flatten the rho values to handle multiple dimensions
-    shape = rho.shape
-    rho_flat = rho.flatten()
     
-    # Create the mask for valid rho values
-    unit_circle_mask = numpy.logical_and(0 <= rho_flat, rho_flat <= 1)
-    nan_mask = numpy.isnan(rho_flat)
-    valid_mask = numpy.logical_and(unit_circle_mask, ~nan_mask)
-
-    # Initialize the output array
-    output_flat = numpy.full_like(rho_flat, default)
-
-    # Compute for valid rho values
-    rho_valid = rho_flat[valid_mask]
-
-    # Compute the number of terms
-    s = (n-m)//2
-    k = numpy.arange(0, s+1)
-
-    # Vectorize coefficients
-    log_k_coef = gammaln(n - k + 1) - gammaln(k + 1) - gammaln((n + m) // 2 - k + 1) - gammaln((n - m) // 2 - k + 1)
-    sign = 1 - 2 * (k % 2)
-    k_coef = sign * numpy.exp(log_k_coef)
-
-    if rho_derivative == 0:
-        coef = k_coef
+    if n <= 5:
+        output = litteral_radial_polynomial(rho, n, m, rho_derivative, default)
+    elif n <= 10:
+        output = symbolic_radial_polynomial(rho, n, m, rho_derivative, default)
     else:
-        # Create a 2D array for (n - 2k - i)
-        i = numpy.arange(rho_derivative)
-        term_matrix = (n - 2 * k)[:, None] - i
-
-        # Compute the product over the rho_derivative axis
-        rho_derivative_coef = numpy.prod(term_matrix, axis=1)
-        coef = k_coef * rho_derivative_coef
-
-    # Compute the rho power
-    exponent = n - 2 * k - rho_derivative
-    exponent_positive_mask = exponent > 0
-    exponent_0_mask = exponent == 0
-    exponent_negative_mask = exponent < 0
-
-    rho_powers = numpy.zeros((len(rho_valid), len(k)))
-    rho_powers[:, exponent_positive_mask] = numpy.power(rho_valid[:, None], exponent[exponent_positive_mask])
-    rho_powers[:, exponent_0_mask] = 1.0
-    rho_powers[:, exponent_negative_mask] = 0.0
-
-    # Compute the result
-    result = numpy.dot(rho_powers, coef)
-
-    # Assign the result to the output
-    output_flat[valid_mask] = result
+        output = global_radial_polynomial(rho, n, m, rho_derivative, default)
     
-    # Reshape the output to the original shape
-    output = output_flat.reshape(shape)
     return output
-    

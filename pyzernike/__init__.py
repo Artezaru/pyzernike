@@ -1,26 +1,25 @@
 from .__version__ import __version__
-from .global_radial_polynomial import global_radial_polynomial
-from .litteral_radial_polynomial import litteral_radial_polynomial
-from .symbolic_radial_polynomial import symbolic_radial_polynomial
+__all__ = ["__version__"]
+
+from .core_polynomial import core_polynomial
+from .core_symbolic import core_symbolic
+__all__.extend(["core_polynomial", "core_symbolic"])
+
 from .radial_polynomial import radial_polynomial
-R = radial_polynomial
+R = radial_polynomial  # Alias
+__all__.extend(["radial_polynomial", "R"])
+
 from .zernike_polynomial import zernike_polynomial
-Z = zernike_polynomial
+Z = zernike_polynomial  # Alias
+__all__.extend(["zernike_polynomial", "Z"])
+
 from .xy_zernike_polynomial import xy_zernike_polynomial
-Zxy = xy_zernike_polynomial
+Zxy = xy_zernike_polynomial  # Alias
+__all__.extend(["xy_zernike_polynomial", "Zxy"])
+
+from .radial_symbolic import radial_symbolic
+from .zernike_symbolic import zernike_symbolic
+__all__.extend(["radial_symbolic", "zernike_symbolic"])
+
 from .pyramid import pyramid
-
-
-__all__ = [
-    "__version__",
-    "global_radial_polynomial",
-    "litteral_radial_polynomial",
-    "symbolic_radial_polynomial",
-    "radial_polynomial",
-    "R",
-    "zernike_polynomial",
-    "Z",
-    "xy_zernike_polynomial",
-    "Zxy",
-    "pyramid"
-]
+__all__.extend(["pyramid"])

@@ -1,15 +1,37 @@
 import numpy
-import numbers
-from scipy.special import factorial
-from .zernike_polynomial import zernike_polynomial
+from numbers import Integral, Real
+from typing import Sequence, List, Optional
 
-def xy_zernike_polynomial(x: numpy.ndarray, y: numpy.ndarray, n: int, m: int, x_derivative: int = 0, y_derivative: int = 0, default: float = numpy.nan, Rx: float = 1.0, Ry: float = 1.0, x0: float = 0.0, y0: float = 0.0, alpha: float = 0.0, h: float = 0.0, theta1: float = 0.0, theta2: float = 2 * numpy.pi) -> numpy.ndarray:
+from .core_polynomial import core_polynomial
+
+def xy_zernike_polynomial(
+    x: numpy.ndarray,
+    y: numpy.ndarray,
+    n: Sequence[Integral],
+    m: Sequence[Integral],
+    x_derivative: Optional[Sequence[Integral]] = None,
+    y_derivative: Optional[Sequence[Integral]] = None,
+    default: Real = numpy.nan,
+    Rx: float = 1.0, 
+    Ry: float = 1.0, 
+    x0: float = 0.0, 
+    y0: float = 0.0, 
+    alpha: float = 0.0, 
+    h: float = 0.0, 
+    theta1: float = 0.0, 
+    theta2: float = 2 * numpy.pi,
+    _skip: bool = False
+) -> List[numpy.ndarray]:
     r"""
-    Computes the Extended Zernike polynomial :math:`Z_{n}^{m}(x, y)` on a extended domain.
+    Computes the Zernike polynomial :math:`Z_{n}^{m}(\rho, \theta)` for given cartesian coordinates :math:`(x, y)`.
+
+    If :math:`|m| > n` or :math:`n < 0`, or :math:`(n - m)` is odd, the output is a zeros array with the same shape as :math:`\rho`.
+
+    if :math:`\rho` is not in :math:`0 \leq \rho \leq 1` or :math:`\rho` is numpy.nan, the output is set to the default value (numpy.nan by default).
 
     .. seealso::
 
-        For the standard Zernike polynomial, see :func:`pyzernike.zernike_polynomial` taking :math:`rho` and :math:`\theta` as inputs.
+        :func:`pyzernike.zernike_polynomial` for computing the radial Zernike polynomial :math:`Z_{n}^{m}` for polar coordinates :math:`(\rho, \theta)`. 
 
     .. seealso::
 
@@ -55,61 +77,56 @@ def xy_zernike_polynomial(x: numpy.ndarray, y: numpy.ndarray, n: int, m: int, x_
     .. math::
 
         Y = -\sin(\alpha) (x - x_0) + \cos(\alpha) (y - y_0)
+    
+    This function allows to compute several Zernike polynomials at once for different orders and degrees, which can be more efficient than calling the radial polynomial function multiple times.
+    The :math:`\rho` and :math:`\theta` values are the same for all the polynomials, and the orders and degrees are provided as sequences. 
+    Moreover, the domain is the same for all the polynomials.
+    The output is a list of numpy arrays, each containing the values of the Zernike polynomial for the corresponding order and degree.
+    
+    .. note::
 
-    ..  note::
+        The alias ``Zxy`` is available for this function.
 
-        An alias for this method is available as ``Zxy``.
+    .. note::
 
-    By default, the function computes the Zernike polynomial on a full circle with a radius of 1.0, i.e., the unit circle.
-    This method is différent from the standard Zernike polynomial function becuase it uses the cartesian coordinates (x, y) instead of the polar coordinates (rho, theta).
+        For developers, the ``_skip`` parameter is used to skip the checks for the input parameters. This is useful for internal use where the checks are already done.
+        In this case :
 
-    The derivative of order (derivative (a)) of the Zernike polynomial with respect to x and order (derivative (b)) with respect to y is defined as follows :
+        - ``x`` and ``y`` must be numpy.ndarray in the valid domain with finite values and float64 dtype and the same shape.
+        - ``n``, ``m``, ``x_derivative`` and ``y_derivative`` must be given as sequence of integers with the same length and valid values.
 
-    .. math::
-
-        \frac{\partial^{a}\partial^{b}Zxy_{n}^{m}(x, y)}{\partial x^{a} \partial y^{b}} = \frac{\partial^{a}\partial^{b}Zxy_{n}^{m}(\rho_{eq}(x,y), \theta_{eq}(x,y))}{\partial x^{a} \partial y^{b}}
+        See also :func:`pyzernike.core_polynomial` for more details on the input parameters.
 
     .. warning::
 
-        Due to complications for the complication of the derivatives, the function supports the computation of the derivatives with respect to x and y for the extended Zernike polynomial only for (x_derivative, y_derivative) = (0, 0), (1, 0) and (0, 1).
-        For more complex derivatives, it is recommended to use the standard Zernike polynomial function with the polar coordinates (rho, theta) as inputs and compute the assembled derivatives using the chain rule.
-
-    .. math::
-
-        \frac{\partial Zxy_{n}^{m}(x, y)}{\partial x} = \frac{\partial Zxy_{n}^{m}}{\partial \rho_{eq}} \frac{\partial \rho_{eq}}{\partial x} + \frac{\partial Zxy_{n}^{m}}{\partial \theta_{eq}} \frac{\partial \theta_{eq}}{\partial x}
-
-    With : 
-
-    .. math::
-
-        \frac{\partial \rho_{eq}}{\partial z} = \frac{1}{1 - h} \frac{1}{r} \left(\frac{X}{R_x^2} \frac{\partial X}{\partial z} + \frac{Y}{R_y^2} \frac{\partial Y}{\partial z}\right)
-
-    .. math::
-
-        \frac{\partial \theta_{eq}}{\partial z} = \frac{2 \pi}{\theta_2 - \theta_1} \frac{1}{R_x R_y r^2} \left(X \frac{\partial Y}{\partial z} - Y \frac{\partial X}{\partial z}\right)
+        The derivatives with respect to x and y are implemented for (x_derivative, y_derivative) = (0, 0), (1, 0), (0, 1) only.
+        Faa di Bruno's formula can be used to compute higher order derivatives, but it is not implemented in this function.
 
     Parameters
     ----------
-    x : numpy.ndarray
-        The x values.
+    x : numpy.ndarray (N-D array)
+        The cartesian x values with shape (...,).
 
-    y : numpy.ndarray
-        The y values.
+    y : numpy.ndarray (N-D array)
+        The cartesian y values with shape (...,). Same shape as x.
 
-    n : int
-        The order of the Zernike polynomial.
+    n : Union[Integral, Sequence[Integral]]
+        A list of the radial order(s) of the Zernike polynomial(s) to compute.
 
-    m : int
-        The degree of the Zernike polynomial.
+    m : Union[Integral, Sequence[Integral]]
+        A list of the radial degree(s) of the Zernike polynomial(s) to compute.
 
-    x_derivative : int, optional
-        The order of the derivative with respect to x. The default is 0.
+    x_derivative : Optional[Union[Integral, Sequence[Integral]]], optional
+        A list of the order(s) of the x derivative(s) to compute, expected to have shape=(Npolynomials,).
+        If None, is it assumed that x_derivative is 0 for all polynomials.
 
-    y_derivative : int, optional
-        The order of the derivative with respect to y. The default is 0.
+    y_derivative : Optional[Union[Integral, Sequence[Integral]]], optional
+        A list of the order(s) of the angular derivative(s) to compute, expected to have shape=(Npolynomials,).
+        If None, is it assumed that y_derivative is 0 for all polynomials.
 
-    default : float, optional
+    default : Real, optional
         The default value for invalid rho values. The default is numpy.nan.
+        If the radial coordinate values are not in the valid domain (0 <= rho <= 1) or if they are numpy.nan, the output is set to this value.
 
     Rx : float, optional
         The length of the semi-major axis of the ellipse (outer boundary). The default is 1.0. Must be greater than 0.
@@ -134,26 +151,28 @@ def xy_zernike_polynomial(x: numpy.ndarray, y: numpy.ndarray, n: int, m: int, x_
 
     theta2 : float, optional
         The ending angle of the sector in radians. The default is 2 * pi. Must be greater than theta1 and less than or equal to theta1 + 2 * pi.
-    
+
+    _skip : bool, optional
+        If True, the checks for the input parameters are skipped. This is useful for internal use where the checks are already done.
+        The default is False.
+
     Returns
     -------
-    numpy.ndarray
-        The radial Zernike polynomial.
-    
+    List[numpy.ndarray]
+        A list of numpy arrays containing the Zernike polynomial values for each order and degree.
+        Each array has the same shape as ``rho``.
+
     Raises
     ------
     TypeError
-        If the x or y values are not a numpy array or if n and m are not integers.
-        If the derivative is not an integer.
-        If Rx, Ry, alpha, h, theta1, or theta2 are not valid types.
+        If the rho or theta values are not a numpy array or if n and m are not integers.
+
     ValueError
-        If the derivative is negative.
-        If x and y do not have the same shape.
-        If Rx, Ry, alpha, h, theta1, or theta2 are not in the valid ranges.
+        If the lengths of n and m are not the same.
+        If the shape of rho and theta are not the same.
 
     Examples
     --------
-    
     Let's consider a full circle with a radius of 10 centered at the origin (0, 0).
     The value of the zernike polynomial :math:`Z_{2}^{0}` at the point (x, y) is given by:
 
@@ -165,94 +184,73 @@ def xy_zernike_polynomial(x: numpy.ndarray, y: numpy.ndarray, n: int, m: int, x_
         y = numpy.linspace(-10, 10, 100)
         X, Y = numpy.meshgrid(x, y)
 
-        zernike = xy_zernike_polynomial(X, Y, 2, 0, Rx=10, Ry=10, x0=0.0, y0=0.0) # Shape similar to X and Y
+        zernike = xy_zernike_polynomial(X, Y, n=[2], m=[0], Rx=10, Ry=10, x0=0.0, y0=0.0) # Shape similar to X and Y
 
-    The first derivative with respect to y is given by:
-
-    .. code-block:: python
-
-        import numpy
-        from pyzernike import xy_zernike_polynomial # or Zxy
-
-        x = numpy.linspace(-10, 10, 100)
-        y = numpy.linspace(-10, 10, 100)
-        X, Y = numpy.meshgrid(x, y)
-        zernike_derivative_y = xy_zernike_polynomial(X, Y, 2, 0, y_derivative=1, Rx=10, Ry=10, x0=0.0, y0=0.0) # Shape similar to X and Y
-
-
-    For a full circle with a radius of R and centered at (x_0, y_0), the value of the zernike polynomial :math:`Z_{2}^{0}` at the point (x, y) is given by:
-
-    .. code-block:: python
-
-        Zxy(x, y, n, m, Rx=R, Ry=R, x0=x_0, y0=y_0)
-
-    For an ellipse with semi-major axis Rx and semi-minor axis Ry, centered at (x_0, y_0) and rotated by an angle alpha, the value of the zernike polynomial :math:`Z_{2}^{0}` at the point (x, y) is given by:
-
-    .. code-block:: python
-
-        Zxy(x, y, n, m, Rx=Rx, Ry=Ry, x0=x_0, y0=y_0, alpha=alpha)
-
-    For a annular sector of the ellipse with semi-major axis Rx and semi-minor axis Ry, centered at (x_0, y_0), rotated by an angle alpha, and an aspect ratio h, the value of the zernike polynomial :math:`Z_{2}^{0}` at the point (x, y) is given by:
-
-    .. code-block:: python
-
-        Zxy(x, y, n, m, Rx=Rx, Ry=Ry, x0=x_0, y0=y_0, alpha=alpha, h=h)
-
+    returns a list with a single numpy array containing the values of the Zernike polynomial :math:`Z_{2}^{0}` at the points (X, Y) within the circle of radius 10.
     """
-    # Check the input parameters
-    if not isinstance(x, numpy.ndarray):
-        raise TypeError("X values must be a numpy array.")
-    if not isinstance(y, numpy.ndarray):
-        raise TypeError("Y values must be a numpy array.")
-    if not x.shape == y.shape:
-        raise ValueError("X and Y must have the same shape.")
-    if not isinstance(n, numbers.Integral) or not isinstance(m, numbers.Integral):
-        raise TypeError("n and m must be integers.")
-    if not isinstance(x_derivative, numbers.Integral) or x_derivative < 0:
-        raise ValueError("The order of the derivative with respect to x must be a positive integer.")
-    if not isinstance(y_derivative, numbers.Integral) or y_derivative < 0:
-        raise ValueError("The order of the derivative with respect to y must be a positive integer.")
-    if not isinstance(default, numbers.Real):
-        raise TypeError("The default value must be a real number.")
-    
-    # Check the parameters for the extended domain
-    if not isinstance(Rx, numbers.Real) or Rx <= 0:
-        raise TypeError("Rx must be a positive real number.")
-    if not isinstance(Ry, numbers.Real) or Ry <= 0:
-        raise TypeError("Ry must be a positive real number.")
-    if not isinstance(x0, numbers.Real):
-        raise TypeError("x0 must be a real number.")
-    if not isinstance(y0, numbers.Real):
-        raise TypeError("y0 must be a real number.")
-    if not isinstance(alpha, numbers.Real):
-        raise TypeError("Alpha must be a real number.")
-    if not isinstance(h, numbers.Real) or not (0 <= h < 1):
-        raise TypeError("h must be a real number in the range [0, 1[.")
-    if not isinstance(theta1, numbers.Real):
-        raise TypeError("Theta1 must be a real number.")
-    if not isinstance(theta2, numbers.Real):
-        raise TypeError("Theta2 must be a real number.")
-    if abs(theta2 - theta1) > 2 * numpy.pi:
-        raise ValueError("The angle between theta1 and theta2 must be less than or equal to 2 * pi.")
-    if theta1 >= theta2:
-        raise ValueError("Theta1 must be less than Theta2.")
-    
+    if not _skip:
+        x = numpy.asarray(x, dtype=numpy.float64)
+        y = numpy.asarray(y, dtype=numpy.float64)
+        if not isinstance(n, Sequence) or not all(isinstance(i, Integral) for i in n):
+            raise TypeError("n must be a sequence of integers.")
+        if not isinstance(m, Sequence) or not all(isinstance(i, Integral) for i in m):
+            raise TypeError("m must be a sequence of integers.")
+        if x_derivative is not None:
+            if not isinstance(x_derivative, Sequence) or not all(isinstance(i, Integral) and i >= 0 for i in x_derivative):
+                raise TypeError("x_derivative must be a sequence of non-negative integers.")
+        if y_derivative is not None:
+            if not isinstance(y_derivative, Sequence) or not all(isinstance(i, Integral) and i >= 0 for i in y_derivative):
+                raise TypeError("y_derivative must be a sequence of non-negative integers.")
+        if not isinstance(default, Real):
+            raise TypeError("Default value must be a real number.")
+        
+        if not x.shape == y.shape:
+            raise ValueError("x and y must have the same shape.")
+        if len(n) != len(m):
+            raise ValueError("n and m must have the same length.")
+        if x_derivative is not None and len(n) != len(x_derivative):
+            raise ValueError("n and x_derivative must have the same length.")
+        if y_derivative is not None and len(n) != len(y_derivative):
+            raise ValueError("n and y_derivative must have the same length.")
+        if x_derivative is None:
+            x_derivative = [0] * len(n)
+        if y_derivative is None:
+            y_derivative = [0] * len(n)
+
+        if not isinstance(Rx, Real) or Rx <= 0:
+            raise TypeError("Rx must be a positive real number.")
+        if not isinstance(Ry, Real) or Ry <= 0:
+            raise TypeError("Ry must be a positive real number.")
+        if not isinstance(x0, Real):
+            raise TypeError("x0 must be a real number.")
+        if not isinstance(y0, Real):
+            raise TypeError("y0 must be a real number.")
+        if not isinstance(alpha, Real):
+            raise TypeError("Alpha must be a real number.")
+        if not isinstance(h, Real) or not (0 <= h < 1):
+            raise TypeError("h must be a real number in the range [0, 1[.")
+        if not isinstance(theta1, Real):
+            raise TypeError("Theta1 must be a real number.")
+        if not isinstance(theta2, Real):
+            raise TypeError("Theta2 must be a real number.")
+        if abs(theta2 - theta1) > 2 * numpy.pi:
+            raise ValueError("The angle between theta1 and theta2 must be less than or equal to 2 * pi.")
+        if theta1 >= theta2:
+            raise ValueError("Theta1 must be less than Theta2.")
+        
+        for index in range(len(n)):
+            if (x_derivative[index], y_derivative[index]) not in [(0, 0), (1, 0), (0, 1)]:
+                raise ValueError("The function supports only the derivatives (0, 0), (1, 0) and (0, 1). For more complex derivatives, use the standard Zernike polynomial function with polar coordinates.")
+        
     # Complete circle case
     if abs(theta2 - theta1 - 2 * numpy.pi) < 1e-10:
         closed_circle = True
     else:
         closed_circle = False
-    
-    # Warning on derivatives
-    if (x_derivative, y_derivative) not in [(0, 0), (1, 0), (0, 1)]:
-        raise ValueError("The function supports only the derivatives (0, 0), (1, 0) and (0, 1). For more complex derivatives, use the standard Zernike polynomial function with polar coordinates.")
-   
-    # flatten the rho values to handle multiple dimensions
-    shape = x.shape
-    x_flat = x.flatten()
-    y_flat = y.flatten()
-    x_centered = x_flat - x0
-    y_centered = y_flat - y0
+
+    # Computing the X, Y arrays from x and y coordinates
+    x_centered = x - x0
+    y_centered = y - y0
     X = numpy.cos(alpha) * x_centered + numpy.sin(alpha) * y_centered
     Y = - numpy.sin(alpha) * x_centered + numpy.cos(alpha) * y_centered
 
@@ -264,22 +262,22 @@ def xy_zernike_polynomial(x: numpy.ndarray, y: numpy.ndarray, n: int, m: int, x_
     theta_prim_2pi = theta_prim % (2 * numpy.pi)
     theta1_2pi = theta1 % (2 * numpy.pi)
     theta2_2pi = theta2 % (2 * numpy.pi)
-    
-    # Compute the equivalent rho values
-    rho_eq = (r_prim - h) / (1 - h)
 
+    # Compute the equivalent rho values
+    rho = (r_prim - h) / (1 - h)
+    
     # Compute the equivalent theta values
     if closed_circle:
-        # theta_1 = theta_2 , theta_eq = 0 for theta_1
+        # theta_1 = theta_2 , theta = 0 for theta_1
         t = theta_prim_2pi
         t1 = t2 = theta1_2pi
-        theta_eq = t - t1
+        theta = t - t1
     elif theta1_2pi < theta2_2pi and not closed_circle:
         # 0 -------[t1, t2]------- 2*pi
         t = theta_prim_2pi
         t1 = theta1_2pi
         t2 = theta2_2pi
-        theta_eq = 2 * numpy.pi * (t - t1) / (t2 - t1)
+        theta = 2 * numpy.pi * (t - t1) / (t2 - t1)
     elif theta1_2pi > theta2_2pi and not closed_circle:
         # [0, t2]-------[t1, 2*pi]
         # Transform theta_prim_2pi to be in [theta1, theta1 + 2 * pi]
@@ -287,50 +285,84 @@ def xy_zernike_polynomial(x: numpy.ndarray, y: numpy.ndarray, n: int, m: int, x_
         t[t < theta1_2pi] += 2 * numpy.pi # Define know in [theta1, theta1 + 2 * pi]
         t1 = theta1_2pi
         t2 = theta2_2pi + 2 * numpy.pi
-        theta_eq = 2 * numpy.pi * (t - t1) / (t2 - t1)
+        theta = 2 * numpy.pi * (t - t1) / (t2 - t1)
     else:
         raise ValueError("Invalid theta1 and theta2 values. They must define a valid sector.")
+    
 
-    # Prepare the output array
-    output_flat = numpy.full_like(rho_eq, default, dtype=numpy.float64)
 
-    # Mask for valid rho values
-    rho_valid_mask = numpy.logical_and(0 <= rho_eq, rho_eq <= 1)
+    # Check the validity of the radial coordinate values
+    if not _skip:
+        # Compute the Mask for valid rho values
+        domain_mask = (rho >= 0) & (rho <= 1)
+        finite_mask = numpy.isfinite(rho) & numpy.isfinite(theta)
+        valid_mask = domain_mask & finite_mask
 
-    # Mask for valid theta values
-    if closed_circle:
-        # All theta values are valid in a closed circle
-        theta_valid_mask = numpy.ones_like(theta_eq, dtype=bool)
-    else:
-        # Only consider theta values within the defined sector
-        theta_valid_mask = numpy.logical_and(0 <= theta_eq, theta_eq <= 2 * numpy.pi)
+        # Conserve only the valid values and save the input shape
+        original_shape = rho.shape
+        rho = rho[valid_mask]
+        theta = theta[valid_mask]
 
-    # Combine the masks
-    valid_mask = numpy.logical_and(rho_valid_mask, theta_valid_mask)
 
-    # According to the expected derivatives, compute the Zernike polynomial
-    if (x_derivative, y_derivative) == (0, 0):
-        output_flat[valid_mask] = zernike_polynomial(rho_eq[valid_mask], theta_eq[valid_mask], n, m, rho_derivative=0, theta_derivative=0, default=default)
+    # If derivatives are not 0 -> rho_derivative and theta_derivative are 1 to compute the first derivative
+    z_n = []
+    z_m = []
+    rho_derivative = []
+    theta_derivative = []
+    compute_derivative = False
+    for index in range(len(n)):
+        if x_derivative[index] == 1 or y_derivative[index] == 1:
+            # If the derivative is 1, we compute the first derivative
+            z_n.extend([n[index], n[index]])
+            z_m.extend([m[index], m[index]])
+            rho_derivative.extend([1, 0])
+            theta_derivative.extend([0, 1])
+            compute_derivative = True
+        else:
+            # If the derivative is 0, we compute the polynomial
+            z_n.append(n[index])
+            z_m.append(m[index])
+            rho_derivative.append(0)
+            theta_derivative.append(0)
 
-    elif (x_derivative, y_derivative) == (1, 0):
-        rho_derivative = (1 / (1 - h)) * (1 / r_prim[valid_mask]) * ( (X[valid_mask] / Rx**2) * numpy.cos(alpha) - (Y[valid_mask] / Ry**2) * numpy.sin(alpha))
-        theta_derivative = (2 * numpy.pi / (theta2 - theta1)) * (1 / (Rx * Ry * r_prim[valid_mask]**2)) * ( - X[valid_mask] * numpy.sin(alpha) - Y[valid_mask] * numpy.cos(alpha))
-        zernike_rho_derivative = zernike_polynomial(rho_eq[valid_mask], theta_eq[valid_mask], n, m, rho_derivative=1, theta_derivative=0, default=default)
-        zernike_theta_derivative = zernike_polynomial(rho_eq[valid_mask], theta_eq[valid_mask], n, m, rho_derivative=0, theta_derivative=1, default=default)
-        output_flat[valid_mask] = zernike_rho_derivative * rho_derivative + zernike_theta_derivative * theta_derivative
+    # Compute the polynomials using the core_polynomial function
+    zernike_polynomials = core_polynomial(
+        rho=rho,
+        theta=theta,
+        n=z_n,
+        m=z_m,
+        rho_derivative=rho_derivative,
+        theta_derivative=theta_derivative,
+        flag_radial=False
+    )
 
-    elif (x_derivative, y_derivative) == (0, 1):
-        rho_derivative = (1 / (1 - h)) * (1 / r_prim[valid_mask]) * ( (X[valid_mask] / Rx**2) * numpy.sin(alpha) + (Y[valid_mask] / Ry**2) * numpy.cos(alpha))
-        theta_derivative = (2 * numpy.pi / (theta2 - theta1)) * (1 / (Rx * Ry * r_prim[valid_mask]**2)) * ( X[valid_mask] * numpy.cos(alpha) - Y[valid_mask] * numpy.sin(alpha))
-        zernike_rho_derivative = zernike_polynomial(rho_eq[valid_mask], theta_eq[valid_mask], n, m, rho_derivative=1, theta_derivative=0, default=default)
-        zernike_theta_derivative = zernike_polynomial(rho_eq[valid_mask], theta_eq[valid_mask], n, m, rho_derivative=0, theta_derivative=1, default=default)
-        output_flat[valid_mask] = zernike_rho_derivative * rho_derivative + zernike_theta_derivative * theta_derivative
+    # If rho is not in the valid domain, set the output to the default value
+    if not _skip:
+        for index in range(len(zernike_polynomials)):
+            # Reshape the radial polynomial to the original shape of rho and set the invalid values to the default value
+            output_default = numpy.full(original_shape, default, dtype=numpy.float64)
+            output_default[valid_mask] = zernike_polynomials[index]
+            zernike_polynomials[index] = output_default
 
-    else:
-        raise ValueError("The function supports only the derivatives (0, 0), (1, 0) and (0, 1). For more complex derivatives, use the standard Zernike polynomial function with polar coordinates.")
-
-    # Reshape the output array
-    output = output_flat.reshape(shape)
+    # Construct the output arrays for the derivatives
+    if compute_derivative:
+        rho_derivative_x = (1 / (1 - h)) * (1 / r_prim) * ( (X / Rx**2) * numpy.cos(alpha) - (Y / Ry**2) * numpy.sin(alpha))
+        theta_derivative_x = (2 * numpy.pi / (theta2 - theta1)) * (1 / (Rx * Ry * r_prim**2)) * ( - X * numpy.sin(alpha) - Y * numpy.cos(alpha))
+        rho_derivative_y = (1 / (1 - h)) * (1 / r_prim) * ( (X / Rx**2) * numpy.sin(alpha) + (Y / Ry**2) * numpy.cos(alpha))
+        theta_derivative_y = (2 * numpy.pi / (theta2 - theta1)) * (1 / (Rx * Ry * r_prim**2)) * ( X * numpy.cos(alpha) - Y * numpy.sin(alpha))
+        
+    output = []
+    zernike_index = 0
+    for index in range(len(n)):
+        if x_derivative[index] == 1:
+            output.append(zernike_polynomials[zernike_index] * rho_derivative_x + zernike_polynomials[zernike_index + 1] * theta_derivative_x)
+            zernike_index += 2
+        elif y_derivative[index] == 1:
+            output.append(zernike_polynomials[zernike_index] * rho_derivative_y + zernike_polynomials[zernike_index + 1] * theta_derivative_y)
+            zernike_index += 2
+        else:
+            output.append(zernike_polynomials[zernike_index])
+            zernike_index += 1
     
     return output
-    
+        

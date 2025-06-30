@@ -1,7 +1,6 @@
 import numpy
 import numbers
-from .zernike_polynomial import zernike_polynomial
-from .radial_polynomial import radial_polynomial
+from .zernike_polynomial import zernike_polynomial, radial_polynomial
 import matplotlib.pyplot as plt
 from matplotlib import cm
 
@@ -79,13 +78,13 @@ def pyramid(N: int = 5, radial: bool = False, rho_derivative: int = 0, theta_der
                 lf = left + idx * (width1 + width_span) + leftoff
                 ax = fig.add_axes([lf, bt, width1, height1])
 
-                m = int(m)
+                m= int(m)
                 n = int(n)
 
                 if radial:
-                    Z = radial_polynomial(rho, [n], [m], rho_derivative=[rho_derivative], default=numpy.nan)[0]
+                    Z = radial_polynomial(rho, n, m, rho_derivative=rho_derivative, default= numpy.nan)
                 else:
-                    Z = zernike_polynomial(rho, theta, [n], [m], rho_derivative=[rho_derivative], theta_derivative=[theta_derivative], default=numpy.nan)[0]
+                    Z = zernike_polynomial(rho, theta, n, m, rho_derivative=rho_derivative, theta_derivative=theta_derivative, default= numpy.nan)
 
                 im = ax.imshow(Z, extent=[-1, 1, -1, 1], origin='lower', cmap=cm.seismic, norm=norm)
                 ax.axis('off')

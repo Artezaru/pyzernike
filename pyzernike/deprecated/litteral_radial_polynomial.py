@@ -3,6 +3,8 @@ import numbers
 import sympy
 from scipy.special import factorial
 
+from .global_radial_polynomial import global_radial_polynomial
+
 def litteral_radial_polynomial(rho: numpy.ndarray, n: int, m: int, rho_derivative: int = 0, default: float = numpy.nan) -> numpy.ndarray:
     r"""
     Computes the radial Zernike polynomial :math:`R_{n}^{m}(\rho)` for :math:`\rho \leq 1`.
@@ -73,11 +75,6 @@ def litteral_radial_polynomial(rho: numpy.ndarray, n: int, m: int, rho_derivativ
     if not isinstance(default, numbers.Real):
         raise TypeError("The default value must be a real number.")
 
-    # Case of n < 0, m < 0, n < m, or (n - m) is odd
-    if n < 0 or m < 0 or n < m or (n - m) % 2 != 0:
-        output = numpy.zeros_like(rho)
-        return output
-
     # flatten the rho values to handle multiple dimensions
     shape = rho.shape
     rho_flat = rho.flatten()
@@ -89,6 +86,12 @@ def litteral_radial_polynomial(rho: numpy.ndarray, n: int, m: int, rho_derivativ
 
     # Initialize the output array
     output_flat = numpy.full_like(rho_flat, default)
+
+    # Case of n < 0, (n - m) is odd or |m| > n
+    if n < 0 or (n - m) % 2 != 0 or abs(m) > n:
+        output_flat[valid_mask] = 0.0
+        output = output_flat.reshape(shape)
+        return output
 
     # Compute for valid rho values
     rho_valid = rho_flat[valid_mask]

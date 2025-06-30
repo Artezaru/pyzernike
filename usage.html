@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Usage &#8212; pyzernike 1.0.1 documentation</title>
+    <title>Usage &#8212; pyzernike 1.0.2 documentation</title>
   
   
   
@@ -38,14 +38,14 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="_static/documentation_options.js?v=292eb321"></script>
+    <script src="_static/documentation_options.js?v=1ed6394b"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'usage';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="pyzernike.pyramid" href="api_doc/pyramid.html" />
+    <link rel="prev" title="pyzernike.xy_zernike_polynomial" href="api_doc/xy_zernike_polynomial.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -110,7 +110,7 @@
   
   
   
-    <p class="title logo__title">pyzernike 1.0.1 documentation</p>
+    <p class="title logo__title">pyzernike 1.0.2 documentation</p>
   
 </a></div>
     
@@ -323,6 +323,8 @@
   <section id="usage">
 <h1>Usage<a class="headerlink" href="#usage" title="Link to this heading">#</a></h1>
 <p>The package <code class="docutils literal notranslate"><span class="pre">pyzernike</span></code> is a Python package to compute Zernike polynomials and their derivatives.</p>
+<section id="compute-zernike-polynomials">
+<h2>Compute Zernike Polynomials<a class="headerlink" href="#compute-zernike-polynomials" title="Link to this heading">#</a></h2>
 <p>To compute the Zernike polynomials <span class="math notranslate nohighlight">\(Z_{n}^{m}\)</span>, use the following code:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyzernike</span><span class="w"> </span><span class="kn">import</span> <span class="n">zernike_polynomial</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
@@ -367,6 +369,71 @@
 <span class="n">Z_53_dtheta_dtheta</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>  <span class="c1"># Zernike polynomial for n=5, m=3 with second derivative with respect to theta</span>
 </pre></div>
 </div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="api_doc/zernike_polynomial.html#pyzernike.zernike_polynomial" title="pyzernike.zernike_polynomial"><code class="xref py py-func docutils literal notranslate"><span class="pre">pyzernike.zernike_polynomial()</span></code></a> for more details on the function parameters and usage.</p></li>
+<li><p><a class="reference internal" href="api_doc/radial_polynomial.html#pyzernike.radial_polynomial" title="pyzernike.radial_polynomial"><code class="xref py py-func docutils literal notranslate"><span class="pre">pyzernike.radial_polynomial()</span></code></a> for computing radial polynomials.</p></li>
+<li><p><a class="reference internal" href="api_doc/xy_zernike_polynomial.html#pyzernike.xy_zernike_polynomial" title="pyzernike.xy_zernike_polynomial"><code class="xref py py-func docutils literal notranslate"><span class="pre">pyzernike.xy_zernike_polynomial()</span></code></a> for cartesian extended Zernike polynomials.</p></li>
+</ul>
+</div>
+</section>
+<section id="get-the-mathematical-expression-of-zernike-polynomials">
+<h2>Get the mathematical expression of Zernike Polynomials<a class="headerlink" href="#get-the-mathematical-expression-of-zernike-polynomials" title="Link to this heading">#</a></h2>
+<p>To get the mathematical expression of Zernike polynomials, you can use the <cite>zernike_symbolic</cite> function:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyzernike</span><span class="w"> </span><span class="kn">import</span> <span class="n">zernike_symbolic</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">m</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">expression</span> <span class="o">=</span> <span class="n">zernike_symbolic</span><span class="p">([</span><span class="n">n</span><span class="p">],</span> <span class="p">[</span><span class="n">m</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">expression</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1"># This will print the symbolic expression of Zernike polynomial Z_31</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">x</span></code> is the symbol for <span class="math notranslate nohighlight">\(\rho\)</span> in the symbolic expression, and <code class="docutils literal notranslate"><span class="pre">y</span></code> is the symbol for <span class="math notranslate nohighlight">\(\theta\)</span>.
+You can use these symbols to manipulate the expressions further if needed.</p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sympy</span>
+<span class="n">rho</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">theta</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">numpy</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># `x` represents the radial coordinate in the symbolic expression</span>
+<span class="c1"># `y` represents the angular coordinate in the symbolic expression</span>
+
+<span class="n">func</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">lambdify</span><span class="p">([</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">],</span> <span class="n">expression</span><span class="p">,</span> <span class="s1">&#39;numpy&#39;</span><span class="p">)</span>
+<span class="n">evaluated_result</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">theta</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="api_doc/zernike_symbolic.html#pyzernike.zernike_symbolic" title="pyzernike.zernike_symbolic"><code class="xref py py-func docutils literal notranslate"><span class="pre">pyzernike.zernike_symbolic()</span></code></a> for more details on the function parameters and usage.</p></li>
+<li><p><a class="reference internal" href="api_doc/radial_symbolic.html#pyzernike.radial_symbolic" title="pyzernike.radial_symbolic"><code class="xref py py-func docutils literal notranslate"><span class="pre">pyzernike.radial_symbolic()</span></code></a> for computing symbolic radial polynomials.</p></li>
+</ul>
+</div>
+</section>
+<section id="display-zernike-polynomials">
+<h2>Display Zernike Polynomials<a class="headerlink" href="#display-zernike-polynomials" title="Link to this heading">#</a></h2>
+<p>To visualize the Zernike polynomials, you can use the <cite>zernike_display</cite> function. This function generates plots for the specified Zernike polynomials.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyzernike</span><span class="w"> </span><span class="kn">import</span> <span class="n">zernike_display</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="n">m</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">zernike_display</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="n">m</span><span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/zernike_display.png"><img alt="_images/zernike_display.png" class="align-center" src="_images/zernike_display.png" style="width: 600px;" />
+</a>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="api_doc/zernike_display.html#pyzernike.zernike_display" title="pyzernike.zernike_display"><code class="xref py py-func docutils literal notranslate"><span class="pre">pyzernike.zernike_display()</span></code></a> for more details on the function parameters and usage.</p></li>
+<li><p><a class="reference internal" href="api_doc/radial_display.html#pyzernike.radial_display" title="pyzernike.radial_display"><code class="xref py py-func docutils literal notranslate"><span class="pre">pyzernike.radial_display()</span></code></a> for displaying radial Zernike polynomials.</p></li>
+</ul>
+</div>
+</section>
 </section>
 
 
@@ -380,12 +447,12 @@
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="api_doc/pyramid.html"
+       href="api_doc/xy_zernike_polynomial.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">pyzernike.pyramid</p>
+        <p class="prev-next-title">pyzernike.xy_zernike_polynomial</p>
       </div>
     </a>
 </div>
@@ -398,6 +465,20 @@
                 <dialog id="pst-secondary-sidebar-modal"></dialog>
                 <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-zernike-polynomials">Compute Zernike Polynomials</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#get-the-mathematical-expression-of-zernike-polynomials">Get the mathematical expression of Zernike Polynomials</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#display-zernike-polynomials">Display Zernike Polynomials</a></li>
+</ul>
+  </nav></div>
 
   <div class="sidebar-secondary-item">
   <div role="note" aria-label="source link">

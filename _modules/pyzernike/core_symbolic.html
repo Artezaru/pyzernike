@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pyzernike.core_symbolic &#8212; pyzernike 1.0.1 documentation</title>
+    <title>pyzernike.core_symbolic &#8212; pyzernike 1.0.2 documentation</title>
   
   
   
@@ -37,7 +37,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=292eb321"></script>
+    <script src="../../_static/documentation_options.js?v=1ed6394b"></script>
     <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/pyzernike/core_symbolic';</script>
@@ -107,7 +107,7 @@
   
   
   
-    <p class="title logo__title">pyzernike 1.0.1 documentation</p>
+    <p class="title logo__title">pyzernike 1.0.2 documentation</p>
   
 </a></div>
     
@@ -328,7 +328,7 @@
 <span class="sd">    .. warning::</span>
 
 <span class="sd">        This method is a core function of ``pyzernike`` that computes Zernike polynomials for given `n`, `m`, `rho_derivative`, and `theta_derivative` values.</span>
-<span class="sd">        It is not a method designed to be use by the users directly, but rather a helper function for the optimized radial polynomial computation.</span>
+<span class="sd">        It is not a method designed to be use by the users directly, but rather a helper function for the optimized polynomial computation.</span>
 
 <span class="sd">        Please ensure that you understand the mathematical background of Zernike polynomials before using this function.</span>
 <span class="sd">        ``n``, ``m``, ``rho_derivative`` and ``theta_derivative`` are expected to be sequences of integers with the same length and valid values.</span>
@@ -340,9 +340,8 @@
 
 <span class="sd">    .. seealso::</span>
 
-<span class="sd">        - :func:`pyzernike.radial_polynomial` for the radial Zernike polynomial computation.</span>
-<span class="sd">        - :func:`pyzernike.zernike_polynomial` for the full Zernike polynomial computation.</span>
-<span class="sd">        - :func:`pyzernike.xy_zernike_polynomial` for the Zernike polynomial computation in Cartesian coordinates.</span>
+<span class="sd">        - :func:`pyzernike.radial_symbolic` for the radial Zernike polynomial computation.</span>
+<span class="sd">        - :func:`pyzernike.zernike_symbolic` for the full Zernike polynomial computation.</span>
 
 <span class="sd">    Compute the symbolic expression of the Zernike polynomial :math:`Z_{n}^{m}(\rho, \theta)` or the radial Zernike polynomial :math:`R_{n}^{m}(\rho)` if the flag `flag_radial` is set to True with symbolic ``sympy`` computation.</span>
 

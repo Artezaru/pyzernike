@@ -11,8 +11,6 @@ Contents
 
 The documentation is divided into the following sections:
 
-Toto truc
-
 - **Installation**: This section describes how to install the package.
 - **API Reference**: This section contains the documentation of the package's API.
 - **Usage**: This section contains the documentation of how to use the package.
@@ -26,15 +24,14 @@ Toto truc
    ./usage
 
 
-A terminal commmand is created to plot the zernike pyramid. The command is called `pyzernike` and can be used as follows:
+A terminal commmand is created to plot the first zernike polynomials. The command is called `pyzernike` and can be used as follows:
 
 .. code-block:: bash
 
     pyzernike
 
-.. image:: ../../pyzernike/resources/pyramid.png
+.. image:: ../../pyzernike/resources/zernike_display.png
     :align: center
-
 
 Author
 ------

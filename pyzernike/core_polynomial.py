@@ -16,7 +16,7 @@ def core_polynomial(
     .. warning::
 
         This method is a core function of ``pyzernike`` that computes Zernike polynomials for given `n`, `m`, `rho_derivative`, and `theta_derivative` values.
-        It is not a method designed to be use by the users directly, but rather a helper function for the optimized radial polynomial computation.
+        It is not a method designed to be use by the users directly, but rather a helper function for the optimized polynomial computation.
 
         Please ensure that you understand the mathematical background of Zernike polynomials before using this function.
         ``rho`` and ``theta`` are expected to be numpy arrays with float64 dtype into the valid domain :math:`0 \leq \rho \leq 1`, with finite values, not NaN values and with the same shape.
@@ -184,7 +184,6 @@ def core_polynomial(
         if max_m is None or abs(m_idx) > max_m:
             max_m = abs(m_idx)
 
-
     # Construct the precomputed terms
     rho_powers_indices_map = numpy.zeros(max_n + 1, dtype=int)
     for index, exponent in enumerate(powers_exponents):
@@ -204,7 +203,7 @@ def core_polynomial(
             cosine_terms = numpy.cos(list(cosine_frequencies) * theta[..., numpy.newaxis])
 
             sine_terms_indices_map = numpy.zeros((max_m + 1,), dtype=int)
-            for index, frequency in enumerate(sine_frequencies):
+            for index, frequency in enumerate(sine_frequencies):    
                 sine_terms_indices_map[frequency] = index
             sine_terms = numpy.sin(list(sine_frequencies) * theta[..., numpy.newaxis])
 
@@ -251,7 +250,7 @@ def core_polynomial(
 
         # Compute the rho power
         exponent = n_idx - 2 * k - rho_derivative_idx
-        rho_orders = rho_powers[:, rho_powers_indices_map[exponent]]
+        rho_orders = rho_powers[..., rho_powers_indices_map[exponent]]
 
         # Assemble the radial polynomial if flag_radial is True
         result = numpy.tensordot(rho_orders, coef, axes=[[-1], [0]])
@@ -270,31 +269,31 @@ def core_polynomial(
                 
             if m_idx > 0:
                 if theta_derivative_idx == 0:
-                    cosine = cosine_terms[:, cosine_terms_indices_map[abs(m_idx)]]
+                    cosine = cosine_terms[..., cosine_terms_indices_map[abs(m_idx)]]
                 elif theta_derivative_idx % 4 == 0:
-                    cosine = (abs(m_idx) ** theta_derivative_idx) * cosine_terms[:, cosine_terms_indices_map[abs(m_idx)]]
+                    cosine = (abs(m_idx) ** theta_derivative_idx) * cosine_terms[..., cosine_terms_indices_map[abs(m_idx)]]
                 elif theta_derivative_idx % 4 == 1:
-                    cosine = - (abs(m_idx) ** theta_derivative_idx) * sine_terms[:, sine_terms_indices_map[abs(m_idx)]]
+                    cosine = - (abs(m_idx) ** theta_derivative_idx) * sine_terms[..., sine_terms_indices_map[abs(m_idx)]]
                 elif theta_derivative_idx % 4 == 2:
-                    cosine = - (abs(m_idx) ** theta_derivative_idx) * cosine_terms[:, cosine_terms_indices_map[abs(m_idx)]]
+                    cosine = - (abs(m_idx) ** theta_derivative_idx) * cosine_terms[..., cosine_terms_indices_map[abs(m_idx)]]
                 else:
-                    cosine = (abs(m_idx) ** theta_derivative_idx) * sine_terms[:, sine_terms_indices_map[abs(m_idx)]]
+                    cosine = (abs(m_idx) ** theta_derivative_idx) * sine_terms[..., sine_terms_indices_map[abs(m_idx)]]
                 
             if m_idx < 0:
                 if theta_derivative_idx == 0:
-                    cosine = sine_terms[:, sine_terms_indices_map[abs(m_idx)]]
+                    cosine = sine_terms[..., sine_terms_indices_map[abs(m_idx)]]
                 elif theta_derivative_idx % 4 == 0:
-                    cosine = (abs(m_idx) ** theta_derivative_idx) * sine_terms[:, sine_terms_indices_map[abs(m_idx)]]
+                    cosine = (abs(m_idx) ** theta_derivative_idx) * sine_terms[..., sine_terms_indices_map[abs(m_idx)]]
                 elif theta_derivative_idx % 4 == 1:
-                    cosine = (abs(m_idx) ** theta_derivative_idx) * cosine_terms[:, cosine_terms_indices_map[abs(m_idx)]]
+                    cosine = (abs(m_idx) ** theta_derivative_idx) * cosine_terms[..., cosine_terms_indices_map[abs(m_idx)]]
                 elif theta_derivative_idx % 4 == 2:
-                    cosine = - (abs(m_idx) ** theta_derivative_idx) * sine_terms[:, sine_terms_indices_map[abs(m_idx)]]
+                    cosine = - (abs(m_idx) ** theta_derivative_idx) * sine_terms[..., sine_terms_indices_map[abs(m_idx)]]
                 else:
-                    cosine = - (abs(m_idx) ** theta_derivative_idx) * cosine_terms[:, cosine_terms_indices_map[abs(m_idx)]]
+                    cosine = - (abs(m_idx) ** theta_derivative_idx) * cosine_terms[..., cosine_terms_indices_map[abs(m_idx)]]
 
             # Multiply the radial polynomial by the cosine factor
             result *= cosine
-
+        
         # Compute the polynomial
         output.append(result)
 

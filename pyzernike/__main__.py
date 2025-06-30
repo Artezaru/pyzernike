@@ -1,4 +1,4 @@
-from .deprecated.pyramid import pyramid
+from pyzernike import zernike_display
 
 def __main__() -> None:
     r"""
@@ -10,7 +10,14 @@ def __main__() -> None:
         pyzernike
         
     """
-    pyramid()
+    list_n = []
+    list_m = []
+    for n in range(0, 5):
+        for m in range(-n, n + 1, 2):
+            list_n.append(n)
+            list_m.append(m)
+    
+    zernike_display(n=list_n, m=list_m)
 
 def __main_gui__() -> None:
     r"""

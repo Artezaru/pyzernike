@@ -3,7 +3,8 @@ __all__ = ["__version__"]
 
 from .core_polynomial import core_polynomial
 from .core_symbolic import core_symbolic
-__all__.extend(["core_polynomial", "core_symbolic"])
+from .core_display import core_display
+__all__.extend(["core_polynomial", "core_symbolic", "core_display"])
 
 from .radial_polynomial import radial_polynomial
 R = radial_polynomial  # Alias
@@ -21,5 +22,6 @@ from .radial_symbolic import radial_symbolic
 from .zernike_symbolic import zernike_symbolic
 __all__.extend(["radial_symbolic", "zernike_symbolic"])
 
-from .pyramid import pyramid
-__all__.extend(["pyramid"])
+from .radial_display import radial_display
+from .zernike_display import zernike_display
+__all__.extend(["radial_display", "zernike_display"])

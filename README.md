@@ -3,8 +3,23 @@
 ## Description
 
 `pyzernike` is a Python package to compute Zernike polynomials and their derivatives. 
+See the documentation below for more informations.
 
-![Pyramid](./pyzernike/resources/pyramid.png)
+Example of usage :
+
+```python
+import numpy
+from pyzernike import zernike_polynomial
+
+rho = numpy.linspace(0, 1, 100)
+theta = numpy.linspace(0, 2*numpy.pi, 100)
+result = zernike_polynomial(rho, theta, n=[2], m=[0])
+polynomial = result[0]  # result is a list, we take the first element
+```
+
+Also compute the symbolic `sympy` expression and display the polynomials as follow :
+
+![Zernike](./pyzernike/resources/zernike_display.png)
 
 ## Authors
 

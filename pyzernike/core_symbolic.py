@@ -14,7 +14,7 @@ def core_symbolic(
     .. warning::
 
         This method is a core function of ``pyzernike`` that computes Zernike polynomials for given `n`, `m`, `rho_derivative`, and `theta_derivative` values.
-        It is not a method designed to be use by the users directly, but rather a helper function for the optimized radial polynomial computation.
+        It is not a method designed to be use by the users directly, but rather a helper function for the optimized polynomial computation.
 
         Please ensure that you understand the mathematical background of Zernike polynomials before using this function.
         ``n``, ``m``, ``rho_derivative`` and ``theta_derivative`` are expected to be sequences of integers with the same length and valid values.
@@ -26,9 +26,8 @@ def core_symbolic(
 
     .. seealso::
 
-        - :func:`pyzernike.radial_polynomial` for the radial Zernike polynomial computation.
-        - :func:`pyzernike.zernike_polynomial` for the full Zernike polynomial computation.
-        - :func:`pyzernike.xy_zernike_polynomial` for the Zernike polynomial computation in Cartesian coordinates.
+        - :func:`pyzernike.radial_symbolic` for the radial Zernike polynomial computation.
+        - :func:`pyzernike.zernike_symbolic` for the full Zernike polynomial computation.
 
     Compute the symbolic expression of the Zernike polynomial :math:`Z_{n}^{m}(\rho, \theta)` or the radial Zernike polynomial :math:`R_{n}^{m}(\rho)` if the flag `flag_radial` is set to True with symbolic ``sympy`` computation.
 

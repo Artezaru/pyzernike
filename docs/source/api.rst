@@ -9,7 +9,7 @@ The package ``pyzernike`` is composed of the following functions, classes, and m
 - ``pyzernike.zernike_polynomial`` alias ``Z`` function is used to compute the Zernike polynomial.
 - ``pyzernike.zernike_symbolic`` function is used to compute the symbolic Zernike polynomial.
 - ``pyzernike.zernike_display`` function is used to plot the Zernike polynomials.
-- ``pyzernike.xy_zernike_polynomial`` alias ``XYZ`` function
+- ``pyzernike.xy_zernike_polynomial`` alias ``Zxy`` function
 
 .. toctree::
    :maxdepth: 1

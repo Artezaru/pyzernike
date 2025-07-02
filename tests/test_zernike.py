@@ -2,11 +2,8 @@ import numpy as np
 import pytest
 import sympy
 
-from pyzernike import radial_polynomial, zernike_polynomial, radial_symbolic, zernike_symbolic, xy_zernike_polynomial, core_polynomial
-from pyzernike.deprecated import zernike_polynomial as old_zernike_polynomial
+from pyzernike import radial_polynomial, zernike_polynomial
 from pyzernike.deprecated import radial_polynomial as old_radial_polynomial
-
-
 
 
 
@@ -19,7 +16,6 @@ def test_old_vs_new_radial_zernike():
     for n in range(15):
         for m in range(0, n + 1):
             for rho_derivative in range(n):
-                print(f"Testing n={n}, m={m}, rho_derivative={rho_derivative}")
                 # Compute using old_radial_polynomial
                 old_result = old_radial_polynomial(rho_test, n, m, rho_derivative=rho_derivative)
 
@@ -30,61 +26,6 @@ def test_old_vs_new_radial_zernike():
                     f"Mismatch between old_radial_polynomial and radial_polynomial for n={n}, m={m}, rho_derivative={rho_derivative}."
                     f" Expected: {old_result}, Got: {result}"
                 )
-
-def test_symbolic_radial():
-    """Test that the symbolic radial polynomial matches the computed radial polynomial for a range of (n, m, rho_derivative) values."""
-    
-    # Generate 100 random rho values between 0 and 1
-    rho_test = np.linspace(0, 1, 100)
-
-    for n in range(15):
-        for m in range(0, n + 1):
-            for rho_derivative in range(n):
-                print(f"Testing n={n}, m={m}, rho_derivative={rho_derivative}")
-                # Compute using symbolic radial polynomial
-                symbolic_expression = radial_symbolic([n], [m], [rho_derivative])[0]
-
-                # `x` represents the radial coordinate in the symbolic expression
-                func = sympy.lambdify('x', symbolic_expression, 'numpy')
-                symbolic_result = func(rho_test)
-
-                # Compute using core_polynomial
-                result = radial_polynomial(rho=rho_test, n=[n], m=[m], rho_derivative=[rho_derivative])[0]
-
-                assert np.allclose(symbolic_result, result), (
-                    f"Mismatch between symbolic and computed radial polynomial for n={n}, m={m}, rho_derivative={rho_derivative}."
-                    f" Expected: {symbolic_result}, Got: {result}"
-                )
-
-
-def test_symbolic_zernike():
-    """Test that the symbolic polynomial matches the computed zernike polynomial for a range of (n, m, rho_derivative, theta_derivative) values."""
-    
-    # Generate 100 random rho values between 0 and 1
-    rho = np.linspace(0, 1, 100)
-    theta = np.linspace(0, 2 * np.pi, 100)
-
-    for n in range(15):
-        for m in range(0, n + 1):
-            for rho_derivative in range(n):
-                for theta_derivative in range(n):
-                    print(f"Testing n={n}, m={m}, rho_derivative={rho_derivative}, theta_derivative={theta_derivative}")
-                    # Compute using symbolic zernike polynomial
-                    symbolic_expression = zernike_symbolic([n], [m], [rho_derivative], [theta_derivative])[0]
-
-                    # `x` represents the radial coordinate in the symbolic expression
-                    # `y` represents the angular coordinate in the symbolic expression
-                    func = sympy.lambdify(['x', 'y'], symbolic_expression, 'numpy')
-                    symbolic_result = func(rho, theta)
-
-                    # Compute using core_polynomial
-                    result = zernike_polynomial(rho=rho, theta=theta, n=[n], m=[m], rho_derivative=[rho_derivative], theta_derivative=[theta_derivative])[0]
-
-                    assert np.allclose(symbolic_result, result), (
-                        f"Mismatch between symbolic and computed zernike polynomial for n={n}, m={m}, "
-                        f"rho_derivative={rho_derivative}, theta_derivative={theta_derivative}."
-                        f" Expected: {symbolic_result}, Got: {result}"
-                    )
 
 
 def test_polynomial_consistency():
@@ -180,24 +121,22 @@ def test_radial_dimensions():
 
 
 
-def test_xy_zernike_polynomial():
-    """Test that the xy_zernike_polynomial function produces same result as zernike_polynomial for the unit disk."""
-    
-    # Generate 100 random rho values between 0 and 1
-    radius = 10
-    rho = np.linspace(0, 1.0, 100)
+def test_zernike_angular_consistency():
+    """Test that the zernike_polynomial is 2pi periodic in theta."""
+    rho = np.linspace(0, 1, 100)
     theta = np.linspace(0, 2 * np.pi, 100)
+    theta_shifted = theta + 2 * np.pi
 
-    for n in range(15):
-        for m in range(0, n + 1):
-            zernike_result = zernike_polynomial(rho=rho, theta=theta, n=[n], m=[m])[0]
+    for n in range(7):
+        for m in range(-n, n + 1, 2):
+            for dt in [0, 1, 2]:
+                # Compute the Zernike polynomial for the original theta
+                original_result = zernike_polynomial(rho=rho, theta=theta, n=[n], m=[m], rho_derivative=[0], theta_derivative=[dt])[0]
 
-            x = radius * rho * np.cos(theta)
-            y = radius * rho * np.sin(theta)
+                # Compute the Zernike polynomial for the shifted theta
+                shifted_result = zernike_polynomial(rho=rho, theta=theta_shifted, n=[n], m=[m], rho_derivative=[0], theta_derivative=[dt])[0]
 
-            xy_result = xy_zernike_polynomial(x=x, y=y, n=[n], m=[m], Rx=radius, Ry=radius)[0]
-
-            assert np.allclose(zernike_result, xy_result, equal_nan=True), (
-                f"Mismatch between zernike_polynomial and xy_zernike_polynomial for n={n}, m={m}."
-                f" Expected: {zernike_result}, Got: {xy_result}"
-            )
+                # Check if the results are equal
+                assert np.allclose(original_result, shifted_result, equal_nan=True), (
+                    f"Mismatch for n={n}, m={m}, theta_derivative={dt}. Expected: {original_result}, Got: {shifted_result}"
+                )

@@ -42,8 +42,6 @@ dev = [
     "pydata-sphinx-theme",
     "numpydoc",
     "pytest",
-    "pyinstaller",
     "pytest-cov",
     "bumpver",
-    "pyinstaller"
 ]

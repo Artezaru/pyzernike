@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>pyzernike.radial_symbolic &#8212; pyzernike 1.0.3 documentation</title>
+    <title>pyzernike.radial_symbolic &#8212; pyzernike 1.1.0 documentation</title>
   
   
   
@@ -38,15 +38,15 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=baaebd52"></script>
+    <script src="../_static/documentation_options.js?v=fc837d61"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'api_doc/radial_symbolic';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="pyzernike.radial_display" href="radial_display.html" />
-    <link rel="prev" title="pyzernike.radial_polynomial" href="radial_polynomial.html" />
+    <link rel="next" title="pyzernike.zernike_symbolic" href="zernike_symbolic.html" />
+    <link rel="prev" title="pyzernike.core_symbolic" href="core_symbolic.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -111,7 +111,7 @@
   
   
   
-    <p class="title logo__title">pyzernike 1.0.3 documentation</p>
+    <p class="title logo__title">pyzernike 1.1.0 documentation</p>
   
 </a></div>
     
@@ -265,18 +265,31 @@
 <nav class="bd-docs-nav bd-links"
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
-  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">API:</span></p>
-<ul class="current nav bd-sidenav">
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Computation API:</span></p>
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="core_polynomial.html">pyzernike.core_polynomial</a></li>
-<li class="toctree-l1"><a class="reference internal" href="core_symbolic.html">pyzernike.core_symbolic</a></li>
-<li class="toctree-l1"><a class="reference internal" href="core_display.html">pyzernike.core_display</a></li>
 <li class="toctree-l1"><a class="reference internal" href="radial_polynomial.html">pyzernike.radial_polynomial</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">pyzernike.radial_symbolic</a></li>
-<li class="toctree-l1"><a class="reference internal" href="radial_display.html">pyzernike.radial_display</a></li>
 <li class="toctree-l1"><a class="reference internal" href="zernike_polynomial.html">pyzernike.zernike_polynomial</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Symbolic API:</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="core_symbolic.html">pyzernike.core_symbolic</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">pyzernike.radial_symbolic</a></li>
 <li class="toctree-l1"><a class="reference internal" href="zernike_symbolic.html">pyzernike.zernike_symbolic</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Display API:</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="core_display.html">pyzernike.core_display</a></li>
+<li class="toctree-l1"><a class="reference internal" href="radial_display.html">pyzernike.radial_display</a></li>
 <li class="toctree-l1"><a class="reference internal" href="zernike_display.html">pyzernike.zernike_display</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Additional Functions API:</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="zernike_index_to_order.html">pyzernike.zernike_index_to_order</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zernike_order_to_index.html">pyzernike.zernike_order_to_index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zernike_polynomial_up_to_order.html">pyzernike.zernike_polynomial_up_to_order</a></li>
 <li class="toctree-l1"><a class="reference internal" href="xy_zernike_polynomial.html">pyzernike.xy_zernike_polynomial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="xy_zernike_polynomial_up_to_order.html">pyzernike.xy_zernike_polynomial_up_to_order</a></li>
 </ul>
 </div>
 </nav></div>
@@ -425,20 +438,20 @@ Each expression is a sympy expression that can be evaluated for specific values 
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="radial_polynomial.html"
+       href="core_symbolic.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">pyzernike.radial_polynomial</p>
+        <p class="prev-next-title">pyzernike.core_symbolic</p>
       </div>
     </a>
     <a class="right-next"
-       href="radial_display.html"
+       href="zernike_symbolic.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">pyzernike.radial_display</p>
+        <p class="prev-next-title">pyzernike.zernike_symbolic</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pyzernike.radial_display &#8212; pyzernike 1.1.0 documentation</title>
+    <title>pyzernike.zernike_index_to_order &#8212; pyzernike 1.1.0 documentation</title>
   
   
   
@@ -40,7 +40,7 @@
     <script src="../../_static/documentation_options.js?v=fc837d61"></script>
     <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/pyzernike/radial_display';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/pyzernike/zernike_index_to_order';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -292,7 +292,7 @@
     
     <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Module code</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">pyzernike.radial_display</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">pyzernike.zernike_index_to_order</span></li>
   </ul>
 </nav>
 </div>
@@ -309,123 +309,93 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <h1>Source code for pyzernike.radial_display</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">numbers</span><span class="w"> </span><span class="kn">import</span> <span class="n">Integral</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Optional</span>
+  <h1>Source code for pyzernike.zernike_index_to_order</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">numbers</span><span class="w"> </span><span class="kn">import</span> <span class="n">Integral</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">.core_display</span><span class="w"> </span><span class="kn">import</span> <span class="n">core_display</span>
 
-<div class="viewcode-block" id="radial_display">
-<a class="viewcode-back" href="../../api_doc/radial_display.html#pyzernike.radial_display">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">radial_display</span><span class="p">(</span>
-    <span class="n">n</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Integral</span><span class="p">],</span>
-    <span class="n">m</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Integral</span><span class="p">],</span>
-    <span class="n">rho_derivative</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="n">Integral</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">_skip</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="zernike_index_to_order">
+<a class="viewcode-back" href="../../api_doc/zernike_index_to_order.html#pyzernike.zernike_index_to_order">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">zernike_index_to_order</span><span class="p">(</span><span class="n">j</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Integral</span><span class="p">],</span> <span class="n">_skip</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Display the radial Zernike polynomial :math:`R_{n}^{m}(\rho)` for :math:`\rho \leq 1` in an interactive matplotlib figure.</span>
-
-<span class="sd">    The radial Zernike polynomial is defined as follows:</span>
+<span class="sd">    Convert indices in the OSA/ANSI Zernike polynomial ordering to their corresponding Zernike orders (n, m).</span>
 
 <span class="sd">    .. math::</span>
 
-<span class="sd">        R_{n}^{m}(\rho) = \sum_{k=0}^{(n-m)/2} \frac{(-1)^k (n-k)!}{k! ((n+m)/2 - k)! ((n-m)/2 - k)!} \rho^{n-2k}</span>
+<span class="sd">        j = \frac{n(n + 2) + m}{2}</span>
 
-<span class="sd">    The derivative of order (derivative (a)) of the radial Zernike polynomial is defined as follows:</span>
+<span class="sd">    ``j`` must be a sequence of non-negative integers.</span>
+
+<span class="sd">    The process to compute the Zernike orders from the index is as follows:</span>
 
 <span class="sd">    .. math::</span>
 
-<span class="sd">        \frac{d^{a}R_{n}^{m}(\rho)}{d\rho^{a}} = \sum_{k=0}^{(n-m)/2} \frac{(-1)^k (n-k)!}{k! ((n+m)/2 - k)! ((n-m)/2 - k)!} (n-2k) (n-2k-1) \ldots (n-2k-a+1) \rho^{n-2k-a}</span>
+<span class="sd">        n(n+2) = 2j - m \in [2j - n, 2j + n]</span>
+
+<span class="sd">    So :</span>
+
+<span class="sd">    .. math::</span>
 <span class="sd">    </span>
-<span class="sd">    This function allows to display several radial Zernike polynomials at once for different orders and degrees given as sequences.</span>
+<span class="sd">        n = \text{int}\left(\frac{-1 + \sqrt{1 + 8j}}{2}\right) \quad \text{and} \quad m = 2j - n(n + 2)</span>
+
+
+<span class="sd">    .. seealso::</span>
+
+<span class="sd">        - :func:`pyzernike.zernike_polynomial` for computing the Zernike polynomial :math:`Z_{n}^{m}(\rho, \theta)`.</span>
+<span class="sd">        - :func:`pyzernike.zernike_order_to_index` for converting Zernike orders to indices.</span>
 
 <span class="sd">    .. note::</span>
 
 <span class="sd">        For developers, the ``_skip`` parameter is used to skip the checks for the input parameters. This is useful for internal use where the checks are already done.</span>
 <span class="sd">        In this case :</span>
 
-<span class="sd">        - ``n``, ``m`` and ``rho_derivative`` must be given as sequence of integers with the same length and valid values.</span>
-
-<span class="sd">        See also :func:`pyzernike.core_display` for more details on the input parameters.</span>
-
-<span class="sd">    .. seealso::</span>
-
-<span class="sd">        :func:`pyzernike.zernike_display` for displaying the full Zernike polynomial.</span>
+<span class="sd">        - ``j`` must be given as sequence of integers with valid values.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    n : Sequence[Integral]</span>
-<span class="sd">        A list of the radial order(s) of the Zernike polynomial(s) to display.</span>
-
-<span class="sd">    m : Sequence[Integral]</span>
-<span class="sd">        A list of the radial degree(s) of the Zernike polynomial(s) to display.</span>
-
-<span class="sd">    rho_derivative : Optional[Sequence[Integral]], optional</span>
-<span class="sd">        A list of the order(s) of the radial derivative(s) to display.</span>
-<span class="sd">        If None, is it assumed that rho_derivative is 0 for all polynomials.</span>
+<span class="sd">    j : Sequence[Integral]</span>
+<span class="sd">        The indices of the Zernike polynomials in the OSA/ANSI ordering.</span>
 
 <span class="sd">    _skip : bool, optional</span>
-<span class="sd">        If True, the checks for the input parameters are skipped. This is useful for internal use where the checks are already done.</span>
-<span class="sd">        The default is False.</span>
+<span class="sd">        If True, skips input validation checks. Default is False.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    None</span>
+<span class="sd">    List[int]</span>
+<span class="sd">        A list of radial orders (n) of the Zernike polynomials.</span>
+
+<span class="sd">    List[int]</span>
+<span class="sd">        A list of azimuthal orders (m) of the Zernike polynomials.</span>
 
 <span class="sd">    Raises</span>
 <span class="sd">    ------</span>
 <span class="sd">    TypeError</span>
-<span class="sd">        If the rho values are not a numpy array or if n and m are not integers.</span>
-
-<span class="sd">    ValueError</span>
-<span class="sd">        If the lengths of n and m are not the same.</span>
+<span class="sd">        If `j` is not a sequence of integers.</span>
 
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
-<span class="sd">    Display the radial Zernike polynomial :math:`R_{2}^{0}(\rho)`:</span>
 
 <span class="sd">    .. code-block:: python</span>
 
-<span class="sd">        from pyzernike import radial_display</span>
-<span class="sd">        radial_display(n=[2], m=[0]) # This will display the radial Zernike polynomial R_2^0 in an interactive matplotlib figure.</span>
+<span class="sd">        from pyzernike import zernike_index_to_order</span>
 
-<span class="sd">    To display multiple radial Zernike polynomials, you can pass sequences for `n` and `m`:</span>
-
-<span class="sd">    .. code-block:: python</span>
-
-<span class="sd">        from pyzernike import radial_display</span>
-<span class="sd">        radial_display(n=[2, 3, 4], m=[0, 1, 2], rho_derivative=[0, 0, 1])</span>
-
-<span class="sd">    .. image:: ../../../pyzernike/resources/radial_display.png</span>
-<span class="sd">        :width: 600px</span>
-<span class="sd">        :align: center</span>
+<span class="sd">        j = [2, 3, 4]</span>
+<span class="sd">        n, m = zernike_index_to_order(j)</span>
+<span class="sd">        print(n)  # Output: [1, 2, 2]</span>
+<span class="sd">        print(m)  # Output: [1, -2, 0]</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">_skip</span><span class="p">:</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">Integral</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">n</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;n must be a sequence of integers.&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">Integral</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">m</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;m must be a sequence of integers.&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">rho_derivative</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">rho_derivative</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">Integral</span><span class="p">)</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">rho_derivative</span><span class="p">):</span>
-                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;rho_derivative must be a sequence of non-negative integers.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">Integral</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">j</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;j must be a sequence of integers.&quot;</span><span class="p">)</span>
         
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;n and m must have the same length.&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">rho_derivative</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">rho_derivative</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;n and rho_derivative must have the same length.&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">rho_derivative</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">rho_derivative</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">j</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;j must be non-negative integers.&quot;</span><span class="p">)</span>
 
-    <span class="c1"># Compute the radial polynomials using the core_polynomial function</span>
-    <span class="n">core_display</span><span class="p">(</span>
-        <span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">,</span>
-        <span class="n">m</span><span class="o">=</span><span class="n">m</span><span class="p">,</span>
-        <span class="n">rho_derivative</span><span class="o">=</span><span class="n">rho_derivative</span><span class="p">,</span>
-        <span class="n">theta_derivative</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">flag_radial</span><span class="o">=</span><span class="kc">True</span>
-    <span class="p">)</span></div>
+    <span class="n">n</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">8</span> <span class="o">*</span> <span class="n">i</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">j</span><span class="p">]</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">i</span> <span class="o">-</span> <span class="n">n_i</span> <span class="o">*</span> <span class="p">(</span><span class="n">n_i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">n_i</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">j</span><span class="p">)]</span>
+
+    <span class="k">return</span> <span class="n">n</span><span class="p">,</span> <span class="n">m</span></div>
 
 </pre></div>
 

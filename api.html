@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>API Reference &#8212; pyzernike 1.0.3 documentation</title>
+    <title>API Reference &#8212; pyzernike 1.1.0 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="_static/documentation_options.js?v=baaebd52"></script>
+    <script src="_static/documentation_options.js?v=fc837d61"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -111,7 +111,7 @@
   
   
   
-    <p class="title logo__title">pyzernike 1.0.3 documentation</p>
+    <p class="title logo__title">pyzernike 1.1.0 documentation</p>
   
 </a></div>
     
@@ -265,18 +265,31 @@
 <nav class="bd-docs-nav bd-links"
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
-  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">API:</span></p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Computation API:</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="api_doc/core_polynomial.html">pyzernike.core_polynomial</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_doc/core_symbolic.html">pyzernike.core_symbolic</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_doc/core_display.html">pyzernike.core_display</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api_doc/radial_polynomial.html">pyzernike.radial_polynomial</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_doc/radial_symbolic.html">pyzernike.radial_symbolic</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_doc/radial_display.html">pyzernike.radial_display</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api_doc/zernike_polynomial.html">pyzernike.zernike_polynomial</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Symbolic API:</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="api_doc/core_symbolic.html">pyzernike.core_symbolic</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_doc/radial_symbolic.html">pyzernike.radial_symbolic</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api_doc/zernike_symbolic.html">pyzernike.zernike_symbolic</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Display API:</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="api_doc/core_display.html">pyzernike.core_display</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_doc/radial_display.html">pyzernike.radial_display</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api_doc/zernike_display.html">pyzernike.zernike_display</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Additional Functions API:</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="api_doc/zernike_index_to_order.html">pyzernike.zernike_index_to_order</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_doc/zernike_order_to_index.html">pyzernike.zernike_order_to_index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_doc/zernike_polynomial_up_to_order.html">pyzernike.zernike_polynomial_up_to_order</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api_doc/xy_zernike_polynomial.html">pyzernike.xy_zernike_polynomial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_doc/xy_zernike_polynomial_up_to_order.html">pyzernike.xy_zernike_polynomial_up_to_order</a></li>
 </ul>
 </div>
 </nav></div>
@@ -336,34 +349,78 @@
                   
   <section id="api-reference">
 <h1>API Reference<a class="headerlink" href="#api-reference" title="Link to this heading">#</a></h1>
-<p>The package <code class="docutils literal notranslate"><span class="pre">pyzernike</span></code> is composed of the following functions, classes, and modules:</p>
+<p>The package <code class="docutils literal notranslate"><span class="pre">pyzernike</span></code> is composed of the following functions, classes, and modules.
+To learn how to use the package effectively, refer to the documentation <a class="reference internal" href="usage.html"><span class="doc">Usage</span></a>.</p>
+<section id="computation">
+<h2>Computation<a class="headerlink" href="#computation" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">pyzernike.radial_polynomial</span></code> alias <code class="docutils literal notranslate"><span class="pre">R</span></code> function is used to compute the radial polynomial of a Zernike polynomial.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">pyzernike.radial_symbolic</span></code> function is used to compute the symbolic radial polynomial.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">pyzernike.radial_display</span></code> function is used to plot the radial Zernike polynomials.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">pyzernike.zernike_polynomial</span></code> alias <code class="docutils literal notranslate"><span class="pre">Z</span></code> function is used to compute the Zernike polynomial.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">pyzernike.zernike_symbolic</span></code> function is used to compute the symbolic Zernike polynomial.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">pyzernike.zernike_display</span></code> function is used to plot the Zernike polynomials.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">pyzernike.xy_zernike_polynomial</span></code> alias <code class="docutils literal notranslate"><span class="pre">Zxy</span></code> function</p></li>
 </ul>
 <div class="toctree-wrapper compound">
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">API:</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Computation API:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="api_doc/core_polynomial.html">pyzernike.core_polynomial</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_doc/core_symbolic.html">pyzernike.core_symbolic</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_doc/core_display.html">pyzernike.core_display</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api_doc/radial_polynomial.html">pyzernike.radial_polynomial</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_doc/radial_symbolic.html">pyzernike.radial_symbolic</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_doc/radial_display.html">pyzernike.radial_display</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api_doc/zernike_polynomial.html">pyzernike.zernike_polynomial</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_doc/zernike_symbolic.html">pyzernike.zernike_symbolic</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_doc/zernike_display.html">pyzernike.zernike_display</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_doc/xy_zernike_polynomial.html">pyzernike.xy_zernike_polynomial</a></li>
 </ul>
 </div>
+</section>
+<section id="symbolic-expressions">
+<h2>Symbolic Expressions<a class="headerlink" href="#symbolic-expressions" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">pyzernike.radial_symbolic</span></code> function is used to compute the symbolic radial polynomial.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pyzernike.zernike_symbolic</span></code> function is used to compute the symbolic Zernike polynomial.</p></li>
+</ul>
+<div class="toctree-wrapper compound">
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Symbolic API:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api_doc/core_symbolic.html">pyzernike.core_symbolic</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_doc/radial_symbolic.html">pyzernike.radial_symbolic</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_doc/zernike_symbolic.html">pyzernike.zernike_symbolic</a></li>
+</ul>
+</div>
+</section>
+<section id="display">
+<h2>Display<a class="headerlink" href="#display" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">pyzernike.radial_display</span></code> function is used to plot the radial polynomial.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pyzernike.zernike_display</span></code> function is used to plot the Zernike polynomial.</p></li>
+</ul>
+<div class="toctree-wrapper compound">
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Display API:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api_doc/core_display.html">pyzernike.core_display</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_doc/radial_display.html">pyzernike.radial_display</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_doc/zernike_display.html">pyzernike.zernike_display</a></li>
+</ul>
+</div>
+</section>
+<section id="additional-functions">
+<h2>Additional Functions<a class="headerlink" href="#additional-functions" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">pyzernike.zernike_index_to_order</span></code> function is used to convert Zernike indices to their corresponding orders (n, m).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pyzernike.zernike_order_to_index</span></code> function is used to convert Zernike orders (n, m) to their corresponding indices.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pyzernike.zernike_polynomial_up_to_order</span></code> alias <code class="docutils literal notranslate"><span class="pre">Zup</span></code> function is used to compute the Zernike polynomial up to a specified order.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pyzernike.xy_zernike_polynomial</span></code> alias <code class="docutils literal notranslate"><span class="pre">Zxy</span></code> function is used to compute the Zernike polynomial in Cartesian coordinates (x, y) in an extended domain <code class="docutils literal notranslate"><span class="pre">G</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pyzernike.xy_zernike_polynomial_up_to_order</span></code> alias <code class="docutils literal notranslate"><span class="pre">Zxyup</span></code> function is used to compute the Zernike polynomial in Cartesian coordinates (x, y) in an extended domain <code class="docutils literal notranslate"><span class="pre">G</span></code> up to a specified order.</p></li>
+</ul>
+<div class="toctree-wrapper compound">
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Additional Functions API:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api_doc/zernike_index_to_order.html">pyzernike.zernike_index_to_order</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_doc/zernike_order_to_index.html">pyzernike.zernike_order_to_index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_doc/zernike_polynomial_up_to_order.html">pyzernike.zernike_polynomial_up_to_order</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_doc/xy_zernike_polynomial.html">pyzernike.xy_zernike_polynomial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_doc/xy_zernike_polynomial_up_to_order.html">pyzernike.xy_zernike_polynomial_up_to_order</a></li>
+</ul>
+</div>
+</section>
+<section id="deprecated-functions">
+<h2>Deprecated Functions<a class="headerlink" href="#deprecated-functions" title="Link to this heading">#</a></h2>
 <p>Some deprecated functions are still available in the package <code class="docutils literal notranslate"><span class="pre">pyzernike.deprecated</span></code>, but they are not recommended for use in new code. They may be removed in future versions of the package. It is advisable to use the newer functions and classes that have been introduced.
 They are not documented in this API reference, but you can find them in the source code of the package.</p>
-<p>To learn how to use the package effectively, refer to the documentation <a class="reference internal" href="usage.html"><span class="doc">Usage</span></a>.</p>
+</section>
 </section>
 
 
@@ -404,6 +461,22 @@ They are not documented in this API reference, but you can find them in the sour
                 <dialog id="pst-secondary-sidebar-modal"></dialog>
                 <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#computation">Computation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#symbolic-expressions">Symbolic Expressions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#display">Display</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-functions">Additional Functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deprecated-functions">Deprecated Functions</a></li>
+</ul>
+  </nav></div>
 
   <div class="sidebar-secondary-item">
   <div role="note" aria-label="source link">

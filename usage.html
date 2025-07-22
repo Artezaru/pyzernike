@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Usage &#8212; pyzernike 1.1.1 documentation</title>
+    <title>Usage &#8212; pyzernike 1.1.2 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="_static/documentation_options.js?v=58fbf978"></script>
+    <script src="_static/documentation_options.js?v=6f037312"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -110,7 +110,7 @@
   
   
   
-    <p class="title logo__title">pyzernike 1.1.1 documentation</p>
+    <p class="title logo__title">pyzernike 1.1.2 documentation</p>
   
 </a></div>
     
@@ -434,6 +434,25 @@ You can use these symbols to manipulate the expressions further if needed.</p>
 </ul>
 </div>
 </section>
+<section id="command-line-display">
+<h2>Command Line Display<a class="headerlink" href="#command-line-display" title="Link to this heading">#</a></h2>
+<p>To display Zernike polynomials from the command line, you can use the <cite>pyzernike</cite> command followed by the desired options. For example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">pyzernike -r -n 3</span>
+</pre></div>
+</div>
+<p>This command will display the radial Zernike polynomials up to order 3.</p>
+<p>To see the full list of options, you can run:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">pyzernike --help</span>
+</pre></div>
+</div>
+<p>The available options are:</p>
+<ul class="simple">
+<li><p>flag <code class="docutils literal notranslate"><span class="pre">-r</span></code> or <code class="docutils literal notranslate"><span class="pre">--radial</span></code> will display the radial Zernike polynomials instead of the full Zernike polynomials.</p></li>
+<li><p>flag <code class="docutils literal notranslate"><span class="pre">-n</span> <span class="pre">{N}</span></code> or <code class="docutils literal notranslate"><span class="pre">`--n</span> <span class="pre">{N}`</span></code> will specify the maximum order of the Zernike polynomials to display. If not specified, the default value is 5</p></li>
+<li><p>flag <code class="docutils literal notranslate"><span class="pre">-dr</span> <span class="pre">{D}`</span></code> or <code class="docutils literal notranslate"><span class="pre">--rho_derivative</span> <span class="pre">{D}</span></code> can be used to specify the radial derivative of the Zernike polynomials. If not specified, the default value is 0 for all polynomials.</p></li>
+<li><p>flag <code class="docutils literal notranslate"><span class="pre">-dt</span> <span class="pre">{D}`</span></code> or <code class="docutils literal notranslate"><span class="pre">--theta_derivative</span> <span class="pre">{D}</span></code> can be used to specify the angular derivative of the Zernike polynomials. If not specified, the default value is 0 for all polynomials.</p></li>
+</ul>
+</section>
 </section>
 
 
@@ -477,6 +496,7 @@ You can use these symbols to manipulate the expressions further if needed.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-zernike-polynomials">Compute Zernike Polynomials</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#get-the-mathematical-expression-of-zernike-polynomials">Get the mathematical expression of Zernike Polynomials</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#display-zernike-polynomials">Display Zernike Polynomials</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#command-line-display">Command Line Display</a></li>
 </ul>
   </nav></div>
 

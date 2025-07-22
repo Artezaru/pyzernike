@@ -123,3 +123,31 @@ To visualize the Zernike polynomials, you can use the `zernike_display` function
 
     - :func:`pyzernike.zernike_display` for more details on the function parameters and usage.
     - :func:`pyzernike.radial_display` for displaying radial Zernike polynomials.
+
+
+Command Line Display 
+-----------------------------
+
+To display Zernike polynomials from the command line, you can use the `pyzernike` command followed by the desired options. For example:
+
+.. code-block:: console
+
+    pyzernike -r -n 3
+
+This command will display the radial Zernike polynomials up to order 3.
+
+To see the full list of options, you can run:
+
+.. code-block:: console
+
+    pyzernike --help
+
+The available options are:
+
+- flag ``-r`` or ``--radial`` will display the radial Zernike polynomials instead of the full Zernike polynomials.
+- flag ``-n {N}`` or ```--n {N}``` will specify the maximum order of the Zernike polynomials to display. If not specified, the default value is 5
+- flag ``-dr {D}``` or ``--rho_derivative {D}`` can be used to specify the radial derivative of the Zernike polynomials. If not specified, the default value is 0 for all polynomials.
+- flag ``-dt {D}``` or ``--theta_derivative {D}`` can be used to specify the angular derivative of the Zernike polynomials. If not specified, the default value is 0 for all polynomials.
+
+
+

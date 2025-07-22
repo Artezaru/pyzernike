@@ -47,9 +47,9 @@ def __main__() -> None:
     dr = args.rho_derivative
     dt = args.theta_derivative
 
-    if not isinstance(Nzer, int) or Nzer < 0:
+    if not isinstance(Nzer, int) or Nzer <= 0:
         raise ValueError("The maximum order of the Zernike polynomials must be a non-negative integer.")
-    if not isinstance(dr, int) or dr <= 0:
+    if not isinstance(dr, int) or dr < 0:
         raise ValueError("The radial derivative must be a positive integer.")
     if not isinstance(dt, int) or dt < 0:
         raise ValueError("The angular derivative must be a non-negative integer.")

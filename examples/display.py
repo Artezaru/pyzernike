@@ -7,4 +7,4 @@ for n in range(0, 5):
         list_n.append(n)
         list_m.append(m)
 
-zernike_display(n=list_n, m=list_m)
+zernike_display(n=list_n, m=list_m, rho_derivative=[1 for _ in range(len(list_n))])

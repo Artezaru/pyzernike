@@ -18,6 +18,8 @@ def __main__() -> None:
     
     - flag `-r` or `--radial` will display the radial Zernike polynomials instead of the full Zernike polynomials.
     - flag `-n` or `--n` will specify the maximum order of the Zernike polynomials to display. If not specified, the default value is 5
+    - flag `-dr` or `--rho_derivative` can be used to specify the radial derivative of the Zernike polynomials. If not specified, the default value is 0 for all polynomials.
+    - flag `-dt` or `--theta_derivative` can be used to specify the angular derivative of the Zernike polynomials. If not specified, the default value is 0 for all polynomials.
         
     """
     # Argument parser
@@ -30,10 +32,28 @@ def __main__() -> None:
         '-n', '--n', type=int, default=5,
         help="Maximum order of the Zernike polynomials to display (default: 5)."
     )
+    parser.add_argument(
+        '-dr', '--rho_derivative', type=int, default=0,
+        help="Radial derivative of the Zernike polynomials to display (default: 0 for all polynomials)."
+    )
+    parser.add_argument(
+        '-dt', '--theta_derivative', type=int, default=0,
+        help="Angular derivative of the Zernike polynomials to display (default: 0 for all polynomials)."
+    )
 
     args = parser.parse_args()
 
     Nzer = args.n
+    dr = args.rho_derivative
+    dt = args.theta_derivative
+
+    if not isinstance(Nzer, int) or Nzer < 0:
+        raise ValueError("The maximum order of the Zernike polynomials must be a non-negative integer.")
+    if not isinstance(dr, int) or dr <= 0:
+        raise ValueError("The radial derivative must be a positive integer.")
+    if not isinstance(dt, int) or dt < 0:
+        raise ValueError("The angular derivative must be a non-negative integer.")
+
     list_n = []
     list_m = []
     if args.radial:
@@ -52,9 +72,10 @@ def __main__() -> None:
     
     # Display the Zernike polynomials
     if args.radial:
-        radial_display(n=list_n, m=list_m)
+        radial_display(n=list_n, m=list_m, rho_derivative=[args.rho_derivative for _ in range(len(list_n))])
     else:
-        zernike_display(n=list_n, m=list_m)
+        zernike_display(n=list_n, m=list_m, rho_derivative=[args.rho_derivative for _ in range(len(list_n))], theta_derivative=[args.theta_derivative for _ in range(len(list_n))])
+
 
 def __main_gui__() -> None:
     r"""

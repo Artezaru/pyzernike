@@ -5,7 +5,7 @@ To install ``pyzernike``, you can use the following command:
 
 .. code-block:: bash
 
-    pip install pyzernike
+    pip install pyzernike-polynomials
 
 Or install it directly from the GitHub repository using:
 

@@ -7,19 +7,12 @@ See the documentation below for more informations.
 
 The Zernike polynomials are defined as follows:
 
-\[
-Z_{n}^{m}(\rho, \theta) = R_{n}^{m}(\rho) \cos(m \theta) \quad \text{if} \quad m > 0
-]\
-
-\[
-Z_{n}^{m}(\rho, \theta) = R_{n}^{-m}(\rho) \sin(-m \theta) \quad \text{if} \quad m < 0
-]\
+![Zernike Cosinus Equation](https://raw.githubusercontent.com/Artezaru/pyzernike/master/pyzernike/resources/zernike_cos.png)
+![Zernike Sinus Equation](https://raw.githubusercontent.com/Artezaru/pyzernike/master/pyzernike/resources/zernike_sin.png)
 
 with :
 
-\[
-R_{n}^{m}(\rho) = \sum_{k=0}^{(n-m)/2} \frac{(-1)^k (n-k)!}{k! ((n+m)/2 - k)! ((n-m)/2 - k)!} \rho^{n-2k}
-]\
+![Zernike Radial Equation](https://raw.githubusercontent.com/Artezaru/pyzernike/master/pyzernike/resources/zernike_radial.png)
 
 where `n` is the radial order, `m` is the azimuthal frequency, `\rho` is the normalized radial coordinate (`\rho` in [0, 1]) and `\theta` is the azimuthal angle.
 
@@ -37,7 +30,7 @@ polynomial = result[0]  # result is a list, we take the first element
 
 Also compute the symbolic `sympy` expression and display the polynomials as follow :
 
-![Zernike](https://raw.githubusercontent.com/Artezaru/pyzernike/master/pyzernike/resources/zernike_display.png)
+![Zernike Display](https://raw.githubusercontent.com/Artezaru/pyzernike/master/pyzernike/resources/zernike_display.png)
 
 ## Authors
 
@@ -72,7 +65,7 @@ Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-    http://www.apache.org/licenses/LICENSE-2.0
+http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,

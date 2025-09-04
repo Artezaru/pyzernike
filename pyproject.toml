@@ -35,9 +35,6 @@ exclude = ["laboratory", "laboratory.*", "tests", "tests*", "examples", "example
 [project.scripts]
 pyzernike = "pyzernike.__main__:__main__"
 
-[project.gui-scripts]
-pyzernike-gui = "pyzernike.__main__:__main_gui__"
-
 [tool.setuptools.dynamic]
 version = {attr = "pyzernike.__version__.__version__"}
 

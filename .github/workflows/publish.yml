@@ -17,15 +17,35 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Install build tools
+      - name: Install tools
         run: |
           python -m pip install --upgrade pip
-          pip install build twine
+          pip install build twine toml jq requests
+
+      - name: Check if version changed
+        id: version_check
+        run: |
+          VERSION=$(python -c "import toml; print(toml.load('pyproject.toml')['project']['version'])")
+          PACKAGE=$(python -c "import toml; print(toml.load('pyproject.toml')['project']['name'])")
+          echo "Current version: $VERSION"
+
+          LATEST=$(python -c "import requests; r=requests.get(f'https://pypi.org/pypi/{PACKAGE}/json'); print(r.json()['info']['version']) if r.status_code==200 else print('0.0.0')")
+          echo "Latest version on PyPI: $LATEST"
+
+          if [ "$VERSION" == "$LATEST" ]; then
+            echo "Version has not changed, skipping publish."
+            echo "should_publish=false" >> $GITHUB_OUTPUT
+          else
+            echo "New version detected!"
+            echo "should_publish=true" >> $GITHUB_OUTPUT
+          fi
 
       - name: Build package
+        if: steps.version_check.outputs.should_publish == 'true'
         run: python -m build
 
       - name: Publish to PyPI
+        if: steps.version_check.outputs.should_publish == 'true'
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.PYPI_PROJECT_TOKEN }}

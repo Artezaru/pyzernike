@@ -10,7 +10,6 @@ name = "pyzernike"
 requires-python = ">= 3.10"
 dynamic = ["version"]
 description = "Zernike polynomials"
-readme = "README.md" 
 license = {file = "LICENSE"}
 authors = [
 {name = "Artezaru", email = "artezaru.github@proton.me"}

@@ -3,29 +3,6 @@ import pytest
 import sympy
 
 from pyzernike import radial_polynomial, zernike_polynomial
-from pyzernike.deprecated import radial_polynomial as old_radial_polynomial
-
-
-
-def test_old_vs_new_radial_zernike():
-    """Compare old_radial_polynomial (deprecated) and radial_polynomial for all (n, m, rho_derivative). -> Ensure that the new radial_polynomial function matches the deprecated old_radial_polynomial function."""
-
-    # Generate 100 random rho values between 0 and 1
-    rho_test = np.linspace(0, 2, 100) # Same data are out of bounds to test the behavior of the function
-
-    for n in range(15):
-        for m in range(0, n + 1):
-            for rho_derivative in range(n):
-                # Compute using old_radial_polynomial
-                old_result = old_radial_polynomial(rho_test, n, m, rho_derivative=rho_derivative)
-
-                # Compute using radial_polynomial
-                result = radial_polynomial(rho_test, [n], [m], [rho_derivative])[0]
-
-                assert np.allclose(result, result, equal_nan=True), (
-                    f"Mismatch between old_radial_polynomial and radial_polynomial for n={n}, m={m}, rho_derivative={rho_derivative}."
-                    f" Expected: {old_result}, Got: {result}"
-                )
 
 
 def test_polynomial_consistency():
@@ -48,7 +25,7 @@ def test_polynomial_consistency():
     theta = np.linspace(0, 2 * np.pi, 100)
 
     # Compute all in one
-    common_result = zernike_polynomial(rho= rho, theta=theta, n=list_n, m=list_m, rho_derivative=list_rho_derivative, theta_derivative=list_theta_derivative)
+    common_result = zernike_polynomial(rho=rho, theta=theta, n=list_n, m=list_m, rho_derivative=list_rho_derivative, theta_derivative=list_theta_derivative)
 
     cumulative_result = []
     for i in range(len(list_n)):

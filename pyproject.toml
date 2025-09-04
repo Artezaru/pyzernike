@@ -6,7 +6,7 @@ requires = [
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "pyzernike"
+name = "pyzernike-polynomials"
 requires-python = ">= 3.10"
 dynamic = ["version"]
 description = "Zernike polynomials"
@@ -15,7 +15,9 @@ authors = [
 {name = "Artezaru", email = "artezaru.github@proton.me"}
 ]
 classifiers = [
-  "Programming Language :: Python"
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
 ]
 dependencies = [
     "numpy>=1.24.0",
@@ -23,6 +25,12 @@ dependencies = [
     "matplotlib>=3.7.0",
     "sympy>=1.12"
 ]
+
+[project.urls]
+Homepage = "https://github.com/Artezaru/pyzernike"
+Documentation = "https://Artezaru.github.io/pyzernike"
+Source = "https://github.com/Artezaru/pyzernike"
+Tracker = "https://github.com/Artezaru/pyzernike/issues"
 
 [tool.setuptools.packages.find]
 where = ["."]

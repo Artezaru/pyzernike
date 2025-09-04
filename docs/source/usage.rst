@@ -76,8 +76,9 @@ To get the mathematical expression of Zernike polynomials, you can use the `zern
 
     n = 3
     m = 1
-    expression = zernike_symbolic([n], [m])
-    print(expression[0])  # This will print the symbolic expression of Zernike polynomial Z_31
+    result = zernike_symbolic([n], [m])
+    expression = result[0]  # result is a list of symbolic expressions for given n and m
+    print(expression)  # This will print the symbolic expression of Zernike polynomial Z_31
 
 .. note::
 

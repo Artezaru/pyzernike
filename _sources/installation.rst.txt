@@ -5,9 +5,18 @@ To install ``pyzernike``, you can use the following command:
 
 .. code-block:: bash
 
+    pip install pyzernike
+
+Or install it directly from the GitHub repository using:
+
+.. code-block:: bash
+
     pip install git+https://github.com/Artezaru/pyzernike.git
 
-Or clone the repository and install it manually:
+Development Installation
+------------------------------
+
+To install the package for development, first clone the repository using:
 
 .. code-block:: bash
 

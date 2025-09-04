@@ -67,8 +67,4 @@ Additional Functions
    ./api_doc/xy_zernike_polynomial
    ./api_doc/xy_zernike_polynomial_up_to_order
 
-Deprecated Functions
----------------------
 
-Some deprecated functions are still available in the package ``pyzernike.deprecated``, but they are not recommended for use in new code. They may be removed in future versions of the package. It is advisable to use the newer functions and classes that have been introduced.
-They are not documented in this API reference, but you can find them in the source code of the package.

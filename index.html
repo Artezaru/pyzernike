@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Welcome to pyzernike’s documentation! &#8212; pyzernike 2.0.2 documentation</title>
+    <title>Welcome to pyzernike’s documentation! &#8212; pyzernike 2.0.3 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="_static/documentation_options.js?v=c2377ec0"></script>
+    <script src="_static/documentation_options.js?v=664ffad9"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -110,7 +110,7 @@
   
   
   
-    <p class="title logo__title">pyzernike 2.0.2 documentation</p>
+    <p class="title logo__title">pyzernike 2.0.3 documentation</p>
   
 </a></div>
     
@@ -293,7 +293,16 @@
 <h1>Welcome to pyzernike’s documentation!<a class="headerlink" href="#welcome-to-pyzernike-s-documentation" title="Link to this heading">#</a></h1>
 <section id="description-of-the-package">
 <h2>Description of the package<a class="headerlink" href="#description-of-the-package" title="Link to this heading">#</a></h2>
-<p>Zernike polynomials</p>
+<p>Zernike polynomials computation and visualization.</p>
+<p>The Zernike polynomials are defined as follows:</p>
+<div class="math notranslate nohighlight">
+\[Z_{n}^{m}(\rho, \theta) = R_{n}^{m}(\rho) \cos(m \theta) \quad \text{if} \quad m &gt; 0\]</div>
+<div class="math notranslate nohighlight">
+\[Z_{n}^{m}(\rho, \theta) = R_{n}^{-m}(\rho) \sin(-m \theta) \quad \text{if} \quad m &lt; 0\]</div>
+<p>with :</p>
+<div class="math notranslate nohighlight">
+\[R_{n}^{m}(\rho) = \sum_{k=0}^{(n-m)/2} \frac{(-1)^k (n-k)!}{k! ((n+m)/2 - k)! ((n-m)/2 - k)!} \rho^{n-2k}\]</div>
+<p>where <span class="math notranslate nohighlight">\(n\)</span> is the radial order, <span class="math notranslate nohighlight">\(m\)</span> is the azimuthal frequency, <span class="math notranslate nohighlight">\(\rho\)</span> is the normalized radial coordinate (<span class="math notranslate nohighlight">\(0 \leq \rho \leq 1\)</span>) and <span class="math notranslate nohighlight">\(\theta\)</span> is the azimuthal angle.</p>
 </section>
 <section id="contents">
 <h2>Contents<a class="headerlink" href="#contents" title="Link to this heading">#</a></h2>

@@ -37,7 +37,7 @@ polynomial = result[0]  # result is a list, we take the first element
 
 Also compute the symbolic `sympy` expression and display the polynomials as follow :
 
-![Zernike](https://raw.githubusercontent.com/Artezaru/pyzernike/master/resources/zernike_display.png)
+![Zernike](https://raw.githubusercontent.com/Artezaru/pyzernike/master/pyzernike/resources/zernike_display.png)
 
 ## Authors
 

@@ -22,18 +22,26 @@ jobs:
           python -m pip install --upgrade pip
           pip install build twine toml jq requests
 
-      - name: Check if version changed
+      - name: Get previous version
+        id: prev_version
+        run: |
+          git fetch --depth=2 origin master
+          PREV_VERSION=$(git show HEAD~1:pyzernike/__version__.py | grep "__version__" | sed -E "s/.*['\"]([^'\"]+)['\"].*/\1/")
+          echo "Previous version: $PREV_VERSION"
+          echo "prev_version=$PREV_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Get current version
+        id: curr_version
+        run: |
+          CURR_VERSION=$(grep "__version__" pyzernike/__version__.py | sed -E "s/.*['\"]([^'\"]+)['\"].*/\1/")
+          echo "Current version: $CURR_VERSION"
+          echo "curr_version=$CURR_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Decide if publish
         id: version_check
         run: |
-          VERSION=$(python -c "import toml; print(toml.load('pyproject.toml')['project']['version'])")
-          PACKAGE=$(python -c "import toml; print(toml.load('pyproject.toml')['project']['name'])")
-          echo "Current version: $VERSION"
-
-          LATEST=$(python -c "import requests; r=requests.get(f'https://pypi.org/pypi/{PACKAGE}/json'); print(r.json()['info']['version']) if r.status_code==200 else print('0.0.0')")
-          echo "Latest version on PyPI: $LATEST"
-
-          if [ "$VERSION" == "$LATEST" ]; then
-            echo "Version has not changed, skipping publish."
+          if [ "${{ steps.prev_version.outputs.prev_version }}" == "${{ steps.curr_version.outputs.curr_version }}" ]; then
+            echo "Version unchanged, skipping publish."
             echo "should_publish=false" >> $GITHUB_OUTPUT
           else
             echo "New version detected!"

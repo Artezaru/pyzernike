@@ -4,7 +4,25 @@ Welcome to pyzernike's documentation!
 Description of the package
 --------------------------
 
-Zernike polynomials
+Zernike polynomials computation and visualization.
+
+The Zernike polynomials are defined as follows:
+
+.. math::
+
+    Z_{n}^{m}(\rho, \theta) = R_{n}^{m}(\rho) \cos(m \theta) \quad \text{if} \quad m > 0
+
+.. math::
+    
+    Z_{n}^{m}(\rho, \theta) = R_{n}^{-m}(\rho) \sin(-m \theta) \quad \text{if} \quad m < 0
+
+with :
+
+.. math::
+   
+   R_{n}^{m}(\rho) = \sum_{k=0}^{(n-m)/2} \frac{(-1)^k (n-k)!}{k! ((n+m)/2 - k)! ((n-m)/2 - k)!} \rho^{n-2k}
+
+where :math:`n` is the radial order, :math:`m` is the azimuthal frequency, :math:`\rho` is the normalized radial coordinate (:math:`0 \leq \rho \leq 1`) and :math:`\theta` is the azimuthal angle.
 
 Contents
 --------

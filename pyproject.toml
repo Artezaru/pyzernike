@@ -9,7 +9,7 @@ build-backend = "setuptools.build_meta"
 name = "pyzernike-polynomials"
 requires-python = ">= 3.10"
 dynamic = ["version"]
-description = "Zernike polynomials"
+description = "Zernike polynomials computation and visualization."
 license = {file = "LICENSE"}
 authors = [
 {name = "Artezaru", email = "artezaru.github@proton.me"}

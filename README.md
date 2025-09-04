@@ -5,6 +5,24 @@
 `pyzernike` is a Python package to compute Zernike polynomials and their derivatives. 
 See the documentation below for more informations.
 
+The Zernike polynomials are defined as follows:
+
+\[
+Z_{n}^{m}(\rho, \theta) = R_{n}^{m}(\rho) \cos(m \theta) \quad \text{if} \quad m > 0
+]\
+
+\[
+Z_{n}^{m}(\rho, \theta) = R_{n}^{-m}(\rho) \sin(-m \theta) \quad \text{if} \quad m < 0
+]\
+
+with :
+
+\[
+R_{n}^{m}(\rho) = \sum_{k=0}^{(n-m)/2} \frac{(-1)^k (n-k)!}{k! ((n+m)/2 - k)! ((n-m)/2 - k)!} \rho^{n-2k}
+]\
+
+where `n` is the radial order, `m` is the azimuthal frequency, `\rho` is the normalized radial coordinate (`\rho` in [0, 1]) and `\theta` is the azimuthal angle.
+
 Example of usage :
 
 ```python
@@ -19,7 +37,7 @@ polynomial = result[0]  # result is a list, we take the first element
 
 Also compute the symbolic `sympy` expression and display the polynomials as follow :
 
-![Zernike](./pyzernike/resources/zernike_display.png)
+![Zernike](https://raw.githubusercontent.com/Artezaru/pyzernike/master/resources/zernike_display.png)
 
 ## Authors
 

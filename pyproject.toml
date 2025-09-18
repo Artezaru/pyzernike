@@ -55,7 +55,10 @@ dev = [
     "pytest-cov",
     "bumpver",
     "twine",
-    "wheel"
+    "wheel",
+    "build",
+    "setuptools",
+    "setuptools-scm",
 ]
 
 [project.readme]

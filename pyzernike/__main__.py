@@ -22,6 +22,7 @@ def __main__() -> None:
     This method contains the script to run if the user enter the name of the package on the command line. 
 
     .. code-block:: console
+    
         pyzernike
 
     This will display a set of Zernike polynomials in an interactive matplotlib figure.
@@ -98,6 +99,7 @@ def __main_gui__() -> None:
     This method contains the script to run if the user enter the name of the package on the command line with the ``gui`` extension.
 
     .. code-block:: console
+
         pyzernike-gui
         
     """

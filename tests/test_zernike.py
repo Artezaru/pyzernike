@@ -117,3 +117,25 @@ def test_zernike_angular_consistency():
                 assert np.allclose(original_result, shifted_result, equal_nan=True), (
                     f"Mismatch for n={n}, m={m}, theta_derivative={dt}. Expected: {original_result}, Got: {shifted_result}"
                 )
+
+
+def test_zernike_precompute_consistency():
+    """Test that the zernike_polynomial function produces consistent results when precompute is True or False."""
+    rho = np.linspace(0, 1, 100)
+    theta = np.linspace(0, 2 * np.pi, 100)
+
+    for n in range(7):
+        for m in range(-n, n + 1, 2):
+            for dr in range(3):
+                for dt in range(3):
+                    # Compute with precompute=True
+                    result_precompute = zernike_polynomial(rho=rho, theta=theta, n=[n], m=[m], rho_derivative=[dr], theta_derivative=[dt], precompute=True)[0]
+
+                    # Compute with precompute=False
+                    result_no_precompute = zernike_polynomial(rho=rho, theta=theta, n=[n], m=[m], rho_derivative=[dr], theta_derivative=[dt], precompute=False)[0]
+
+                    # Check if the results are equal
+                    assert np.allclose(result_precompute, result_no_precompute, equal_nan=True), (
+                        f"Mismatch for n={n}, m={m}, rho_derivative={dr}, theta_derivative={dt}. "
+                        f"With precompute: {result_precompute}, Without precompute: {result_no_precompute}"
+                    )

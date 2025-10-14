@@ -16,7 +16,7 @@ from numbers import Integral
 from typing import Sequence, List, Optional
 import sympy
 
-from .core_symbolic import core_symbolic
+from .core.core_symbolic import core_symbolic
 
 def radial_symbolic(
     n: Sequence[Integral],
@@ -33,32 +33,24 @@ def radial_symbolic(
 
         R_{n}^{m}(\rho) = \sum_{k=0}^{(n-m)/2} \frac{(-1)^k (n-k)!}{k! ((n+m)/2 - k)! ((n-m)/2 - k)!} \rho^{n-2k}
 
-    if :math:`n < 0`, :math:`m < 0`, :math:`n < m`, or :math:`(n - m)` is odd, the output is a zeros array with the same shape as :math:`\rho`.
-
-    The derivative of order (derivative (a)) of the radial Zernike polynomial is defined as follows:
-
-    .. math::
-
-        \frac{d^{a}R_{n}^{m}(\rho)}{d\rho^{a}} = \sum_{k=0}^{(n-m)/2} \frac{(-1)^k (n-k)!}{k! ((n+m)/2 - k)! ((n-m)/2 - k)!} (n-2k) (n-2k-1) \ldots (n-2k-a+1) \rho^{n-2k-a}
-    
-    This function allows to compute several radial Zernike polynomials at once for different orders and degrees given as sequences. The output is a list of numpy arrays, each containing the expression of the radial Zernike polynomial for the corresponding order and degree.
-
-    .. note::
-
-        The symbol `x` is used to represent the radial coordinate :math:`\rho` in the symbolic expression.
-
-    .. note::
-
-        For developers, the ``_skip`` parameter is used to skip the checks for the input parameters. This is useful for internal use where the checks are already done.
-        In this case :
-
-        - ``n``, ``m`` and ``rho_derivative`` must be given as sequence of integers with the same length and valid values.
-
-        See also :func:`pyzernike.core_symbolic` for more details on the input parameters.
+    if :math:`n < 0`, :math:`m < 0`, :math:`n < m`, or :math:`(n - m)` is odd, the output is the zero polynomial.
 
     .. seealso::
 
-        :func:`pyzernike.zernike_symbolic` for computing the symbolic expressions of Zernike polynomials.
+        - :func:`pyzernike.zernike_symbolic` for computing the full Zernike polynomial symbolic expression :math:`Z_{n}^{m}(\rho, \theta)`.
+        - :func:`pyzernike.core.core_symbolic` to inspect the core implementation of the symbolic computation.
+        - The page :doc:`../../mathematical_description` in the documentation for the detailed mathematical description of the Zernike polynomials.
+    
+    The function allows to display several radial Zernike polynomials for different sets of (order, degree, derivative order) given as sequences.
+
+    - The parameters ``n``, ``m`` and ``rho_derivative`` must be sequences of integers with the same length.
+
+    The output is a list of sympy expressions, each containing the symbolic expression of the radial Zernike polynomial for the corresponding order and degree.
+    The list has the same length as the input sequences.
+
+    .. note::
+
+        The symbol `r` is used to represent the radial coordinate :math:`\rho` in the symbolic expression.
 
     Parameters
     ----------
@@ -85,10 +77,10 @@ def radial_symbolic(
     Raises
     ------
     TypeError
-        If the rho values are not a numpy array or if n and m are not integers.
+        If n, m or rho_derivative (if not None) are not sequences of integers.
 
     ValueError
-        If the lengths of n and m are not the same.
+        If the lengths of n, m and rho_derivative (if not None) are not the same.
 
     Examples
     --------
@@ -99,6 +91,11 @@ def radial_symbolic(
         from pyzernike import radial_symbolic
         result = radial_symbolic(n=[2], m=[0])
         expression = result[0]  # result is a list, we take the first element
+        print(expression)
+
+    .. code-block:: console
+
+        2*r**2 - 1
 
     Then evaluate the expression for a specific value of :math:`\rho`:
 
@@ -107,9 +104,9 @@ def radial_symbolic(
         import numpy
         import sympy
         rho = numpy.linspace(0, 1, 100)
-        # `x` represents the radial coordinate in the symbolic expression
+        # `r` represents the radial coordinate in the symbolic expression
         
-        func = sympy.lambdify('x', expression, 'numpy')
+        func = sympy.lambdify('r', expression, 'numpy')
         evaluated_result = func(rho)
 
     """

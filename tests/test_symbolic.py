@@ -19,8 +19,8 @@ def test_symbolic_radial():
                 # Compute using symbolic radial polynomial
                 symbolic_expression = radial_symbolic([n], [m], [rho_derivative])[0]
 
-                # `x` represents the radial coordinate in the symbolic expression
-                func = sympy.lambdify('x', symbolic_expression, 'numpy')
+                # `r` represents the radial coordinate in the symbolic expression
+                func = sympy.lambdify('r', symbolic_expression, 'numpy')
                 symbolic_result = func(rho_test)
 
                 # Compute using core_polynomial
@@ -47,9 +47,9 @@ def test_symbolic_zernike():
                     # Compute using symbolic zernike polynomial
                     symbolic_expression = zernike_symbolic([n], [m], [rho_derivative], [theta_derivative])[0]
 
-                    # `x` represents the radial coordinate in the symbolic expression
-                    # `y` represents the angular coordinate in the symbolic expression
-                    func = sympy.lambdify(['x', 'y'], symbolic_expression, 'numpy')
+                    # `r` represents the radial coordinate in the symbolic expression
+                    # `t` represents the angular coordinate in the symbolic expression
+                    func = sympy.lambdify(['r', 't'], symbolic_expression, 'numpy')
                     symbolic_result = func(rho, theta)
 
                     # Compute using core_polynomial

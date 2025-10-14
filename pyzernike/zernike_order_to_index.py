@@ -31,12 +31,27 @@ def zernike_order_to_index(n : Sequence[Integral], m : Sequence[Integral], _skip
         - :func:`pyzernike.zernike_polynomial` for computing the Zernike polynomial :math:`Z_{n}^{m}(\rho, \theta)`.
         - :func:`pyzernike.zernike_index_to_order` for converting indices back to Zernike orders.
 
-    .. note::
+    - The parameters ``n`` and ``m`` must be sequences of integers with the same length.
 
-        For developers, the ``_skip`` parameter is used to skip the checks for the input parameters. This is useful for internal use where the checks are already done.
-        In this case :
+    The first few Zernike polynomials in the OSA/ANSI ordering are:
 
-        - ``n`` and ``m`` must be given as sequence of integers with the same length and valid values.
+    +-----+-----+-----+
+    |  j  |  n  |  m  |
+    +=====+=====+=====+
+    |  0  |  0  |  0  |
+    +-----+-----+-----+
+    |  1  |  1  | - 1 |
+    +-----+-----+-----+
+    |  2  |  1  |  1  |
+    +-----+-----+-----+
+    |  3  |  2  | - 2 |
+    +-----+-----+-----+
+    |  4  |  2  |  0  |
+    +-----+-----+-----+
+    |  5  |  2  |  2  |
+    +-----+-----+-----+
+    | ... | ... | ... |
+    +-----+-----+-----+
 
     Parameters
     ----------

@@ -24,7 +24,32 @@ def zernike_index_to_order(j: Sequence[Integral], _skip: bool = False) -> Tuple[
 
         j = \frac{n(n + 2) + m}{2}
 
-    ``j`` must be a sequence of non-negative integers.
+    .. seealso::
+
+        - :func:`pyzernike.zernike_polynomial` for computing the Zernike polynomial :math:`Z_{n}^{m}(\rho, \theta)`.
+        - :func:`pyzernike.zernike_order_to_index` for converting Zernike orders to indices.    
+
+    - ``j`` must be a sequence of non-negative integers.
+
+    The first few Zernike polynomials in the OSA/ANSI ordering are:
+
+    +-----+-----+-----+
+    |  j  |  n  |  m  |
+    +=====+=====+=====+
+    |  0  |  0  |  0  |
+    +-----+-----+-----+
+    |  1  |  1  | - 1 |
+    +-----+-----+-----+
+    |  2  |  1  |  1  |
+    +-----+-----+-----+
+    |  3  |  2  | - 2 |
+    +-----+-----+-----+
+    |  4  |  2  |  0  |
+    +-----+-----+-----+
+    |  5  |  2  |  2  |
+    +-----+-----+-----+
+    | ... | ... | ... |
+    +-----+-----+-----+
 
     The process to compute the Zernike orders from the index is as follows:
 
@@ -37,19 +62,6 @@ def zernike_index_to_order(j: Sequence[Integral], _skip: bool = False) -> Tuple[
     .. math::
     
         n = \text{int}\left(\frac{-1 + \sqrt{1 + 8j}}{2}\right) \quad \text{and} \quad m = 2j - n(n + 2)
-
-
-    .. seealso::
-
-        - :func:`pyzernike.zernike_polynomial` for computing the Zernike polynomial :math:`Z_{n}^{m}(\rho, \theta)`.
-        - :func:`pyzernike.zernike_order_to_index` for converting Zernike orders to indices.
-
-    .. note::
-
-        For developers, the ``_skip`` parameter is used to skip the checks for the input parameters. This is useful for internal use where the checks are already done.
-        In this case :
-
-        - ``j`` must be given as sequence of integers with valid values.
 
     Parameters
     ----------

@@ -25,20 +25,23 @@ def core_display(
         rho_derivative: Sequence[int], 
         theta_derivative: Sequence[int],
         flag_radial: bool,
+        precompute: bool = True,
     ) -> None:
     r"""
+    Display Zernike polynomials for given `n`, `m`, `rho_derivative`, and `theta_derivative` values.
 
     .. warning::
 
-        This method is a core function of ``pyzernike`` that displays Zernike polynomials for given `n`, `m`, `rho_derivative`, and `theta_derivative` values.
-        It is not a method designed to be use by the users directly, but rather a helper function for the optimized display.
-
-        ``n``, ``m``, ``rho_derivative`` and ``theta_derivative`` are expected to be sequences of integers with the same length and valid values.
+        This method is a core function of ``pyzernike`` that is not designed to be use by the users directly.
+        No test is done on the input parameters. Please use the high level functions.
 
     .. seealso::
 
         - :func:`pyzernike.radial_display` for the radial Zernike polynomial display.
         - :func:`pyzernike.zernike_display` for the full Zernike polynomial display.
+        - The page :doc:`../../mathematical_description` in the documentation for the mathematical description of the Zernike polynomials.
+
+    - ``n``, ``m``, ``rho_derivative`` and ``theta_derivative`` are expected to be sequences of integers of the same length and valid values.
 
     The displays are including in a interactive matplotlib figure with buttons to navigate through the different Zernike polynomials.
 
@@ -57,6 +60,11 @@ def core_display(
     theta_derivative : Sequence[int]
         A list of integers containing the order of the angular derivative to display for each Zernike polynomial.
         If `theta_derivative` is None, no angular derivative is displayed. ONLY USED IF `flag_radial` IS False.
+
+    precompute : bool, optional
+        If True, the useful terms for the Zernike polynomials are precomputed to optimize the computation.
+        If False, the useful terms are computed on-the-fly to avoid memory overhead.
+        Default is True.
 
     flag_radial : bool
         If True, the radial Zernike polynomial :math:`R_{n}^{m}(\rho)` is displayed instead of the full Zernike polynomial :math:`Z_{n}^{m}(\rho, \theta)`.
@@ -82,6 +90,7 @@ def core_display(
             rho_derivative=rho_derivative,
             theta_derivative=None,
             flag_radial=True,
+            precompute=precompute,
         )
     else:
         # Full Zernike polynomial
@@ -93,6 +102,7 @@ def core_display(
             rho_derivative=rho_derivative,
             theta_derivative=theta_derivative,
             flag_radial=False,
+            precompute=precompute,
         )
 
     # Indexes for the current plot
@@ -129,11 +139,13 @@ def core_display(
             # Plot radial Zernike polynomial
             plot_radial.set_ydata(data)
             title = rf"$\mathrm{{Radial\ Zernike}}\ R_{{{n[index]}}}^{{{m[index]}}}(\rho),\ \frac{{d^{{{rho_derivative[index]}}}}}{{d\rho^{{{rho_derivative[index]}}}}}$"
+            ax.set_ylim(min(numpy.min(data), -1), max(numpy.max(data), 1))
         else:
             # Plot full Zernike polynomial
             pcm_zernike.set_array(data.flatten())
             title = rf"$Z_{{{n[index]}}}^{{{m[index]}}},\ \frac{{\partial^{rho_derivative[index]}}}{{\partial \rho^{rho_derivative[index]}}}\ \frac{{\partial^{theta_derivative[index]}}}{{\partial \theta^{theta_derivative[index]}}}$"
-        
+            pcm_zernike.set_clim(min(numpy.min(data), -1), max(numpy.max(data), 1))
+
         ax.set_title(title)
         fig.canvas.draw_idle()
 

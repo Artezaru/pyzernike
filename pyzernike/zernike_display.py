@@ -15,48 +15,40 @@
 from numbers import Integral
 from typing import Sequence, Optional
 
-from .core_display import core_display
+from .core.core_display import core_display
 
 def zernike_display(
     n: Sequence[Integral],
     m: Sequence[Integral],
     rho_derivative: Optional[Sequence[Integral]] = None,
     theta_derivative: Optional[Sequence[Integral]] = None,
+    precompute: bool = True,
     _skip: bool = False
 ) -> None:
     r"""
-    Display the Zernike polynomial :math:`Z_{n}^{m}(\rho, \theta)` in the unit circle in an interactive matplotlib figure.
+    Display the Zernike polynomial :math:`Z_{n}^{m}(\rho, \theta)` for :math:`\rho \leq 1` and :math:`\theta \in [0, 2\pi]` in an interactive matplotlib figure.
 
     The Zernike polynomial is defined as follows:
 
     .. math::
 
         Z_{n}^{m}(\rho, \theta) = R_{n}^{m}(\rho) \cos(m \theta) \quad \text{if} \quad m \geq 0
-    
+
     .. math::
 
         Z_{n}^{m}(\rho, \theta) = R_{n}^{-m}(\rho) \sin(-m \theta) \quad \text{if} \quad m < 0
 
-    The derivative of order (derivative (a)) of the Zernike polynomial with respect to rho and order (derivative (b)) with respect to theta is defined as follows :
-
-    .. math::
-
-        \frac{\partial^{a}\partial^{b}Z_{n}^{m}(\rho, \theta)}{\partial \rho^{a} \partial \theta^{b}} = \frac{\partial^{a}R_{n}^{m}(\rho)}{\partial \rho^{a}} \frac{\partial^{b}\cos(m \theta)}{\partial \theta^{b}} \quad \text{if} \quad m > 0
-    
-    This function allows to display several Zernike polynomials at once for different orders and degrees given as sequences.
-
-    .. note::
-
-        For developers, the ``_skip`` parameter is used to skip the checks for the input parameters. This is useful for internal use where the checks are already done.
-        In this case :
-
-        - ``n``, ``m`` and ``rho_derivative`` must be given as sequence of integers with the same length and valid values.
-
-        See also :func:`pyzernike.core_display` for more details on the input parameters.
+    If :math:`n < 0`, :math:`n < |m|`, or :math:`(n - m)` is odd, the polynomial is zero.
 
     .. seealso::
 
-        :func:`pyzernike.radial_display` for displaying the radial Zernike polynomial.
+        - :func:`pyzernike.radial_display` for displaying the radial part of the Zernike polynomial :math:`R_{n}^{m}(\rho)`.
+        - :func:`pyzernike.core.core_display` to inspect the core implementation of the display.
+        - The page :doc:`../../mathematical_description` in the documentation for the detailed mathematical description of the Zernike polynomials.
+
+    The function allows to display several Zernike polynomials for different sets of (order, degree, derivative orders) given as sequences.
+
+    - The parameters ``n``, ``m``, ``rho_derivative`` and ``theta_derivative`` must be sequences of integers with the same length.
 
     Parameters
     ----------
@@ -74,6 +66,11 @@ def zernike_display(
         A list of the order(s) of the angular derivative(s) to display.
         If None, is it assumed that theta_derivative is 0 for all polynomials.
 
+    precompute : bool, optional
+        If True, the useful terms for the Zernike polynomials are precomputed to optimize the computation.
+        If False, the useful terms are computed on-the-fly to avoid memory overhead.
+        Default is True.
+
     _skip : bool, optional
         If True, the checks for the input parameters are skipped. This is useful for internal use where the checks are already done.
         The default is False.
@@ -85,10 +82,10 @@ def zernike_display(
     Raises
     ------
     TypeError
-        If the rho values are not a numpy array or if n and m are not integers.
+        If n, m, rho_derivative or theta_derivative (if not None) are not sequences of integers.
 
     ValueError
-        If the lengths of n and m are not the same.
+        If the lengths of n, m, rho_derivative and theta_derivative (if not None) are not the same.
 
     Examples
     --------
@@ -122,6 +119,8 @@ def zernike_display(
         if theta_derivative is not None:
             if not isinstance(theta_derivative, Sequence) or not all(isinstance(i, Integral) and i >= 0 for i in theta_derivative):
                 raise TypeError("theta_derivative must be a sequence of non-negative integers.")
+        if not isinstance(precompute, bool):
+            raise TypeError("precompute must be a boolean.")
         
         if len(n) != len(m):
             raise ValueError("n and m must have the same length.")
@@ -140,5 +139,6 @@ def zernike_display(
         m=m,
         rho_derivative=rho_derivative,
         theta_derivative=theta_derivative,
-        flag_radial=False
+        flag_radial=False,
+        precompute=precompute,
     )

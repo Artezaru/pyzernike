@@ -38,6 +38,7 @@ The documentation is divided into the following sections:
    :caption: Contents:
 
    ./installation
+   ./mathematical_description
    ./api
    ./usage
 

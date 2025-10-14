@@ -16,7 +16,7 @@ from numbers import Integral
 from typing import Sequence, List, Optional
 import sympy
 
-from .core_symbolic import core_symbolic
+from .core.core_symbolic import core_symbolic
 
 def zernike_symbolic(
     n: Sequence[Integral],
@@ -26,41 +26,37 @@ def zernike_symbolic(
     _skip: bool = False
 ) -> List[sympy.Expr]:
     r"""
-    Compute the symbolic expression of the radial Zernike polynomial :math:`R_{n}^{m}(\rho)` for :math:`\rho \leq 1`.
+    Compute the symbolic expression of the Zernike polynomial :math:`Z_{n}^{m}(\rho, \theta)` for :math:`\rho \leq 1` and :math:`\theta \in [0, 2\pi]`.
 
     The Zernike polynomial is defined as follows:
 
     .. math::
 
-        Z_{n}^{m}(\rho, \theta) = R_{n}^{m}(\rho) \cos(m \theta) \quad \text{if} \quad m > 0
-    
+        Z_{n}^{m}(\rho, \theta) = R_{n}^{m}(\rho) \cos(m \theta) \quad \text{if} \quad m \geq 0
+
     .. math::
 
         Z_{n}^{m}(\rho, \theta) = R_{n}^{-m}(\rho) \sin(-m \theta) \quad \text{if} \quad m < 0
 
-    The derivative of order (derivative (a)) of the Zernike polynomial with respect to rho and order (derivative (b)) with respect to theta is defined as follows :
+    If :math:`n < 0`, :math:`n < |m|`, or :math:`(n - m)` is odd, the polynomial is zero.
 
-    .. math::
+    .. seealso::
 
-        \frac{\partial^{a}\partial^{b}Z_{n}^{m}(\rho, \theta)}{\partial \rho^{a} \partial \theta^{b}} = \frac{\partial^{a}R_{n}^{m}(\rho)}{\partial \rho^{a}} \frac{\partial^{b}\cos(m \theta)}{\partial \theta^{b}} \quad \text{if} \quad m > 0
-
-    If :math:`|m| > n` or :math:`n < 0`, or :math:`(n - m)` is odd, the output is a zeros array with the same shape as :math:`\rho`.
+        - :func:`pyzernike.radial_polynomial` for computing the radial part of the Zernike polynomial :math:`R_{n}^{m}(\rho)`.
+        - :func:`pyzernike.core.core_polynomial` to inspect the core implementation of the computation.
+        - The page :doc:`../../mathematical_description` in the documentation for the detailed mathematical description of the Zernike polynomials.
     
-    This function allows to compute several radial Zernike polynomials at once for different orders and degrees given as sequences. The output is a list of numpy arrays, each containing the expression of the radial Zernike polynomial for the corresponding order and degree.
+    The function allows to display several Zernike polynomials for different sets of (order, degree, derivative orders) given as sequences.
+
+    - The parameters ``n``, ``m``, ``rho_derivative`` and ``theta_derivative`` must be sequences of integers with the same length.
+
+    The output is a list of sympy expressions, each containing the symbolic expression of the Zernike polynomial for the corresponding order and degree.
+    The list has the same length as the input sequences.
 
     .. note::
 
-        The symbol `x` is used to represent the radial coordinate :math:`\rho` in the symbolic expression.
-        The symbol `y` is used to represent the angular coordinate :math:`\theta` in the symbolic expression.
-
-    .. note::
-
-        For developers, the ``_skip`` parameter is used to skip the checks for the input parameters. This is useful for internal use where the checks are already done.
-        In this case :
-
-        - ``n``, ``m``, ``rho_derivative`` and ``theta_derivative`` must be given as sequence of integers with the same length and valid values.
-
-        See also :func:`pyzernike.core_symbolic` for more details on the input parameters.
+        - The symbol `r` is used to represent the radial coordinate :math:`\rho` in the symbolic expression.
+        - The symbol `t` is used to represent the angular coordinate :math:`\theta` in the symbolic expression.
 
     Parameters
     ----------
@@ -91,20 +87,25 @@ def zernike_symbolic(
     Raises
     ------
     TypeError
-        If the rho values are not a numpy array or if n and m are not integers.
+        If n, m, rho_derivative or theta_derivative (if not None) are not sequences of integers.
 
     ValueError
-        If the lengths of n and m are not the same.
+        If the lengths of n, m, rho_derivative or theta_derivative (if not None) are not the same.
 
     Examples
     --------
-    Compute the expression of the radial Zernike polynomial :math:`Z_{2}^{0}(\rho, \theta)`:
+    Compute the expression of the radial Zernike polynomial :math:`Z_{2}^{1}(\rho, \theta)`:
 
     .. code-block:: python
 
         from pyzernike import zernike_symbolic
-        result = zernike_symbolic(n=[2], m=[0])
+        result = zernike_symbolic(n=[2], m=[1])
         expression = result[0]  # result is a list, we take the first element
+        print(expression)
+
+    .. code-block:: console
+
+        (2*r**2 - 1)*cos(t)
 
     Then evaluate the expression for a specific value of :math:`\rho` and :math:`\theta`:
 
@@ -115,10 +116,10 @@ def zernike_symbolic(
         rho = numpy.linspace(0, 1, 100)
         theta = numpy.linspace(0, 2 * numpy.pi, 100)
 
-        # `x` represents the radial coordinate in the symbolic expression
-        # `y` represents the angular coordinate in the symbolic expression
-        
-        func = sympy.lambdify(['x', 'y'], expression, 'numpy')
+        # `r` represents the radial coordinate in the symbolic expression
+        # `t` represents the angular coordinate in the symbolic expression
+
+        func = sympy.lambdify(['r', 't'], expression, 'numpy')
         evaluated_result = func(rho, theta)
 
     """

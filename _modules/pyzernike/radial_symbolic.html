@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pyzernike.radial_symbolic &#8212; pyzernike 2.0.8 documentation</title>
+    <title>pyzernike.radial_symbolic &#8212; pyzernike 2.1.0 documentation</title>
   
   
   
@@ -37,7 +37,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=722443bc"></script>
+    <script src="../../_static/documentation_options.js?v=20623aea"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/pyzernike/radial_symbolic';</script>
@@ -107,7 +107,7 @@
   
   
   
-    <p class="title logo__title">pyzernike 2.0.8 documentation</p>
+    <p class="title logo__title">pyzernike 2.1.0 documentation</p>
   
 </a></div>
     
@@ -124,6 +124,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../../installation.html">
     Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../mathematical_description.html">
+    Mathematical description
   </a>
 </li>
 
@@ -215,6 +222,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../../installation.html">
     Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../mathematical_description.html">
+    Mathematical description
   </a>
 </li>
 
@@ -328,7 +342,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">sympy</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">.core_symbolic</span><span class="w"> </span><span class="kn">import</span> <span class="n">core_symbolic</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.core.core_symbolic</span><span class="w"> </span><span class="kn">import</span> <span class="n">core_symbolic</span>
 
 <div class="viewcode-block" id="radial_symbolic">
 <a class="viewcode-back" href="../../api_doc/radial_symbolic.html#pyzernike.radial_symbolic">[docs]</a>
@@ -347,32 +361,24 @@
 
 <span class="sd">        R_{n}^{m}(\rho) = \sum_{k=0}^{(n-m)/2} \frac{(-1)^k (n-k)!}{k! ((n+m)/2 - k)! ((n-m)/2 - k)!} \rho^{n-2k}</span>
 
-<span class="sd">    if :math:`n &lt; 0`, :math:`m &lt; 0`, :math:`n &lt; m`, or :math:`(n - m)` is odd, the output is a zeros array with the same shape as :math:`\rho`.</span>
-
-<span class="sd">    The derivative of order (derivative (a)) of the radial Zernike polynomial is defined as follows:</span>
-
-<span class="sd">    .. math::</span>
-
-<span class="sd">        \frac{d^{a}R_{n}^{m}(\rho)}{d\rho^{a}} = \sum_{k=0}^{(n-m)/2} \frac{(-1)^k (n-k)!}{k! ((n+m)/2 - k)! ((n-m)/2 - k)!} (n-2k) (n-2k-1) \ldots (n-2k-a+1) \rho^{n-2k-a}</span>
-<span class="sd">    </span>
-<span class="sd">    This function allows to compute several radial Zernike polynomials at once for different orders and degrees given as sequences. The output is a list of numpy arrays, each containing the expression of the radial Zernike polynomial for the corresponding order and degree.</span>
-
-<span class="sd">    .. note::</span>
-
-<span class="sd">        The symbol `x` is used to represent the radial coordinate :math:`\rho` in the symbolic expression.</span>
-
-<span class="sd">    .. note::</span>
-
-<span class="sd">        For developers, the ``_skip`` parameter is used to skip the checks for the input parameters. This is useful for internal use where the checks are already done.</span>
-<span class="sd">        In this case :</span>
-
-<span class="sd">        - ``n``, ``m`` and ``rho_derivative`` must be given as sequence of integers with the same length and valid values.</span>
-
-<span class="sd">        See also :func:`pyzernike.core_symbolic` for more details on the input parameters.</span>
+<span class="sd">    if :math:`n &lt; 0`, :math:`m &lt; 0`, :math:`n &lt; m`, or :math:`(n - m)` is odd, the output is the zero polynomial.</span>
 
 <span class="sd">    .. seealso::</span>
 
-<span class="sd">        :func:`pyzernike.zernike_symbolic` for computing the symbolic expressions of Zernike polynomials.</span>
+<span class="sd">        - :func:`pyzernike.zernike_symbolic` for computing the full Zernike polynomial symbolic expression :math:`Z_{n}^{m}(\rho, \theta)`.</span>
+<span class="sd">        - :func:`pyzernike.core.core_symbolic` to inspect the core implementation of the symbolic computation.</span>
+<span class="sd">        - The page :doc:`../../mathematical_description` in the documentation for the detailed mathematical description of the Zernike polynomials.</span>
+<span class="sd">    </span>
+<span class="sd">    The function allows to display several radial Zernike polynomials for different sets of (order, degree, derivative order) given as sequences.</span>
+
+<span class="sd">    - The parameters ``n``, ``m`` and ``rho_derivative`` must be sequences of integers with the same length.</span>
+
+<span class="sd">    The output is a list of sympy expressions, each containing the symbolic expression of the radial Zernike polynomial for the corresponding order and degree.</span>
+<span class="sd">    The list has the same length as the input sequences.</span>
+
+<span class="sd">    .. note::</span>
+
+<span class="sd">        The symbol `r` is used to represent the radial coordinate :math:`\rho` in the symbolic expression.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -399,10 +405,10 @@
 <span class="sd">    Raises</span>
 <span class="sd">    ------</span>
 <span class="sd">    TypeError</span>
-<span class="sd">        If the rho values are not a numpy array or if n and m are not integers.</span>
+<span class="sd">        If n, m or rho_derivative (if not None) are not sequences of integers.</span>
 
 <span class="sd">    ValueError</span>
-<span class="sd">        If the lengths of n and m are not the same.</span>
+<span class="sd">        If the lengths of n, m and rho_derivative (if not None) are not the same.</span>
 
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
@@ -413,6 +419,11 @@
 <span class="sd">        from pyzernike import radial_symbolic</span>
 <span class="sd">        result = radial_symbolic(n=[2], m=[0])</span>
 <span class="sd">        expression = result[0]  # result is a list, we take the first element</span>
+<span class="sd">        print(expression)</span>
+
+<span class="sd">    .. code-block:: console</span>
+
+<span class="sd">        2*r**2 - 1</span>
 
 <span class="sd">    Then evaluate the expression for a specific value of :math:`\rho`:</span>
 
@@ -421,9 +432,9 @@
 <span class="sd">        import numpy</span>
 <span class="sd">        import sympy</span>
 <span class="sd">        rho = numpy.linspace(0, 1, 100)</span>
-<span class="sd">        # `x` represents the radial coordinate in the symbolic expression</span>
+<span class="sd">        # `r` represents the radial coordinate in the symbolic expression</span>
 <span class="sd">        </span>
-<span class="sd">        func = sympy.lambdify(&#39;x&#39;, expression, &#39;numpy&#39;)</span>
+<span class="sd">        func = sympy.lambdify(&#39;r&#39;, expression, &#39;numpy&#39;)</span>
 <span class="sd">        evaluated_result = func(rho)</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>

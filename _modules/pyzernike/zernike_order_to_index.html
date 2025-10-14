@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pyzernike.zernike_order_to_index &#8212; pyzernike 2.0.8 documentation</title>
+    <title>pyzernike.zernike_order_to_index &#8212; pyzernike 2.1.0 documentation</title>
   
   
   
@@ -37,7 +37,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=722443bc"></script>
+    <script src="../../_static/documentation_options.js?v=20623aea"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/pyzernike/zernike_order_to_index';</script>
@@ -107,7 +107,7 @@
   
   
   
-    <p class="title logo__title">pyzernike 2.0.8 documentation</p>
+    <p class="title logo__title">pyzernike 2.1.0 documentation</p>
   
 </a></div>
     
@@ -124,6 +124,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../../installation.html">
     Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../mathematical_description.html">
+    Mathematical description
   </a>
 </li>
 
@@ -215,6 +222,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../../installation.html">
     Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../mathematical_description.html">
+    Mathematical description
   </a>
 </li>
 
@@ -345,12 +359,27 @@
 <span class="sd">        - :func:`pyzernike.zernike_polynomial` for computing the Zernike polynomial :math:`Z_{n}^{m}(\rho, \theta)`.</span>
 <span class="sd">        - :func:`pyzernike.zernike_index_to_order` for converting indices back to Zernike orders.</span>
 
-<span class="sd">    .. note::</span>
+<span class="sd">    - The parameters ``n`` and ``m`` must be sequences of integers with the same length.</span>
 
-<span class="sd">        For developers, the ``_skip`` parameter is used to skip the checks for the input parameters. This is useful for internal use where the checks are already done.</span>
-<span class="sd">        In this case :</span>
+<span class="sd">    The first few Zernike polynomials in the OSA/ANSI ordering are:</span>
 
-<span class="sd">        - ``n`` and ``m`` must be given as sequence of integers with the same length and valid values.</span>
+<span class="sd">    +-----+-----+-----+</span>
+<span class="sd">    |  j  |  n  |  m  |</span>
+<span class="sd">    +=====+=====+=====+</span>
+<span class="sd">    |  0  |  0  |  0  |</span>
+<span class="sd">    +-----+-----+-----+</span>
+<span class="sd">    |  1  |  1  | - 1 |</span>
+<span class="sd">    +-----+-----+-----+</span>
+<span class="sd">    |  2  |  1  |  1  |</span>
+<span class="sd">    +-----+-----+-----+</span>
+<span class="sd">    |  3  |  2  | - 2 |</span>
+<span class="sd">    +-----+-----+-----+</span>
+<span class="sd">    |  4  |  2  |  0  |</span>
+<span class="sd">    +-----+-----+-----+</span>
+<span class="sd">    |  5  |  2  |  2  |</span>
+<span class="sd">    +-----+-----+-----+</span>
+<span class="sd">    | ... | ... | ... |</span>
+<span class="sd">    +-----+-----+-----+</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>

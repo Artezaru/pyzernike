@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pyzernike.radial_display &#8212; pyzernike 2.0.8 documentation</title>
+    <title>pyzernike.radial_display &#8212; pyzernike 2.1.0 documentation</title>
   
   
   
@@ -37,7 +37,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=722443bc"></script>
+    <script src="../../_static/documentation_options.js?v=20623aea"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/pyzernike/radial_display';</script>
@@ -107,7 +107,7 @@
   
   
   
-    <p class="title logo__title">pyzernike 2.0.8 documentation</p>
+    <p class="title logo__title">pyzernike 2.1.0 documentation</p>
   
 </a></div>
     
@@ -124,6 +124,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../../installation.html">
     Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../mathematical_description.html">
+    Mathematical description
   </a>
 </li>
 
@@ -215,6 +222,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../../installation.html">
     Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../mathematical_description.html">
+    Mathematical description
   </a>
 </li>
 
@@ -327,7 +341,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">numbers</span><span class="w"> </span><span class="kn">import</span> <span class="n">Integral</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Optional</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">.core_display</span><span class="w"> </span><span class="kn">import</span> <span class="n">core_display</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.core.core_display</span><span class="w"> </span><span class="kn">import</span> <span class="n">core_display</span>
 
 <div class="viewcode-block" id="radial_display">
 <a class="viewcode-back" href="../../api_doc/radial_display.html#pyzernike.radial_display">[docs]</a>
@@ -335,6 +349,7 @@
     <span class="n">n</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Integral</span><span class="p">],</span>
     <span class="n">m</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Integral</span><span class="p">],</span>
     <span class="n">rho_derivative</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="n">Integral</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">precompute</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">_skip</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
@@ -346,26 +361,17 @@
 
 <span class="sd">        R_{n}^{m}(\rho) = \sum_{k=0}^{(n-m)/2} \frac{(-1)^k (n-k)!}{k! ((n+m)/2 - k)! ((n-m)/2 - k)!} \rho^{n-2k}</span>
 
-<span class="sd">    The derivative of order (derivative (a)) of the radial Zernike polynomial is defined as follows:</span>
-
-<span class="sd">    .. math::</span>
-
-<span class="sd">        \frac{d^{a}R_{n}^{m}(\rho)}{d\rho^{a}} = \sum_{k=0}^{(n-m)/2} \frac{(-1)^k (n-k)!}{k! ((n+m)/2 - k)! ((n-m)/2 - k)!} (n-2k) (n-2k-1) \ldots (n-2k-a+1) \rho^{n-2k-a}</span>
-<span class="sd">    </span>
-<span class="sd">    This function allows to display several radial Zernike polynomials at once for different orders and degrees given as sequences.</span>
-
-<span class="sd">    .. note::</span>
-
-<span class="sd">        For developers, the ``_skip`` parameter is used to skip the checks for the input parameters. This is useful for internal use where the checks are already done.</span>
-<span class="sd">        In this case :</span>
-
-<span class="sd">        - ``n``, ``m`` and ``rho_derivative`` must be given as sequence of integers with the same length and valid values.</span>
-
-<span class="sd">        See also :func:`pyzernike.core_display` for more details on the input parameters.</span>
+<span class="sd">    If :math:`n &lt; 0`, :math:`m &lt; 0`, :math:`n &lt; m`, or :math:`(n - m)` is odd, the polynomial is zero.</span>
 
 <span class="sd">    .. seealso::</span>
 
-<span class="sd">        :func:`pyzernike.zernike_display` for displaying the full Zernike polynomial.</span>
+<span class="sd">        - :func:`pyzernike.zernike_display` for displaying the full Zernike polynomial :math:`Z_{n}^{m}(\rho, \theta)`.</span>
+<span class="sd">        - :func:`pyzernike.core.core_display` to inspect the core implementation of the display.</span>
+<span class="sd">        - The page :doc:`../../mathematical_description` in the documentation for the detailed mathematical description of the Zernike polynomials.</span>
+
+<span class="sd">    The function allows to display several radial Zernike polynomials for different sets of (order, degree, derivative order) given as sequences.</span>
+
+<span class="sd">    - The parameters ``n``, ``m`` and ``rho_derivative`` must be sequences of integers with the same length.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -379,6 +385,11 @@
 <span class="sd">        A list of the order(s) of the radial derivative(s) to display.</span>
 <span class="sd">        If None, is it assumed that rho_derivative is 0 for all polynomials.</span>
 
+<span class="sd">    precompute : bool, optional</span>
+<span class="sd">        If True, the useful terms for the Zernike polynomials are precomputed to optimize the computation.</span>
+<span class="sd">        If False, the useful terms are computed on-the-fly to avoid memory overhead.</span>
+<span class="sd">        Default is True.</span>
+
 <span class="sd">    _skip : bool, optional</span>
 <span class="sd">        If True, the checks for the input parameters are skipped. This is useful for internal use where the checks are already done.</span>
 <span class="sd">        The default is False.</span>
@@ -390,10 +401,10 @@
 <span class="sd">    Raises</span>
 <span class="sd">    ------</span>
 <span class="sd">    TypeError</span>
-<span class="sd">        If the rho values are not a numpy array or if n and m are not integers.</span>
+<span class="sd">        If n, m or rho_derivative (if not None) are not sequences of integers.</span>
 
 <span class="sd">    ValueError</span>
-<span class="sd">        If the lengths of n and m are not the same.</span>
+<span class="sd">        If the lengths of n, m and rho_derivative (if not None) are not the same.</span>
 
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
@@ -424,6 +435,8 @@
         <span class="k">if</span> <span class="n">rho_derivative</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">rho_derivative</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">Integral</span><span class="p">)</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">rho_derivative</span><span class="p">):</span>
                 <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;rho_derivative must be a sequence of non-negative integers.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">precompute</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;precompute must be a boolean.&quot;</span><span class="p">)</span>
         
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;n and m must have the same length.&quot;</span><span class="p">)</span>
@@ -438,7 +451,8 @@
         <span class="n">m</span><span class="o">=</span><span class="n">m</span><span class="p">,</span>
         <span class="n">rho_derivative</span><span class="o">=</span><span class="n">rho_derivative</span><span class="p">,</span>
         <span class="n">theta_derivative</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">flag_radial</span><span class="o">=</span><span class="kc">True</span>
+        <span class="n">flag_radial</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">precompute</span><span class="o">=</span><span class="n">precompute</span><span class="p">,</span>
     <span class="p">)</span></div>
 
 </pre></div>

@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>pyzernike.radial_display &#8212; pyzernike 2.0.8 documentation</title>
+    <title>pyzernike.radial_display &#8212; pyzernike 2.1.0 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=722443bc"></script>
+    <script src="../_static/documentation_options.js?v=20623aea"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -46,7 +46,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="pyzernike.zernike_display" href="zernike_display.html" />
-    <link rel="prev" title="pyzernike.core_display" href="core_display.html" />
+    <link rel="prev" title="pyzernike.zernike_symbolic" href="zernike_symbolic.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -111,7 +111,7 @@
   
   
   
-    <p class="title logo__title">pyzernike 2.0.8 documentation</p>
+    <p class="title logo__title">pyzernike 2.1.0 documentation</p>
   
 </a></div>
     
@@ -128,6 +128,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../installation.html">
     Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../mathematical_description.html">
+    Mathematical description
   </a>
 </li>
 
@@ -225,6 +232,13 @@
 </li>
 
 
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../mathematical_description.html">
+    Mathematical description
+  </a>
+</li>
+
+
 <li class="nav-item current active">
   <a class="nav-link nav-internal" href="../api.html">
     API Reference
@@ -267,19 +281,18 @@
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Computation API:</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="core_polynomial.html">pyzernike.core_polynomial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="radial_polynomial.html">pyzernike.radial_polynomial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="zernike_polynomial.html">pyzernike.zernike_polynomial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zernike_polynomial_up_to_order.html">pyzernike.zernike_polynomial_up_to_order</a></li>
+<li class="toctree-l1"><a class="reference internal" href="xy_zernike_polynomial.html">pyzernike.xy_zernike_polynomial</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Symbolic API:</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="core_symbolic.html">pyzernike.core_symbolic</a></li>
 <li class="toctree-l1"><a class="reference internal" href="radial_symbolic.html">pyzernike.radial_symbolic</a></li>
 <li class="toctree-l1"><a class="reference internal" href="zernike_symbolic.html">pyzernike.zernike_symbolic</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Display API:</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="core_display.html">pyzernike.core_display</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">pyzernike.radial_display</a></li>
 <li class="toctree-l1"><a class="reference internal" href="zernike_display.html">pyzernike.zernike_display</a></li>
 </ul>
@@ -287,9 +300,16 @@
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="zernike_index_to_order.html">pyzernike.zernike_index_to_order</a></li>
 <li class="toctree-l1"><a class="reference internal" href="zernike_order_to_index.html">pyzernike.zernike_order_to_index</a></li>
-<li class="toctree-l1"><a class="reference internal" href="zernike_polynomial_up_to_order.html">pyzernike.zernike_polynomial_up_to_order</a></li>
-<li class="toctree-l1"><a class="reference internal" href="xy_zernike_polynomial.html">pyzernike.xy_zernike_polynomial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cartesian_to_elliptic_annulus.html">pyzernike.cartesian_to_elliptic_annulus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="xy_zernike_polynomial_up_to_order.html">pyzernike.xy_zernike_polynomial_up_to_order</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Core Development API:</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="core/core_polynomial.html">pyzernike.core.core_polynomial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core/core_symbolic.html">pyzernike.core.core_symbolic</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core/core_display.html">pyzernike.core.core_display</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core/core_create_precomputing_sets.html">pyzernike.core.core_create_precomputing_sets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core/core_cartesian_to_elliptic_annulus.html">pyzernike.core.core_cartesian_to_elliptic_annulus</a></li>
 </ul>
 </div>
 </nav></div>
@@ -354,28 +374,24 @@
 <h1>pyzernike.radial_display<a class="headerlink" href="#pyzernike-radial-display" title="Link to this heading">#</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="pyzernike.radial_display">
-<span class="sig-prename descclassname"><span class="pre">pyzernike.</span></span><span class="sig-name descname"><span class="pre">radial_display</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Integral</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Integral</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho_derivative</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Integral</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_skip</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/pyzernike/radial_display.html#radial_display"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyzernike.radial_display" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pyzernike.</span></span><span class="sig-name descname"><span class="pre">radial_display</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Integral</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Integral</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho_derivative</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Integral</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">precompute</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_skip</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/pyzernike/radial_display.html#radial_display"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyzernike.radial_display" title="Link to this definition">#</a></dt>
 <dd><p>Display the radial Zernike polynomial <span class="math notranslate nohighlight">\(R_{n}^{m}(\rho)\)</span> for <span class="math notranslate nohighlight">\(\rho \leq 1\)</span> in an interactive matplotlib figure.</p>
 <p>The radial Zernike polynomial is defined as follows:</p>
 <div class="math notranslate nohighlight">
 \[R_{n}^{m}(\rho) = \sum_{k=0}^{(n-m)/2} \frac{(-1)^k (n-k)!}{k! ((n+m)/2 - k)! ((n-m)/2 - k)!} \rho^{n-2k}\]</div>
-<p>The derivative of order (derivative (a)) of the radial Zernike polynomial is defined as follows:</p>
-<div class="math notranslate nohighlight">
-\[\frac{d^{a}R_{n}^{m}(\rho)}{d\rho^{a}} = \sum_{k=0}^{(n-m)/2} \frac{(-1)^k (n-k)!}{k! ((n+m)/2 - k)! ((n-m)/2 - k)!} (n-2k) (n-2k-1) \ldots (n-2k-a+1) \rho^{n-2k-a}\]</div>
-<p>This function allows to display several radial Zernike polynomials at once for different orders and degrees given as sequences.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>For developers, the <code class="docutils literal notranslate"><span class="pre">_skip</span></code> parameter is used to skip the checks for the input parameters. This is useful for internal use where the checks are already done.
-In this case :</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">n</span></code>, <code class="docutils literal notranslate"><span class="pre">m</span></code> and <code class="docutils literal notranslate"><span class="pre">rho_derivative</span></code> must be given as sequence of integers with the same length and valid values.</p></li>
-</ul>
-<p>See also <a class="reference internal" href="core_display.html#pyzernike.core_display" title="pyzernike.core_display"><code class="xref py py-func docutils literal notranslate"><span class="pre">pyzernike.core_display()</span></code></a> for more details on the input parameters.</p>
-</div>
+<p>If <span class="math notranslate nohighlight">\(n &lt; 0\)</span>, <span class="math notranslate nohighlight">\(m &lt; 0\)</span>, <span class="math notranslate nohighlight">\(n &lt; m\)</span>, or <span class="math notranslate nohighlight">\((n - m)\)</span> is odd, the polynomial is zero.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="zernike_display.html#pyzernike.zernike_display" title="pyzernike.zernike_display"><code class="xref py py-func docutils literal notranslate"><span class="pre">pyzernike.zernike_display()</span></code></a> for displaying the full Zernike polynomial.</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="zernike_display.html#pyzernike.zernike_display" title="pyzernike.zernike_display"><code class="xref py py-func docutils literal notranslate"><span class="pre">pyzernike.zernike_display()</span></code></a> for displaying the full Zernike polynomial <span class="math notranslate nohighlight">\(Z_{n}^{m}(\rho, \theta)\)</span>.</p></li>
+<li><p><a class="reference internal" href="core/core_display.html#pyzernike.core.core_display" title="pyzernike.core.core_display"><code class="xref py py-func docutils literal notranslate"><span class="pre">pyzernike.core.core_display()</span></code></a> to inspect the core implementation of the display.</p></li>
+<li><p>The page <a class="reference internal" href="../mathematical_description.html"><span class="doc">Mathematical description</span></a> in the documentation for the detailed mathematical description of the Zernike polynomials.</p></li>
+</ul>
 </div>
+<p>The function allows to display several radial Zernike polynomials for different sets of (order, degree, derivative order) given as sequences.</p>
+<ul class="simple">
+<li><p>The parameters <code class="docutils literal notranslate"><span class="pre">n</span></code>, <code class="docutils literal notranslate"><span class="pre">m</span></code> and <code class="docutils literal notranslate"><span class="pre">rho_derivative</span></code> must be sequences of integers with the same length.</p></li>
+</ul>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -383,6 +399,9 @@ In this case :</p>
 <li><p><strong>m</strong> (<em>Sequence</em><em>[</em><em>Integral</em><em>]</em>) – A list of the radial degree(s) of the Zernike polynomial(s) to display.</p></li>
 <li><p><strong>rho_derivative</strong> (<em>Optional</em><em>[</em><em>Sequence</em><em>[</em><em>Integral</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – A list of the order(s) of the radial derivative(s) to display.
 If None, is it assumed that rho_derivative is 0 for all polynomials.</p></li>
+<li><p><strong>precompute</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, the useful terms for the Zernike polynomials are precomputed to optimize the computation.
+If False, the useful terms are computed on-the-fly to avoid memory overhead.
+Default is True.</p></li>
 <li><p><strong>_skip</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, the checks for the input parameters are skipped. This is useful for internal use where the checks are already done.
 The default is False.</p></li>
 </ul>
@@ -392,8 +411,8 @@ The default is False.</p></li>
 </dd>
 <dt class="field-odd">Raises<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>TypeError</strong> – If the rho values are not a numpy array or if n and m are not integers.</p></li>
-<li><p><strong>ValueError</strong> – If the lengths of n and m are not the same.</p></li>
+<li><p><strong>TypeError</strong> – If n, m or rho_derivative (if not None) are not sequences of integers.</p></li>
+<li><p><strong>ValueError</strong> – If the lengths of n, m and rho_derivative (if not None) are not the same.</p></li>
 </ul>
 </dd>
 </dl>
@@ -425,12 +444,12 @@ The default is False.</p></li>
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="core_display.html"
+       href="zernike_symbolic.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">pyzernike.core_display</p>
+        <p class="prev-next-title">pyzernike.zernike_symbolic</p>
       </div>
     </a>
     <a class="right-next"

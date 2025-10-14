@@ -1,6 +1,11 @@
 Usage
 ==============
 
+.. contents:: Table of Contents
+   :local:
+   :depth: 2
+   :backlinks: top
+
 The package ``pyzernike`` is a Python package to compute Zernike polynomials and their derivatives.
 
 Compute Zernike Polynomials
@@ -57,13 +62,10 @@ To compute several Zernike polynomials at once, you can pass lists of :math:`n`,
     Z_42_drho_dtheta = result[1]  # Zernike polynomial for n=4, m=2 with first derivative with respect to theta and first derivative with respect to rho
     Z_53_dtheta_dtheta = result[2]  # Zernike polynomial for n=5, m=3 with second derivative with respect to theta
 
-
 .. seealso:: 
     
     - :func:`pyzernike.zernike_polynomial` for more details on the function parameters and usage.
     - :func:`pyzernike.radial_polynomial` for computing radial polynomials.
-    - :func:`pyzernike.xy_zernike_polynomial` for cartesian extended Zernike polynomials.
-
 
 Get the mathematical expression of Zernike Polynomials
 ------------------------------------------------------
@@ -126,8 +128,74 @@ To visualize the Zernike polynomials, you can use the `zernike_display` function
     - :func:`pyzernike.radial_display` for displaying radial Zernike polynomials.
 
 
+Going Further with pyzernike
+------------------------------------------------------
+
+Compute all Zernike polynomials up to a specified order
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To compute all Zernike polynomials up to a specified order, you can use the `zernike_polynomial_up_to_order` function. 
+This function generates Zernike polynomials for all valid (n, m) pairs up to the given maximum order.
+
+.. code-block:: python
+
+    from pyzernike import zernike_polynomial_up_to_order, zernike_order_to_index
+    import numpy as np
+
+    rho = np.linspace(0, 1, 100)
+    theta = np.linspace(0, 2*np.pi, 100)
+
+    # Specify the maximum order
+    max_order = 4
+
+    # Compute all Zernike polynomials up to the specified order
+    result = zernike_polynomial_up_to_order(rho, theta, max_order)
+   
+    # Extract the Zernike polynomials and their corresponding (n, m) orders
+    n = [2]
+    m = [0]
+    index = zernike_order_to_index(n, m)[0]  # Get the index for Z_20 (several (n, m) pairs can be provided)
+    Z_20 = result[index]  # Access the Zernike polynomial Z_20
+
+.. seealso::
+
+    - :func:`pyzernike.zernike_polynomial_up_to_order` for more details on the function parameters and usage.
+    - :func:`pyzernike.zernike_order_to_index` to convert (n, m) orders to their corresponding indices.
+    - :func:`pyzernike.zernike_index_to_order` to convert indices back to (n, m) orders.
+
+
+Compute Zernike polynomials in an extended domain (e.g., Cartesian coordinates)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To compute Zernike polynomials in Cartesian coordinates (x, y), you can use the `xy_zernike_polynomial` function.
+This function computes the Zernike polynomials over an extended domain :math:`G`.
+
+For example, lets compute the Zernike polynomial :math:`Z_{3}^{1}` in Cartesian coordinates over a radius of 2:
+
+.. code-block:: python
+
+    from pyzernike import xy_zernike_polynomial
+    import numpy as np
+
+    # Create a grid of (x, y) points over the extended domain G
+    x = np.linspace(-2, 2, 200)
+    y = np.linspace(-2, 2, 200)
+    X, Y = np.meshgrid(x, y)
+
+    n = [3]
+    m = [1]
+
+    # Compute the Zernike polynomial Z_31 in Cartesian coordinates extended over a radius of 2
+    result = xy_zernike_polynomial(X, Y, n, m, Rx=2, Ry=2)
+    Z_31_xy = result[0]  # result is a list of Zernike polynomials for given n and m
+
+.. seealso::
+
+    - :func:`pyzernike.xy_zernike_polynomial` for more details on the function parameters and usage.
+    - :func:`pyzernike.xy_zernike_polynomial_up_to_order` to compute all Zernike polynomials up to a specified order in an extended domain (e.g., Cartesian coordinates).
+
 Command Line Display 
------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~
 
 To display Zernike polynomials from the command line, you can use the `pyzernike` command followed by the desired options. For example:
 

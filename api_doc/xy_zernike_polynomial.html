@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>pyzernike.xy_zernike_polynomial &#8212; pyzernike 2.0.8 documentation</title>
+    <title>pyzernike.xy_zernike_polynomial &#8212; pyzernike 2.1.0 documentation</title>
   
   
   
@@ -38,14 +38,14 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=722443bc"></script>
+    <script src="../_static/documentation_options.js?v=20623aea"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'api_doc/xy_zernike_polynomial';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="pyzernike.xy_zernike_polynomial_up_to_order" href="xy_zernike_polynomial_up_to_order.html" />
+    <link rel="next" title="pyzernike.radial_symbolic" href="radial_symbolic.html" />
     <link rel="prev" title="pyzernike.zernike_polynomial_up_to_order" href="zernike_polynomial_up_to_order.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -111,7 +111,7 @@
   
   
   
-    <p class="title logo__title">pyzernike 2.0.8 documentation</p>
+    <p class="title logo__title">pyzernike 2.1.0 documentation</p>
   
 </a></div>
     
@@ -128,6 +128,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../installation.html">
     Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../mathematical_description.html">
+    Mathematical description
   </a>
 </li>
 
@@ -225,6 +232,13 @@
 </li>
 
 
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../mathematical_description.html">
+    Mathematical description
+  </a>
+</li>
+
+
 <li class="nav-item current active">
   <a class="nav-link nav-internal" href="../api.html">
     API Reference
@@ -266,30 +280,36 @@
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Computation API:</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="core_polynomial.html">pyzernike.core_polynomial</a></li>
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="radial_polynomial.html">pyzernike.radial_polynomial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="zernike_polynomial.html">pyzernike.zernike_polynomial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zernike_polynomial_up_to_order.html">pyzernike.zernike_polynomial_up_to_order</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">pyzernike.xy_zernike_polynomial</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Symbolic API:</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="core_symbolic.html">pyzernike.core_symbolic</a></li>
 <li class="toctree-l1"><a class="reference internal" href="radial_symbolic.html">pyzernike.radial_symbolic</a></li>
 <li class="toctree-l1"><a class="reference internal" href="zernike_symbolic.html">pyzernike.zernike_symbolic</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Display API:</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="core_display.html">pyzernike.core_display</a></li>
 <li class="toctree-l1"><a class="reference internal" href="radial_display.html">pyzernike.radial_display</a></li>
 <li class="toctree-l1"><a class="reference internal" href="zernike_display.html">pyzernike.zernike_display</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Additional Functions API:</span></p>
-<ul class="current nav bd-sidenav">
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="zernike_index_to_order.html">pyzernike.zernike_index_to_order</a></li>
 <li class="toctree-l1"><a class="reference internal" href="zernike_order_to_index.html">pyzernike.zernike_order_to_index</a></li>
-<li class="toctree-l1"><a class="reference internal" href="zernike_polynomial_up_to_order.html">pyzernike.zernike_polynomial_up_to_order</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">pyzernike.xy_zernike_polynomial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cartesian_to_elliptic_annulus.html">pyzernike.cartesian_to_elliptic_annulus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="xy_zernike_polynomial_up_to_order.html">pyzernike.xy_zernike_polynomial_up_to_order</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Core Development API:</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="core/core_polynomial.html">pyzernike.core.core_polynomial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core/core_symbolic.html">pyzernike.core.core_symbolic</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core/core_display.html">pyzernike.core.core_display</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core/core_create_precomputing_sets.html">pyzernike.core.core_create_precomputing_sets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core/core_cartesian_to_elliptic_annulus.html">pyzernike.core.core_cartesian_to_elliptic_annulus</a></li>
 </ul>
 </div>
 </nav></div>
@@ -354,13 +374,15 @@
 <h1>pyzernike.xy_zernike_polynomial<a class="headerlink" href="#pyzernike-xy-zernike-polynomial" title="Link to this heading">#</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="pyzernike.xy_zernike_polynomial">
-<span class="sig-prename descclassname"><span class="pre">pyzernike.</span></span><span class="sig-name descname"><span class="pre">xy_zernike_polynomial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Integral</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Integral</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_derivative</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Integral</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_derivative</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Integral</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">nan</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Rx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Ry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">6.283185307179586</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_skip</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pyzernike/xy_zernike_polynomial.html#xy_zernike_polynomial"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyzernike.xy_zernike_polynomial" title="Link to this definition">#</a></dt>
-<dd><p>Computes the Zernike polynomial <span class="math notranslate nohighlight">\(Z_{n}^{m}(\rho, \theta)\)</span> for given cartesian coordinates <span class="math notranslate nohighlight">\((x, y)\)</span>.</p>
-<p>If <span class="math notranslate nohighlight">\(|m| &gt; n\)</span> or <span class="math notranslate nohighlight">\(n &lt; 0\)</span>, or <span class="math notranslate nohighlight">\((n - m)\)</span> is odd, the output is a zeros array with the same shape as <span class="math notranslate nohighlight">\(\rho\)</span>.</p>
-<p>if <span class="math notranslate nohighlight">\(\rho\)</span> is not in <span class="math notranslate nohighlight">\(0 \leq \rho \leq 1\)</span> or <span class="math notranslate nohighlight">\(\rho\)</span> is numpy.nan, the output is set to the default value (numpy.nan by default).</p>
+<span class="sig-prename descclassname"><span class="pre">pyzernike.</span></span><span class="sig-name descname"><span class="pre">xy_zernike_polynomial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Integral</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Integral</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Rx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Ry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_derivative</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Integral</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_derivative</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Integral</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">nan</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">precompute</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_skip</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pyzernike/xy_zernike_polynomial.html#xy_zernike_polynomial"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyzernike.xy_zernike_polynomial" title="Link to this definition">#</a></dt>
+<dd><p>Computes the Zernike polynomial <span class="math notranslate nohighlight">\(Z_{n}^{m}(\rho_{eq}, \theta_{eq})\)</span> for given cartesian coordinates <span class="math notranslate nohighlight">\((x, y)\)</span> on an elliptic annulus domain.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="zernike_polynomial.html#pyzernike.zernike_polynomial" title="pyzernike.zernike_polynomial"><code class="xref py py-func docutils literal notranslate"><span class="pre">pyzernike.zernike_polynomial()</span></code></a> for computing the Zernike polynomial <span class="math notranslate nohighlight">\(Z_{n}^{m}\)</span> for polar coordinates <span class="math notranslate nohighlight">\((\rho, \theta)\)</span>.</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="zernike_polynomial.html#pyzernike.zernike_polynomial" title="pyzernike.zernike_polynomial"><code class="xref py py-func docutils literal notranslate"><span class="pre">pyzernike.zernike_polynomial()</span></code></a> for computing the Zernike polynomial <span class="math notranslate nohighlight">\(Z_{n}^{m}\)</span> for polar coordinates <span class="math notranslate nohighlight">\((\rho, \theta)\)</span>.</p></li>
+<li><p><a class="reference internal" href="cartesian_to_elliptic_annulus.html#pyzernike.cartesian_to_elliptic_annulus" title="pyzernike.cartesian_to_elliptic_annulus"><code class="xref py py-func docutils literal notranslate"><span class="pre">pyzernike.cartesian_to_elliptic_annulus()</span></code></a> to convert Cartesian coordinates to elliptic annulus domain polar coordinates.</p></li>
+<li><p>The page <a class="reference internal" href="../mathematical_description.html"><span class="doc">Mathematical description</span></a> in the documentation for the mathematical extension of the Zernike polynomials on the elliptic domain.</p></li>
+</ul>
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
@@ -368,106 +390,97 @@
 The associated paper is available in the resources folder of the package.</p>
 <p>Download the PDF : <a class="reference download internal" download="" href="../_downloads/07c9a3e7501e262d5f3bc15511799c02/Navarro%20and%20al.%20Generalization%20of%20Zernike%20polynomials%20for%20regular%20portions%20of%20circles%20and%20ellipses.pdf"><code class="xref download docutils literal notranslate"><span class="pre">PDF</span></code></a></p>
 </div>
-<p>The user must provide the x and y coordinates of the points where the polynomial is evaluated and the parameters of the extended domain G:</p>
+<p>Lets consider the extended elliptic annulus domain defined by the following parameters:</p>
+<figure class="align-center" id="id1">
+<a class="reference internal image-reference" href="../_images/elliptic_annulus_domain.png"><img alt="../_images/elliptic_annulus_domain.png" src="../_images/elliptic_annulus_domain.png" style="width: 400px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">The parameters to define the extended domain of the Zernike polynomial.</span><a class="headerlink" href="#id1" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>The parameters are:</p>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(R_x\)</span> and <span class="math notranslate nohighlight">\(R_y\)</span> are the lenght of the semi-axis of the ellipse (outer boundary noted A and B on the figure).</p></li>
+<li><p><span class="math notranslate nohighlight">\(R_x\)</span> and <span class="math notranslate nohighlight">\(R_y\)</span> are the lengths of the semi-axis of the ellipse.</p></li>
 <li><p><span class="math notranslate nohighlight">\(x_0\)</span> and <span class="math notranslate nohighlight">\(y_0\)</span> are the coordinates of the center of the ellipse.</p></li>
 <li><p><span class="math notranslate nohighlight">\(\alpha\)</span> is the rotation angle of the ellipse in radians.</p></li>
 <li><p><span class="math notranslate nohighlight">\(h=\frac{a}{R_x}=\frac{b}{R_y}\)</span> defining the inner boundary of the ellipse.</p></li>
-<li><p><span class="math notranslate nohighlight">\(\theta_1\)</span> and <span class="math notranslate nohighlight">\(\theta_2\)</span> are the angles defining the sector of the ellipse where the polynomial is described.</p></li>
 </ul>
-<figure class="align-center" id="id1">
-<a class="reference internal image-reference" href="../_images/extended_parameters.png"><img alt="../_images/extended_parameters.png" src="../_images/extended_parameters.png" style="width: 400px;" />
-</a>
-<figcaption>
-<p><span class="caption-text">The parameters to define the extended domain of the Zernike polynomial. <code class="docutils literal notranslate"><span class="pre">A</span></code> and <code class="docutils literal notranslate"><span class="pre">B</span></code> are the semi-major and semi-minor axes of the ellipse, respectively, they correspond to <span class="math notranslate nohighlight">\(R_x\)</span> and <span class="math notranslate nohighlight">\(R_y\)</span>.</span><a class="headerlink" href="#id1" title="Link to this image">#</a></p>
-</figcaption>
-</figure>
-<p>The applied mapping is as follows:</p>
-<div class="math notranslate nohighlight">
-\[Zxy_{n}^{m}(x, y) = Z_{n}^{m}\left(\frac{r - h}{1 - h}, \frac{2 \pi (\theta - \theta_1)}{\theta_2 - \theta_1}\right)\]</div>
-<p>Where:</p>
-<div class="math notranslate nohighlight">
-\[r = \sqrt{\left(\frac{X}{R_x}\right)^{2} + \left(\frac{Y}{R_y}\right)^{2}}\]</div>
-<div class="math notranslate nohighlight">
-\[\theta = \text{atan2} (\frac{Y}{R_y}, \frac{X}{R_x})\]</div>
-<div class="math notranslate nohighlight">
-\[X = \cos(\alpha) (x - x_0) + \sin(\alpha) (y - y_0)\]</div>
-<div class="math notranslate nohighlight">
-\[Y = -\sin(\alpha) (x - x_0) + \cos(\alpha) (y - y_0)\]</div>
-<p>This function allows to compute several Zernike polynomials at once for different orders and degrees, which can be more efficient than calling the radial polynomial function multiple times.
-The <span class="math notranslate nohighlight">\(\rho\)</span> and <span class="math notranslate nohighlight">\(\theta\)</span> values are the same for all the polynomials, and the orders and degrees are provided as sequences.
-Moreover, the domain is the same for all the polynomials.
-The output is a list of numpy arrays, each containing the values of the Zernike polynomial for the corresponding order and degree.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The alias <code class="docutils literal notranslate"><span class="pre">Zxy</span></code> is available for this function.</p>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>For developers, the <code class="docutils literal notranslate"><span class="pre">_skip</span></code> parameter is used to skip the checks for the input parameters. This is useful for internal use where the checks are already done.
-In this case :</p>
+<p>The Zernike polynomial <span class="math notranslate nohighlight">\(Z_{n}^{m}(\rho_{eq}, \theta_{eq})\)</span> is computed for the equivalent polar coordinates.</p>
+<p>This function allows to compute several Zernike polynomials at once for different sets of (order, degree, derivative orders) given as sequences,
+which can be more efficient than calling the polynomial function multiple times.</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> must be numpy.ndarray in the valid domain with finite values and float64 dtype and the same shape.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">n</span></code>, <code class="docutils literal notranslate"><span class="pre">m</span></code>, <code class="docutils literal notranslate"><span class="pre">x_derivative</span></code> and <code class="docutils literal notranslate"><span class="pre">y_derivative</span></code> must be given as sequence of integers with the same length and valid values.</p></li>
+<li><p>The parameters <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> must be numpy arrays of the same shape.</p></li>
+<li><p>The parameters <code class="docutils literal notranslate"><span class="pre">n</span></code>, <code class="docutils literal notranslate"><span class="pre">m</span></code>, <code class="docutils literal notranslate"><span class="pre">x_derivative</span></code> and <code class="docutils literal notranslate"><span class="pre">y_derivative</span></code> must be sequences of integers with the same length.</p></li>
 </ul>
-<p>See also <a class="reference internal" href="core_polynomial.html#pyzernike.core_polynomial" title="pyzernike.core_polynomial"><code class="xref py py-func docutils literal notranslate"><span class="pre">pyzernike.core_polynomial()</span></code></a> for more details on the input parameters.</p>
+<p>The output is a list of numpy arrays, each containing the values of the Zernike polynomial for the corresponding order and degree.
+The list has the same length as the input sequences and the arrays have the same shape as <code class="docutils literal notranslate"><span class="pre">x</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If the input <code class="docutils literal notranslate"><span class="pre">x</span></code> or <code class="docutils literal notranslate"><span class="pre">y</span></code> are not floating point numpy arrays, it is converted to one with <code class="docutils literal notranslate"><span class="pre">numpy.float64</span></code> dtype.
+If the input <code class="docutils literal notranslate"><span class="pre">x</span></code> or <code class="docutils literal notranslate"><span class="pre">y</span></code> are floating point numpy arrays (ex: <code class="docutils literal notranslate"><span class="pre">numpy.float32</span></code>), the computation will be done in <code class="docutils literal notranslate"><span class="pre">numpy.float32</span></code>.
+If the input <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> are not of the same dtype, they are both converted to <code class="docutils literal notranslate"><span class="pre">numpy.float64</span></code>.</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>The derivatives with respect to x and y are implemented for (x_derivative, y_derivative) = (0, 0), (1, 0), (0, 1) only.
-Faa di Bruno’s formula can be used to compute higher order derivatives, but it is not implemented in this function.</p>
+<p>The only available derivatives are the first and second order derivatives with respect to x or y independently (jacobian and hessian matrix).
+For more complex derivatives, please implement the Faa di Bruno’s formula using the standard Zernike polynomial function with polar coordinates.</p>
+<ul class="simple">
+<li><p>Available derivatives (:math:(dx, dy)): (0, 0), (1, 0), (0, 1), (2, 0), (0, 2), (1, 1).</p></li>
+</ul>
 </div>
-<p>The derivatives with respect to x and y are computed using the chain rule.</p>
-<div class="math notranslate nohighlight">
-\[\frac{\partial Zxy_{n}^{m}}{\partial z} = \frac{\partial Z_{n}^{m}}{\partial \rho_{eq}} \cdot \frac{\partial \rho_{eq}}{\partial z} + \frac{\partial Z_{n}^{m}}{\partial \theta_{eq}} \cdot \frac{\partial \theta_{eq}}{\partial z}\]</div>
-<p>where:</p>
-<div class="math notranslate nohighlight">
-\[\frac{\partial \rho_{eq}}{\partial z} = \frac{1}{1 - h} \cdot \frac{1}{r} \cdot \left( \frac{X}{R_x^2} \cdot \frac{\partial X}{\partial z} + \frac{Y}{R_y^2} \cdot \frac{\partial Y}{\partial z} \right)\]</div>
-<div class="math notranslate nohighlight">
-\[\frac{\partial \theta_{eq}}{\partial z} = \frac{2 \pi}{\theta_2 - \theta_1} \cdot \frac{1}{R_x R_y r^2} \cdot \left( X \cdot \frac{\partial Y}{\partial z} - Y \cdot \frac{\partial X}{\partial z} \right)\]</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>x</strong> (<em>numpy.ndarray</em><em> (</em><em>N-D array</em><em>)</em>) – The cartesian x values with shape (…,).</p></li>
-<li><p><strong>y</strong> (<em>numpy.ndarray</em><em> (</em><em>N-D array</em><em>)</em>) – The cartesian y values with shape (…,). Same shape as x.</p></li>
-<li><p><strong>n</strong> (<em>Union</em><em>[</em><em>Integral</em><em>, </em><em>Sequence</em><em>[</em><em>Integral</em><em>]</em><em>]</em>) – A list of the radial order(s) of the Zernike polynomial(s) to compute.</p></li>
-<li><p><strong>m</strong> (<em>Union</em><em>[</em><em>Integral</em><em>, </em><em>Sequence</em><em>[</em><em>Integral</em><em>]</em><em>]</em>) – A list of the radial degree(s) of the Zernike polynomial(s) to compute.</p></li>
-<li><p><strong>x_derivative</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>Integral</em><em>, </em><em>Sequence</em><em>[</em><em>Integral</em><em>]</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – A list of the order(s) of the x derivative(s) to compute, expected to have shape=(Npolynomials,).
-If None, is it assumed that x_derivative is 0 for all polynomials.</p></li>
-<li><p><strong>y_derivative</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>Integral</em><em>, </em><em>Sequence</em><em>[</em><em>Integral</em><em>]</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – A list of the order(s) of the angular derivative(s) to compute, expected to have shape=(Npolynomials,).
-If None, is it assumed that y_derivative is 0 for all polynomials.</p></li>
-<li><p><strong>default</strong> (<em>Real</em><em>, </em><em>optional</em>) – The default value for invalid rho values. The default is numpy.nan.
-If the radial coordinate values are not in the valid domain (0 &lt;= rho &lt;= 1) or if they are numpy.nan, the output is set to this value.</p></li>
-<li><p><strong>Rx</strong> (<em>float</em><em>, </em><em>optional</em>) – The length of the semi-major axis of the ellipse (outer boundary). The default is 1.0. Must be greater than 0.</p></li>
-<li><p><strong>Ry</strong> (<em>float</em><em>, </em><em>optional</em>) – The length of the semi-minor axis of the ellipse (outer boundary). The default is 1.0. Must be greater than 0.</p></li>
-<li><p><strong>x0</strong> (<em>float</em><em>, </em><em>optional</em>) – The x-coordinate of the center of the ellipse. The default is 0.0.</p></li>
-<li><p><strong>y0</strong> (<em>float</em><em>, </em><em>optional</em>) – The y-coordinate of the center of the ellipse. The default is 0.0.</p></li>
-<li><p><strong>alpha</strong> (<em>float</em><em>, </em><em>optional</em>) – The rotation angle of the ellipse in radians. The default is 0.0.</p></li>
-<li><p><strong>h</strong> (<em>float</em><em>, </em><em>optional</em>) – The ratio of the inner semi-axis to the outer semi-axis. The default is 0. Must be in the range [0, 1[.</p></li>
-<li><p><strong>theta1</strong> (<em>float</em><em>, </em><em>optional</em>) – The starting angle of the sector in radians. The default is 0.0.</p></li>
-<li><p><strong>theta2</strong> (<em>float</em><em>, </em><em>optional</em>) – The ending angle of the sector in radians. The default is 2 * pi. Must be greater than theta1 and less than or equal to theta1 + 2 * pi.</p></li>
+<li><p><strong>x</strong> (<em>Sequence</em><em>[</em><em>float</em><em>]</em>) – The x coordinates in Cartesian system with shape (…,).</p></li>
+<li><p><strong>y</strong> (<em>Sequence</em><em>[</em><em>float</em><em>]</em>) – The y coordinates in Cartesian system with shape (…,).</p></li>
+<li><p><strong>n</strong> (<em>Sequence</em><em>[</em><em>Integral</em><em>]</em>) – A list of the radial order(s) of the Zernike polynomial(s) to compute.</p></li>
+<li><p><strong>m</strong> (<em>Sequence</em><em>[</em><em>Integral</em><em>]</em>) – A list of the radial degree(s) of the Zernike polynomial(s) to compute.</p></li>
+<li><p><strong>Rx</strong> (<em>float</em><em>, </em><em>optional</em>) – The length of the semi-axis of the ellipse along x axis. Must be strictly positive.
+The default is 1.0, which corresponds to the unit circle.</p></li>
+<li><p><strong>Ry</strong> (<em>float</em><em>, </em><em>optional</em>) – The length of the semi-axis of the ellipse along y axis. Must be strictly positive.
+The default is 1.0, which corresponds to the unit circle.</p></li>
+<li><p><strong>x0</strong> (<em>float</em><em>, </em><em>optional</em>) – The x coordinate of the center of the ellipse. Can be any real number.
+The default is 0.0, which corresponds to an ellipse centered at the origin.</p></li>
+<li><p><strong>y0</strong> (<em>float</em><em>, </em><em>optional</em>) – The y coordinate of the center of the ellipse. Can be any real number.
+The default is 0.0, which corresponds to an ellipse centered at the origin.</p></li>
+<li><p><strong>alpha</strong> (<em>float</em><em>, </em><em>optional</em>) – The rotation angle of the ellipse in radians. Can be any real number.
+The default is 0.0, such as <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> axis are aligned with the ellipse axes.</p></li>
+<li><p><strong>h</strong> (<em>float</em><em>, </em><em>optional</em>) – The ratio of the inner semi-axis to the outer semi-axis. Must be in the range [0, 1).
+The default is 0.0, which corresponds to a filled ellipse.</p></li>
+<li><p><strong>x_derivative</strong> (<em>Sequence</em><em>[</em><em>Integral</em><em>]</em><em>, </em><em>optional</em>) – The derivative order with respect to x to compute. Must be a sequence of non-negative integers of the same length as <cite>n</cite> and <cite>m</cite>.
+The default is None, which corresponds to the 0th derivative (the polynomial itself).</p></li>
+<li><p><strong>y_derivative</strong> (<em>Sequence</em><em>[</em><em>Integral</em><em>]</em><em>, </em><em>optional</em>) – The derivative order with respect to y to compute. Must be a sequence of non-negative integers of the same length as <cite>n</cite> and <cite>m</cite>.
+The default is None, which corresponds to the 0th derivative (the polynomial itself).</p></li>
+<li><p><strong>default</strong> (<em>Real</em><em>, </em><em>optional</em>) – The default value to use for points outside the elliptic annulus domain. Must be a real number.
+The default is numpy.nan.</p></li>
+<li><p><strong>precompute</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, precomputes the useful terms for better performance when computing multiple polynomials with the same rho values.
+If False, computes the useful terms on the fly for each polynomial to avoid memory overhead.
+The default is True.</p></li>
 <li><p><strong>_skip</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, the checks for the input parameters are skipped. This is useful for internal use where the checks are already done.
 The default is False.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A list of numpy arrays containing the Zernike polynomial values for each order and degree.
-Each array has the same shape as <code class="docutils literal notranslate"><span class="pre">rho</span></code>.</p>
+Each array has the same shape as <code class="docutils literal notranslate"><span class="pre">x</span></code>.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>List[numpy.ndarray]</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>TypeError</strong> – If the rho or theta values are not a numpy array or if n and m are not integers.</p></li>
-<li><p><strong>ValueError</strong> – If the lengths of n and m are not the same.
-    If the shape of rho and theta are not the same.</p></li>
+<li><p><strong>TypeError</strong> – If the x or y values can not be converted to a numpy array of floating points values.
+    If n, m, x_derivative or y_derivative (if not None) are not sequences of integers.</p></li>
+<li><p><strong>ValueError</strong> – If the x and y do not have the same shape.
+    If the lengths of n, m, x_derivative and y_derivative (if not None) are not the same.
+    If Rx or Ry are not strictly positive.
+    If h is not in the range [0, 1[.
+    If the derivative orders are higher than 2 or mixed (ex: (1, 1)).</p></li>
 </ul>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<p>Let’s consider a full circle with a radius of 10 centered at the origin (0, 0).
+<p>Let’s consider a full circle with a radius of 10 centered at the origin (1, 1).
 The value of the zernike polynomial <span class="math notranslate nohighlight">\(Z_{2}^{0}\)</span> at the point (x, y) is given by:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyzernike</span><span class="w"> </span><span class="kn">import</span> <span class="n">xy_zernike_polynomial</span> <span class="c1"># or Zxy</span>
@@ -475,10 +488,17 @@ The value of the zernike polynomial <span class="math notranslate nohighlight">\
 <span class="n">y</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
 <span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 
-<span class="n">zernike</span> <span class="o">=</span> <span class="n">xy_zernike_polynomial</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">m</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">Rx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">Ry</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">x0</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">y0</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span> <span class="c1"># Shape similar to X and Y</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">xy_zernike_polynomial</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">m</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">Rx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">Ry</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">x0</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">y0</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span> <span class="c1"># List with a single numpy array</span>
+<span class="n">zernike_n2_m0</span> <span class="o">=</span> <span class="n">output</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># Shape similar to X and Y</span>
 </pre></div>
 </div>
 <p>returns a list with a single numpy array containing the values of the Zernike polynomial <span class="math notranslate nohighlight">\(Z_{2}^{0}\)</span> at the points (X, Y) within the circle of radius 10.</p>
+<p>To compute the first derivative with respect to x and y, we can use:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">output</span> <span class="o">=</span> <span class="n">xy_zernike_polynomial</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">m</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">Rx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">Ry</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">x0</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">y0</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">x_derivative</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">y_derivative</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span> <span class="c1"># List with two numpy arrays</span>
+<span class="n">zernike_n2_m0_dx</span> <span class="o">=</span> <span class="n">output</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># First derivative with respect to x</span>
+<span class="n">zernike_n2_m0_dy</span> <span class="o">=</span> <span class="n">output</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># First derivative with respect to y</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </section>
@@ -503,11 +523,11 @@ The value of the zernike polynomial <span class="math notranslate nohighlight">\
       </div>
     </a>
     <a class="right-next"
-       href="xy_zernike_polynomial_up_to_order.html"
+       href="radial_symbolic.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">pyzernike.xy_zernike_polynomial_up_to_order</p>
+        <p class="prev-next-title">pyzernike.radial_symbolic</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

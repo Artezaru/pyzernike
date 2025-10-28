@@ -16,7 +16,7 @@ with :
 
 where `n` is the radial order, `m` is the azimuthal frequency, `\rho` is the normalized radial coordinate (`\rho` in [0, 1]) and `\theta` is the azimuthal angle.
 
-Example of usage :
+## Usage
 
 ```python
 import numpy

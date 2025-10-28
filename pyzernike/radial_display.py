@@ -62,10 +62,6 @@ def radial_display(
         If False, the useful terms are computed on-the-fly to avoid memory overhead.
         Default is True.
 
-    _skip : bool, optional
-        If True, the checks for the input parameters are skipped. This is useful for internal use where the checks are already done.
-        The default is False.
-
     Returns
     -------
     None

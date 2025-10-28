@@ -68,9 +68,6 @@ def zernike_index_to_order(j: Sequence[Integral], _skip: bool = False) -> Tuple[
     j : Sequence[Integral]
         The indices of the Zernike polynomials in the OSA/ANSI ordering.
 
-    _skip : bool, optional
-        If True, skips input validation checks. Default is False.
-
     Returns
     -------
     List[int]

@@ -64,10 +64,6 @@ def radial_symbolic(
         A list of the order(s) of the radial derivative(s) to compute.
         If None, is it assumed that rho_derivative is 0 for all polynomials.
 
-    _skip : bool, optional
-        If True, the checks for the input parameters are skipped. This is useful for internal use where the checks are already done.
-        The default is False.
-
     Returns
     -------
     List[sympy.Expr]

@@ -94,9 +94,6 @@ def zernike_polynomial_up_to_order(
         If False, the function will compute the terms on-the-fly, which may be slower but avoid memory overhead.
         The default is True.
 
-    _skip : bool, optional
-        If True, skips input validation checks. Default is False. This is useful for internal use where the checks are already done.
-
     Returns
     -------
     List[List[numpy.ndarray]]

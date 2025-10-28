@@ -142,10 +142,6 @@ def xy_zernike_polynomial_up_to_order(
         If False, computes the useful terms on the fly for each polynomial to avoid memory overhead.
         The default is True.
 
-    _skip : bool, optional
-        If True, the checks for the input parameters are skipped. This is useful for internal use where the checks are already done.
-        The default is False.
-
     Returns
     -------
     List[numpy.ndarray]

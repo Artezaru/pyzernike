@@ -61,9 +61,6 @@ def zernike_order_to_index(n : Sequence[Integral], m : Sequence[Integral], _skip
     m : Sequence[Integral]
         The azimuthal orders of the Zernike polynomials.
 
-    _skip : bool, optional
-        If True, skips input validation checks. Default is False.
-
     Returns
     -------
     List[int]

@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>pyzernike.zernike_order_to_index &#8212; pyzernike 2.1.2 documentation</title>
+    <title>pyzernike.zernike_order_to_index &#8212; pyzernike 2.2.0 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=b3e23499"></script>
+    <script src="../_static/documentation_options.js?v=b21de401"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -111,7 +111,7 @@
   
   
   
-    <p class="title logo__title">pyzernike 2.1.2 documentation</p>
+    <p class="title logo__title">pyzernike 2.2.0 documentation</p>
   
 </a></div>
     
@@ -308,7 +308,7 @@
 <li class="toctree-l1"><a class="reference internal" href="core/core_polynomial.html">pyzernike.core.core_polynomial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="core/core_symbolic.html">pyzernike.core.core_symbolic</a></li>
 <li class="toctree-l1"><a class="reference internal" href="core/core_display.html">pyzernike.core.core_display</a></li>
-<li class="toctree-l1"><a class="reference internal" href="core/core_create_precomputing_sets.html">pyzernike.core.core_create_precomputing_sets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core/core_create_precomputing_terms.html">pyzernike.core.core_create_precomputing_terms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="core/core_cartesian_to_elliptic_annulus.html">pyzernike.core.core_cartesian_to_elliptic_annulus</a></li>
 </ul>
 </div>
@@ -374,7 +374,7 @@
 <h1>pyzernike.zernike_order_to_index<a class="headerlink" href="#pyzernike-zernike-order-to-index" title="Link to this heading">#</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="pyzernike.zernike_order_to_index">
-<span class="sig-prename descclassname"><span class="pre">pyzernike.</span></span><span class="sig-name descname"><span class="pre">zernike_order_to_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Integral</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Integral</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_skip</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pyzernike/zernike_order_to_index.html#zernike_order_to_index"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyzernike.zernike_order_to_index" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pyzernike.</span></span><span class="sig-name descname"><span class="pre">zernike_order_to_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Integral</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Integral</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pyzernike/zernike_order_to_index.html#zernike_order_to_index"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyzernike.zernike_order_to_index" title="Link to this definition">#</a></dt>
 <dd><p>Convert Zernike orders (n, m) to their corresponding indices in the OSA/ANSI Zernike polynomial ordering.</p>
 <div class="math notranslate nohighlight">
 \[j = \frac{n(n + 2) + m}{2}\]</div>

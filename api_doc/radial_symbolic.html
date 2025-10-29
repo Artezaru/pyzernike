@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>pyzernike.radial_symbolic &#8212; pyzernike 2.1.2 documentation</title>
+    <title>pyzernike.radial_symbolic &#8212; pyzernike 2.2.0 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=b3e23499"></script>
+    <script src="../_static/documentation_options.js?v=b21de401"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -111,7 +111,7 @@
   
   
   
-    <p class="title logo__title">pyzernike 2.1.2 documentation</p>
+    <p class="title logo__title">pyzernike 2.2.0 documentation</p>
   
 </a></div>
     
@@ -308,7 +308,7 @@
 <li class="toctree-l1"><a class="reference internal" href="core/core_polynomial.html">pyzernike.core.core_polynomial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="core/core_symbolic.html">pyzernike.core.core_symbolic</a></li>
 <li class="toctree-l1"><a class="reference internal" href="core/core_display.html">pyzernike.core.core_display</a></li>
-<li class="toctree-l1"><a class="reference internal" href="core/core_create_precomputing_sets.html">pyzernike.core.core_create_precomputing_sets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core/core_create_precomputing_terms.html">pyzernike.core.core_create_precomputing_terms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="core/core_cartesian_to_elliptic_annulus.html">pyzernike.core.core_cartesian_to_elliptic_annulus</a></li>
 </ul>
 </div>
@@ -374,7 +374,7 @@
 <h1>pyzernike.radial_symbolic<a class="headerlink" href="#pyzernike-radial-symbolic" title="Link to this heading">#</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="pyzernike.radial_symbolic">
-<span class="sig-prename descclassname"><span class="pre">pyzernike.</span></span><span class="sig-name descname"><span class="pre">radial_symbolic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Integral</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Integral</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho_derivative</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Integral</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_skip</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Expr</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pyzernike/radial_symbolic.html#radial_symbolic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyzernike.radial_symbolic" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pyzernike.</span></span><span class="sig-name descname"><span class="pre">radial_symbolic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Integral</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Integral</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho_derivative</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Integral</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Expr</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pyzernike/radial_symbolic.html#radial_symbolic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyzernike.radial_symbolic" title="Link to this definition">#</a></dt>
 <dd><p>Compute the symbolic expression of the radial Zernike polynomial <span class="math notranslate nohighlight">\(R_{n}^{m}(\rho)\)</span> for <span class="math notranslate nohighlight">\(\rho \leq 1\)</span>.</p>
 <p>The radial Zernike polynomial is defined as follows:</p>
 <div class="math notranslate nohighlight">
@@ -401,9 +401,9 @@ The list has the same length as the input sequences.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>n</strong> (<em>Sequence</em><em>[</em><em>Integral</em><em>]</em>) – A list of the radial order(s) of the Zernike polynomial(s) to compute.</p></li>
-<li><p><strong>m</strong> (<em>Sequence</em><em>[</em><em>Integral</em><em>]</em>) – A list of the radial degree(s) of the Zernike polynomial(s) to compute.</p></li>
-<li><p><strong>rho_derivative</strong> (<em>Optional</em><em>[</em><em>Sequence</em><em>[</em><em>Integral</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – A list of the order(s) of the radial derivative(s) to compute.
+<li><p><strong>n</strong> (<em>Sequence</em><em>[</em><em>Integral</em><em>] or </em><em>numpy.array</em>) – A sequence (List, Tuple) or 1D numpy array of the radial order(s) of the Zernike polynomial(s) to compute. Must be non-negative integers.</p></li>
+<li><p><strong>m</strong> (<em>Sequence</em><em>[</em><em>Integral</em><em>] or </em><em>numpy.array</em>) – A sequence (List, Tuple) or 1D numpy array of the radial degree(s) of the Zernike polynomial(s) to compute. Must be non-negative integers.</p></li>
+<li><p><strong>rho_derivative</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>Sequence</em><em>[</em><em>Integral</em><em>]</em><em>, </em><em>numpy.array</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – A sequence (List, Tuple) or 1D numpy array of the order(s) of the radial derivative(s) to compute. Must be non-negative integers.
 If None, is it assumed that rho_derivative is 0 for all polynomials.</p></li>
 </ul>
 </dd>

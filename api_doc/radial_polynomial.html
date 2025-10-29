@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>pyzernike.radial_polynomial &#8212; pyzernike 2.1.2 documentation</title>
+    <title>pyzernike.radial_polynomial &#8212; pyzernike 2.2.0 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=b3e23499"></script>
+    <script src="../_static/documentation_options.js?v=b21de401"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -111,7 +111,7 @@
   
   
   
-    <p class="title logo__title">pyzernike 2.1.2 documentation</p>
+    <p class="title logo__title">pyzernike 2.2.0 documentation</p>
   
 </a></div>
     
@@ -308,7 +308,7 @@
 <li class="toctree-l1"><a class="reference internal" href="core/core_polynomial.html">pyzernike.core.core_polynomial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="core/core_symbolic.html">pyzernike.core.core_symbolic</a></li>
 <li class="toctree-l1"><a class="reference internal" href="core/core_display.html">pyzernike.core.core_display</a></li>
-<li class="toctree-l1"><a class="reference internal" href="core/core_create_precomputing_sets.html">pyzernike.core.core_create_precomputing_sets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core/core_create_precomputing_terms.html">pyzernike.core.core_create_precomputing_terms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="core/core_cartesian_to_elliptic_annulus.html">pyzernike.core.core_cartesian_to_elliptic_annulus</a></li>
 </ul>
 </div>
@@ -374,7 +374,7 @@
 <h1>pyzernike.radial_polynomial<a class="headerlink" href="#pyzernike-radial-polynomial" title="Link to this heading">#</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="pyzernike.radial_polynomial">
-<span class="sig-prename descclassname"><span class="pre">pyzernike.</span></span><span class="sig-name descname"><span class="pre">radial_polynomial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rho</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Integral</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Integral</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho_derivative</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Integral</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">nan</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">precompute</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_skip</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pyzernike/radial_polynomial.html#radial_polynomial"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyzernike.radial_polynomial" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pyzernike.</span></span><span class="sig-name descname"><span class="pre">radial_polynomial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rho</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Integral</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Integral</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho_derivative</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Integral</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">nan</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">precompute</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pyzernike/radial_polynomial.html#radial_polynomial"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyzernike.radial_polynomial" title="Link to this definition">#</a></dt>
 <dd><p>Computes the radial Zernike polynomial <span class="math notranslate nohighlight">\(R_{n}^{m}(\rho)\)</span> for <span class="math notranslate nohighlight">\(\rho \leq 1\)</span>.</p>
 <p>The radial Zernike polynomial is defined as follows:</p>
 <div class="math notranslate nohighlight">
@@ -399,16 +399,16 @@ The output is a list of numpy arrays, each containing the values of the radial Z
 The list has the same length as the input sequences and the arrays have the same shape as <code class="docutils literal notranslate"><span class="pre">rho</span></code>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If the input <code class="docutils literal notranslate"><span class="pre">rho</span></code> is not a floating point numpy array, it is converted to one with <code class="docutils literal notranslate"><span class="pre">numpy.float64</span></code> dtype.
+<p>If the input <code class="docutils literal notranslate"><span class="pre">rho</span></code> is not a floating point numpy array, it is converted to one with <code class="docutils literal notranslate"><span class="pre">numpy.float64</span></code> dtype by default.
 If the input <code class="docutils literal notranslate"><span class="pre">rho</span></code> is a floating point numpy array (ex: <code class="docutils literal notranslate"><span class="pre">numpy.float32</span></code>), the computation will be done in <code class="docutils literal notranslate"><span class="pre">numpy.float32</span></code>.</p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>rho</strong> (<em>numpy.ndarray</em><em> (</em><em>N-D array</em><em>)</em>) – The radial coordinate values with shape (…,) and floating point values.</p></li>
-<li><p><strong>n</strong> (<em>Sequence</em><em>[</em><em>Integral</em><em>]</em>) – A list of the radial order(s) of the Zernike polynomial(s) to compute. Must be non-negative integers.</p></li>
-<li><p><strong>m</strong> (<em>Sequence</em><em>[</em><em>Integral</em><em>]</em>) – A list of the radial degree(s) of the Zernike polynomial(s) to compute. Must be non-negative integers.</p></li>
-<li><p><strong>rho_derivative</strong> (<em>Optional</em><em>[</em><em>Sequence</em><em>[</em><em>Integral</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – A list of the order(s) of the radial derivative(s) to compute. Must be non-negative integers.
+<li><p><strong>n</strong> (<em>Sequence</em><em>[</em><em>Integral</em><em>] or </em><em>numpy.array</em>) – A sequence (List, Tuple) or 1D numpy array of the radial order(s) of the Zernike polynomial(s) to compute. Must be non-negative integers.</p></li>
+<li><p><strong>m</strong> (<em>Sequence</em><em>[</em><em>Integral</em><em>] or </em><em>numpy.array</em>) – A sequence (List, Tuple) or 1D numpy array of the radial degree(s) of the Zernike polynomial(s) to compute. Must be non-negative integers.</p></li>
+<li><p><strong>rho_derivative</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>Sequence</em><em>[</em><em>Integral</em><em>]</em><em>, </em><em>numpy.array</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – A sequence (List, Tuple) or 1D numpy array of the order(s) of the radial derivative(s) to compute. Must be non-negative integers.
 If None, is it assumed that rho_derivative is 0 for all polynomials.</p></li>
 <li><p><strong>default</strong> (<em>Real</em><em>, </em><em>optional</em>) – The default value for invalid rho values. The default is numpy.nan.
 If the radial coordinate values are not in the valid domain (0 &lt;= rho &lt;= 1) or if they are numpy.nan, the output is set to this value.</p></li>
@@ -419,14 +419,15 @@ The default is True.</p></li>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A list of numpy arrays containing the radial Zernike polynomial values for each order and degree.
-Each array has the same shape as <code class="docutils literal notranslate"><span class="pre">rho</span></code> and the list has the same length as the input sequences.</p>
+Each array has the same shape as <code class="docutils literal notranslate"><span class="pre">rho</span></code> and the list has the same length as the input sequences.
+The dtype of the arrays is the same as the dtype of <code class="docutils literal notranslate"><span class="pre">rho</span></code> is given, otherwise <code class="docutils literal notranslate"><span class="pre">numpy.float64</span></code>.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>List[numpy.ndarray]</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>TypeError</strong> – If the rho values can not be converted to a numpy array of floating points values.
+<li><p><strong>TypeError</strong> – If the rho values can not be converted to a 1D numpy array of floating points values.
     If n, m or rho_derivative (if not None) are not sequences of integers.</p></li>
 <li><p><strong>ValueError</strong> – If the lengths of n, m and rho_derivative (if not None) are not the same.</p></li>
 </ul>

@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>pyzernike.core.core_cartesian_to_elliptic_annulus &#8212; pyzernike 2.1.2 documentation</title>
+    <title>pyzernike.core.core_cartesian_to_elliptic_annulus &#8212; pyzernike 2.2.0 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=b3e23499"></script>
+    <script src="../../_static/documentation_options.js?v=b21de401"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -46,7 +46,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Usage" href="../../usage.html" />
-    <link rel="prev" title="pyzernike.core.core_create_precomputing_sets" href="core_create_precomputing_sets.html" />
+    <link rel="prev" title="pyzernike.core.core_create_precomputing_terms" href="core_create_precomputing_terms.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -111,7 +111,7 @@
   
   
   
-    <p class="title logo__title">pyzernike 2.1.2 documentation</p>
+    <p class="title logo__title">pyzernike 2.2.0 documentation</p>
   
 </a></div>
     
@@ -308,7 +308,7 @@
 <li class="toctree-l1"><a class="reference internal" href="core_polynomial.html">pyzernike.core.core_polynomial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="core_symbolic.html">pyzernike.core.core_symbolic</a></li>
 <li class="toctree-l1"><a class="reference internal" href="core_display.html">pyzernike.core.core_display</a></li>
-<li class="toctree-l1"><a class="reference internal" href="core_create_precomputing_sets.html">pyzernike.core.core_create_precomputing_sets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core_create_precomputing_terms.html">pyzernike.core.core_create_precomputing_terms</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">pyzernike.core.core_cartesian_to_elliptic_annulus</a></li>
 </ul>
 </div>
@@ -374,7 +374,7 @@
 <h1>pyzernike.core.core_cartesian_to_elliptic_annulus<a class="headerlink" href="#pyzernike-core-core-cartesian-to-elliptic-annulus" title="Link to this heading">#</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="pyzernike.core.core_cartesian_to_elliptic_annulus">
-<span class="sig-prename descclassname"><span class="pre">pyzernike.core.</span></span><span class="sig-name descname"><span class="pre">core_cartesian_to_elliptic_annulus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Rx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Ry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_derivative</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_derivative</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/pyzernike/core/core_cartesian_to_elliptic_annulus.html#core_cartesian_to_elliptic_annulus"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyzernike.core.core_cartesian_to_elliptic_annulus" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pyzernike.core.</span></span><span class="sig-name descname"><span class="pre">core_cartesian_to_elliptic_annulus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Rx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">floating</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Ry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">floating</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">floating</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">floating</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">floating</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">floating</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_derivative</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_derivative</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">float_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">type</span><span class="p"><span class="pre">[</span></span><span class="pre">floating</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/pyzernike/core/core_cartesian_to_elliptic_annulus.html#core_cartesian_to_elliptic_annulus"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyzernike.core.core_cartesian_to_elliptic_annulus" title="Link to this definition">#</a></dt>
 <dd><p>Transform Cartesian coordinates <span class="math notranslate nohighlight">\((x, y)\)</span> to elliptic annulus domain polar coordinates <span class="math notranslate nohighlight">\((\rho_{eq}, \theta_{eq})\)</span>.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -417,20 +417,20 @@ No test is done on the input parameters. Please use the high level functions.</p
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>x</strong> (<em>numpy.ndarray</em>) – The x coordinates in Cartesian system with shape (…,).</p></li>
-<li><p><strong>y</strong> (<em>numpy.ndarray</em>) – The y coordinates in Cartesian system with shape (…,).</p></li>
-<li><p><strong>Rx</strong> (<em>float</em>) – The length of the semi-axis of the ellipse along x axis. Must be strictly positive.</p></li>
-<li><p><strong>Ry</strong> (<em>float</em>) – The length of the semi-axis of the ellipse along y axis. Must be strictly positive.</p></li>
-<li><p><strong>x0</strong> (<em>float</em>) – The x coordinate of the center of the ellipse. Can be any real number.</p></li>
-<li><p><strong>y0</strong> (<em>float</em>) – The y coordinate of the center of the ellipse. Can be any real number.</p></li>
-<li><p><strong>alpha</strong> (<em>float</em>) – The rotation angle of the ellipse in radians. Can be any real number.</p></li>
-<li><p><strong>h</strong> (<em>float</em>) – The ratio of the inner semi-axis to the outer semi-axis. Must be in the range [0, 1).</p></li>
-<li><p><strong>x_derivative</strong> (<em>Sequence</em><em>[</em><em>int</em><em>]</em>) – The derivative order with respect to x to compute. Must be a sequence of non-negative integers.</p></li>
-<li><p><strong>y_derivative</strong> (<em>Sequence</em><em>[</em><em>int</em><em>]</em>) – The derivative order with respect to y to compute. Must be a sequence of non-negative integers of the same length as <cite>x_derivative</cite>.</p></li>
+<li><p><strong>x</strong> (<em>numpy.ndarray</em>) – The x coordinates in Cartesian system with shape (…,). Must be array and floating point dtype corresponding to <cite>float_type</cite>.</p></li>
+<li><p><strong>y</strong> (<em>numpy.ndarray</em>) – The y coordinates in Cartesian system with shape (…,). Must be array and floating point dtype corresponding to <cite>float_type</cite>.</p></li>
+<li><p><strong>Rx</strong> (<em>numpy.floating</em>) – The length of the semi-axis of the ellipse along x axis. Must be strictly positive and floating point type corresponding to <cite>float_type</cite>.</p></li>
+<li><p><strong>Ry</strong> (<em>numpy.floating</em>) – The length of the semi-axis of the ellipse along y axis. Must be strictly positive and floating point type corresponding to <cite>float_type</cite>.</p></li>
+<li><p><strong>x0</strong> (<em>numpy.floating</em>) – The x coordinate of the center of the ellipse. Can be any real number as floating point type corresponding to <cite>float_type</cite>.</p></li>
+<li><p><strong>y0</strong> (<em>numpy.floating</em>) – The y coordinate of the center of the ellipse. Can be any real number as floating point type corresponding to <cite>float_type</cite>.</p></li>
+<li><p><strong>alpha</strong> (<em>numpy.floating</em>) – The rotation angle of the ellipse in radians. Can be any real number as floating point type corresponding to <cite>float_type</cite>.</p></li>
+<li><p><strong>h</strong> (<em>numpy.floating</em>) – The ratio of the inner semi-axis to the outer semi-axis. Must be in the range [0, 1) as floating point type corresponding to <cite>float_type</cite>.</p></li>
+<li><p><strong>x_derivative</strong> (<em>numpy.ndarray</em>) – The derivative order with respect to x to compute. Must be a sequence of non-negative integers with type compatible to <cite>float_type</cite>.</p></li>
+<li><p><strong>y_derivative</strong> (<em>numpy.ndarray</em>) – The derivative order with respect to y to compute. Must be a sequence of non-negative integers of the same length as <cite>x_derivative</cite> with type compatible to <cite>float_type</cite>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The polar coordinates (<span class="math notranslate nohighlight">\(\rho_{eq}, \theta_{eq}\)</span>) and their derivatives with respect to the Cartesian coordinates <span class="math notranslate nohighlight">\((x, y)\)</span>.
+<dd class="field-even"><p>The polar coordinates (<span class="math notranslate nohighlight">\(\rho_{eq}, \theta_{eq}\)</span>) and their derivatives with respect to the Cartesian coordinates <span class="math notranslate nohighlight">\((x, y)\)</span> as two lists of numpy arrays of floating point type corresponding to <cite>float_type</cite>.
 <code class="docutils literal notranslate"><span class="pre">output[0][i]</span></code> is the derivative with respect to x of order <code class="docutils literal notranslate"><span class="pre">x_derivative[i]</span></code> and with respect to y of order <code class="docutils literal notranslate"><span class="pre">y_derivative[i]</span></code> of <span class="math notranslate nohighlight">\(\rho_{eq}\)</span>.
 <code class="docutils literal notranslate"><span class="pre">output[1][i]</span></code> is the derivative with respect to x of order <code class="docutils literal notranslate"><span class="pre">x_derivative[i]</span></code> and with respect to y of order <code class="docutils literal notranslate"><span class="pre">y_derivative[i]</span></code> of <span class="math notranslate nohighlight">\(\theta_{eq}\)</span>.</p>
 </dd>
@@ -456,12 +456,12 @@ For orders 0, 1 and 2, the derivatives are computed using the analytical express
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="core_create_precomputing_sets.html"
+       href="core_create_precomputing_terms.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">pyzernike.core.core_create_precomputing_sets</p>
+        <p class="prev-next-title">pyzernike.core.core_create_precomputing_terms</p>
       </div>
     </a>
     <a class="right-next"

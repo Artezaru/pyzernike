@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>pyzernike.core.core_symbolic &#8212; pyzernike 2.1.2 documentation</title>
+    <title>pyzernike.core.core_symbolic &#8212; pyzernike 2.2.0 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=b3e23499"></script>
+    <script src="../../_static/documentation_options.js?v=b21de401"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -111,7 +111,7 @@
   
   
   
-    <p class="title logo__title">pyzernike 2.1.2 documentation</p>
+    <p class="title logo__title">pyzernike 2.2.0 documentation</p>
   
 </a></div>
     
@@ -308,7 +308,7 @@
 <li class="toctree-l1"><a class="reference internal" href="core_polynomial.html">pyzernike.core.core_polynomial</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">pyzernike.core.core_symbolic</a></li>
 <li class="toctree-l1"><a class="reference internal" href="core_display.html">pyzernike.core.core_display</a></li>
-<li class="toctree-l1"><a class="reference internal" href="core_create_precomputing_sets.html">pyzernike.core.core_create_precomputing_sets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core_create_precomputing_terms.html">pyzernike.core.core_create_precomputing_terms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="core_cartesian_to_elliptic_annulus.html">pyzernike.core.core_cartesian_to_elliptic_annulus</a></li>
 </ul>
 </div>
@@ -374,13 +374,13 @@
 <h1>pyzernike.core.core_symbolic<a class="headerlink" href="#pyzernike-core-core-symbolic" title="Link to this heading">#</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="pyzernike.core.core_symbolic">
-<span class="sig-prename descclassname"><span class="pre">pyzernike.core.</span></span><span class="sig-name descname"><span class="pre">core_symbolic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho_derivative</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta_derivative</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flag_radial</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Expr</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/pyzernike/core/core_symbolic.html#core_symbolic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyzernike.core.core_symbolic" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pyzernike.core.</span></span><span class="sig-name descname"><span class="pre">core_symbolic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho_derivative</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta_derivative</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flag_radial</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Expr</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/pyzernike/core/core_symbolic.html#core_symbolic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyzernike.core.core_symbolic" title="Link to this definition">#</a></dt>
 <dd><p>Compute the symbolic expression of the Zernike polynomial <span class="math notranslate nohighlight">\(Z_{n}^{m}(\rho, \theta)\)</span> or the radial Zenike
 polynomial <span class="math notranslate nohighlight">\(R_{n}^{m}(\rho)\)</span> if the flag <cite>flag_radial</cite> is set to True with symbolic <code class="docutils literal notranslate"><span class="pre">sympy</span></code> computation.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This method is a core function of <code class="docutils literal notranslate"><span class="pre">pyzernike</span></code> that is not designed to be use by the users directly.
-No test is done on the input parameters. Please use the high level functions.</p>
+Please use the high level functions.</p>
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
@@ -398,17 +398,20 @@ No test is done on the input parameters. Please use the high level functions.</p
 <p>The <cite>r</cite> symbol is used to represent the radial coordinate <span class="math notranslate nohighlight">\(\rho\)</span> in the symbolic expression.
 The <cite>t</cite> symbol is used to represent the angular coordinate <span class="math notranslate nohighlight">\(\theta\)</span> in the symbolic expression.</p>
 </div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Note match the numpy <code class="docutils literal notranslate"><span class="pre">core_polynomial</span></code> function for n=11, m=9, dr=0, dt=10, to investigate later.</p>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>n</strong> (<em>Sequence</em><em>[</em><em>int</em><em>]</em>) – A list of integers containing the order <cite>n</cite> of each radial Zernike polynomial to compute.</p></li>
-<li><p><strong>m</strong> (<em>Sequence</em><em>[</em><em>int</em><em>]</em>) – A list of integers containing the degree <cite>m</cite> of each radial Zernike polynomial to compute.</p></li>
-<li><p><strong>rho_derivative</strong> (<em>Sequence</em><em>[</em><em>int</em><em>]</em>) – A list of integers containing the order of the radial derivative to compute for each radial Zernike polynomial.
-If <cite>rho_derivative</cite> is None, no radial derivative is computed.</p></li>
-<li><p><strong>theta_derivative</strong> (<em>Sequence</em><em>[</em><em>int</em><em>]</em>) – A list of integers containing the order of the angular derivative to compute for each Zernike polynomial.
-If <cite>theta_derivative</cite> is None, no angular derivative is computed. ONLY USED IF <cite>flag_radial</cite> IS False.</p></li>
+<li><p><strong>n</strong> (<em>numpy.array</em><em>[</em><em>numpy.integer</em><em>]</em>) – The orders of the Zernike polynomials to compute. Must be a 1D array of integers.</p></li>
+<li><p><strong>m</strong> (<em>numpy.array</em><em>[</em><em>numpy.integer</em><em>]</em>) – The degrees of the Zernike polynomials. Must be a 1D array of integers.</p></li>
+<li><p><strong>numpy.array</strong><strong>[</strong><strong>numpy.integer</strong><strong>]</strong> – The orders of the derivatives with respect to rho. Must be a 1D array of integers.</p></li>
+<li><p><strong>theta_derivative</strong> (<em>Optional</em><em>[</em><em>numpy.array</em><em>[</em><em>numpy.integer</em><em>]</em><em>]</em>) – The orders of the derivatives with respect to theta. Must be None if <code class="docutils literal notranslate"><span class="pre">flag_radial</span></code> is True. Otherwise, must be a 1D array of integers.</p></li>
 <li><p><strong>flag_radial</strong> (<em>bool</em>) – If True, the radial Zernike polynomial <span class="math notranslate nohighlight">\(R_{n}^{m}(\rho)\)</span> is computed instead of the full Zernike polynomial <span class="math notranslate nohighlight">\(Z_{n}^{m}(\rho, \theta)\)</span>.
 If False, the full Zernike polynomial <span class="math notranslate nohighlight">\(Z_{n}^{m}(\rho, \theta)\)</span> is computed, which includes the angular part with the cosine and sine terms.</p></li>
+<li><p><strong>float_type</strong> (<em>numpy.floating</em>) – The floating point type used for the computations (e.g., numpy.float32, numpy.float64).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>

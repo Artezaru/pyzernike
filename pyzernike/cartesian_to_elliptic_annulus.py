@@ -13,24 +13,25 @@
 # limitations under the License.
 
 
+from email.policy import default
 import numpy
-from typing import Optional, Tuple, Sequence, List
+from typing import Optional, Tuple, Sequence, List, Union
 from numbers import Integral, Real
 
 from .core.core_cartesian_to_elliptic_annulus import core_cartesian_to_elliptic_annulus
+from .core.core_corresponding_signed_integer_type import core_corresponding_signed_integer_type
 
 def cartesian_to_elliptic_annulus(
-    x: Sequence[Real],
-    y: Sequence[Real],
-    Rx: float = 1.0,
-    Ry: float = 1.0,
-    x0: float = 0.0,
-    y0: float = 0.0,
-    alpha: float = 0.0,
-    h: float = 0.0,
-    x_derivative: Optional[Sequence[Integral]] = None,
-    y_derivative: Optional[Sequence[Integral]] = None,
-    _skip: bool = False,
+    x: numpy.ndarray,
+    y: numpy.ndarray,
+    Rx: Real = 1.0,
+    Ry: Real = 1.0,
+    x0: Real = 0.0,
+    y0: Real = 0.0,
+    alpha: Real = 0.0,
+    h: Real = 0.0,
+    x_derivative:  Optional[Union[numpy.array, Sequence[Integral]]] = None,
+    y_derivative:  Optional[Union[numpy.array, Sequence[Integral]]] = None,
     ) -> Tuple[List[numpy.ndarray], List[numpy.ndarray]]:
     r"""
     Transform Cartesian coordinates :math:`(x, y)` to elliptic annulus domain polar coordinates :math:`(\rho_{eq}, \theta_{eq})`.
@@ -59,7 +60,7 @@ def cartesian_to_elliptic_annulus(
 
     The methods allow to compute the polar coordinates :math:`(\rho_{eq}, \theta_{eq})` and their derivatives with respect to the Cartesian coordinates :math:`(x, y)`.
 
-    - ``x`` and ``y`` are expected to be numpy arrays of the same shape and same dtype.
+    - ``x`` and ``y`` are expected to be numpy arrays of the same shape.
     - ``x_derivative`` and ``y_derivative`` must be sequences of non-negative integers of the same length.
 
     The output is a tuple of two lists with lengths equal to the length of ``x_derivative`` and ``y_derivative``:
@@ -78,49 +79,49 @@ def cartesian_to_elliptic_annulus(
 
     Parameters
     ----------
-    x : Sequence[float]
+    x : numpy.ndarray
         The x coordinates in Cartesian system with shape (...,).
 
-    y : Sequence[float]
+    y : numpy.ndarray
         The y coordinates in Cartesian system with shape (...,).
 
-    Rx : float, optional
+    Rx : Real, optional
         The length of the semi-axis of the ellipse along x axis. Must be strictly positive.
         The default is 1.0, which corresponds to the unit circle.
 
-    Ry : float, optional
+    Ry : Real, optional
         The length of the semi-axis of the ellipse along y axis. Must be strictly positive.
         The default is 1.0, which corresponds to the unit circle.
 
-    x0 : float, optional
+    x0 : Real, optional
         The x coordinate of the center of the ellipse. Can be any real number.
         The default is 0.0, which corresponds to an ellipse centered at the origin.
 
-    y0 : float, optional
+    y0 : Real, optional
         The y coordinate of the center of the ellipse. Can be any real number.
         The default is 0.0, which corresponds to an ellipse centered at the origin.
 
-    alpha : float, optional
+    alpha : Real, optional
         The rotation angle of the ellipse in radians. Can be any real number.
         The default is 0.0, such as :math:`x` and :math:`y` axis are aligned with the ellipse axes.
 
-    h : float, optional
+    h : Real, optional
         The ratio of the inner semi-axis to the outer semi-axis. Must be in the range [0, 1).
         The default is 0.0, which corresponds to a filled ellipse.
 
-    x_derivative : Optional[Sequence[int]], optional
-        The derivative order with respect to x to compute. Must be a sequence of non-negative integers.
-        If None, is it assumed that x_derivative is [0].
+    x_derivative : Optional[Union[Sequence[Integral], numpy.array]], optional
+        A sequence (List, Tuple) or 1D numpy array of the order(s) of the x derivative(s) to compute. Must be non-negative integers.
+        If None, is it assumed that x_derivative is 0 for all polynomials.
 
-    y_derivative : Optional[Sequence[int]], optional
-        The derivative order with respect to y to compute. Must be a sequence of non-negative integers of the same length as `x_derivative`.
-        If None, is it assumed that y_derivative is [0].
+    y_derivative : Optional[Union[Sequence[Integral], numpy.array]], optional
+        A sequence (List, Tuple) or 1D numpy array of the order(s) of the y derivative(s) to compute. Must be non-negative integers.
+        If None, is it assumed that y_derivative is 0 for all polynomials.
 
     Returns
     -------
     Tuple[List[numpy.ndarray], List[numpy.ndarray]]
 
-        The polar coordinates (:math:`\rho_{eq}, \theta_{eq}`) and their derivatives with respect to the Cartesian coordinates :math:`(x, y)`.
+        The polar coordinates (:math:`\rho_{eq}, \theta_{eq}`) and their derivatives with respect to the Cartesian coordinates :math:`(x, y)` as two lists of numpy arrays with shape (...,) and dtype matching the input arrays.
         ``output[0][i]`` is the derivative with respect to x of order ``x_derivative[i]`` and with respect to y of order ``y_derivative[i]`` of :math:`\rho_{eq}`.
         ``output[1][i]`` is the derivative with respect to x of order ``x_derivative[i]`` and with respect to y of order ``y_derivative[i]`` of :math:`\theta_{eq}`.
 
@@ -187,53 +188,109 @@ def cartesian_to_elliptic_annulus(
     These derivatives can be useful for computing gradients or Jacobians of Zernike polynomials on the elliptic annulus domain, see :func:`pyzernike.xy_zernike_polynomial` for more details.
 
     """
-    if not _skip:
-        # Convert x and y to numpy arrays of floating point values
-        if not isinstance(x, numpy.ndarray):
-            x = numpy.asarray(x, dtype=numpy.float64)
-        if not isinstance(y, numpy.ndarray):
-            y = numpy.asarray(y, dtype=numpy.float64)
-        # Convert x and y in arrays of floating point values if they are not already
-        if not numpy.issubdtype(x.dtype, numpy.floating):
-            x = x.astype(numpy.float64)
-        if not numpy.issubdtype(y.dtype, numpy.floating):
-            y = y.astype(numpy.float64)
-        # If x and y are not of the same dtype, convert them to float64
-        if x.dtype != y.dtype:
-            y = y.astype(numpy.float64)
-            x = x.astype(numpy.float64)
+    # Convert x and y to numpy arrays of floating point values
+    if not isinstance(x, numpy.ndarray):
+        x = numpy.asarray(x, dtype=numpy.float64)
+    if not isinstance(y, numpy.ndarray):
+        y = numpy.asarray(y, dtype=numpy.float64)
 
-        if x_derivative is not None:
-            if not isinstance(x_derivative, Sequence) or not all(isinstance(i, Integral) and i >= 0 for i in x_derivative):
-                raise TypeError("x_derivative must be a sequence of non-negative integers.")
-        if y_derivative is not None:
-            if not isinstance(y_derivative, Sequence) or not all(isinstance(i, Integral) and i >= 0 for i in y_derivative):
-                raise TypeError("y_derivative must be a sequence of non-negative integers.")
-        
-        if not x.shape == y.shape:
-            raise ValueError("x and y must have the same shape.")
+    # Convert x and y in arrays of floating point values if they are not already
+    if not numpy.issubdtype(x.dtype, numpy.floating):
+        x = x.astype(numpy.float64)
+    if not numpy.issubdtype(y.dtype, numpy.floating):
+        y = y.astype(numpy.float64)
 
+    # If x and y are not of the same dtype, convert them to float64
+    if x.dtype != y.dtype:
+        x = x.astype(numpy.float64)
+        y = y.astype(numpy.float64)
+
+    # Check that x and y have the same shape
+    if x.shape != y.shape:
+        raise ValueError("x and y must have the same shape.")
+
+    # Determine the float type
+    float_type = y.dtype.type
+    int_type = core_corresponding_signed_integer_type(float_type)
+
+    # Check the input parameters
+    if x_derivative is not None:
+        if not isinstance(x_derivative, (Sequence, numpy.ndarray)) or not all(isinstance(i, Integral) and i >= 0 for i in x_derivative):
+            raise TypeError("x_derivative must be a sequence or a 1D array of non-negative integers.")
+    if y_derivative is not None:
+        if not isinstance(y_derivative, (Sequence, numpy.ndarray)) or not all(isinstance(i, Integral) and i >= 0 for i in y_derivative):
+            raise TypeError("y_derivative must be a sequence or a 1D array of non-negative integers.")
+    if Rx is not None:
         if not isinstance(Rx, Real) or Rx <= 0:
             raise TypeError("Rx must be a positive real number.")
+    if Ry is not None:
         if not isinstance(Ry, Real) or Ry <= 0:
             raise TypeError("Ry must be a positive real number.")
+    if x0 is not None:
         if not isinstance(x0, Real):
             raise TypeError("x0 must be a real number.")
+    if y0 is not None:
         if not isinstance(y0, Real):
             raise TypeError("y0 must be a real number.")
+    if alpha is not None:
         if not isinstance(alpha, Real):
             raise TypeError("Alpha must be a real number.")
+    if h is not None:
         if not isinstance(h, Real) or not (0 <= h < 1):
             raise TypeError("h must be a real number in the range [0, 1[.")
+    
+    
+    # Convert rho_derivative to arrays for length checking
+    if x_derivative is None and y_derivative is None:
+        x_derivative = numpy.array([0], dtype=int_type)
+        y_derivative = numpy.array([0], dtype=int_type)
+    elif x_derivative is None and y_derivative is not None:
+        x_derivative = numpy.zeros_like(y_derivative, dtype=int_type)
+        y_derivative = numpy.asarray(y_derivative, dtype=int_type)
+    elif x_derivative is not None and y_derivative is None:
+        y_derivative = numpy.zeros_like(x_derivative, dtype=int_type)
+        x_derivative = numpy.asarray(x_derivative, dtype=int_type)
+    else:
+        x_derivative = numpy.asarray(x_derivative, dtype=int_type)
+        y_derivative = numpy.asarray(y_derivative, dtype=int_type)
+    
+    # Check lengths
+    if not x_derivative.ndim == 1:
+        raise TypeError("x_derivative must be a sequence or a 1D array of integers.")
+    if not y_derivative.ndim == 1:
+        raise TypeError("y_derivative must be a sequence or a 1D array of integers.")
+    if not (x_derivative.size == y_derivative.size):
+        raise ValueError("x_derivative (if given) and y_derivative (if given) must have the same length.")
+    
+    # Convert the float parameters to the correct type
+    if Rx is None:
+        Rx = float_type(1.0)
+    else:
+        Rx = float_type(Rx)
 
-        if x_derivative is None and y_derivative is None:
-            x_derivative = [0]
-            y_derivative = [0]
-        elif x_derivative is None and y_derivative is not None:
-            x_derivative = [0] * len(y_derivative)
-        elif x_derivative is not None and y_derivative is None:
-            y_derivative = [0] * len(x_derivative)
-        if len(x_derivative) != len(y_derivative):
-            raise ValueError("x_derivative and y_derivative must have the same length.")
+    if Ry is None:
+        Ry = float_type(1.0)
+    else:
+        Ry = float_type(Ry)
+
+    if x0 is None:
+        x0 = float_type(0.0)
+    else:
+        x0 = float_type(x0)
+
+    if y0 is None:
+        y0 = float_type(0.0)
+    else:
+        y0 = float_type(y0)
+
+    if alpha is None:
+        alpha = float_type(0.0)
+    else:
+        alpha = float_type(alpha)
+
+    if h is None:
+        h = float_type(0.0)
+    else:
+        h = float_type(h)
         
-    return core_cartesian_to_elliptic_annulus(x, y, Rx, Ry, x0, y0, alpha, h, x_derivative, y_derivative)
+    return core_cartesian_to_elliptic_annulus(x, y, Rx, Ry, x0, y0, alpha, h, x_derivative, y_derivative, float_type)

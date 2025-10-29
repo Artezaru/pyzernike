@@ -12,14 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Sequence, List
+from typing import List, Optional
+import numpy
 import sympy
 
 def core_symbolic(
-        n: Sequence[int], 
-        m: Sequence[int], 
-        rho_derivative: Sequence[int], 
-        theta_derivative: Sequence[int],
+        n: numpy.array,
+        m: numpy.array,
+        rho_derivative: numpy.array,
+        theta_derivative: Optional[numpy.array],
         flag_radial: bool,
     ) -> List[sympy.Expr]:
     r"""
@@ -30,7 +31,7 @@ def core_symbolic(
     .. warning::
 
         This method is a core function of ``pyzernike`` that is not designed to be use by the users directly.
-        No test is done on the input parameters. Please use the high level functions.
+        Please use the high level functions.
 
     .. seealso::
 
@@ -45,25 +46,30 @@ def core_symbolic(
         The `r` symbol is used to represent the radial coordinate :math:`\rho` in the symbolic expression.
         The `t` symbol is used to represent the angular coordinate :math:`\theta` in the symbolic expression.
 
+    .. warning::
+
+        Note match the numpy ``core_polynomial`` function for n=11, m=9, dr=0, dt=10, to investigate later.
+
     Parameters
     ----------    
-    n : Sequence[int]
-        A list of integers containing the order `n` of each radial Zernike polynomial to compute.
+    n : numpy.array[numpy.integer]
+        The orders of the Zernike polynomials to compute. Must be a 1D array of integers.
 
-    m : Sequence[int]
-        A list of integers containing the degree `m` of each radial Zernike polynomial to compute.
+    m : numpy.array[numpy.integer]
+        The degrees of the Zernike polynomials. Must be a 1D array of integers.
 
-    rho_derivative : Sequence[int]
-        A list of integers containing the order of the radial derivative to compute for each radial Zernike polynomial.
-        If `rho_derivative` is None, no radial derivative is computed.
+    numpy.array[numpy.integer]
+        The orders of the derivatives with respect to rho. Must be a 1D array of integers.
 
-    theta_derivative : Sequence[int]
-        A list of integers containing the order of the angular derivative to compute for each Zernike polynomial.
-        If `theta_derivative` is None, no angular derivative is computed. ONLY USED IF `flag_radial` IS False.
+    theta_derivative : Optional[numpy.array[numpy.integer]]
+        The orders of the derivatives with respect to theta. Must be None if ``flag_radial`` is True. Otherwise, must be a 1D array of integers.
 
     flag_radial : bool
         If True, the radial Zernike polynomial :math:`R_{n}^{m}(\rho)` is computed instead of the full Zernike polynomial :math:`Z_{n}^{m}(\rho, \theta)`.
         If False, the full Zernike polynomial :math:`Z_{n}^{m}(\rho, \theta)` is computed, which includes the angular part with the cosine and sine terms.
+
+    float_type : numpy.floating
+        The floating point type used for the computations (e.g., numpy.float32, numpy.float64).
 
     Returns
     -------
@@ -71,8 +77,18 @@ def core_symbolic(
         A list of symbolic expressions of the Zernike polynomial or radial Zernike polynomial for each order and degree specified in `n` and `m`.
         Each expression is a sympy expression that can be evaluated or manipulated further.
     """
+
+    # Fast assertions on the inputs
+    assert isinstance(n, numpy.ndarray) and n.ndim == 1 and numpy.issubdtype(n.dtype, numpy.integer), "[pyzernike-core] n must be a 1D numpy array of integers."
+    assert isinstance(m, numpy.ndarray) and m.ndim == 1 and numpy.issubdtype(m.dtype, numpy.integer), "[pyzernike-core] m must be a 1D numpy array of integers."
+    assert isinstance(rho_derivative, numpy.ndarray) and rho_derivative.ndim == 1 and numpy.issubdtype(rho_derivative.dtype, numpy.integer), "[pyzernike-core] rho_derivative must be a 1D numpy array of integers."
+    assert isinstance(flag_radial, bool), "[pyzernike-core] flag_radial must be a boolean."
+    assert flag_radial or (isinstance(theta_derivative, numpy.ndarray) and theta_derivative.ndim == 1 and numpy.issubdtype(theta_derivative.dtype, numpy.integer)), "[pyzernike-core] theta_derivative must be a 1D numpy array of integers when flag_radial is False."
+    assert not flag_radial or theta_derivative is None, "[pyzernike-core] theta_derivative must be None when flag_radial is True."
+    assert n.size == m.size == rho_derivative.size and (flag_radial or n.size == theta_derivative.size), "[pyzernike-core] n, m, rho_derivative and theta_derivative (if flag_radial is False) must have the same size."
+
     # Create the output list
-    output = []
+    output: list[sympy.Expr] = []
 
     # =================================================================
     # Boucle over the polynomials to compute
@@ -80,9 +96,9 @@ def core_symbolic(
     for idx in range(len(n)):
 
         # Extract the n, m and rho_derivative
-        n_idx = n[idx]
-        m_idx = m[idx]
-        rho_derivative_idx = rho_derivative[idx]
+        n_idx: numpy.integer = n[idx]
+        m_idx: numpy.integer = m[idx]
+        rho_derivative_idx: numpy.integer = rho_derivative[idx]
 
         # Construct the radial polynomial expression
         r = sympy.symbols('r')

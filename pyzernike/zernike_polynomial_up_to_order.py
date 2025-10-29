@@ -13,21 +13,21 @@
 # limitations under the License.
 
 import numpy
-from typing import Sequence, List, Optional
+from typing import Sequence, List, Optional, Union
 from numbers import Integral, Real
 
 from .core.core_polynomial import core_polynomial
 from .zernike_index_to_order import zernike_index_to_order
+from .core.core_corresponding_signed_integer_type import core_corresponding_signed_integer_type
 
 def zernike_polynomial_up_to_order(
         rho: numpy.ndarray,
         theta: numpy.ndarray,
         order: Integral,
-        rho_derivative: Optional[Sequence[Integral]] = None, 
-        theta_derivative: Optional[Sequence[Integral]] = None,
+        rho_derivative: Optional[Union[numpy.array, Sequence[Integral]]] = None,
+        theta_derivative: Optional[Union[numpy.array, Sequence[Integral]]] = None,
         default: Real = numpy.nan,
         precompute: bool = True,
-        _skip: bool = False,
     ) -> List[List[numpy.ndarray]]:
     r"""
     Computes all the Zernike polynomials :math:`Z_n^m` for :math:`\rho \leq 1` and :math:`\theta \in [0, 2\pi]` up to a given order.
@@ -76,13 +76,13 @@ def zernike_polynomial_up_to_order(
     order : int
         The maximum order of the Zernike polynomials to compute. It must be a positive integer.
 
-    rho_derivative : Sequence[int]
-        A list of integers containing the order of the radial derivative to compute for each radial Zernike polynomial.
-        If `rho_derivative` is None, no radial derivative is computed. Assuming that the radial derivative is 0 for all polynomials.
+    rho_derivative : Optional[Union[Sequence[Integral], numpy.array]], optional
+        A sequence (List, Tuple) or 1D numpy array of the order(s) of the radial derivative(s) to compute. Must be non-negative integers.
+        If None, is it assumed that rho_derivative is 0 for all polynomials.
 
-    theta_derivative : Sequence[int]
-        A list of integers containing the order of the angular derivative to compute for each Zernike polynomial. Same length as ``rho_derivative``.
-        If `theta_derivative` is None, no angular derivative is computed. Assuming that the angular derivative is 0 for all polynomials.
+    theta_derivative : Optional[Union[Sequence[Integral], numpy.array]], optional
+        A sequence (List, Tuple) or 1D numpy array of the order(s) of the angular derivative(s) to compute. Must be non-negative integers.
+        If None, is it assumed that theta_derivative is 0 for all polynomials.
 
     default : Real, optional
         The default value for invalid rho values. The default is numpy.nan.
@@ -155,56 +155,83 @@ def zernike_polynomial_up_to_order(
     The output will contain the Zernike polynomials and their derivatives for the specified orders and degrees.
     
     """
-    if not _skip:
-        # Convert rho and theta to numpy arrays of floating point values
-        if not isinstance(rho, numpy.ndarray):
-            rho = numpy.asarray(rho, dtype=numpy.float64)
-        if not isinstance(theta, numpy.ndarray):
-            theta = numpy.asarray(theta, dtype=numpy.float64)
-        # Convert rho and theta in arrays of floating point values if they are not already
-        if not numpy.issubdtype(rho.dtype, numpy.floating):
-            rho = rho.astype(numpy.float64)
-        if not numpy.issubdtype(theta.dtype, numpy.floating):
-            theta = theta.astype(numpy.float64)
-        # If rho and theta are not of the same dtype, convert them to float64
-        if rho.dtype != theta.dtype:
-            theta = theta.astype(numpy.float64)
-            rho = rho.astype(numpy.float64)
+    # Convert rho and theta to numpy arrays of floating point values
+    if not isinstance(rho, numpy.ndarray):
+        rho = numpy.asarray(rho, dtype=numpy.float64)
+    if not isinstance(theta, numpy.ndarray):
+        theta = numpy.asarray(theta, dtype=numpy.float64)
 
-        if not isinstance(order, Integral) or order < 0:
-            raise TypeError("Order must be a non-negative integer.")
-        if rho_derivative is not None:
-            if not isinstance(rho_derivative, Sequence) or not all(isinstance(i, Integral) and i >= 0 for i in rho_derivative):
-                raise TypeError("rho_derivative must be a sequence of non-negative integers.")
-        if theta_derivative is not None:
-            if not isinstance(theta_derivative, Sequence) or not all(isinstance(i, Integral) and i >= 0 for i in theta_derivative):
-                raise TypeError("theta_derivative must be a sequence of non-negative integers.")
-        if not isinstance(default, Real):
-            raise TypeError("Default value must be a real number.")
-        if not isinstance(precompute, bool):
-            raise TypeError("precompute must be a boolean.")
+    # Convert rho and theta in arrays of floating point values if they are not already
+    if not numpy.issubdtype(rho.dtype, numpy.floating):
+        rho = rho.astype(numpy.float64)
+    if not numpy.issubdtype(theta.dtype, numpy.floating):
+        theta = theta.astype(numpy.float64)
 
-        if not rho.shape == theta.shape:
-            raise ValueError("Rho and theta must have the same shape.")
-        if rho_derivative is not None and theta_derivative is not None and len(rho_derivative) != len(theta_derivative):
-            raise ValueError("rho_derivative and theta_derivative must have the same length.")
-        if theta_derivative is not None and rho_derivative is None:
-            rho_derivative = [0] * len(theta_derivative)
-        if rho_derivative is not None and theta_derivative is None:
-            theta_derivative = [0] * len(rho_derivative)
-        if rho_derivative is None and theta_derivative is None:
-            rho_derivative = [0]
-            theta_derivative = [0]
+    # If rho and theta are not of the same dtype, convert them to float64
+    if rho.dtype != theta.dtype:
+        theta = theta.astype(numpy.float64)
+        rho = rho.astype(numpy.float64)
 
-        # Compute the Mask for valid rho values
-        domain_mask = (rho >= 0) & (rho <= 1)
-        finite_mask = numpy.isfinite(rho) & numpy.isfinite(theta)
-        valid_mask = domain_mask & finite_mask
+    # Check that rho and theta have the same shape
+    if rho.shape != theta.shape:
+        raise ValueError("rho and theta must have the same shape.")
 
-        # Conserve only the valid values and save the input shape
-        original_shape = rho.shape
-        rho = rho[valid_mask]
-        theta = theta[valid_mask]
+    # Determine the float type
+    float_type = rho.dtype.type
+    int_type = core_corresponding_signed_integer_type(float_type)
+
+    # Check the input parameters
+    if not isinstance(order, Integral) or order < 0:
+        raise TypeError("order must be a non-negative integer.")
+    if rho_derivative is not None:
+        if not isinstance(rho_derivative, (Sequence, numpy.ndarray)) or not all(isinstance(i, Integral) and i >= 0 for i in rho_derivative):
+            raise TypeError("rho_derivative must be a sequence or a 1D array of non-negative integers.")
+    if theta_derivative is not None:
+        if not isinstance(theta_derivative, (Sequence, numpy.ndarray)) or not all(isinstance(i, Integral) and i >= 0 for i in theta_derivative):
+            raise TypeError("theta_derivative must be a sequence or a 1D array of non-negative integers.")
+    if not isinstance(default, Real):
+        raise TypeError("Default value must be a real number.")
+    if not isinstance(precompute, bool):
+        raise TypeError("precompute must be a boolean.")
+    
+    # Convert rho_derivative to arrays for length checking
+    if rho_derivative is None and theta_derivative is None:
+        rho_derivative = numpy.array([0], dtype=int_type)
+        theta_derivative = numpy.array([0], dtype=int_type)
+    elif rho_derivative is None and theta_derivative is not None:
+        rho_derivative = numpy.zeros_like(theta_derivative, dtype=int_type)
+        theta_derivative = numpy.asarray(theta_derivative, dtype=int_type)
+    elif rho_derivative is not None and theta_derivative is None:
+        theta_derivative = numpy.zeros_like(rho_derivative, dtype=int_type)
+        rho_derivative = numpy.asarray(rho_derivative, dtype=int_type)
+    else:
+        rho_derivative = numpy.asarray(rho_derivative, dtype=int_type)
+        theta_derivative = numpy.asarray(theta_derivative, dtype=int_type)
+
+    # Check lengths
+    if rho_derivative.ndim != 1:
+        raise TypeError("rho_derivative must be a sequence or a 1D array of integers.")
+    if theta_derivative.ndim != 1:
+        raise TypeError("theta_derivative must be a sequence or a 1D array of integers.")
+
+    if not (rho_derivative.size == theta_derivative.size):
+        raise ValueError("rho_derivative (if given) and theta_derivative (if given) must have the same length.")
+    
+    # Convert the default value to the proper float type
+    default = float_type(default)
+
+    # Compute the Mask for valid rho values
+    domain_mask = (rho >= 0) & (rho <= 1)
+    finite_mask = numpy.isfinite(rho) & numpy.isfinite(theta)
+    valid_mask = domain_mask & finite_mask
+
+    # Conserve only the valid values and save the input shape
+    original_shape = rho.shape
+    rho = rho[valid_mask]
+    theta = theta[valid_mask]
+    
+    # Convert the order into the correct int type
+    order = int_type(order)
 
     # Create the [n,m,...] lists for all the Zernike polynomials up to the given order
     N_polynomials = (order + 1) * (order + 2) // 2
@@ -217,6 +244,11 @@ def zernike_polynomial_up_to_order(
     rho_derivative = [dr for dr in rho_derivative for _ in range(N_polynomials)]
     theta_derivative = [dt for dt in theta_derivative for _ in range(N_polynomials)]
 
+    n = numpy.asarray(n, dtype=int_type)
+    m = numpy.asarray(m, dtype=int_type)
+    rho_derivative = numpy.asarray(rho_derivative, dtype=int_type)
+    theta_derivative = numpy.asarray(theta_derivative, dtype=int_type)
+
     # Compute the Zernike polynomials using the core_polynomial function
     output = core_polynomial(
         rho=rho,
@@ -227,6 +259,7 @@ def zernike_polynomial_up_to_order(
         theta_derivative=theta_derivative,
         flag_radial=False,
         precompute=precompute,
+        float_type=float_type,
     ) # List[N_polys * len(rho_derivative) of numpy.ndarray with shape of valid rho]
 
     # Reshape the output to a list of lists of shape (len(rho_derivative), N_polynomials)
@@ -236,13 +269,12 @@ def zernike_polynomial_up_to_order(
     # Reshape the output to the original shape of rho and set the invalid values to the default value
     # =================================================================
     # If rho is not in the valid domain, set the output to the default value
-    if not _skip:
-        for derivative_index in range(N_derivatives):
-            for index in range(N_polynomials):
-                # Reshape the radial polynomial to the original shape of rho and set the invalid values to the default value
-                output_default = numpy.full(original_shape, default, dtype=numpy.float64)
-                output_default[valid_mask] = output[derivative_index][index]
-                output[derivative_index][index] = output_default
+    for derivative_index in range(N_derivatives):
+        for index in range(N_polynomials):
+            # Reshape the radial polynomial to the original shape of rho and set the invalid values to the default value
+            output_default = numpy.full(original_shape, default, dtype=float_type)
+            output_default[valid_mask] = output[derivative_index][index]
+            output[derivative_index][index] = output_default
 
     return output
 

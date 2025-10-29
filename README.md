@@ -16,6 +16,9 @@ with :
 
 where `n` is the radial order, `m` is the azimuthal frequency, `\rho` is the normalized radial coordinate (`\rho` in [0, 1]) and `\theta` is the azimuthal angle.
 
+All input arrays are automatically converted to ``numpy.float64`` so that every calculation is performed in double‑precision, 
+guaranteeing numerical stability throughout the library.
+
 ## Usage
 
 ```python

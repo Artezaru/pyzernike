@@ -14,18 +14,18 @@
 
 import numpy
 from numbers import Integral, Real
-from typing import Sequence, List, Optional
+from typing import Sequence, List, Optional, Union
 
+from .core.core_corresponding_signed_integer_type import core_corresponding_signed_integer_type
 from .core.core_polynomial import core_polynomial
 
 def radial_polynomial(
     rho: numpy.ndarray, 
-    n: Sequence[Integral],
-    m: Sequence[Integral],
-    rho_derivative: Optional[Sequence[Integral]] = None,
+    n: Union[numpy.array, Sequence[Integral]],
+    m: Union[numpy.array, Sequence[Integral]],
+    rho_derivative: Optional[Union[numpy.array, Sequence[Integral]]] = None,
     default: Real = numpy.nan,
-    precompute: bool = True,
-    _skip: bool = False
+    precompute: bool = True
 ) -> List[numpy.ndarray]:
     r"""
     Computes the radial Zernike polynomial :math:`R_{n}^{m}(\rho)` for :math:`\rho \leq 1`.
@@ -56,7 +56,7 @@ def radial_polynomial(
 
     .. note::
 
-        If the input ``rho`` is not a floating point numpy array, it is converted to one with ``numpy.float64`` dtype.
+        If the input ``rho`` is not a floating point numpy array, it is converted to one with ``numpy.float64`` dtype by default.
         If the input ``rho`` is a floating point numpy array (ex: ``numpy.float32``), the computation will be done in ``numpy.float32``.
 
     Parameters
@@ -64,14 +64,14 @@ def radial_polynomial(
     rho : numpy.ndarray (N-D array)
         The radial coordinate values with shape (...,) and floating point values.
 
-    n : Sequence[Integral]
-        A list of the radial order(s) of the Zernike polynomial(s) to compute. Must be non-negative integers.
+    n : Sequence[Integral] or numpy.array
+        A sequence (List, Tuple) or 1D numpy array of the radial order(s) of the Zernike polynomial(s) to compute. Must be non-negative integers.
 
-    m : Sequence[Integral]
-        A list of the radial degree(s) of the Zernike polynomial(s) to compute. Must be non-negative integers.
+    m : Sequence[Integral] or numpy.array
+        A sequence (List, Tuple) or 1D numpy array of the radial degree(s) of the Zernike polynomial(s) to compute. Must be non-negative integers.
 
-    rho_derivative : Optional[Sequence[Integral]], optional
-        A list of the order(s) of the radial derivative(s) to compute. Must be non-negative integers.
+    rho_derivative : Optional[Union[Sequence[Integral], numpy.array]], optional
+        A sequence (List, Tuple) or 1D numpy array of the order(s) of the radial derivative(s) to compute. Must be non-negative integers.
         If None, is it assumed that rho_derivative is 0 for all polynomials.
 
     default : Real, optional
@@ -88,11 +88,12 @@ def radial_polynomial(
     List[numpy.ndarray]
         A list of numpy arrays containing the radial Zernike polynomial values for each order and degree.
         Each array has the same shape as ``rho`` and the list has the same length as the input sequences.
+        The dtype of the arrays is the same as the dtype of ``rho`` is given, otherwise ``numpy.float64``.
 
     Raises
     ------
     TypeError
-        If the rho values can not be converted to a numpy array of floating points values.
+        If the rho values can not be converted to a 1D numpy array of floating points values.
         If n, m or rho_derivative (if not None) are not sequences of integers.
 
     ValueError
@@ -122,42 +123,61 @@ def radial_polynomial(
         derivative = result[1]  # result is a list, we take the second element
 
     """
-    if not _skip:
-        # Convert rho to a numpy array of floating point values
-        if not isinstance(rho, numpy.ndarray):
-            rho = numpy.asarray(rho, dtype=numpy.float64)
-        # Convert rho in an array of floating point values if it is not already
-        if not numpy.issubdtype(rho.dtype, numpy.floating):
-            rho = rho.astype(numpy.float64)
+    # Convert rho to a numpy array of floating point values
+    if not isinstance(rho, numpy.ndarray):
+        rho = numpy.asarray(rho, dtype=numpy.float64)
 
-        # Check the input parameters
-        if not isinstance(n, Sequence) or not all(isinstance(i, Integral) for i in n):
-            raise TypeError("n must be a sequence of integers.")
-        if not isinstance(m, Sequence) or not all(isinstance(i, Integral) for i in m):
-            raise TypeError("m must be a sequence of integers.")
-        if rho_derivative is not None:
-            if not isinstance(rho_derivative, Sequence) or not all(isinstance(i, Integral) and i >= 0 for i in rho_derivative):
-                raise TypeError("rho_derivative must be a sequence of non-negative integers.")
-        if not isinstance(default, Real):
-            raise TypeError("Default value must be a real number.")
-        if not isinstance(precompute, bool):
-            raise TypeError("precompute must be a boolean.")
+    # Convert rho in an array of floating point values if it is not already
+    if not numpy.issubdtype(rho.dtype, numpy.floating):
+        rho = rho.astype(numpy.float64)
 
-        if len(n) != len(m):
-            raise ValueError("n and m must have the same length.")
-        if rho_derivative is not None and len(n) != len(rho_derivative):
-            raise ValueError("n and rho_derivative must have the same length.")
-        if rho_derivative is None:
-            rho_derivative = [0] * len(n)
+    # Determine the float type
+    float_type = rho.dtype.type
+    int_type = core_corresponding_signed_integer_type(float_type)
 
-        # Compute the Mask for valid rho values
-        domain_mask = (rho >= 0) & (rho <= 1)
-        finite_mask = numpy.isfinite(rho)
-        valid_mask = domain_mask & finite_mask
+    # Check the input parameters
+    if not isinstance(n, (Sequence, numpy.ndarray)) or not all(isinstance(i, Integral) for i in n):
+        raise TypeError("n must be a sequence or a 1D array of integers.")
+    if not isinstance(m, (Sequence, numpy.ndarray)) or not all(isinstance(i, Integral) for i in m):
+        raise TypeError("m must be a sequence or a 1D array of integers.")
+    if rho_derivative is not None:
+        if not isinstance(rho_derivative, (Sequence, numpy.ndarray)) or not all(isinstance(i, Integral) and i >= 0 for i in rho_derivative):
+            raise TypeError("rho_derivative must be a sequence or a 1D array of non-negative integers.")
+    if not isinstance(default, Real):
+        raise TypeError("Default value must be a real number.")
+    if not isinstance(precompute, bool):
+        raise TypeError("precompute must be a boolean.")
+    
+    # Convert n, m and rho_derivative to arrays for length checking
+    n = numpy.asarray(n, dtype=int_type)
+    m = numpy.asarray(m, dtype=int_type)
+    if rho_derivative is not None:
+        rho_derivative = numpy.asarray(rho_derivative, dtype=int_type)
+    else:
+        rho_derivative = numpy.zeros_like(n, dtype=int_type)
+    
+    # Check lengths
+    if not n.ndim == 1:
+        raise TypeError("n must be a sequence or a 1D array of integers.")
+    if not m.ndim == 1:
+        raise TypeError("m must be a sequence or a 1D array of integers.")
+    if rho_derivative.ndim != 1:
+        raise TypeError("rho_derivative must be a sequence or a 1D array of integers.")
 
-        # Conserve only the valid values and save the input shape
-        original_shape = rho.shape
-        rho = rho[valid_mask]
+    if not (n.size == m.size == rho_derivative.size):
+        raise ValueError("n, m and rho_derivative (if given) must have the same length.")
+
+    # Convert the default value to the proper float type
+    default = float_type(default)
+
+    # Compute the Mask for valid rho values
+    domain_mask = (rho >= 0) & (rho <= 1)
+    finite_mask = numpy.isfinite(rho)
+    valid_mask = domain_mask & finite_mask
+
+    # Conserve only the valid values and save the input shape
+    original_shape = rho.shape
+    rho = rho[valid_mask]
 
     # Compute the radial polynomials using the core_polynomial function
     radial_polynomials = core_polynomial(
@@ -169,15 +189,15 @@ def radial_polynomial(
         theta_derivative=None,
         flag_radial=True,
         precompute=precompute,
+        float_type=float_type
     )
 
     # If rho is not in the valid domain, set the output to the default value
-    if not _skip:
-        for index in range(len(radial_polynomials)):
-            # Reshape the radial polynomial to the original shape of rho and set the invalid values to the default value
-            output_default = numpy.full(original_shape, default, dtype=numpy.float64)
-            output_default[valid_mask] = radial_polynomials[index]
-            radial_polynomials[index] = output_default
+    for index in range(len(radial_polynomials)):
+        # Reshape the radial polynomial to the original shape of rho and set the invalid values to the default value
+        output_default = numpy.full(original_shape, default, dtype=float_type)
+        output_default[valid_mask] = radial_polynomials[index]
+        radial_polynomials[index] = output_default
 
     # Return the radial polynomials
     return radial_polynomials

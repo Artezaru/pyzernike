@@ -26,9 +26,12 @@ def test_symbolic_radial():
                 # Compute using core_polynomial
                 result = radial_polynomial(rho=rho_test, n=[n], m=[m], rho_derivative=[rho_derivative])[0]
 
+                # Compute the error between the two results
+                error = np.abs(symbolic_result - result)
+
                 assert np.allclose(symbolic_result, result), (
                     f"Mismatch between symbolic and computed radial polynomial for n={n}, m={m}, rho_derivative={rho_derivative}."
-                    f" Expected: {symbolic_result}, Got: {result}"
+                    f" Error: {error}"
                 )
 
 
@@ -43,7 +46,7 @@ def test_symbolic_zernike():
         for m in range(0, n + 1):
             for rho_derivative in range(n):
                 for theta_derivative in range(n):
-                    print(f"Testing n={n}, m={m}, rho_derivative={rho_derivative}, theta_derivative={theta_derivative}")
+                    # print(f"Testing n={n}, m={m}, rho_derivative={rho_derivative}, theta_derivative={theta_derivative}")
                     # Compute using symbolic zernike polynomial
                     symbolic_expression = zernike_symbolic([n], [m], [rho_derivative], [theta_derivative])[0]
 
@@ -55,8 +58,11 @@ def test_symbolic_zernike():
                     # Compute using core_polynomial
                     result = zernike_polynomial(rho=rho, theta=theta, n=[n], m=[m], rho_derivative=[rho_derivative], theta_derivative=[theta_derivative])[0]
 
+                    # Compute the error between the two results
+                    error = np.abs(symbolic_result - result)
+
                     assert np.allclose(symbolic_result, result), (
                         f"Mismatch between symbolic and computed zernike polynomial for n={n}, m={m}, "
-                        f"rho_derivative={rho_derivative}, theta_derivative={theta_derivative}."
-                        f" Expected: {symbolic_result}, Got: {result}"
+                        f"dr={rho_derivative}, dt={theta_derivative}."
+                        f" Error: {error}"
                     )

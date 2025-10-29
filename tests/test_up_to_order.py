@@ -42,12 +42,12 @@ def test_zernike_up_to_order_dimensions():
     Rho, Theta = np.meshgrid(rho, theta, indexing='ij')
 
     # Test for different n and m values
-    results = zernike_polynomial_up_to_order(rho=Rho, theta=Theta, order=10, rho_derivative=[0,1], theta_derivative=[0,0], _skip=True)
+    results = zernike_polynomial_up_to_order(rho=Rho, theta=Theta, order=10, rho_derivative=[0,1], theta_derivative=[0,0])
 
     # Consistency check with flattened inputs
     flat_rho = Rho.flatten()
     flat_theta = Theta.flatten()
-    flat_results = zernike_polynomial_up_to_order(flat_rho, flat_theta, order=10, rho_derivative=[0,1], theta_derivative=[0,0], _skip=True)
+    flat_results = zernike_polynomial_up_to_order(flat_rho, flat_theta, order=10, rho_derivative=[0,1], theta_derivative=[0,0])
 
     assert all(np.allclose(results[i][j].flatten(), flat_results[i][j]) for i in range(len(results)) for j in range(len(results[i]))), (
         "Mismatch between results and flat_results."
@@ -94,14 +94,35 @@ def test_xy_zernike_up_to_order_dimensions():
     X, Y = np.meshgrid(x, y, indexing='ij')
 
     # Test for different n and m values
-    results = xy_zernike_polynomial_up_to_order(x=X, y=Y, order=10, x_derivative=[0,1], y_derivative=[0,0], Rx=np.sqrt(2), Ry=np.sqrt(2), _skip=True)
+    results = xy_zernike_polynomial_up_to_order(x=X, y=Y, order=10, x_derivative=[0,1], y_derivative=[0,0], Rx=np.sqrt(2), Ry=np.sqrt(2))
 
     # Consistency check with flattened inputs
     flat_x = X.flatten()
     flat_y = Y.flatten()
-    flat_results = xy_zernike_polynomial_up_to_order(flat_x, flat_y, order=10, x_derivative=[0,1], y_derivative=[0,0], Rx=np.sqrt(2), Ry=np.sqrt(2), _skip=True)
+    flat_results = xy_zernike_polynomial_up_to_order(flat_x, flat_y, order=10, x_derivative=[0,1], y_derivative=[0,0], Rx=np.sqrt(2), Ry=np.sqrt(2))
 
     assert all(np.allclose(results[i][j].flatten(), flat_results[i][j]) for i in range(len(results)) for j in range(len(results[i]))), (
         "Mismatch between results and flat_results."
     )
     
+
+def test_zernike_up_to_order_dtype():
+    """Test that the zernike_polynomial function returns results of the correct dtype."""
+    rho_16 = np.linspace(0, 1, 100).astype(np.float16)
+    theta_16 = np.linspace(0, 2 * np.pi, 100).astype(np.float16)
+    rho_32 = np.linspace(0, 1, 100).astype(np.float32)
+    theta_32 = np.linspace(0, 2 * np.pi, 100).astype(np.float32)
+    rho_64 = np.linspace(0, 1, 100).astype(np.float64)
+    theta_64 = np.linspace(0, 2 * np.pi, 100).astype(np.float64)
+
+    for rho, theta, dtype in [
+        (rho_16, theta_16, np.float16),
+        (rho_32, theta_32, np.float32),
+        (rho_64, theta_64, np.float64),
+    ]:
+        result = zernike_polynomial_up_to_order(rho=rho, theta=theta, order=10, rho_derivative=[0], theta_derivative=[0])
+        for derivative_array in result:
+            for poly_array in derivative_array:
+                assert poly_array.dtype == dtype, f"Expected dtype {dtype}, but got {poly_array.dtype}"
+
+

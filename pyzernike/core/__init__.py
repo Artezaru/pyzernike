@@ -14,8 +14,11 @@
 
 __all__ = []
 
-from .core_create_precomputing_sets import core_create_precomputing_sets
-__all__.extend(['core_create_precomputing_sets'])
+from .core_corresponding_signed_integer_type import core_corresponding_signed_integer_type
+__all__.extend(['core_corresponding_signed_integer_type'])
+
+from .core_create_precomputing_terms import core_create_precomputing_terms
+__all__.extend(['core_create_precomputing_terms'])
 
 from .core_polynomial import core_polynomial
 __all__.extend(['core_polynomial'])

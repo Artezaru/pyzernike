@@ -51,14 +51,27 @@ def up_to_order(order, dr=None, dt=None):
 
     return n_values, m_values, dr_values, dt_values
 
+def get_int_type(float_type):
+    if float_type == numpy.float32:
+        return numpy.int32
+    if float_type == numpy.float64:
+        return numpy.int64
 
-def time_core_polynomial(order, num_points, dr=None, dt=None, flag_radial=True, precompute=True, Nmean=10):
+def time_core_polynomial(order, num_points, dr=None, dt=None, precompute=True, Nmean=10, float_type=numpy.float64):
     # Generate the n, m, dr, and dt values for the specified order
     n, m, rho_derivative, theta_derivative = up_to_order(order, dr=dr, dt=dt)
 
+    int_type = get_int_type(float_type)
+
     # Create a grid of rho and theta values
-    rho = numpy.random.uniform(0, 1, num_points)
-    theta = numpy.random.uniform(0, 2 * numpy.pi, num_points)
+    rho = numpy.random.uniform(0, 1, num_points).astype(float_type)
+    theta = numpy.random.uniform(0, 2 * numpy.pi, num_points).astype(float_type)
+    n = numpy.asarray(n, dtype=int_type)
+    m = numpy.asarray(m, dtype=int_type)
+    rho_derivative = numpy.asarray(rho_derivative, dtype=int_type)
+    theta_derivative = numpy.asarray(theta_derivative, dtype=int_type)
+
+    print(rho.dtype, theta.dtype, n.dtype, m.dtype, rho_derivative.dtype, theta_derivative.dtype)
 
     # Record the start time
     start_time = time.perf_counter()
@@ -72,8 +85,9 @@ def time_core_polynomial(order, num_points, dr=None, dt=None, flag_radial=True, 
             m=m,
             rho_derivative=rho_derivative,
             theta_derivative=theta_derivative,
-            flag_radial=flag_radial,
+            flag_radial=False,
             precompute=precompute,
+            float_type=float_type
         )
 
     # Record the end time
@@ -94,8 +108,6 @@ if __name__ == "__main__":
     dt_unique = [0]
     dr_first_derivative = [0, 1, 0]
     dt_first_derivative = [0, 0, 1]
-    # dr_second_derivative = [0, 1, 0, 1, 2, 0]
-    # dt_second_derivative = [0, 0, 1, 1, 0, 2]
 
     # Create a grid of rho and theta values
     num_points = []
@@ -103,29 +115,32 @@ if __name__ == "__main__":
         num_points.extend([10**power, 2*(10**power), 5*(10**power)])
     num_points.append(3000*4000)
 
-    times_unique = []
-    times_first = []
-    # times_second = []
+    times_unique_64 = []
+    times_first_64 = []
+    times_unique_32 = []
+    times_first_32 = []
     for n_points in num_points:
         print(f"Number of points: {n_points} - starting computations...")
-        time_unique = [
-            time_core_polynomial(order, n_points, dr=dr_unique, dt=dt_unique, Nmean=Nmean)
+        times_unique_64.append([
+            time_core_polynomial(order, n_points, dr=dr_unique, dt=dt_unique, Nmean=Nmean, float_type=numpy.float64)
             for order in orders
-        ]
-        print("\t unique done")
-        time_first = [
-            time_core_polynomial(order, n_points, dr=dr_first_derivative, dt=dt_first_derivative, Nmean=Nmean)
+        ])
+        print("\t unique 64 done")
+        times_first_64.append([
+            time_core_polynomial(order, n_points, dr=dr_first_derivative, dt=dt_first_derivative, Nmean=Nmean, float_type=numpy.float64)
             for order in orders
-        ]
-        print("\t first done")
-        # time_second = [
-        #     time_core_polynomial(order, n_points, dr=dr_second_derivative, dt=dt_second_derivative, Nmean=Nmean)
-        #     for order in orders
-        # ]
-        # print("\t second done")
-        times_unique.append(time_unique)
-        times_first.append(time_first)
-        # times_second.append(time_second)
+        ])
+        print("\t first 64 done")
+        times_unique_32.append([
+            time_core_polynomial(order, n_points, dr=dr_unique, dt=dt_unique, Nmean=Nmean, float_type=numpy.float32)
+            for order in orders
+        ])
+        print("\t unique 32 done")
+        times_first_32.append([
+            time_core_polynomial(order, n_points, dr=dr_first_derivative, dt=dt_first_derivative, Nmean=Nmean, float_type=numpy.float32)
+            for order in orders
+        ])
+        print("\t first 32 done")
 
     # Plot the results (time versus number of points - log-log scale) 
     #
@@ -134,11 +149,11 @@ if __name__ == "__main__":
     plt.figure(figsize=(10, 6))
     plt.title
     colors=['blue','red','green','orange','black']
-    markers = ['o', 's', '^']
-    linestyles = ['-', '--', ':']
-    labels = ['Unique', 'First Derivative', 'Second Derivative']
+    markers = ['o', 'o', '^', '^']
+    linestyles = ['-', '--', '-.', '--']
+    labels = ['Unique 64', 'First Derivative 64', 'Unique 32', 'First Derivative 32']
     for i, order in enumerate(orders):
-        for j, times in enumerate([times_unique, times_first]):#, times_second]):
+        for j, times in enumerate([times_unique_64, times_first_64, times_unique_32, times_first_32]):
             plt.plot(num_points, [t[i] for t in times], label=f"Order {order} - {labels[j]}", color=colors[i], marker=markers[j], linestyle=linestyles[j])
     plt.xscale('log')
     plt.yscale('log')
@@ -164,7 +179,7 @@ if __name__ == "__main__":
         header = ['Number of Points'] + [f'Order {order} - {label}' for order in orders for label in labels[:2]]
         writer.writerow(header)
         for i, n_points in enumerate(num_points):
-            row = [n_points] + [times_unique[i][j] for j in range(len(orders))] + [times_first[i][j] for j in range(len(orders))]
+            row = [n_points] + [times_unique_64[i][j] for j in range(len(orders))] + [times_first_64[i][j] for j in range(len(orders))] + [times_unique_32[i][j] for j in range(len(orders))] + [times_first_32[i][j] for j in range(len(orders))]
             writer.writerow(row)
 
     # Show the plot

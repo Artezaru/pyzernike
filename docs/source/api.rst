@@ -119,5 +119,6 @@ For developers interested in the core functionalities of the package, the ``core
    ./api_doc/core/core_polynomial
    ./api_doc/core/core_symbolic
    ./api_doc/core/core_display
-   ./api_doc/core/core_create_precomputing_sets
+   ./api_doc/core/core_create_precomputing_terms
+   ./api_core/core/core_corresponding_signed_integer_type
    ./api_doc/core/core_cartesian_to_elliptic_annulus

@@ -16,7 +16,7 @@ from typing import Sequence, List, Tuple
 from numbers import Integral
 
 
-def zernike_index_to_order(j: Sequence[Integral], _skip: bool = False) -> Tuple[List[int], List[int]]:
+def zernike_index_to_order(j: Sequence[Integral]) -> Tuple[List[int], List[int]]:
     r"""
     Convert indices in the OSA/ANSI Zernike polynomial ordering to their corresponding Zernike orders (n, m).
 
@@ -94,12 +94,11 @@ def zernike_index_to_order(j: Sequence[Integral], _skip: bool = False) -> Tuple[
         print(m)  # Output: [1, -2, 0]
 
     """
-    if not _skip:
-        if not isinstance(j, Sequence) or not all(isinstance(i, Integral) for i in j):
-            raise TypeError("j must be a sequence of integers.")
-        
-        if any(i < 0 for i in j):
-            raise ValueError("j must be non-negative integers.")
+    if not isinstance(j, Sequence) or not all(isinstance(i, Integral) for i in j):
+        raise TypeError("j must be a sequence of integers.")
+
+    if any(i < 0 for i in j):
+        raise ValueError("j must be non-negative integers.")
 
     n = [int((-1 + (1 + 8 * i) ** 0.5) / 2) for i in j]
     m = [2 * i - n_i * (n_i + 2) for n_i, i in zip(n, j)]

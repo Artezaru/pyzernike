@@ -13,16 +13,18 @@
 # limitations under the License.
 
 from numbers import Integral
-from typing import Sequence, Optional
+from typing import Sequence, Optional, Union
+import numpy
 
 from .core.core_display import core_display
+from .core.core_corresponding_signed_integer_type import core_corresponding_signed_integer_type
 
 def radial_display(
-    n: Sequence[Integral],
-    m: Sequence[Integral],
-    rho_derivative: Optional[Sequence[Integral]] = None,
+    n: Union[numpy.array, Sequence[Integral]],
+    m: Union[numpy.array, Sequence[Integral]],
+    rho_derivative: Optional[Union[numpy.array, Sequence[Integral]]] = None,
     precompute: bool = True,
-    _skip: bool = False
+    float_type: numpy.floating = numpy.float64
 ) -> None:
     r"""
     Display the radial Zernike polynomial :math:`R_{n}^{m}(\rho)` for :math:`\rho \leq 1` in an interactive matplotlib figure.
@@ -47,20 +49,23 @@ def radial_display(
 
     Parameters
     ----------
-    n : Sequence[Integral]
-        A list of the radial order(s) of the Zernike polynomial(s) to display.
+    n : Sequence[Integral] or numpy.array
+        A sequence (List, Tuple) or 1D numpy array of the radial order(s) of the Zernike polynomial(s) to display. Must be non-negative integers.
 
-    m : Sequence[Integral]
-        A list of the radial degree(s) of the Zernike polynomial(s) to display.
+    m : Sequence[Integral] or numpy.array
+        A sequence (List, Tuple) or 1D numpy array of the radial degree(s) of the Zernike polynomial(s) to display. Must be non-negative integers.
 
-    rho_derivative : Optional[Sequence[Integral]], optional
-        A list of the order(s) of the radial derivative(s) to display.
+    rho_derivative : Optional[Union[Sequence[Integral], numpy.array]], optional
+        A sequence (List, Tuple) or 1D numpy array of the order(s) of the radial derivative(s) to display. Must be non-negative integers.
         If None, is it assumed that rho_derivative is 0 for all polynomials.
 
     precompute : bool, optional
         If True, the useful terms for the Zernike polynomials are precomputed to optimize the computation.
         If False, the useful terms are computed on-the-fly to avoid memory overhead.
         Default is True.
+
+    float_type : numpy.floating, optional
+        The floating point type to use for the computations. Default is numpy.float64.
 
     Returns
     -------
@@ -95,23 +100,38 @@ def radial_display(
         :align: center
 
     """
-    if not _skip:
-        if not isinstance(n, Sequence) or not all(isinstance(i, Integral) for i in n):
-            raise TypeError("n must be a sequence of integers.")
-        if not isinstance(m, Sequence) or not all(isinstance(i, Integral) for i in m):
-            raise TypeError("m must be a sequence of integers.")
-        if rho_derivative is not None:
-            if not isinstance(rho_derivative, Sequence) or not all(isinstance(i, Integral) and i >= 0 for i in rho_derivative):
-                raise TypeError("rho_derivative must be a sequence of non-negative integers.")
-        if not isinstance(precompute, bool):
-            raise TypeError("precompute must be a boolean.")
-        
-        if len(n) != len(m):
-            raise ValueError("n and m must have the same length.")
-        if rho_derivative is not None and len(n) != len(rho_derivative):
-            raise ValueError("n and rho_derivative must have the same length.")
-        if rho_derivative is None:
-            rho_derivative = [0] * len(n)
+    # Get the corresponding integer types
+    int_type = core_corresponding_signed_integer_type(float_type)
+
+    # Check the input parameters
+    if not isinstance(n, (Sequence, numpy.ndarray)) or not all(isinstance(i, Integral) for i in n):
+        raise TypeError("n must be a sequence or a 1D array of integers.")
+    if not isinstance(m, (Sequence, numpy.ndarray)) or not all(isinstance(i, Integral) for i in m):
+        raise TypeError("m must be a sequence or a 1D array of integers.")
+    if rho_derivative is not None:
+        if not isinstance(rho_derivative, (Sequence, numpy.ndarray)) or not all(isinstance(i, Integral) and i >= 0 for i in rho_derivative):
+            raise TypeError("rho_derivative must be a sequence or a 1D array of non-negative integers.")
+    if not isinstance(precompute, bool):
+        raise TypeError("precompute must be a boolean.")
+    
+    # Convert n, m and rho_derivative to arrays for length checking
+    n = numpy.asarray(n, dtype=int_type)
+    m = numpy.asarray(m, dtype=int_type)
+    if rho_derivative is not None:
+        rho_derivative = numpy.asarray(rho_derivative, dtype=int_type)
+    else:
+        rho_derivative = numpy.zeros_like(n, dtype=int_type)
+    
+    # Check lengths
+    if not n.ndim == 1:
+        raise TypeError("n must be a sequence or a 1D array of integers.")
+    if not m.ndim == 1:
+        raise TypeError("m must be a sequence or a 1D array of integers.")
+    if rho_derivative.ndim != 1:
+        raise TypeError("rho_derivative must be a sequence or a 1D array of integers.")
+
+    if not (n.size == m.size == rho_derivative.size):
+        raise ValueError("n, m and rho_derivative (if given) must have the same length.")
 
     # Compute the radial polynomials using the core_polynomial function
     core_display(
@@ -121,4 +141,5 @@ def radial_display(
         theta_derivative=None,
         flag_radial=True,
         precompute=precompute,
+        float_type=float_type,
     )

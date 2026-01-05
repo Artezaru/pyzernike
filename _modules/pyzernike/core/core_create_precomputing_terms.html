@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pyzernike.core.core_create_precomputing_terms &#8212; pyzernike 2.2.0 documentation</title>
+    <title>pyzernike.core.core_create_precomputing_terms &#8212; pyzernike 2.3.0 documentation</title>
   
   
   
@@ -37,7 +37,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=b21de401"></script>
+    <script src="../../../_static/documentation_options.js?v=c3c8ae58"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/pyzernike/core/core_create_precomputing_terms';</script>
@@ -107,7 +107,7 @@
   
   
   
-    <p class="title logo__title">pyzernike 2.2.0 documentation</p>
+    <p class="title logo__title">pyzernike 2.3.0 documentation</p>
   
 </a></div>
     
@@ -365,7 +365,7 @@
 
 <span class="sd">        :func:`pyzernike.core.core_polynomial` for computing Zernike polynomials.</span>
 
-<span class="sd">    For one defined Zernike polynomial of order ``n``, degree ``m`` and derivative with respect to rho ``a``, the usefull rho exponents are :</span>
+<span class="sd">    For one defined Zernike polynomial of order ``n``, azimuthal frequency ``m`` and derivative with respect to rho ``a``, the usefull rho exponents are :</span>
 
 <span class="sd">    .. math::</span>
 
@@ -387,7 +387,7 @@
 <span class="sd">        The orders of the Zernike polynomials to compute. Must be a 1D array of integers of type compatible with ``float_type``.</span>
 
 <span class="sd">    m : numpy.array[numpy.integer]</span>
-<span class="sd">        The degrees of the Zernike polynomials. Must be a 1D array of integers of type compatible with ``float_type``.</span>
+<span class="sd">        The azimuthal frequencies of the Zernike polynomials. Must be a 1D array of integers of type compatible with ``float_type``.</span>
 
 <span class="sd">    rho_derivative : numpy.array[numpy.integer]</span>
 <span class="sd">        The orders of the derivatives with respect to rho. Must be a 1D array of integers of type compatible with ``float_type``.</span>
@@ -412,7 +412,7 @@
 <span class="sd">        - ``sine_frequencies``: An 1D array of unique integer frequencies for the sine terms needed for the computations with dtype compatible with ``float_type``.</span>
 <span class="sd">        - ``factorials_integers``: An 1D array of unique integers for the factorials needed for the computations with dtype compatible with ``float_type``.</span>
 <span class="sd">        - ``max_n``: The maximum order in ``n`` as integer of type compatible with ``float_type``.</span>
-<span class="sd">        - ``max_abs_m``: The maximum absolute degree in ``m`` as integer of type compatible with ``float_type``.</span>
+<span class="sd">        - ``max_abs_m``: The maximum absolute azimuthal frequency in ``m`` as integer of type compatible with ``float_type``.</span>
 <span class="sd">    </span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Get the corresponding integer types</span>
@@ -528,7 +528,7 @@
 
   <p class="copyright">
     
-      © Copyright 2025-2025, Artezaru.
+      © Copyright 2025-2026, Artezaru.
       <br/>
     
   </p>

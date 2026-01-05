@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>pyzernike.core.core_symbolic &#8212; pyzernike 2.2.0 documentation</title>
+    <title>pyzernike.core.core_symbolic &#8212; pyzernike 2.3.0 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=b21de401"></script>
+    <script src="../../_static/documentation_options.js?v=c3c8ae58"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -111,7 +111,7 @@
   
   
   
-    <p class="title logo__title">pyzernike 2.2.0 documentation</p>
+    <p class="title logo__title">pyzernike 2.3.0 documentation</p>
   
 </a></div>
     
@@ -309,6 +309,7 @@
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">pyzernike.core.core_symbolic</a></li>
 <li class="toctree-l1"><a class="reference internal" href="core_display.html">pyzernike.core.core_display</a></li>
 <li class="toctree-l1"><a class="reference internal" href="core_create_precomputing_terms.html">pyzernike.core.core_create_precomputing_terms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core_corresponding_signed_integer_type.html">pyzernike.core.core_corresponding_signed_integer_type</a></li>
 <li class="toctree-l1"><a class="reference internal" href="core_cartesian_to_elliptic_annulus.html">pyzernike.core.core_cartesian_to_elliptic_annulus</a></li>
 </ul>
 </div>
@@ -406,7 +407,7 @@ The <cite>t</cite> symbol is used to represent the angular coordinate <span clas
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>n</strong> (<em>numpy.array</em><em>[</em><em>numpy.integer</em><em>]</em>) – The orders of the Zernike polynomials to compute. Must be a 1D array of integers.</p></li>
-<li><p><strong>m</strong> (<em>numpy.array</em><em>[</em><em>numpy.integer</em><em>]</em>) – The degrees of the Zernike polynomials. Must be a 1D array of integers.</p></li>
+<li><p><strong>m</strong> (<em>numpy.array</em><em>[</em><em>numpy.integer</em><em>]</em>) – The azimuthal frequencies of the Zernike polynomials. Must be a 1D array of integers.</p></li>
 <li><p><strong>numpy.array</strong><strong>[</strong><strong>numpy.integer</strong><strong>]</strong> – The orders of the derivatives with respect to rho. Must be a 1D array of integers.</p></li>
 <li><p><strong>theta_derivative</strong> (<em>Optional</em><em>[</em><em>numpy.array</em><em>[</em><em>numpy.integer</em><em>]</em><em>]</em>) – The orders of the derivatives with respect to theta. Must be None if <code class="docutils literal notranslate"><span class="pre">flag_radial</span></code> is True. Otherwise, must be a 1D array of integers.</p></li>
 <li><p><strong>flag_radial</strong> (<em>bool</em>) – If True, the radial Zernike polynomial <span class="math notranslate nohighlight">\(R_{n}^{m}(\rho)\)</span> is computed instead of the full Zernike polynomial <span class="math notranslate nohighlight">\(Z_{n}^{m}(\rho, \theta)\)</span>.
@@ -415,7 +416,7 @@ If False, the full Zernike polynomial <span class="math notranslate nohighlight"
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A list of symbolic expressions of the Zernike polynomial or radial Zernike polynomial for each order and degree specified in <cite>n</cite> and <cite>m</cite>.
+<dd class="field-even"><p>A list of symbolic expressions of the Zernike polynomial or radial Zernike polynomial for each order and azimuthal frequency specified in <cite>n</cite> and <cite>m</cite>.
 Each expression is a sympy expression that can be evaluated or manipulated further.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
@@ -511,7 +512,7 @@ Each expression is a sympy expression that can be evaluated or manipulated furth
 
   <p class="copyright">
     
-      © Copyright 2025-2025, Artezaru.
+      © Copyright 2025-2026, Artezaru.
       <br/>
     
   </p>

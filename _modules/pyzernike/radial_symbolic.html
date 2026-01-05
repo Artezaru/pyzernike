@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pyzernike.radial_symbolic &#8212; pyzernike 2.2.0 documentation</title>
+    <title>pyzernike.radial_symbolic &#8212; pyzernike 2.3.0 documentation</title>
   
   
   
@@ -37,7 +37,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=b21de401"></script>
+    <script src="../../_static/documentation_options.js?v=c3c8ae58"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/pyzernike/radial_symbolic';</script>
@@ -107,7 +107,7 @@
   
   
   
-    <p class="title logo__title">pyzernike 2.2.0 documentation</p>
+    <p class="title logo__title">pyzernike 2.3.0 documentation</p>
   
 </a></div>
     
@@ -369,11 +369,11 @@
 <span class="sd">        - :func:`pyzernike.core.core_symbolic` to inspect the core implementation of the symbolic computation.</span>
 <span class="sd">        - The page :doc:`../../mathematical_description` in the documentation for the detailed mathematical description of the Zernike polynomials.</span>
 <span class="sd">    </span>
-<span class="sd">    The function allows to display several radial Zernike polynomials for different sets of (order, degree, derivative order) given as sequences.</span>
+<span class="sd">    The function allows to display several radial Zernike polynomials for different sets of (order, azimuthal frequency, derivative order) given as sequences.</span>
 
 <span class="sd">    - The parameters ``n``, ``m`` and ``rho_derivative`` must be sequences of integers with the same length.</span>
 
-<span class="sd">    The output is a list of sympy expressions, each containing the symbolic expression of the radial Zernike polynomial for the corresponding order and degree.</span>
+<span class="sd">    The output is a list of sympy expressions, each containing the symbolic expression of the radial Zernike polynomial for the corresponding order and azimuthal frequency.</span>
 <span class="sd">    The list has the same length as the input sequences.</span>
 
 <span class="sd">    .. note::</span>
@@ -386,7 +386,7 @@
 <span class="sd">        A sequence (List, Tuple) or 1D numpy array of the radial order(s) of the Zernike polynomial(s) to compute. Must be non-negative integers.</span>
 
 <span class="sd">    m : Sequence[Integral] or numpy.array</span>
-<span class="sd">        A sequence (List, Tuple) or 1D numpy array of the radial degree(s) of the Zernike polynomial(s) to compute. Must be non-negative integers.</span>
+<span class="sd">        A sequence (List, Tuple) or 1D numpy array of the azimuthal frequency(ies) of the Zernike polynomial(s) to compute. Must be non-negative integers.</span>
 
 <span class="sd">    rho_derivative : Optional[Union[Sequence[Integral], numpy.array]], optional</span>
 <span class="sd">        A sequence (List, Tuple) or 1D numpy array of the order(s) of the radial derivative(s) to compute. Must be non-negative integers.</span>
@@ -395,7 +395,7 @@
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    List[sympy.Expr]</span>
-<span class="sd">        A list of symbolic expressions containing the radial Zernike polynomial values for each order and degree</span>
+<span class="sd">        A list of symbolic expressions containing the radial Zernike polynomial values for each order and azimuthal frequency</span>
 <span class="sd">        Each expression is a sympy expression that can be evaluated for specific values of :math:`\rho`.</span>
 
 <span class="sd">    Raises</span>
@@ -515,7 +515,7 @@
 
   <p class="copyright">
     
-      © Copyright 2025-2025, Artezaru.
+      © Copyright 2025-2026, Artezaru.
       <br/>
     
   </p>

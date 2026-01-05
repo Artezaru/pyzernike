@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>API Reference &#8212; pyzernike 2.2.0 documentation</title>
+    <title>API Reference &#8212; pyzernike 2.3.0 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="_static/documentation_options.js?v=b21de401"></script>
+    <script src="_static/documentation_options.js?v=c3c8ae58"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -111,7 +111,7 @@
   
   
   
-    <p class="title logo__title">pyzernike 2.2.0 documentation</p>
+    <p class="title logo__title">pyzernike 2.3.0 documentation</p>
   
 </a></div>
     
@@ -309,6 +309,7 @@
 <li class="toctree-l1"><a class="reference internal" href="api_doc/core/core_symbolic.html">pyzernike.core.core_symbolic</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api_doc/core/core_display.html">pyzernike.core.core_display</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api_doc/core/core_create_precomputing_terms.html">pyzernike.core.core_create_precomputing_terms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_doc/core/core_corresponding_signed_integer_type.html">pyzernike.core.core_corresponding_signed_integer_type</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api_doc/core/core_cartesian_to_elliptic_annulus.html">pyzernike.core.core_cartesian_to_elliptic_annulus</a></li>
 </ul>
 </div>
@@ -384,7 +385,7 @@ To learn how to use the package effectively, refer to the documentation <a class
 </nav>
 <section id="generalities-and-notations-about-zernike-polynomials">
 <h2><a class="toc-backref" href="#table-of-contents" role="doc-backlink">Generalities and notations about Zernike Polynomials</a><a class="headerlink" href="#generalities-and-notations-about-zernike-polynomials" title="Link to this heading">#</a></h2>
-<p>For a polynomial of order <span class="math notranslate nohighlight">\(n\)</span> and repetition <span class="math notranslate nohighlight">\(m\)</span>, the Zernike polynomial <span class="math notranslate nohighlight">\(Z_{n}^{m}(\rho, \theta)\)</span> is defined on the unit disk as:</p>
+<p>For a polynomial of order/degree <span class="math notranslate nohighlight">\(n\)</span> and azimuthal frequency <span class="math notranslate nohighlight">\(m\)</span>, the Zernike polynomial <span class="math notranslate nohighlight">\(Z_{n}^{m}(\rho, \theta)\)</span> is defined on the unit disk as:</p>
 <div class="math notranslate nohighlight">
 \[Z_{n}^{m}(\rho, \theta) = R_{n}^{m}(\rho) \cos(m \theta) \quad \text{if} \quad m \geq 0\]</div>
 <div class="math notranslate nohighlight">
@@ -399,8 +400,8 @@ To learn how to use the package effectively, refer to the documentation <a class
 <p class="admonition-title">Note</p>
 <p>Thus any polynomial evaluated at <span class="math notranslate nohighlight">\((\rho, \theta)\)</span> can be defined by 4 parameters :</p>
 <ul class="simple">
-<li><p>n : order of the polynomial noted <code class="docutils literal notranslate"><span class="pre">n</span></code> in the documentation</p></li>
-<li><p>m : degree of the polynomial noted <code class="docutils literal notranslate"><span class="pre">m</span></code> in the documentation</p></li>
+<li><p>n : order/degree of the polynomial noted <code class="docutils literal notranslate"><span class="pre">n</span></code> in the documentation</p></li>
+<li><p>m : azimuthal frequency of the polynomial noted <code class="docutils literal notranslate"><span class="pre">m</span></code> in the documentation</p></li>
 <li><p>a : order of the derivative with respect to <span class="math notranslate nohighlight">\(\rho\)</span> noted <code class="docutils literal notranslate"><span class="pre">rho_derivative</span></code> in the arguments.</p></li>
 <li><p>b : order of the derivative with respect to <span class="math notranslate nohighlight">\(\theta\)</span> noted <code class="docutils literal notranslate"><span class="pre">theta_derivative</span></code> in the arguments.</p></li>
 </ul>
@@ -480,6 +481,7 @@ To learn how to use the package effectively, refer to the documentation <a class
 <li class="toctree-l1"><a class="reference internal" href="api_doc/core/core_symbolic.html">pyzernike.core.core_symbolic</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api_doc/core/core_display.html">pyzernike.core.core_display</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api_doc/core/core_create_precomputing_terms.html">pyzernike.core.core_create_precomputing_terms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_doc/core/core_corresponding_signed_integer_type.html">pyzernike.core.core_corresponding_signed_integer_type</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api_doc/core/core_cartesian_to_elliptic_annulus.html">pyzernike.core.core_cartesian_to_elliptic_annulus</a></li>
 </ul>
 </div>
@@ -576,7 +578,7 @@ To learn how to use the package effectively, refer to the documentation <a class
 
   <p class="copyright">
     
-      © Copyright 2025-2025, Artezaru.
+      © Copyright 2025-2026, Artezaru.
       <br/>
     
   </p>

@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pyzernike.xy_zernike_polynomial_up_to_order &#8212; pyzernike 2.2.0 documentation</title>
+    <title>pyzernike.xy_zernike_polynomial_up_to_order &#8212; pyzernike 2.3.0 documentation</title>
   
   
   
@@ -37,7 +37,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=b21de401"></script>
+    <script src="../../_static/documentation_options.js?v=c3c8ae58"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/pyzernike/xy_zernike_polynomial_up_to_order';</script>
@@ -107,7 +107,7 @@
   
   
   
-    <p class="title logo__title">pyzernike 2.2.0 documentation</p>
+    <p class="title logo__title">pyzernike 2.3.0 documentation</p>
   
 </a></div>
     
@@ -368,7 +368,7 @@
 
 <span class="sd">    .. seealso::</span>
 
-<span class="sd">        - :func:`pyzernike.xy_zernike_polynomial` for computing a set of Zernike polynomials for given orders and degrees.</span>
+<span class="sd">        - :func:`pyzernike.xy_zernike_polynomial` for computing a set of Zernike polynomials for given orders and azimuthal frequencies.</span>
 <span class="sd">        - :func:`pyzernike.cartesian_to_elliptic_annulus` to convert Cartesian coordinates to elliptic annulus domain polar coordinates.</span>
 <span class="sd">        - The page :doc:`../../mathematical_description` in the documentation for the mathematical extension of the Zernike polynomials on the elliptic domain.</span>
 
@@ -403,7 +403,7 @@
 <span class="sd">    - The parameters ``x_derivative`` and ``y_derivative`` must be sequences of integers with the same length.</span>
 
 <span class="sd">    The :math:`x` and :math:`y` values are the same for all the polynomials.</span>
-<span class="sd">    The output ``output[k][j]`` is the Zernike polynomial of order ``n[j]`` and degree ``m[j]`` (OSA/ANSI ordering) with same shape as ``x`` and for the radial derivative of order ``x_derivative[k]`` and the angular derivative of order ``y_derivative[k]``.</span>
+<span class="sd">    The output ``output[k][j]`` is the Zernike polynomial of order ``n[j]`` and azimuthal frequency ``m[j]`` (OSA/ANSI ordering) with same shape as ``x`` and for the radial derivative of order ``x_derivative[k]`` and the angular derivative of order ``y_derivative[k]``.</span>
 
 <span class="sd">    .. note::</span>
 
@@ -473,7 +473,7 @@
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    List[numpy.ndarray]</span>
-<span class="sd">        A list of numpy arrays containing the Zernike polynomial values for each order and degree.</span>
+<span class="sd">        A list of numpy arrays containing the Zernike polynomial values for each order and azimuthal frequency.</span>
 <span class="sd">        Each array has the same shape as ``x``.</span>
 
 <span class="sd">    Raises</span>
@@ -509,7 +509,7 @@
 
 <span class="sd">        # Extract the values: </span>
 <span class="sd">        indices = list(range(len(polynomials)))</span>
-<span class="sd">        n, m = zernike_index_to_order(indices)  # Get the orders and degrees from the indices</span>
+<span class="sd">        n, m = zernike_index_to_order(indices)  # Get the orders and azimuthal frequencies from the indices</span>
 
 <span class="sd">        for i, (n_i, m_i) in enumerate(zip(n, m)):</span>
 <span class="sd">            print(f&quot;Zernike polynomial Z_{n_i}^{m_i} for the given x and y values is: {polynomials[i]}&quot;)</span>
@@ -531,7 +531,7 @@
 <span class="sd">        polynomials = result[0]  # Get the first set of polynomials (for x_derivative=0, y_derivative=0)</span>
 <span class="sd">        derivatives_x = result[1]  # Get the first set of derivatives (for x_derivative=1, y_derivative=0)</span>
 
-<span class="sd">    The output will contain the Zernike polynomials and their derivatives for the specified orders and degrees.</span>
+<span class="sd">    The output will contain the Zernike polynomials and their derivatives for the specified orders and azimuthal frequencies.</span>
 <span class="sd">    </span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Convert x and y to numpy arrays of floating point values</span>
@@ -724,7 +724,7 @@
 
   <p class="copyright">
     
-      © Copyright 2025-2025, Artezaru.
+      © Copyright 2025-2026, Artezaru.
       <br/>
     
   </p>

@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pyzernike.xy_zernike_polynomial &#8212; pyzernike 2.2.0 documentation</title>
+    <title>pyzernike.xy_zernike_polynomial &#8212; pyzernike 2.3.0 documentation</title>
   
   
   
@@ -37,7 +37,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=b21de401"></script>
+    <script src="../../_static/documentation_options.js?v=c3c8ae58"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/pyzernike/xy_zernike_polynomial';</script>
@@ -107,7 +107,7 @@
   
   
   
-    <p class="title logo__title">pyzernike 2.2.0 documentation</p>
+    <p class="title logo__title">pyzernike 2.3.0 documentation</p>
   
 </a></div>
     
@@ -397,13 +397,13 @@
 
 <span class="sd">    The Zernike polynomial :math:`Z_{n}^{m}(\rho_{eq}, \theta_{eq})` is computed for the equivalent polar coordinates.</span>
 <span class="sd">    </span>
-<span class="sd">    This function allows to compute several Zernike polynomials at once for different sets of (order, degree, derivative orders) given as sequences,</span>
+<span class="sd">    This function allows to compute several Zernike polynomials at once for different sets of (order, azimuthal frequency, derivative orders) given as sequences,</span>
 <span class="sd">    which can be more efficient than calling the polynomial function multiple times.</span>
 
 <span class="sd">    - The parameters ``x`` and ``y`` must be numpy arrays of the same shape.</span>
 <span class="sd">    - The parameters ``n``, ``m``, ``x_derivative`` and ``y_derivative`` must be sequences of integers with the same length.</span>
 
-<span class="sd">    The output is a list of numpy arrays, each containing the values of the Zernike polynomial for the corresponding order and degree.</span>
+<span class="sd">    The output is a list of numpy arrays, each containing the values of the Zernike polynomial for the corresponding order and azimuthal frequency.</span>
 <span class="sd">    The list has the same length as the input sequences and the arrays have the same shape as ``x``.</span>
 
 <span class="sd">    .. note::</span>
@@ -431,7 +431,7 @@
 <span class="sd">        A sequence (List, Tuple) or 1D numpy array of the radial order(s) of the Zernike polynomial(s) to compute. Must be non-negative integers.</span>
 
 <span class="sd">    m : Sequence[Integral] or numpy.array</span>
-<span class="sd">        A sequence (List, Tuple) or 1D numpy array of the radial degree(s) of the Zernike polynomial(s) to compute. Must be non-negative integers.</span>
+<span class="sd">        A sequence (List, Tuple) or 1D numpy array of the azimuthal frequency(ies) of the Zernike polynomial(s) to compute. Must be non-negative integers.</span>
 
 <span class="sd">    Rx : Real, optional</span>
 <span class="sd">        The length of the semi-axis of the ellipse along x axis. Must be strictly positive.</span>
@@ -478,7 +478,7 @@
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    List[numpy.ndarray]</span>
-<span class="sd">        A list of numpy arrays containing the Zernike polynomial values for each order and degree.</span>
+<span class="sd">        A list of numpy arrays containing the Zernike polynomial values for each order and azimuthal frequency.</span>
 <span class="sd">        Each array has the same shape as ``x``.</span>
 
 <span class="sd">    Raises</span>
@@ -850,7 +850,7 @@
 
   <p class="copyright">
     
-      © Copyright 2025-2025, Artezaru.
+      © Copyright 2025-2026, Artezaru.
       <br/>
     
   </p>

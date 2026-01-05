@@ -12,7 +12,7 @@ To learn how to use the package effectively, refer to the documentation :doc:`..
 Generalities and notations about Zernike Polynomials
 -------------------------------------------------------
 
-For a polynomial of order :math:`n` and repetition :math:`m`, the Zernike polynomial :math:`Z_{n}^{m}(\rho, \theta)` is defined on the unit disk as:
+For a polynomial of order/degree :math:`n` and azimuthal frequency :math:`m`, the Zernike polynomial :math:`Z_{n}^{m}(\rho, \theta)` is defined on the unit disk as:
 
 .. math::
 
@@ -38,8 +38,8 @@ The derivative of order (derivative (a)) of the Zernike polynomial with respect 
 
    Thus any polynomial evaluated at :math:`(\rho, \theta)` can be defined by 4 parameters :
 
-   - n : order of the polynomial noted ``n`` in the documentation
-   - m : degree of the polynomial noted ``m`` in the documentation
+   - n : order/degree of the polynomial noted ``n`` in the documentation
+   - m : azimuthal frequency of the polynomial noted ``m`` in the documentation
    - a : order of the derivative with respect to :math:`\rho` noted ``rho_derivative`` in the arguments.
    - b : order of the derivative with respect to :math:`\theta` noted ``theta_derivative`` in the arguments.
 
@@ -120,5 +120,5 @@ For developers interested in the core functionalities of the package, the ``core
    ./api_doc/core/core_symbolic
    ./api_doc/core/core_display
    ./api_doc/core/core_create_precomputing_terms
-   ./api_core/core/core_corresponding_signed_integer_type
+   ./api_doc/core/core_corresponding_signed_integer_type
    ./api_doc/core/core_cartesian_to_elliptic_annulus

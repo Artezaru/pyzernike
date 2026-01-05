@@ -217,6 +217,6 @@ The available options are:
 - flag ``-n {N}`` or ```--n {N}``` will specify the maximum order of the Zernike polynomials to display. If not specified, the default value is 5
 - flag ``-dr {D}``` or ``--rho_derivative {D}`` can be used to specify the radial derivative of the Zernike polynomials. If not specified, the default value is 0 for all polynomials.
 - flag ``-dt {D}``` or ``--theta_derivative {D}`` can be used to specify the angular derivative of the Zernike polynomials. If not specified, the default value is 0 for all polynomials.
-
-
+- flag ``-i`` or ``--interactive`` can be used to launch the interactive display window. If given, ignore other options and launch the interactive display.
+- flag ``-h`` or ``--help`` can be used to display the help message.
 

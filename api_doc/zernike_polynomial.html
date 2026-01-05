@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>pyzernike.zernike_polynomial &#8212; pyzernike 2.2.0 documentation</title>
+    <title>pyzernike.zernike_polynomial &#8212; pyzernike 2.3.0 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=b21de401"></script>
+    <script src="../_static/documentation_options.js?v=c3c8ae58"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -111,7 +111,7 @@
   
   
   
-    <p class="title logo__title">pyzernike 2.2.0 documentation</p>
+    <p class="title logo__title">pyzernike 2.3.0 documentation</p>
   
 </a></div>
     
@@ -309,6 +309,7 @@
 <li class="toctree-l1"><a class="reference internal" href="core/core_symbolic.html">pyzernike.core.core_symbolic</a></li>
 <li class="toctree-l1"><a class="reference internal" href="core/core_display.html">pyzernike.core.core_display</a></li>
 <li class="toctree-l1"><a class="reference internal" href="core/core_create_precomputing_terms.html">pyzernike.core.core_create_precomputing_terms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core/core_corresponding_signed_integer_type.html">pyzernike.core.core_corresponding_signed_integer_type</a></li>
 <li class="toctree-l1"><a class="reference internal" href="core/core_cartesian_to_elliptic_annulus.html">pyzernike.core.core_cartesian_to_elliptic_annulus</a></li>
 </ul>
 </div>
@@ -391,14 +392,14 @@ If <span class="math notranslate nohighlight">\(\rho\)</span> is not in <span cl
 <li><p>The page <a class="reference internal" href="../mathematical_description.html"><span class="doc">Mathematical description</span></a> in the documentation for the detailed mathematical description of the Zernike polynomials.</p></li>
 </ul>
 </div>
-<p>This function allows to compute several Zernike polynomials at once for different sets of (order, degree, derivative orders) given as sequences,
+<p>This function allows to compute several Zernike polynomials at once for different sets of (order, azimuthal frequency, derivative orders) given as sequences,
 which can be more efficient than calling the polynomial function multiple times.</p>
 <ul class="simple">
 <li><p>The parameters <code class="docutils literal notranslate"><span class="pre">rho</span></code> and <code class="docutils literal notranslate"><span class="pre">theta</span></code> must be numpy arrays of the same shape.</p></li>
 <li><p>The parameters <code class="docutils literal notranslate"><span class="pre">n</span></code>, <code class="docutils literal notranslate"><span class="pre">m</span></code>, <code class="docutils literal notranslate"><span class="pre">rho_derivative</span></code> and <code class="docutils literal notranslate"><span class="pre">theta_derivative</span></code> must be sequences of integers with the same length.</p></li>
 </ul>
 <p>The <span class="math notranslate nohighlight">\(\rho\)</span> and <span class="math notranslate nohighlight">\(\theta\)</span> values are the same for all the polynomials.
-The output is a list of numpy arrays, each containing the values of the Zernike polynomial for the corresponding order and degree.
+The output is a list of numpy arrays, each containing the values of the Zernike polynomial for the corresponding order and azimuthal frequency.
 The list has the same length as the input sequences and the arrays have the same shape as <code class="docutils literal notranslate"><span class="pre">rho</span></code>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -412,7 +413,7 @@ If the input <code class="docutils literal notranslate"><span class="pre">rho</s
 <li><p><strong>rho</strong> (<em>numpy.ndarray</em><em> (</em><em>N-D array</em><em>)</em>) – The radial coordinate values with shape (…,).</p></li>
 <li><p><strong>theta</strong> (<em>numpy.ndarray</em><em> (</em><em>N-D array</em><em>)</em>) – The angular coordinate values with shape (…,). Same shape as <code class="docutils literal notranslate"><span class="pre">rho</span></code>.</p></li>
 <li><p><strong>n</strong> (<em>Sequence</em><em>[</em><em>Integral</em><em>] or </em><em>numpy.array</em>) – A sequence (List, Tuple) or 1D numpy array of the radial order(s) of the Zernike polynomial(s) to compute. Must be non-negative integers.</p></li>
-<li><p><strong>m</strong> (<em>Sequence</em><em>[</em><em>Integral</em><em>] or </em><em>numpy.array</em>) – A sequence (List, Tuple) or 1D numpy array of the radial degree(s) of the Zernike polynomial(s) to compute. Must be non-negative integers.</p></li>
+<li><p><strong>m</strong> (<em>Sequence</em><em>[</em><em>Integral</em><em>] or </em><em>numpy.array</em>) – A sequence (List, Tuple) or 1D numpy array of the azimuthal frequency(ies) of the Zernike polynomial(s) to compute. Must be non-negative integers.</p></li>
 <li><p><strong>rho_derivative</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>Sequence</em><em>[</em><em>Integral</em><em>]</em><em>, </em><em>numpy.array</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – A sequence (List, Tuple) or 1D numpy array of the order(s) of the radial derivative(s) to compute. Must be non-negative integers.
 If None, is it assumed that rho_derivative is 0 for all polynomials.</p></li>
 <li><p><strong>theta_derivative</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>Sequence</em><em>[</em><em>Integral</em><em>]</em><em>, </em><em>numpy.array</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – A sequence (List, Tuple) or 1D numpy array of the order(s) of the angular derivative(s) to compute. Must be non-negative integers.
@@ -425,7 +426,7 @@ The default is True.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A list of numpy arrays containing the Zernike polynomial values for each order and degree.
+<dd class="field-even"><p>A list of numpy arrays containing the Zernike polynomial values for each order and azimuthal frequency.
 Each array has the same shape as <code class="docutils literal notranslate"><span class="pre">rho</span></code> and the list has the same length as the input sequences.
 The dtype of the arrays is the same as the dtype of <code class="docutils literal notranslate"><span class="pre">rho</span></code> and <code class="docutils literal notranslate"><span class="pre">theta</span></code> is given, otherwise <code class="docutils literal notranslate"><span class="pre">numpy.float64</span></code>.</p>
 </dd>
@@ -550,7 +551,7 @@ The dtype of the arrays is the same as the dtype of <code class="docutils litera
 
   <p class="copyright">
     
-      © Copyright 2025-2025, Artezaru.
+      © Copyright 2025-2026, Artezaru.
       <br/>
     
   </p>

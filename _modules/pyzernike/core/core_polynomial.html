@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pyzernike.core.core_polynomial &#8212; pyzernike 2.2.0 documentation</title>
+    <title>pyzernike.core.core_polynomial &#8212; pyzernike 2.3.0 documentation</title>
   
   
   
@@ -37,7 +37,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=b21de401"></script>
+    <script src="../../../_static/documentation_options.js?v=c3c8ae58"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/pyzernike/core/core_polynomial';</script>
@@ -107,7 +107,7 @@
   
   
   
-    <p class="title logo__title">pyzernike 2.2.0 documentation</p>
+    <p class="title logo__title">pyzernike 2.3.0 documentation</p>
   
 </a></div>
     
@@ -391,7 +391,7 @@
 <span class="sd">        The orders of the Zernike polynomials to compute. Must be a 1D array of integers of type compatible with ``float_type``.</span>
 
 <span class="sd">    m : numpy.array[numpy.integer]</span>
-<span class="sd">        The degrees of the Zernike polynomials. Must be a 1D array of integers of type compatible with ``float_type``.</span>
+<span class="sd">        The azimuthal frequencies of the Zernike polynomials. Must be a 1D array of integers of type compatible with ``float_type``.</span>
 
 <span class="sd">    numpy.array[numpy.integer]</span>
 <span class="sd">        The orders of the derivatives with respect to rho. Must be a 1D array of integers of type compatible with ``float_type``.</span>
@@ -452,14 +452,14 @@
     <span class="c1">#     An array of shape=(..., Nexponents) containing the precomputed powers of rho for the useful exponents.</span>
     <span class="c1"># </span>
     <span class="c1"># cosine_terms_indices_map : numpy.ndarray (1-D array)</span>
-    <span class="c1">#     An array of shape=(max(m) + 1,) containing the indices of the cosine terms in `cosine_terms` for a given degree.</span>
+    <span class="c1">#     An array of shape=(max(m) + 1,) containing the indices of the cosine terms in `cosine_terms` for a given azimuthal frequency.</span>
     <span class="c1">#     This is used to map the computed angular polynomial coefficients to the precomputed cosine terms. ONLY USED IF `flag_radial` IS False.</span>
     <span class="c1"># </span>
     <span class="c1"># cosine_terms : numpy.ndarray (2-D array)</span>
     <span class="c1">#     An array of shape=(..., Ncosine_terms) containing the cosine terms for the useful angular polynomials. ONLY USED IF `flag_radial` IS False.</span>
     <span class="c1">#   </span>
     <span class="c1"># sine_terms_indices_map : numpy.ndarray (1-D array)</span>
-    <span class="c1">#     An array of shape=(max(m) + 1,) containing the indices of the sine terms in `sine_terms` for a given degree.</span>
+    <span class="c1">#     An array of shape=(max(m) + 1,) containing the indices of the sine terms in `sine_terms` for a given azimuthal frequency.</span>
     <span class="c1">#     This is used to map the computed angular polynomial coefficients to the precomputed sine terms. ONLY USED IF `flag_radial` IS False.</span>
     <span class="c1"># </span>
     <span class="c1"># sine_terms : numpy.ndarray (2-D array)</span>
@@ -699,7 +699,7 @@
 
   <p class="copyright">
     
-      © Copyright 2025-2025, Artezaru.
+      © Copyright 2025-2026, Artezaru.
       <br/>
     
   </p>

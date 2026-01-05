@@ -73,6 +73,7 @@ def __main__() -> None:
     
     if interactive:
         core_display_interactive(numpy.float64)
+        return
 
     if not isinstance(Nzer, int) or Nzer <= 0:
         raise ValueError("The maximum order of the Zernike polynomials must be a non-negative integer.")

@@ -40,7 +40,7 @@ def xy_zernike_polynomial_up_to_order(
 
     .. seealso::
 
-        - :func:`pyzernike.xy_zernike_polynomial` for computing a set of Zernike polynomials for given orders and degrees.
+        - :func:`pyzernike.xy_zernike_polynomial` for computing a set of Zernike polynomials for given orders and azimuthal frequencies.
         - :func:`pyzernike.cartesian_to_elliptic_annulus` to convert Cartesian coordinates to elliptic annulus domain polar coordinates.
         - The page :doc:`../../mathematical_description` in the documentation for the mathematical extension of the Zernike polynomials on the elliptic domain.
 
@@ -75,7 +75,7 @@ def xy_zernike_polynomial_up_to_order(
     - The parameters ``x_derivative`` and ``y_derivative`` must be sequences of integers with the same length.
 
     The :math:`x` and :math:`y` values are the same for all the polynomials.
-    The output ``output[k][j]`` is the Zernike polynomial of order ``n[j]`` and degree ``m[j]`` (OSA/ANSI ordering) with same shape as ``x`` and for the radial derivative of order ``x_derivative[k]`` and the angular derivative of order ``y_derivative[k]``.
+    The output ``output[k][j]`` is the Zernike polynomial of order ``n[j]`` and azimuthal frequency ``m[j]`` (OSA/ANSI ordering) with same shape as ``x`` and for the radial derivative of order ``x_derivative[k]`` and the angular derivative of order ``y_derivative[k]``.
 
     .. note::
 
@@ -145,7 +145,7 @@ def xy_zernike_polynomial_up_to_order(
     Returns
     -------
     List[numpy.ndarray]
-        A list of numpy arrays containing the Zernike polynomial values for each order and degree.
+        A list of numpy arrays containing the Zernike polynomial values for each order and azimuthal frequency.
         Each array has the same shape as ``x``.
 
     Raises
@@ -181,7 +181,7 @@ def xy_zernike_polynomial_up_to_order(
 
         # Extract the values: 
         indices = list(range(len(polynomials)))
-        n, m = zernike_index_to_order(indices)  # Get the orders and degrees from the indices
+        n, m = zernike_index_to_order(indices)  # Get the orders and azimuthal frequencies from the indices
 
         for i, (n_i, m_i) in enumerate(zip(n, m)):
             print(f"Zernike polynomial Z_{n_i}^{m_i} for the given x and y values is: {polynomials[i]}")
@@ -203,7 +203,7 @@ def xy_zernike_polynomial_up_to_order(
         polynomials = result[0]  # Get the first set of polynomials (for x_derivative=0, y_derivative=0)
         derivatives_x = result[1]  # Get the first set of derivatives (for x_derivative=1, y_derivative=0)
 
-    The output will contain the Zernike polynomials and their derivatives for the specified orders and degrees.
+    The output will contain the Zernike polynomials and their derivatives for the specified orders and azimuthal frequencies.
     
     """
     # Convert x and y to numpy arrays of floating point values

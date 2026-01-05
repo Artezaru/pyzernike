@@ -26,8 +26,8 @@ __all__.extend(['core_polynomial'])
 from .core_symbolic import core_symbolic
 __all__.extend(['core_symbolic'])
 
-from .core_display import core_display
-__all__.extend(['core_display'])
+from .core_display import core_display, core_display_interactive
+__all__.extend(['core_display', 'core_display_interactive'])
 
 from .core_cartesian_to_elliptic_annulus import core_cartesian_to_elliptic_annulus
 __all__.extend(['core_cartesian_to_elliptic_annulus'])

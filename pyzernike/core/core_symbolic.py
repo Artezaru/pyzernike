@@ -56,7 +56,7 @@ def core_symbolic(
         The orders of the Zernike polynomials to compute. Must be a 1D array of integers.
 
     m : numpy.array[numpy.integer]
-        The degrees of the Zernike polynomials. Must be a 1D array of integers.
+        The azimuthal frequencies of the Zernike polynomials. Must be a 1D array of integers.
 
     numpy.array[numpy.integer]
         The orders of the derivatives with respect to rho. Must be a 1D array of integers.
@@ -74,7 +74,7 @@ def core_symbolic(
     Returns
     -------
     List[sympy.Expr]
-        A list of symbolic expressions of the Zernike polynomial or radial Zernike polynomial for each order and degree specified in `n` and `m`.
+        A list of symbolic expressions of the Zernike polynomial or radial Zernike polynomial for each order and azimuthal frequency specified in `n` and `m`.
         Each expression is a sympy expression that can be evaluated or manipulated further.
     """
 

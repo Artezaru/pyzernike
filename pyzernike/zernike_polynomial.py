@@ -51,14 +51,14 @@ def zernike_polynomial(
         - :func:`pyzernike.core.core_polynomial` to inspect the core implementation of the computation.
         - The page :doc:`../../mathematical_description` in the documentation for the detailed mathematical description of the Zernike polynomials.
     
-    This function allows to compute several Zernike polynomials at once for different sets of (order, degree, derivative orders) given as sequences,
+    This function allows to compute several Zernike polynomials at once for different sets of (order, azimuthal frequency, derivative orders) given as sequences,
     which can be more efficient than calling the polynomial function multiple times.
 
     - The parameters ``rho`` and ``theta`` must be numpy arrays of the same shape.
     - The parameters ``n``, ``m``, ``rho_derivative`` and ``theta_derivative`` must be sequences of integers with the same length.
 
     The :math:`\rho` and :math:`\theta` values are the same for all the polynomials.
-    The output is a list of numpy arrays, each containing the values of the Zernike polynomial for the corresponding order and degree.
+    The output is a list of numpy arrays, each containing the values of the Zernike polynomial for the corresponding order and azimuthal frequency.
     The list has the same length as the input sequences and the arrays have the same shape as ``rho``.
 
     .. note::
@@ -79,7 +79,7 @@ def zernike_polynomial(
         A sequence (List, Tuple) or 1D numpy array of the radial order(s) of the Zernike polynomial(s) to compute. Must be non-negative integers.
 
     m : Sequence[Integral] or numpy.array
-        A sequence (List, Tuple) or 1D numpy array of the radial degree(s) of the Zernike polynomial(s) to compute. Must be non-negative integers.
+        A sequence (List, Tuple) or 1D numpy array of the azimuthal frequency(ies) of the Zernike polynomial(s) to compute. Must be non-negative integers.
 
     rho_derivative : Optional[Union[Sequence[Integral], numpy.array]], optional
         A sequence (List, Tuple) or 1D numpy array of the order(s) of the radial derivative(s) to compute. Must be non-negative integers.
@@ -102,7 +102,7 @@ def zernike_polynomial(
     Returns
     -------
     List[numpy.ndarray]
-        A list of numpy arrays containing the Zernike polynomial values for each order and degree.
+        A list of numpy arrays containing the Zernike polynomial values for each order and azimuthal frequency.
         Each array has the same shape as ``rho`` and the list has the same length as the input sequences.
         The dtype of the arrays is the same as the dtype of ``rho`` and ``theta`` is given, otherwise ``numpy.float64``.
 

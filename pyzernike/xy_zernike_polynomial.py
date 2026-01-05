@@ -69,13 +69,13 @@ def xy_zernike_polynomial(
 
     The Zernike polynomial :math:`Z_{n}^{m}(\rho_{eq}, \theta_{eq})` is computed for the equivalent polar coordinates.
     
-    This function allows to compute several Zernike polynomials at once for different sets of (order, degree, derivative orders) given as sequences,
+    This function allows to compute several Zernike polynomials at once for different sets of (order, azimuthal frequency, derivative orders) given as sequences,
     which can be more efficient than calling the polynomial function multiple times.
 
     - The parameters ``x`` and ``y`` must be numpy arrays of the same shape.
     - The parameters ``n``, ``m``, ``x_derivative`` and ``y_derivative`` must be sequences of integers with the same length.
 
-    The output is a list of numpy arrays, each containing the values of the Zernike polynomial for the corresponding order and degree.
+    The output is a list of numpy arrays, each containing the values of the Zernike polynomial for the corresponding order and azimuthal frequency.
     The list has the same length as the input sequences and the arrays have the same shape as ``x``.
 
     .. note::
@@ -103,7 +103,7 @@ def xy_zernike_polynomial(
         A sequence (List, Tuple) or 1D numpy array of the radial order(s) of the Zernike polynomial(s) to compute. Must be non-negative integers.
 
     m : Sequence[Integral] or numpy.array
-        A sequence (List, Tuple) or 1D numpy array of the radial degree(s) of the Zernike polynomial(s) to compute. Must be non-negative integers.
+        A sequence (List, Tuple) or 1D numpy array of the azimuthal frequency(ies) of the Zernike polynomial(s) to compute. Must be non-negative integers.
 
     Rx : Real, optional
         The length of the semi-axis of the ellipse along x axis. Must be strictly positive.
@@ -150,7 +150,7 @@ def xy_zernike_polynomial(
     Returns
     -------
     List[numpy.ndarray]
-        A list of numpy arrays containing the Zernike polynomial values for each order and degree.
+        A list of numpy arrays containing the Zernike polynomial values for each order and azimuthal frequency.
         Each array has the same shape as ``x``.
 
     Raises

@@ -48,7 +48,7 @@ def zernike_display(
         - :func:`pyzernike.core.core_display` to inspect the core implementation of the display.
         - The page :doc:`../../mathematical_description` in the documentation for the detailed mathematical description of the Zernike polynomials.
 
-    The function allows to display several Zernike polynomials for different sets of (order, degree, derivative orders) given as sequences.
+    The function allows to display several Zernike polynomials for different sets of (order, azimuthal frequency, derivative orders) given as sequences.
 
     - The parameters ``n``, ``m``, ``rho_derivative`` and ``theta_derivative`` must be sequences of integers with the same length.
 
@@ -58,7 +58,7 @@ def zernike_display(
         A sequence (List, Tuple) or 1D numpy array of the radial order(s) of the Zernike polynomial(s) to display. Must be non-negative integers.
 
     m : Sequence[Integral] or numpy.array
-        A sequence (List, Tuple) or 1D numpy array of the radial degree(s) of the Zernike polynomial(s) to display. Must be non-negative integers.
+        A sequence (List, Tuple) or 1D numpy array of the azimuthal frequency(ies) of the Zernike polynomial(s) to display. Must be non-negative integers.
 
     rho_derivative : Optional[Union[Sequence[Integral], numpy.array]], optional
         A sequence (List, Tuple) or 1D numpy array of the order(s) of the radial derivative(s) to display. Must be non-negative integers.

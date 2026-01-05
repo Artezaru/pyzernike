@@ -63,7 +63,7 @@ def core_polynomial(
         The orders of the Zernike polynomials to compute. Must be a 1D array of integers of type compatible with ``float_type``.
 
     m : numpy.array[numpy.integer]
-        The degrees of the Zernike polynomials. Must be a 1D array of integers of type compatible with ``float_type``.
+        The azimuthal frequencies of the Zernike polynomials. Must be a 1D array of integers of type compatible with ``float_type``.
 
     numpy.array[numpy.integer]
         The orders of the derivatives with respect to rho. Must be a 1D array of integers of type compatible with ``float_type``.
@@ -124,14 +124,14 @@ def core_polynomial(
     #     An array of shape=(..., Nexponents) containing the precomputed powers of rho for the useful exponents.
     # 
     # cosine_terms_indices_map : numpy.ndarray (1-D array)
-    #     An array of shape=(max(m) + 1,) containing the indices of the cosine terms in `cosine_terms` for a given degree.
+    #     An array of shape=(max(m) + 1,) containing the indices of the cosine terms in `cosine_terms` for a given azimuthal frequency.
     #     This is used to map the computed angular polynomial coefficients to the precomputed cosine terms. ONLY USED IF `flag_radial` IS False.
     # 
     # cosine_terms : numpy.ndarray (2-D array)
     #     An array of shape=(..., Ncosine_terms) containing the cosine terms for the useful angular polynomials. ONLY USED IF `flag_radial` IS False.
     #   
     # sine_terms_indices_map : numpy.ndarray (1-D array)
-    #     An array of shape=(max(m) + 1,) containing the indices of the sine terms in `sine_terms` for a given degree.
+    #     An array of shape=(max(m) + 1,) containing the indices of the sine terms in `sine_terms` for a given azimuthal frequency.
     #     This is used to map the computed angular polynomial coefficients to the precomputed sine terms. ONLY USED IF `flag_radial` IS False.
     # 
     # sine_terms : numpy.ndarray (2-D array)

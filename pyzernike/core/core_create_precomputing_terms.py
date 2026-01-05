@@ -37,7 +37,7 @@ def core_create_precomputing_terms(
 
         :func:`pyzernike.core.core_polynomial` for computing Zernike polynomials.
 
-    For one defined Zernike polynomial of order ``n``, degree ``m`` and derivative with respect to rho ``a``, the usefull rho exponents are :
+    For one defined Zernike polynomial of order ``n``, azimuthal frequency ``m`` and derivative with respect to rho ``a``, the usefull rho exponents are :
 
     .. math::
 
@@ -59,7 +59,7 @@ def core_create_precomputing_terms(
         The orders of the Zernike polynomials to compute. Must be a 1D array of integers of type compatible with ``float_type``.
 
     m : numpy.array[numpy.integer]
-        The degrees of the Zernike polynomials. Must be a 1D array of integers of type compatible with ``float_type``.
+        The azimuthal frequencies of the Zernike polynomials. Must be a 1D array of integers of type compatible with ``float_type``.
 
     rho_derivative : numpy.array[numpy.integer]
         The orders of the derivatives with respect to rho. Must be a 1D array of integers of type compatible with ``float_type``.
@@ -84,7 +84,7 @@ def core_create_precomputing_terms(
         - ``sine_frequencies``: An 1D array of unique integer frequencies for the sine terms needed for the computations with dtype compatible with ``float_type``.
         - ``factorials_integers``: An 1D array of unique integers for the factorials needed for the computations with dtype compatible with ``float_type``.
         - ``max_n``: The maximum order in ``n`` as integer of type compatible with ``float_type``.
-        - ``max_abs_m``: The maximum absolute degree in ``m`` as integer of type compatible with ``float_type``.
+        - ``max_abs_m``: The maximum absolute azimuthal frequency in ``m`` as integer of type compatible with ``float_type``.
     
     """
     # Get the corresponding integer types

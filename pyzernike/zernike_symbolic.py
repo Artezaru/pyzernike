@@ -46,11 +46,11 @@ def zernike_symbolic(
         - :func:`pyzernike.core.core_polynomial` to inspect the core implementation of the computation.
         - The page :doc:`../../mathematical_description` in the documentation for the detailed mathematical description of the Zernike polynomials.
     
-    The function allows to display several Zernike polynomials for different sets of (order, degree, derivative orders) given as sequences.
+    The function allows to display several Zernike polynomials for different sets of (order, azimuthal frequency, derivative orders) given as sequences.
 
     - The parameters ``n``, ``m``, ``rho_derivative`` and ``theta_derivative`` must be sequences of integers with the same length.
 
-    The output is a list of sympy expressions, each containing the symbolic expression of the Zernike polynomial for the corresponding order and degree.
+    The output is a list of sympy expressions, each containing the symbolic expression of the Zernike polynomial for the corresponding order and azimuthal frequency.
     The list has the same length as the input sequences.
 
     .. note::
@@ -64,7 +64,7 @@ def zernike_symbolic(
         A sequence (List, Tuple) or 1D numpy array of the radial order(s) of the Zernike polynomial(s) to compute. Must be non-negative integers.
 
     m : Sequence[Integral] or numpy.array
-        A sequence (List, Tuple) or 1D numpy array of the radial degree(s) of the Zernike polynomial(s) to compute. Must be non-negative integers.
+        A sequence (List, Tuple) or 1D numpy array of the azimuthal frequency(ies) of the Zernike polynomial(s) to compute. Must be non-negative integers.
 
     rho_derivative : Optional[Union[Sequence[Integral], numpy.array]], optional
         A sequence (List, Tuple) or 1D numpy array of the order(s) of the radial derivative(s) to compute. Must be non-negative integers.
@@ -77,7 +77,7 @@ def zernike_symbolic(
     Returns
     -------
     List[sympy.Expr]
-        A list of symbolic expressions containing the Zernike polynomial values for each order and degree
+        A list of symbolic expressions containing the Zernike polynomial values for each order and azimuthal frequency.
         Each expression is a sympy expression that can be evaluated for specific values of :math:`\rho` and :math:`\theta`.
 
     Raises

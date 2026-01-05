@@ -59,7 +59,7 @@ def zernike_order_to_index(n : Sequence[Integral], m : Sequence[Integral]) -> Li
         The radial orders of the Zernike polynomials.
 
     m : Sequence[Integral]
-        The azimuthal orders of the Zernike polynomials.
+        The azimuthal frequencies of the Zernike polynomials.
 
     Returns
     -------

@@ -46,7 +46,7 @@ def zernike_polynomial_up_to_order(
 
     .. seealso::
 
-        - :func:`pyzernike.zernike_polynomial` to compute a sets of Zernike polynomial for given order and degree.
+        - :func:`pyzernike.zernike_polynomial` to compute a sets of Zernike polynomial for given order and azimuthal frequency.
         - :func:`pyzernike.zernike_index_to_order` to extract the Zernike orders (n, m) from the indices (j) in OSA/ANSI ordering.
         - The page :doc:`../../mathematical_description` in the documentation for the detailed mathematical description of the Zernike polynomials.
 
@@ -57,7 +57,7 @@ def zernike_polynomial_up_to_order(
     - The parameters ``rho_derivative`` and ``theta_derivative`` must be sequences of integers with the same length.
 
     The :math:`\rho` and :math:`\theta` values are the same for all the polynomials.
-    The output ``output[k][j]`` is the Zernike polynomial of order ``n[j]`` and degree ``m[j]`` (OSA/ANSI ordering) with same shape as ``rho`` and for the radial derivative of order ``rho_derivative[k]`` and the angular derivative of order ``theta_derivative[k]``.
+    The output ``output[k][j]`` is the Zernike polynomial of order ``n[j]`` and azimuthal frequency ``m[j]`` (OSA/ANSI ordering) with same shape as ``rho`` and for the radial derivative of order ``rho_derivative[k]`` and the angular derivative of order ``theta_derivative[k]``.
 
     .. note::
 
@@ -97,9 +97,9 @@ def zernike_polynomial_up_to_order(
     Returns
     -------
     List[List[numpy.ndarray]]
-        A list of lists of numpy arrays, where each inner list corresponds to a different radial order and contains the computed Zernike polynomials for the specified orders and degrees.
+        A list of lists of numpy arrays, where each inner list corresponds to a different radial order and contains the computed Zernike polynomials for the specified orders and azimuthal frequencies.
         The shape of each array is the same as the input `rho` and `theta`, and the dtype is float64.
-        ``output[k][j]`` is the Zernike polynomial of order ``n[j]`` and degree ``m[j]`` (OSA/ANSI ordering) with the radial derivative of order ``rho_derivative[k]`` and the angular derivative of order ``theta_derivative[k]``.
+        ``output[k][j]`` is the Zernike polynomial of order ``n[j]`` and azimuthal frequency ``m[j]`` (OSA/ANSI ordering) with the radial derivative of order ``rho_derivative[k]`` and the angular derivative of order ``theta_derivative[k]``.
 
     Raises
     ------
@@ -131,7 +131,7 @@ def zernike_polynomial_up_to_order(
 
         # Extract the values: 
         indices = list(range(len(polynomials)))
-        n, m = zernike_index_to_order(indices)  # Get the orders and degrees from the indices
+        n, m = zernike_index_to_order(indices)  # Get the orders and azimuthal frequencies from the indices
 
         for i, (n_i, m_i) in enumerate(zip(n, m)):
             print(f"Zernike polynomial Z_{n_i}^{m_i} for the given rho and theta values is: {polynomials[i]}")
@@ -152,7 +152,7 @@ def zernike_polynomial_up_to_order(
         polynomials = result[0]  # Get the first set of polynomials (for rho_derivative=0, theta_derivative=0)
         derivatives = result[1]  # Get the second set of polynomials (for rho_derivative=1, theta_derivative=0)
 
-    The output will contain the Zernike polynomials and their derivatives for the specified orders and degrees.
+    The output will contain the Zernike polynomials and their derivatives for the specified orders and azimuthal frequencies.
     
     """
     # Convert rho and theta to numpy arrays of floating point values

@@ -74,7 +74,7 @@ def zernike_index_to_order(j: Sequence[Integral]) -> Tuple[List[int], List[int]]
         A list of radial orders (n) of the Zernike polynomials.
 
     List[int]
-        A list of azimuthal orders (m) of the Zernike polynomials.
+        A list of azimuthal frequencies (m) of the Zernike polynomials.
 
     Raises
     ------

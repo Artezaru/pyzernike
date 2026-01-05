@@ -16,7 +16,7 @@ from numbers import Integral
 from typing import Sequence, Optional, Union
 import numpy
 
-from .core.core_display import core_display
+from .core.core_display import core_display, core_display_interactive
 from .core.core_corresponding_signed_integer_type import core_corresponding_signed_integer_type
 
 def radial_display(
@@ -43,7 +43,7 @@ def radial_display(
         - :func:`pyzernike.core.core_display` to inspect the core implementation of the display.
         - The page :doc:`../../mathematical_description` in the documentation for the detailed mathematical description of the Zernike polynomials.
 
-    The function allows to display several radial Zernike polynomials for different sets of (order, degree, derivative order) given as sequences.
+    The function allows to display several radial Zernike polynomials for different sets of (order, azimuthal frequency, derivative order) given as sequences.
 
     - The parameters ``n``, ``m`` and ``rho_derivative`` must be sequences of integers with the same length.
 
@@ -53,7 +53,7 @@ def radial_display(
         A sequence (List, Tuple) or 1D numpy array of the radial order(s) of the Zernike polynomial(s) to display. Must be non-negative integers.
 
     m : Sequence[Integral] or numpy.array
-        A sequence (List, Tuple) or 1D numpy array of the radial degree(s) of the Zernike polynomial(s) to display. Must be non-negative integers.
+        A sequence (List, Tuple) or 1D numpy array of the azimuthal frequency(ies) of the Zernike polynomial(s) to display. Must be non-negative integers.
 
     rho_derivative : Optional[Union[Sequence[Integral], numpy.array]], optional
         A sequence (List, Tuple) or 1D numpy array of the order(s) of the radial derivative(s) to display. Must be non-negative integers.

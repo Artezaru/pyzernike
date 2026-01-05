@@ -13,7 +13,9 @@
 # limitations under the License.
 
 from pyzernike import zernike_display, radial_display
+from pyzernike.core import core_display_interactive
 import argparse
+import numpy
 
 def __main__() -> None:
     r"""
@@ -35,6 +37,8 @@ def __main__() -> None:
     - flag `-n` or `--n` will specify the maximum order of the Zernike polynomials to display. If not specified, the default value is 5
     - flag `-dr` or `--rho_derivative` can be used to specify the radial derivative of the Zernike polynomials. If not specified, the default value is 0 for all polynomials.
     - flag `-dt` or `--theta_derivative` can be used to specify the angular derivative of the Zernike polynomials. If not specified, the default value is 0 for all polynomials.
+    - flag `-i` or `--interactive` can be used to launch the interactive display window. If not specified, the default behavior is to launch the interactive display.
+    - flag `-h` or `--help` can be used to display the help message.
         
     """
     # Argument parser
@@ -55,12 +59,20 @@ def __main__() -> None:
         '-dt', '--theta_derivative', type=int, default=0,
         help="Angular derivative of the Zernike polynomials to display (default: 0 for all polynomials)."
     )
+    parser.add_argument(
+        '-i', '--interactive', action='store_true',
+        help="Launch the interactive display window."
+    )
 
     args = parser.parse_args()
 
     Nzer = args.n
     dr = args.rho_derivative
     dt = args.theta_derivative
+    interactive = args.interactive
+    
+    if interactive:
+        core_display_interactive(numpy.float64)
 
     if not isinstance(Nzer, int) or Nzer <= 0:
         raise ValueError("The maximum order of the Zernike polynomials must be a non-negative integer.")

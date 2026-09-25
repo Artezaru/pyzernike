@@ -2,8 +2,15 @@ import numpy as np
 import pytest
 import sympy
 
-from pyzernike import radial_polynomial, zernike_polynomial
+try:
+    import pyzernike
+except:
+    import os 
+    import sys
+    sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+    import pyzernike
 
+from pyzernike import radial_polynomial, zernike_polynomial
 
 def test_polynomial_consistency():
     """Test that the zernike_polynomial function produces consistent results when called with multiple n, m, rho_derivative, and theta_derivative values."""

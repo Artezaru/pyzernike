@@ -12,285 +12,202 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
-from email.policy import default
-import numpy
-from typing import Optional, Tuple, Sequence, List, Union
 from numbers import Integral, Real
+from typing import List, Optional, Sequence, Tuple, Union
 
-from .core.core_cartesian_to_elliptic_annulus import core_cartesian_to_elliptic_annulus
-from .core.core_corresponding_signed_integer_type import core_corresponding_signed_integer_type
+import numpy
+
+from .core.parsing import _as_common_floating_arrays, _as_ellipse_parameters, _broadcast_integers
+from .core.cartesian_to_elliptic_annulus import _cartesian_to_elliptic_annulus
+
 
 def cartesian_to_elliptic_annulus(
     x: numpy.ndarray,
     y: numpy.ndarray,
-    Rx: Real = 1.0,
-    Ry: Real = 1.0,
-    x0: Real = 0.0,
-    y0: Real = 0.0,
-    alpha: Real = 0.0,
-    h: Real = 0.0,
-    x_derivative:  Optional[Union[numpy.array, Sequence[Integral]]] = None,
-    y_derivative:  Optional[Union[numpy.array, Sequence[Integral]]] = None,
-    ) -> Tuple[List[numpy.ndarray], List[numpy.ndarray]]:
+    Rx: Optional[Real] = 1.0,
+    Ry: Optional[Real] = 1.0,
+    x0: Optional[Real] = 0.0,
+    y0: Optional[Real] = 0.0,
+    alpha: Optional[Real] = 0.0,
+    h: Optional[Real] = 0.0,
+    x_derivative: Optional[Union[Integral, Sequence[Integral], numpy.ndarray]] = 0,
+    y_derivative: Optional[Union[Integral, Sequence[Integral], numpy.ndarray]] = 0,
+    *,
+    to_list: bool = True,
+) -> Union[Tuple[numpy.ndarray, numpy.ndarray], Tuple[List[numpy.ndarray], List[numpy.ndarray]]]:
     r"""
-    Transform Cartesian coordinates :math:`(x, y)` to elliptic annulus domain polar coordinates :math:`(\rho_{eq}, \theta_{eq})`.
-
-    .. seealso::
-
-        - :func:`pyzernike.elliptic_domain_to_cartesian` to convert elliptic annulus domain polar coordinates to Cartesian coordinates.
-        - :func:`pyzernike.xy_zernike_polynomial` to compute Zernike polynomials on the elliptic annulus domain.
-        - :func:`pyzernike.core.core_cartesian_to_elliptic_annulus` to inspect the core implementation of the computation.
-        - The page :doc:`../../mathematical_description` in the documentation for the mathematical extension of the Zernike polynomials on the elliptic domain.
-
-    Lets consider the extended elliptic annulus domain defined by the following parameters:
+    Transform Cartesian coordinates :math:`(x, y)` into the equivalent polar coordinates
+    :math:`(\rho_{eq}, \theta_{eq})` of an elliptic annulus, and compute their derivatives with
+    respect to :math:`x` and :math:`y`.
 
     .. figure:: ../../../pyzernike/resources/elliptic_annulus_domain.png
         :width: 400px
         :align: center
 
-        The parameters to define the extended domain of the Zernike polynomial.
+        The parameters of the elliptic annulus domain.
 
-    The parameters are:
+    The elliptic annulus is defined by its semi-axes :math:`R_x` and :math:`R_y`, its center
+    :math:`(x_0, y_0)`, its rotation angle :math:`\alpha` and the ratio :math:`h = \frac{a}{R_x} = \frac{b}{R_y}`
+    of the inner to the outer semi-axes. The coordinates are first expressed in the frame of the ellipse:
 
-    - :math:`R_x` and :math:`R_y` are the lengths of the semi-axis of the ellipse.
-    - :math:`x_0` and :math:`y_0` are the coordinates of the center of the ellipse.
-    - :math:`\alpha` is the rotation angle of the ellipse in radians.
-    - :math:`h=\frac{a}{R_x}=\frac{b}{R_y}` defining the inner boundary of the ellipse.
+    .. math::
 
-    The methods allow to compute the polar coordinates :math:`(\rho_{eq}, \theta_{eq})` and their derivatives with respect to the Cartesian coordinates :math:`(x, y)`.
+        X = \cos(\alpha) (x - x_0) + \sin(\alpha) (y - y_0)
+        \quad \text{and} \quad
+        Y = -\sin(\alpha) (x - x_0) + \cos(\alpha) (y - y_0)
 
-    - ``x`` and ``y`` are expected to be numpy arrays of the same shape.
-    - ``x_derivative`` and ``y_derivative`` must be sequences of non-negative integers of the same length.
+    then mapped onto the unit annulus [1]_:
 
-    The output is a tuple of two lists with lengths equal to the length of ``x_derivative`` and ``y_derivative``:
+    .. math::
 
-    - The first list contains the equivalent polar radius :math:`\rho_{eq}` and its derivatives with respect to the given orders.
-    - The second list contains the equivalent polar angle :math:`\theta_{eq}` and its derivatives with respect to the given orders.
+        r = \sqrt{\left(\frac{X}{R_x}\right)^2 + \left(\frac{Y}{R_y}\right)^2},
+        \quad
+        \rho_{eq} = \frac{r - h}{1 - h}
+        \quad \text{and} \quad
+        \theta_{eq} = \operatorname{atan2}\left(\frac{Y}{R_y}, \frac{X}{R_x}\right) \in [-\pi, \pi]
 
-    .. note::
+    The points of the elliptic annulus are those with :math:`0 \leq \rho_{eq} \leq 1`. The coordinates
+    :math:`(\rho_{eq}, \theta_{eq})` can be passed directly to :func:`pyzernike.zernike_polynomial`.
 
-        If the input ``x`` or ``y`` are not floating point numpy arrays, it is converted to one with ``numpy.float64`` dtype.
-        If the input ``x`` or ``y`` are floating point numpy arrays (ex: ``numpy.float32``), the computation will be done in ``numpy.float32``.
-        If the input ``x`` and ``y`` are not of the same dtype, they are both converted to ``numpy.float64``.
+    The derivatives of total order 1 and 2 are computed with the analytical expressions obtained by the
+    chain rule (see the page :doc:`../../mathematical_description`). The derivatives of total order 3 and
+    more are computed by symbolic differentiation with ``sympy``, which has a high computational cost.
 
-    The derivatives for orders higher than 2 are computed using symbolic differentiation with sympy library (high computational cost).
-    For orders 0, 1 and 2, the derivatives are computed using the analytical expressions derived from the chain rule.
+    **Shape of the inputs and of the output.** ``x_derivative`` and ``y_derivative`` can each be a single
+    integer or a sequence of integers (list, tuple or 1D numpy array):
+
+    - If both are integers, the output is a tuple ``(rho_eq, theta_eq)`` of two arrays with the shape of ``x``.
+    - If at least one of them is a sequence, the integer is repeated to the length :math:`N` of the
+      sequence (the sequences must have the same length). The output is a tuple of two lists of
+      :math:`N` arrays (``to_list=True``), or of two arrays of shape :math:`(N, \dots)` (``to_list=False``).
+
+    .. seealso::
+
+        - :func:`pyzernike.xy_zernike_polynomial` to compute the Zernike polynomials on the elliptic annulus directly.
+        - :func:`pyzernike.zernike_polynomial` to compute the Zernike polynomials in polar coordinates.
+        - The page :doc:`../../mathematical_description` for the extension of the Zernike polynomials to the elliptic annulus.
 
     Parameters
     ----------
     x : numpy.ndarray
-        The x coordinates in Cartesian system with shape (...,).
+        The x Cartesian coordinates with any shape ``(...)``.
 
     y : numpy.ndarray
-        The y coordinates in Cartesian system with shape (...,).
+        The y Cartesian coordinates with the same shape as ``x``.
+        If ``x`` and ``y`` are floating point arrays of the same dtype (e.g. ``numpy.float32``), this
+        dtype is kept. Otherwise, both are converted to ``numpy.float64``.
 
-    Rx : Real, optional
-        The length of the semi-axis of the ellipse along x axis. Must be strictly positive.
-        The default is 1.0, which corresponds to the unit circle.
+    Rx : Optional[Real], optional
+        The semi-axis :math:`R_x` of the ellipse along its x axis. Must be strictly positive. Default is 1.0.
 
-    Ry : Real, optional
-        The length of the semi-axis of the ellipse along y axis. Must be strictly positive.
-        The default is 1.0, which corresponds to the unit circle.
+    Ry : Optional[Real], optional
+        The semi-axis :math:`R_y` of the ellipse along its y axis. Must be strictly positive. Default is 1.0.
 
-    x0 : Real, optional
-        The x coordinate of the center of the ellipse. Can be any real number.
-        The default is 0.0, which corresponds to an ellipse centered at the origin.
+    x0 : Optional[Real], optional
+        The x coordinate :math:`x_0` of the center of the ellipse. Default is 0.0.
 
-    y0 : Real, optional
-        The y coordinate of the center of the ellipse. Can be any real number.
-        The default is 0.0, which corresponds to an ellipse centered at the origin.
+    y0 : Optional[Real], optional
+        The y coordinate :math:`y_0` of the center of the ellipse. Default is 0.0.
 
-    alpha : Real, optional
-        The rotation angle of the ellipse in radians. Can be any real number.
-        The default is 0.0, such as :math:`x` and :math:`y` axis are aligned with the ellipse axes.
+    alpha : Optional[Real], optional
+        The rotation angle :math:`\alpha` of the ellipse in radians. Default is 0.0.
 
-    h : Real, optional
-        The ratio of the inner semi-axis to the outer semi-axis. Must be in the range [0, 1).
-        The default is 0.0, which corresponds to a filled ellipse.
+    h : Optional[Real], optional
+        The ratio :math:`h` of the inner to the outer semi-axes, in :math:`[0, 1)`. Default is 0.0 (full ellipse).
 
-    x_derivative : Optional[Union[Sequence[Integral], numpy.array]], optional
-        A sequence (List, Tuple) or 1D numpy array of the order(s) of the x derivative(s) to compute. Must be non-negative integers.
-        If None, is it assumed that x_derivative is 0 for all polynomials.
+    x_derivative : Optional[Union[Integral, Sequence[Integral], numpy.ndarray]], optional
+        The order(s) of the derivative with respect to :math:`x`. Default is 0 (no derivative).
 
-    y_derivative : Optional[Union[Sequence[Integral], numpy.array]], optional
-        A sequence (List, Tuple) or 1D numpy array of the order(s) of the y derivative(s) to compute. Must be non-negative integers.
-        If None, is it assumed that y_derivative is 0 for all polynomials.
+    y_derivative : Optional[Union[Integral, Sequence[Integral], numpy.ndarray]], optional
+        The order(s) of the derivative with respect to :math:`y`. Default is 0 (no derivative).
+
+    to_list : bool, optional
+        Only used when several derivatives are computed. If True, the output is a tuple of two lists of
+        arrays. If False, it is a tuple of two arrays of shape :math:`(N, \dots)`. Default is True.
+
+    None is accepted for all the parameters with a default value and means this default value.
 
     Returns
     -------
-    Tuple[List[numpy.ndarray], List[numpy.ndarray]]
+    Union[Tuple[numpy.ndarray, numpy.ndarray], Tuple[List[numpy.ndarray], List[numpy.ndarray]]]
+        The tuple ``(rho_eq, theta_eq)``:
 
-        The polar coordinates (:math:`\rho_{eq}, \theta_{eq}`) and their derivatives with respect to the Cartesian coordinates :math:`(x, y)` as two lists of numpy arrays with shape (...,) and dtype matching the input arrays.
-        ``output[0][i]`` is the derivative with respect to x of order ``x_derivative[i]`` and with respect to y of order ``y_derivative[i]`` of :math:`\rho_{eq}`.
-        ``output[1][i]`` is the derivative with respect to x of order ``x_derivative[i]`` and with respect to y of order ``y_derivative[i]`` of :math:`\theta_{eq}`.
+        - If ``x_derivative`` and ``y_derivative`` are integers: two arrays with the shape of ``x``.
+        - Otherwise, if ``to_list`` is True: two lists of :math:`N` arrays with the shape of ``x``.
+        - Otherwise: two arrays of shape :math:`(N, \dots)`.
 
-        
+        ``rho_eq[i]`` (resp. ``theta_eq[i]``) is the derivative of :math:`\rho_{eq}` (resp.
+        :math:`\theta_{eq}`) of order ``x_derivative[i]`` with respect to :math:`x` and
+        ``y_derivative[i]`` with respect to :math:`y`.
+
+    Raises
+    ------
+    TypeError
+        If ``x`` or ``y`` can not be converted to a floating point array, if a parameter of the ellipse
+        is not a real number, if ``x_derivative`` or ``y_derivative`` is not an integer or a sequence of
+        integers, or if ``to_list`` is not a boolean.
+
+    ValueError
+        If ``x`` and ``y`` do not have the same shape, if ``Rx`` or ``Ry`` is not strictly positive, if
+        ``h`` is not in :math:`[0, 1)`, if the sequences do not have the same length, or if a derivative
+        order is negative.
+
+    References
+    ----------
+    .. [1] R. Navarro et al., "Generalization of Zernike polynomials for regular portions of circles
+       and ellipses," Optics Express 22(18), 21263-21279 (2014). https://doi.org/10.1364/OE.22.021263
+
     Examples
     --------
-    Lets compute Zernike polynomial :math:`Z_2^0` on an extended circle of radius 2 centered at (1,1).
-
-    First, we convert a grid of Cartesian coordinates to elliptic annulus polar coordinates using :func:`pyzernike.cartesian_to_elliptic_annulus`:
+    Compute the defocus :math:`Z_{2}^{0}` on a circle of radius 2 centered at :math:`(1, 1)`:
 
     .. code-block:: python
 
         import numpy
-        from pyzernike import cartesian_to_elliptic_annulus
+        from pyzernike import cartesian_to_elliptic_annulus, zernike_polynomial
 
-        # Define the elliptic annulus domain parameters
-        Rx = 2.0  # Semi-axis along x
-        Ry = 2.0  # Semi-axis along y
-        x0 = 1.0  # Center x
-        y0 = 1.0  # Center y
+        X, Y = numpy.meshgrid(numpy.linspace(-1, 3, 100), numpy.linspace(-1, 3, 100))
+        rho_eq, theta_eq = cartesian_to_elliptic_annulus(X, Y, Rx=2.0, Ry=2.0, x0=1.0, y0=1.0)
+        Z20 = zernike_polynomial(rho_eq, theta_eq, n=2, m=0)
 
-        # Create a grid of Cartesian coordinates
-        x = np.linspace(-1, 3, 100)
-        y = np.linspace(-1, 3, 100)
-        X, Y = np.meshgrid(x, y)
+    The complete process can be done in one step with :func:`pyzernike.xy_zernike_polynomial`.
 
-        # Convert to elliptic annulus polar coordinates
-        list_rho_eq, list_theta_eq = cartesian_to_elliptic_annulus(X, Y, Rx, Ry, x0, y0)
-
-        # Extract the polar coordinates (0th order derivatives)
-        rho_eq = list_rho_eq[0]
-        theta_eq = list_theta_eq[0]
-
-    Then the variables ``rho_eq`` and ``theta_eq`` can be directly used to compute Zernike polynomials on the elliptic annulus domain using :func:`pyzernike.zernike_polynomial`.
-    Note that the complete process can be done in one step using :func:`pyzernike.xy_zernike_polynomial`.
+    Compute the coordinates and their first derivatives with respect to :math:`x` and :math:`y`:
 
     .. code-block:: python
 
-        from pyzernike import zernike_polynomial
-
-        # Compute the Zernike polynomial Z_2^0 on the elliptic annulus domain
-        Z20 = zernike_polynomial(rho_eq, theta_eq, n=2, m=0)[0]
-
-    If you also want to extract ``rho_eq`` and ``theta_eq``  and their first derivatives with respect to x and y, you can specify the derivative orders:
-
-    .. code-block:: python
-
-        # Define the derivative orders
-        x_derivative = [0, 1, 0]  # 0th and 1st derivative with respect to x
-        y_derivative = [0, 0, 1]  # 0th and 1st derivative with respect to y
-
-        # Convert to elliptic annulus polar coordinates and compute derivatives
-        list_rho_eq, list_theta_eq = cartesian_to_elliptic_annulus(X, Y, Rx, Ry, x0, y0, x_derivative=x_derivative, y_derivative=y_derivative)
-
-        # Extract the polar coordinates and their derivatives
-        rho_eq = list_rho_eq[0]          # 0th order derivative of rho_eq
-        drho_eq_dx = list_rho_eq[1]      # 1st order derivative of rho_eq with respect to x
-        drho_eq_dy = list_rho_eq[2]      # 1st order derivative of rho_eq with respect to y
-
-        theta_eq = list_theta_eq[0]      # 0th order derivative of theta_eq
-        dtheta_eq_dx = list_theta_eq[1]  # 1st order derivative of theta_eq with respect to x
-        dtheta_eq_dy = list_theta_eq[2]  # 1st order derivative of theta_eq with respect to y
-
-    These derivatives can be useful for computing gradients or Jacobians of Zernike polynomials on the elliptic annulus domain, see :func:`pyzernike.xy_zernike_polynomial` for more details.
+        rho_eq, theta_eq = cartesian_to_elliptic_annulus(X, Y, Rx=2.0, Ry=2.0, x0=1.0, y0=1.0, x_derivative=[0, 1, 0], y_derivative=[0, 0, 1])
+        rho, drho_dx, drho_dy = rho_eq
+        theta, dtheta_dx, dtheta_dy = theta_eq
 
     """
-    # Convert x and y to numpy arrays of floating point values
-    if not isinstance(x, numpy.ndarray):
-        x = numpy.asarray(x, dtype=numpy.float64)
-    if not isinstance(y, numpy.ndarray):
-        y = numpy.asarray(y, dtype=numpy.float64)
+    x, y = _as_common_floating_arrays(x=x, y=y)
+    Rx, Ry, x0, y0, alpha, h = _as_ellipse_parameters(Rx, Ry, x0, y0, alpha, h)
+    if not isinstance(to_list, bool):
+        raise TypeError("to_list must be a boolean.")
 
-    # Convert x and y in arrays of floating point values if they are not already
-    if not numpy.issubdtype(x.dtype, numpy.floating):
-        x = x.astype(numpy.float64)
-    if not numpy.issubdtype(y.dtype, numpy.floating):
-        y = y.astype(numpy.float64)
+    if x_derivative is None:
+        x_derivative = 0
+    if y_derivative is None:
+        y_derivative = 0
 
-    # If x and y are not of the same dtype, convert them to float64
-    if x.dtype != y.dtype:
-        x = x.astype(numpy.float64)
-        y = y.astype(numpy.float64)
+    derivatives, single = _broadcast_integers(x_derivative=x_derivative, y_derivative=y_derivative)
+    if any(d < 0 for d in derivatives["x_derivative"] + derivatives["y_derivative"]):
+        raise ValueError("x_derivative and y_derivative must contain non-negative integers.")
 
-    # Check that x and y have the same shape
-    if x.shape != y.shape:
-        raise ValueError("x and y must have the same shape.")
+    float_type = x.dtype.type
+    rho_eq, theta_eq = _cartesian_to_elliptic_annulus(
+        x, y,
+        float_type(Rx), float_type(Ry), float_type(x0), float_type(y0), float_type(alpha), float_type(h),
+        derivatives["x_derivative"],
+        derivatives["y_derivative"],
+    )
 
-    # Determine the float type
-    float_type = y.dtype.type
-    int_type = core_corresponding_signed_integer_type(float_type)
-
-    # Check the input parameters
-    if x_derivative is not None:
-        if not isinstance(x_derivative, (Sequence, numpy.ndarray)) or not all(isinstance(i, Integral) and i >= 0 for i in x_derivative):
-            raise TypeError("x_derivative must be a sequence or a 1D array of non-negative integers.")
-    if y_derivative is not None:
-        if not isinstance(y_derivative, (Sequence, numpy.ndarray)) or not all(isinstance(i, Integral) and i >= 0 for i in y_derivative):
-            raise TypeError("y_derivative must be a sequence or a 1D array of non-negative integers.")
-    if Rx is not None:
-        if not isinstance(Rx, Real) or Rx <= 0:
-            raise TypeError("Rx must be a positive real number.")
-    if Ry is not None:
-        if not isinstance(Ry, Real) or Ry <= 0:
-            raise TypeError("Ry must be a positive real number.")
-    if x0 is not None:
-        if not isinstance(x0, Real):
-            raise TypeError("x0 must be a real number.")
-    if y0 is not None:
-        if not isinstance(y0, Real):
-            raise TypeError("y0 must be a real number.")
-    if alpha is not None:
-        if not isinstance(alpha, Real):
-            raise TypeError("Alpha must be a real number.")
-    if h is not None:
-        if not isinstance(h, Real) or not (0 <= h < 1):
-            raise TypeError("h must be a real number in the range [0, 1[.")
-    
-    
-    # Convert rho_derivative to arrays for length checking
-    if x_derivative is None and y_derivative is None:
-        x_derivative = numpy.array([0], dtype=int_type)
-        y_derivative = numpy.array([0], dtype=int_type)
-    elif x_derivative is None and y_derivative is not None:
-        x_derivative = numpy.zeros_like(y_derivative, dtype=int_type)
-        y_derivative = numpy.asarray(y_derivative, dtype=int_type)
-    elif x_derivative is not None and y_derivative is None:
-        y_derivative = numpy.zeros_like(x_derivative, dtype=int_type)
-        x_derivative = numpy.asarray(x_derivative, dtype=int_type)
-    else:
-        x_derivative = numpy.asarray(x_derivative, dtype=int_type)
-        y_derivative = numpy.asarray(y_derivative, dtype=int_type)
-    
-    # Check lengths
-    if not x_derivative.ndim == 1:
-        raise TypeError("x_derivative must be a sequence or a 1D array of integers.")
-    if not y_derivative.ndim == 1:
-        raise TypeError("y_derivative must be a sequence or a 1D array of integers.")
-    if not (x_derivative.size == y_derivative.size):
-        raise ValueError("x_derivative (if given) and y_derivative (if given) must have the same length.")
-    
-    # Convert the float parameters to the correct type
-    if Rx is None:
-        Rx = float_type(1.0)
-    else:
-        Rx = float_type(Rx)
-
-    if Ry is None:
-        Ry = float_type(1.0)
-    else:
-        Ry = float_type(Ry)
-
-    if x0 is None:
-        x0 = float_type(0.0)
-    else:
-        x0 = float_type(x0)
-
-    if y0 is None:
-        y0 = float_type(0.0)
-    else:
-        y0 = float_type(y0)
-
-    if alpha is None:
-        alpha = float_type(0.0)
-    else:
-        alpha = float_type(alpha)
-
-    if h is None:
-        h = float_type(0.0)
-    else:
-        h = float_type(h)
-        
-    return core_cartesian_to_elliptic_annulus(x, y, Rx, Ry, x0, y0, alpha, h, x_derivative, y_derivative, float_type)
+    if single:
+        return rho_eq[0], theta_eq[0]
+    if to_list:
+        return rho_eq, theta_eq
+    return (
+        numpy.stack([numpy.broadcast_to(value, x.shape) for value in rho_eq]) if rho_eq else numpy.empty((0,) + x.shape, dtype=x.dtype),
+        numpy.stack([numpy.broadcast_to(value, x.shape) for value in theta_eq]) if theta_eq else numpy.empty((0,) + x.shape, dtype=x.dtype),
+    )

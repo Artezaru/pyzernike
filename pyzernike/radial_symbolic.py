@@ -13,135 +13,121 @@
 # limitations under the License.
 
 from numbers import Integral
-from typing import Sequence, List, Optional, Union
+from typing import List, Optional, Sequence, Union
+
 import numpy
 import sympy
 
-from .core.core_symbolic import core_symbolic
+from .core.parsing import _broadcast_integers
+from .core.core_symbolic import _core_symbolic
+
 
 def radial_symbolic(
-    n: Union[numpy.array, Sequence[Integral]],
-    m: Union[numpy.array, Sequence[Integral]],
-    rho_derivative: Optional[Union[numpy.array, Sequence[Integral]]] = None,
-) -> List[sympy.Expr]:
+    n: Union[Integral, Sequence[Integral], numpy.ndarray],
+    m: Union[Integral, Sequence[Integral], numpy.ndarray],
+    rho_derivative: Optional[Union[Integral, Sequence[Integral], numpy.ndarray]] = 0,
+) -> Union[sympy.Expr, List[sympy.Expr]]:
     r"""
-    Compute the symbolic expression of the radial Zernike polynomial :math:`R_{n}^{m}(\rho)` for :math:`\rho \leq 1`.
+    Compute the symbolic expressions of the radial Zernike polynomials :math:`R_{n}^{m}(\rho)` and of their derivatives.
 
-    The radial Zernike polynomial is defined as follows:
+    The radial Zernike polynomials [1]_ are defined for :math:`0 \leq m \leq n` and :math:`n - m` even by:
 
     .. math::
 
-        R_{n}^{m}(\rho) = \sum_{k=0}^{(n-m)/2} \frac{(-1)^k (n-k)!}{k! ((n+m)/2 - k)! ((n-m)/2 - k)!} \rho^{n-2k}
+        R_{n}^{m}(\rho) = \sum_{k=0}^{\frac{n-m}{2}} \frac{(-1)^k (n-k)!}{k! \left(\frac{n+m}{2} - k\right)! \left(\frac{n-m}{2} - k\right)!} \rho^{n-2k}
 
-    if :math:`n < 0`, :math:`m < 0`, :math:`n < m`, or :math:`(n - m)` is odd, the output is the zero polynomial.
+    The expressions are exact polynomials with integer coefficients in the symbol ``r``, which stands
+    for :math:`\rho`. For :math:`n \leq 19` without derivative, they are read from a precomputed table
+    (factorized form :math:`r^{m} P(r^2)` for :math:`n \geq 10`). Otherwise they are built in expanded
+    form from the exact coefficients (see :func:`pyzernike.core._core_symbolic`).
+
+    - If :math:`m < 0`, :math:`m > n` or :math:`n - m` is odd, the expression is ``0``.
+    - If the derivative order :math:`a` is greater than :math:`n`, the expression is ``0``.
+
+    **Shape of the inputs and of the output.** ``n``, ``m`` and ``rho_derivative`` can each be a single
+    integer or a sequence of integers (list, tuple or 1D numpy array):
+
+    - If all of them are integers, a single expression is returned.
+    - If at least one of them is a sequence, the integers are repeated to the length :math:`N` of the
+      sequences (which must all have the same length), and a list of :math:`N` expressions is returned.
 
     .. seealso::
 
-        - :func:`pyzernike.zernike_symbolic` for computing the full Zernike polynomial symbolic expression :math:`Z_{n}^{m}(\rho, \theta)`.
-        - :func:`pyzernike.core.core_symbolic` to inspect the core implementation of the symbolic computation.
-        - The page :doc:`../../mathematical_description` in the documentation for the detailed mathematical description of the Zernike polynomials.
-    
-    The function allows to display several radial Zernike polynomials for different sets of (order, azimuthal frequency, derivative order) given as sequences.
-
-    - The parameters ``n``, ``m`` and ``rho_derivative`` must be sequences of integers with the same length.
-
-    The output is a list of sympy expressions, each containing the symbolic expression of the radial Zernike polynomial for the corresponding order and azimuthal frequency.
-    The list has the same length as the input sequences.
-
-    .. note::
-
-        The symbol `r` is used to represent the radial coordinate :math:`\rho` in the symbolic expression.
+        - :func:`pyzernike.radial_polynomial` for the numerical evaluation of the radial polynomials.
+        - :func:`pyzernike.zernike_symbolic` for the symbolic expressions of the full Zernike polynomials.
+        - The page :doc:`../../mathematical_description` for the mathematical description of the Zernike polynomials.
 
     Parameters
     ----------
-    n : Sequence[Integral] or numpy.array
-        A sequence (List, Tuple) or 1D numpy array of the radial order(s) of the Zernike polynomial(s) to compute. Must be non-negative integers.
+    n : Union[Integral, Sequence[Integral], numpy.ndarray]
+        The radial order(s) :math:`n`.
 
-    m : Sequence[Integral] or numpy.array
-        A sequence (List, Tuple) or 1D numpy array of the azimuthal frequency(ies) of the Zernike polynomial(s) to compute. Must be non-negative integers.
+    m : Union[Integral, Sequence[Integral], numpy.ndarray]
+        The azimuthal frequency(ies) :math:`m`.
 
-    rho_derivative : Optional[Union[Sequence[Integral], numpy.array]], optional
-        A sequence (List, Tuple) or 1D numpy array of the order(s) of the radial derivative(s) to compute. Must be non-negative integers.
-        If None, is it assumed that rho_derivative is 0 for all polynomials.
+    rho_derivative : Optional[Union[Integral, Sequence[Integral], numpy.ndarray]], optional
+        The order(s) :math:`a \geq 0` of the derivative with respect to :math:`\rho`. Default is 0 (no derivative).
+        None is accepted and means 0.
 
     Returns
     -------
-    List[sympy.Expr]
-        A list of symbolic expressions containing the radial Zernike polynomial values for each order and azimuthal frequency
-        Each expression is a sympy expression that can be evaluated for specific values of :math:`\rho`.
+    Union[sympy.Expr, List[sympy.Expr]]
+        - If ``n``, ``m`` and ``rho_derivative`` are integers: a single expression in the symbol ``r``.
+        - Otherwise: a list of :math:`N` expressions, where ``output[i]`` corresponds to ``(n[i], m[i], rho_derivative[i])``.
 
     Raises
     ------
     TypeError
-        If n, m or rho_derivative (if not None) are not sequences of integers.
+        If ``n``, ``m`` or ``rho_derivative`` is not an integer or a sequence of integers.
 
     ValueError
-        If the lengths of n, m and rho_derivative (if not None) are not the same.
+        If the sequences do not have the same length, or if a derivative order is negative.
+
+    References
+    ----------
+    .. [1] F. Zernike, "Beugungstheorie des Schneidenverfahrens und seiner verbesserten Form, der
+       Phasenkontrastmethode," Physica 1(7-12), 689-704 (1934). https://doi.org/10.1016/S0031-8914(34)80259-5
 
     Examples
     --------
-    Compute the expression of the radial Zernike polynomial :math:`R_{2}^{0}(\rho)`:
+    Get the expression of :math:`R_{4}^{0}(\rho)` and of its first derivative:
 
     .. code-block:: python
 
         from pyzernike import radial_symbolic
-        result = radial_symbolic(n=[2], m=[0])
-        expression = result[0]  # result is a list, we take the first element
-        print(expression)
+
+        print(radial_symbolic(n=4, m=0))
+        print(radial_symbolic(n=4, m=0, rho_derivative=1))
 
     .. code-block:: console
 
-        2*r**2 - 1
+        6*r**4 - 6*r**2 + 1
+        24*r**3 - 12*r
 
-    Then evaluate the expression for a specific value of :math:`\rho`:
+    Evaluate the expressions of order 4 with ``numpy``:
 
     .. code-block:: python
 
         import numpy
         import sympy
+
+        expressions = radial_symbolic(n=4, m=[0, 2, 4])
         rho = numpy.linspace(0, 1, 100)
-        # `r` represents the radial coordinate in the symbolic expression
-        
-        func = sympy.lambdify('r', expression, 'numpy')
-        evaluated_result = func(rho)
+        values = [sympy.lambdify('r', expression, 'numpy')(rho) for expression in expressions]
+
+    .. note::
+
+        For an expression equal to a constant (e.g. ``0``), ``sympy.lambdify`` returns a scalar and
+        not an array. Use ``numpy.broadcast_to(value, rho.shape)`` if an array is needed.
 
     """
-    # Check the input parameters
-    if not isinstance(n, (Sequence, numpy.ndarray)) or not all(isinstance(i, Integral) for i in n):
-        raise TypeError("n must be a sequence or a 1D array of integers.")
-    if not isinstance(m, (Sequence, numpy.ndarray)) or not all(isinstance(i, Integral) for i in m):
-        raise TypeError("m must be a sequence or a 1D array of integers.")
-    if rho_derivative is not None:
-        if not isinstance(rho_derivative, (Sequence, numpy.ndarray)) or not all(isinstance(i, Integral) and i >= 0 for i in rho_derivative):
-            raise TypeError("rho_derivative must be a sequence or a 1D array of non-negative integers.")
-    
-    # Convert n, m and rho_derivative to arrays for length checking
-    n = numpy.asarray(n, dtype=numpy.int32)
-    m = numpy.asarray(m, dtype=numpy.int32)
-    if rho_derivative is not None:
-        rho_derivative = numpy.asarray(rho_derivative, dtype=numpy.int32)
-    else:
-        rho_derivative = numpy.zeros_like(n, dtype=numpy.int32)
+    if rho_derivative is None:
+        rho_derivative = 0
 
-    # Check lengths
-    if not n.ndim == 1:
-        raise TypeError("n must be a sequence or a 1D array of integers.")
-    if not m.ndim == 1:
-        raise TypeError("m must be a sequence or a 1D array of integers.")
-    if rho_derivative.ndim != 1:
-        raise TypeError("rho_derivative must be a sequence or a 1D array of integers.")
+    indices, single = _broadcast_integers(n=n, m=m, rho_derivative=rho_derivative)
+    if any(a < 0 for a in indices["rho_derivative"]):
+        raise ValueError("rho_derivative must contain non-negative integers.")
 
-    if not (n.size == m.size == rho_derivative.size):
-        raise ValueError("n, m and rho_derivative (if given) must have the same length.")
+    expressions = _core_symbolic(indices["n"], indices["m"], indices["rho_derivative"], None, True)
 
-    # Compute the radial polynomials using the core_polynomial function
-    radial_expressions = core_symbolic(
-        n=n,
-        m=m,
-        rho_derivative=rho_derivative,
-        theta_derivative=None,
-        flag_radial=True
-    )
-
-    # Return the radial polynomials
-    return radial_expressions
+    return expressions[0] if single else expressions

@@ -14,20 +14,8 @@
 
 __all__ = []
 
-from .core_corresponding_signed_integer_type import core_corresponding_signed_integer_type
-__all__.extend(['core_corresponding_signed_integer_type'])
-
-from .core_create_precomputing_terms import core_create_precomputing_terms
-__all__.extend(['core_create_precomputing_terms'])
-
-from .core_polynomial import core_polynomial
-__all__.extend(['core_polynomial'])
-
-from .core_symbolic import core_symbolic
-__all__.extend(['core_symbolic'])
-
-from .core_display import core_display, core_display_interactive
-__all__.extend(['core_display', 'core_display_interactive'])
-
-from .core_cartesian_to_elliptic_annulus import core_cartesian_to_elliptic_annulus
-__all__.extend(['core_cartesian_to_elliptic_annulus'])
+from .core_polynomial import _core_polynomials
+from .core_symbolic import _core_symbolic
+from .zernike_recursive import _zernike_recursive_up_to_order
+from .core_display import _core_display, _core_display_interactive
+from .cartesian_to_elliptic_annulus import _cartesian_to_elliptic_annulus

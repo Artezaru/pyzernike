@@ -13,59 +13,71 @@
 # limitations under the License.
 
 from numbers import Integral
-from typing import Sequence, Optional, Union
+from typing import Optional, Sequence, Union
+
 import numpy
 
-from .core.core_display import core_display, core_display_interactive
-from .core.core_corresponding_signed_integer_type import core_corresponding_signed_integer_type
+from .core.parsing import _broadcast_integers, _check_display_parameters
+from .core.core_display import _core_display
+
 
 def radial_display(
-    n: Union[numpy.array, Sequence[Integral]],
-    m: Union[numpy.array, Sequence[Integral]],
-    rho_derivative: Optional[Union[numpy.array, Sequence[Integral]]] = None,
+    n: Union[Integral, Sequence[Integral], numpy.ndarray],
+    m: Union[Integral, Sequence[Integral], numpy.ndarray],
+    rho_derivative: Optional[Union[Integral, Sequence[Integral], numpy.ndarray]] = 0,
+    *,
     precompute: bool = True,
-    float_type: numpy.floating = numpy.float64
+    resolution: int = 200,
+    rho_power: float = 1.0,
 ) -> None:
     r"""
-    Display the radial Zernike polynomial :math:`R_{n}^{m}(\rho)` for :math:`\rho \leq 1` in an interactive matplotlib figure.
+    Display the radial Zernike polynomials :math:`R_{n}^{m}(\rho)` and their derivatives in a ``matplotlib`` figure.
 
-    The radial Zernike polynomial is defined as follows:
+    Each polynomial is drawn as a curve :math:`\rho \mapsto \frac{d^a R_{n}^{m}}{d\rho^a}(\rho)` on
+    :math:`[0, 1]`. When several polynomials are given, the "Previous" and "Next" buttons of the figure
+    navigate through them. The vertical axis spans :math:`[\min(-1, R), \max(1, R)]`.
+
+    The radial Zernike polynomials [1]_ are defined for :math:`0 \leq m \leq n` and :math:`n - m` even by:
 
     .. math::
 
-        R_{n}^{m}(\rho) = \sum_{k=0}^{(n-m)/2} \frac{(-1)^k (n-k)!}{k! ((n+m)/2 - k)! ((n-m)/2 - k)!} \rho^{n-2k}
+        R_{n}^{m}(\rho) = \sum_{k=0}^{\frac{n-m}{2}} \frac{(-1)^k (n-k)!}{k! \left(\frac{n+m}{2} - k\right)! \left(\frac{n-m}{2} - k\right)!} \rho^{n-2k}
 
-    If :math:`n < 0`, :math:`m < 0`, :math:`n < m`, or :math:`(n - m)` is odd, the polynomial is zero.
+    If :math:`m < 0`, :math:`m > n`, :math:`n - m` is odd or :math:`a > n`, the displayed polynomial is zero.
+
+    **Shape of the inputs.** ``n``, ``m`` and ``rho_derivative`` can each be a single integer or a
+    sequence of integers (list, tuple or 1D numpy array). The integers are repeated to the length of
+    the sequences, which must all have the same length.
 
     .. seealso::
 
-        - :func:`pyzernike.zernike_display` for displaying the full Zernike polynomial :math:`Z_{n}^{m}(\rho, \theta)`.
-        - :func:`pyzernike.core.core_display` to inspect the core implementation of the display.
-        - The page :doc:`../../mathematical_description` in the documentation for the detailed mathematical description of the Zernike polynomials.
-
-    The function allows to display several radial Zernike polynomials for different sets of (order, azimuthal frequency, derivative order) given as sequences.
-
-    - The parameters ``n``, ``m`` and ``rho_derivative`` must be sequences of integers with the same length.
+        - :func:`pyzernike.radial_polynomial` for the numerical evaluation of the radial polynomials.
+        - :func:`pyzernike.zernike_display` to display the full Zernike polynomials.
+        - :func:`pyzernike.core._core_display` for the implementation of the display.
 
     Parameters
     ----------
-    n : Sequence[Integral] or numpy.array
-        A sequence (List, Tuple) or 1D numpy array of the radial order(s) of the Zernike polynomial(s) to display. Must be non-negative integers.
+    n : Union[Integral, Sequence[Integral], numpy.ndarray]
+        The radial order(s) :math:`n`.
 
-    m : Sequence[Integral] or numpy.array
-        A sequence (List, Tuple) or 1D numpy array of the azimuthal frequency(ies) of the Zernike polynomial(s) to display. Must be non-negative integers.
+    m : Union[Integral, Sequence[Integral], numpy.ndarray]
+        The azimuthal frequency(ies) :math:`m`.
 
-    rho_derivative : Optional[Union[Sequence[Integral], numpy.array]], optional
-        A sequence (List, Tuple) or 1D numpy array of the order(s) of the radial derivative(s) to display. Must be non-negative integers.
-        If None, is it assumed that rho_derivative is 0 for all polynomials.
+    rho_derivative : Optional[Union[Integral, Sequence[Integral], numpy.ndarray]], optional
+        The order(s) :math:`a \geq 0` of the derivative with respect to :math:`\rho`. Default is 0 (no derivative).
+        None is accepted and means 0.
 
     precompute : bool, optional
-        If True, the useful terms for the Zernike polynomials are precomputed to optimize the computation.
-        If False, the useful terms are computed on-the-fly to avoid memory overhead.
-        Default is True.
+        If True, the powers of :math:`\rho` are cached and shared between the polynomials. Default is True.
 
-    float_type : numpy.floating, optional
-        The floating point type to use for the computations. Default is numpy.float64.
+    resolution : int, optional
+        The number of points along each axis of the display grid. Default is 200.
+
+    rho_power : float, optional
+        The strictly positive exponent :math:`p` of the display mapping: at the displayed radial coordinate
+        :math:`s \in [0, 1]`, the polynomial is evaluated at :math:`\rho = s^{p}`. With :math:`p < 1`
+        (e.g. ``0.5``), the edge of the disk, where the high order polynomials oscillate the most, is
+        enlarged; with :math:`p > 1`, the center is enlarged. Default is 1 (no mapping).
 
     Returns
     -------
@@ -74,72 +86,49 @@ def radial_display(
     Raises
     ------
     TypeError
-        If n, m or rho_derivative (if not None) are not sequences of integers.
+        If ``n``, ``m`` or ``rho_derivative`` is not an integer or a sequence of integers, if
+        ``precompute`` is not a boolean, or if ``resolution`` is not an integer or ``rho_power`` is not a real number.
 
     ValueError
-        If the lengths of n, m and rho_derivative (if not None) are not the same.
+        If the sequences do not have the same length or are empty, if a derivative order is negative, or if
+        ``resolution`` is lower than 2 or ``rho_power`` is not strictly positive.
+
+    References
+    ----------
+    .. [1] F. Zernike, "Beugungstheorie des Schneidenverfahrens und seiner verbesserten Form, der
+       Phasenkontrastmethode," Physica 1(7-12), 689-704 (1934). https://doi.org/10.1016/S0031-8914(34)80259-5
 
     Examples
     --------
-    Display the radial Zernike polynomial :math:`R_{2}^{0}(\rho)`:
+    Display :math:`R_{2}^{0}(\rho)`:
 
     .. code-block:: python
 
         from pyzernike import radial_display
-        radial_display(n=[2], m=[0]) # This will display the radial Zernike polynomial R_2^0 in an interactive matplotlib figure.
 
-    To display multiple radial Zernike polynomials, you can pass sequences for `n` and `m`:
+        radial_display(n=2, m=0)
+
+    Display all the radial polynomials of order 4 and their first derivatives:
 
     .. code-block:: python
 
-        from pyzernike import radial_display
-        radial_display(n=[2, 3, 4], m=[0, 1, 2], rho_derivative=[0, 0, 1])
+        radial_display(n=4, m=[0, 2, 4, 0, 2, 4], rho_derivative=[0, 0, 0, 1, 1, 1])
 
     .. image:: ../../../pyzernike/resources/radial_display.png
         :width: 600px
         :align: center
 
     """
-    # Get the corresponding integer types
-    int_type = core_corresponding_signed_integer_type(float_type)
-
-    # Check the input parameters
-    if not isinstance(n, (Sequence, numpy.ndarray)) or not all(isinstance(i, Integral) for i in n):
-        raise TypeError("n must be a sequence or a 1D array of integers.")
-    if not isinstance(m, (Sequence, numpy.ndarray)) or not all(isinstance(i, Integral) for i in m):
-        raise TypeError("m must be a sequence or a 1D array of integers.")
-    if rho_derivative is not None:
-        if not isinstance(rho_derivative, (Sequence, numpy.ndarray)) or not all(isinstance(i, Integral) and i >= 0 for i in rho_derivative):
-            raise TypeError("rho_derivative must be a sequence or a 1D array of non-negative integers.")
     if not isinstance(precompute, bool):
         raise TypeError("precompute must be a boolean.")
-    
-    # Convert n, m and rho_derivative to arrays for length checking
-    n = numpy.asarray(n, dtype=int_type)
-    m = numpy.asarray(m, dtype=int_type)
-    if rho_derivative is not None:
-        rho_derivative = numpy.asarray(rho_derivative, dtype=int_type)
-    else:
-        rho_derivative = numpy.zeros_like(n, dtype=int_type)
-    
-    # Check lengths
-    if not n.ndim == 1:
-        raise TypeError("n must be a sequence or a 1D array of integers.")
-    if not m.ndim == 1:
-        raise TypeError("m must be a sequence or a 1D array of integers.")
-    if rho_derivative.ndim != 1:
-        raise TypeError("rho_derivative must be a sequence or a 1D array of integers.")
+    resolution, rho_power = _check_display_parameters(resolution, rho_power)
+    if rho_derivative is None:
+        rho_derivative = 0
 
-    if not (n.size == m.size == rho_derivative.size):
-        raise ValueError("n, m and rho_derivative (if given) must have the same length.")
+    indices, _ = _broadcast_integers(n=n, m=m, rho_derivative=rho_derivative)
+    if not indices["n"]:
+        raise ValueError("At least one polynomial must be given.")
+    if any(a < 0 for a in indices["rho_derivative"]):
+        raise ValueError("rho_derivative must contain non-negative integers.")
 
-    # Compute the radial polynomials using the core_polynomial function
-    core_display(
-        n=n,
-        m=m,
-        rho_derivative=rho_derivative,
-        theta_derivative=None,
-        flag_radial=True,
-        precompute=precompute,
-        float_type=float_type,
-    )
+    _core_display(indices["n"], indices["m"], indices["rho_derivative"], None, True, precompute, resolution, rho_power)

@@ -12,234 +12,214 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import numpy
 from numbers import Integral, Real
-from typing import Sequence, List, Optional, Union
+from typing import List, Optional, Sequence, Union
 
-from .core.core_polynomial import core_polynomial
-from .core.core_corresponding_signed_integer_type import core_corresponding_signed_integer_type
+import numpy
+
+from .core.parsing import _as_common_floating_arrays, _broadcast_integers
+from .core.core_polynomial import _core_polynomials
+
 
 def zernike_polynomial(
-    rho: numpy.ndarray, 
+    rho: numpy.ndarray,
     theta: numpy.ndarray,
-    n: Union[numpy.array, Sequence[Integral]],
-    m: Union[numpy.array, Sequence[Integral]],
-    rho_derivative: Optional[Union[numpy.array, Sequence[Integral]]] = None,
-    theta_derivative: Optional[Union[numpy.array, Sequence[Integral]]] = None,
+    n: Union[Integral, Sequence[Integral], numpy.ndarray],
+    m: Union[Integral, Sequence[Integral], numpy.ndarray],
+    rho_derivative: Optional[Union[Integral, Sequence[Integral], numpy.ndarray]] = 0,
+    theta_derivative: Optional[Union[Integral, Sequence[Integral], numpy.ndarray]] = 0,
     default: Real = numpy.nan,
+    *,
     precompute: bool = True,
-) -> List[numpy.ndarray]:
+    to_list: bool = True,
+) -> Union[numpy.ndarray, List[numpy.ndarray]]:
     r"""
-    Computes the Zernike polynomial :math:`Z_{n}^{m}(\rho, \theta)` for :math:`\rho \leq 1` and :math:`\theta \in [0, 2\pi]`.
+    Compute the Zernike polynomials :math:`Z_{n}^{m}(\rho, \theta)` and their derivatives.
 
-    The Zernike polynomial is defined as follows:
-
-    .. math::
-
-        Z_{n}^{m}(\rho, \theta) = R_{n}^{m}(\rho) \cos(m \theta) \quad \text{if} \quad m \geq 0
+    The Zernike polynomials [1]_ are defined on the unit disk for :math:`|m| \leq n` and :math:`n - m` even by:
 
     .. math::
 
-        Z_{n}^{m}(\rho, \theta) = R_{n}^{-m}(\rho) \sin(-m \theta) \quad \text{if} \quad m < 0
+        Z_{n}^{m}(\rho, \theta) = \begin{cases}
+            R_{n}^{m}(\rho) \cos(m \theta) & \text{if } m \geq 0 \\
+            R_{n}^{|m|}(\rho) \sin(|m| \theta) & \text{if } m < 0
+        \end{cases}
 
-    If :math:`n < 0`, :math:`n < |m|`, or :math:`(n - m)` is odd, the output is a zeros array with the same shape as :math:`\rho`.
-    If :math:`\rho` is not in :math:`0 \leq \rho \leq 1` or :math:`\rho` is numpy.nan, the output is set to the default value (numpy.nan by default).
+    where :math:`R_{n}^{m}` is the radial polynomial (see :func:`pyzernike.radial_polynomial`). The
+    polynomials are not normalized: :math:`Z_{n}^{m}(1, \theta)` has an amplitude of 1. The normalized
+    polynomials of Noll [2]_ are obtained by multiplying by :math:`\sqrt{2(n+1)}` (:math:`m \neq 0`)
+    or :math:`\sqrt{n+1}` (:math:`m = 0`).
 
-    .. seealso::
+    The derivative of order :math:`a` with respect to :math:`\rho` and :math:`b` with respect to :math:`\theta` is:
 
-        - :func:`pyzernike.radial_polynomial` for computing the radial part of the Zernike polynomial :math:`R_{n}^{m}(\rho)`.
-        - :func:`pyzernike.core.core_polynomial` to inspect the core implementation of the computation.
-        - The page :doc:`../../mathematical_description` in the documentation for the detailed mathematical description of the Zernike polynomials.
-    
-    This function allows to compute several Zernike polynomials at once for different sets of (order, azimuthal frequency, derivative orders) given as sequences,
-    which can be more efficient than calling the polynomial function multiple times.
+    .. math::
 
-    - The parameters ``rho`` and ``theta`` must be numpy arrays of the same shape.
-    - The parameters ``n``, ``m``, ``rho_derivative`` and ``theta_derivative`` must be sequences of integers with the same length.
+        \frac{\partial^{a+b} Z_{n}^{m}}{\partial \rho^{a} \partial \theta^{b}} = \begin{cases}
+            \frac{d^a R_{n}^{m}}{d\rho^a}(\rho) \, m^{b} \cos\left(m\theta + b\frac{\pi}{2}\right) & \text{if } m > 0 \\
+            \frac{d^a R_{n}^{0}}{d\rho^a}(\rho) \, \delta_{b,0} & \text{if } m = 0 \\
+            \frac{d^a R_{n}^{|m|}}{d\rho^a}(\rho) \, |m|^{b} \sin\left(|m|\theta + b\frac{\pi}{2}\right) & \text{if } m < 0
+        \end{cases}
 
-    The :math:`\rho` and :math:`\theta` values are the same for all the polynomials.
-    The output is a list of numpy arrays, each containing the values of the Zernike polynomial for the corresponding order and azimuthal frequency.
-    The list has the same length as the input sequences and the arrays have the same shape as ``rho``.
+    The coefficients of the radial part are computed exactly with integer arithmetic, and the sum is
+    evaluated with the Horner scheme (see :func:`pyzernike.core._core_polynomials`).
+
+    - If :math:`|m| > n` or :math:`n - m` is odd, the polynomial is zero.
+    - If :math:`a > n`, the derivative is zero.
+    - Where :math:`\rho` is outside :math:`[0, 1]`, or :math:`\rho` or :math:`\theta` is not finite,
+      the output is set to ``default``.
+
+    **Shape of the inputs and of the output.** ``n``, ``m``, ``rho_derivative`` and ``theta_derivative``
+    can each be a single integer or a sequence of integers (list, tuple or 1D numpy array):
+
+    - If all of them are integers, a single polynomial is computed and returned as an array with the
+      shape of ``rho``.
+    - If at least one of them is a sequence, the integers are repeated to the length :math:`N` of the
+      sequences (which must all have the same length), and :math:`N` polynomials are computed. They are
+      returned as a list of :math:`N` arrays with the shape of ``rho`` (``to_list=True``), or as a single
+      array of shape :math:`(N, \dots)` (``to_list=False``).
 
     .. note::
 
-        If the input ``rho`` or ``theta`` are not floating point numpy arrays, it is converted to one with ``numpy.float64`` dtype.
-        If the input ``rho`` or ``theta`` are floating point numpy arrays (ex: ``numpy.float32``), the computation will be done in ``numpy.float32``.
-        If the input ``rho`` and ``theta`` are not of the same dtype, they are both converted to ``numpy.float64``.
+        The explicit sum of the radial part suffers from cancellation between its large alternating terms
+        for high orders. In double precision, the absolute error stays below :math:`10^{-10}` up to
+        :math:`n \approx 20` for :math:`m = 0`, and grows quickly beyond.
+
+    .. seealso::
+
+        - :func:`pyzernike.radial_polynomial` for the radial polynomials :math:`R_{n}^{m}(\rho)`.
+        - :func:`pyzernike.zernike_symbolic` for the symbolic expressions of the Zernike polynomials.
+        - :func:`pyzernike.zernike_index_to_order` to convert OSA/ANSI indices to orders :math:`(n, m)`.
+        - The page :doc:`../../mathematical_description` for the mathematical description of the Zernike polynomials.
 
     Parameters
     ----------
-    rho : numpy.ndarray (N-D array)
-        The radial coordinate values with shape (...,).
+    rho : numpy.ndarray
+        The radial coordinates :math:`\rho` with any shape ``(...)``.
 
-    theta : numpy.ndarray (N-D array)
-        The angular coordinate values with shape (...,). Same shape as ``rho``.
+    theta : numpy.ndarray
+        The angular coordinates :math:`\theta` in radians, with the same shape as ``rho``.
+        If ``rho`` and ``theta`` are floating point arrays of the same dtype (e.g. ``numpy.float32``),
+        this dtype is kept. Otherwise, both are converted to ``numpy.float64``.
 
-    n : Sequence[Integral] or numpy.array
-        A sequence (List, Tuple) or 1D numpy array of the radial order(s) of the Zernike polynomial(s) to compute. Must be non-negative integers.
+    n : Union[Integral, Sequence[Integral], numpy.ndarray]
+        The radial order(s) :math:`n`.
 
-    m : Sequence[Integral] or numpy.array
-        A sequence (List, Tuple) or 1D numpy array of the azimuthal frequency(ies) of the Zernike polynomial(s) to compute. Must be non-negative integers.
+    m : Union[Integral, Sequence[Integral], numpy.ndarray]
+        The azimuthal frequency(ies) :math:`m`.
 
-    rho_derivative : Optional[Union[Sequence[Integral], numpy.array]], optional
-        A sequence (List, Tuple) or 1D numpy array of the order(s) of the radial derivative(s) to compute. Must be non-negative integers.
-        If None, is it assumed that rho_derivative is 0 for all polynomials.
+    rho_derivative : Optional[Union[Integral, Sequence[Integral], numpy.ndarray]], optional
+        The order(s) :math:`a \geq 0` of the derivative with respect to :math:`\rho`. Default is 0 (no derivative).
+        None is accepted and means 0.
 
-    theta_derivative : Optional[Union[Sequence[Integral], numpy.array]], optional
-        A sequence (List, Tuple) or 1D numpy array of the order(s) of the angular derivative(s) to compute. Must be non-negative integers.
-        If None, is it assumed that theta_derivative is 0 for all polynomials.
+    theta_derivative : Optional[Union[Integral, Sequence[Integral], numpy.ndarray]], optional
+        The order(s) :math:`b \geq 0` of the derivative with respect to :math:`\theta`. Default is 0 (no derivative).
+        None is accepted and means 0.
 
     default : Real, optional
-        The default value for invalid rho values. The default is numpy.nan.
-        If the radial coordinate values are not in the valid domain (0 <= rho <= 1) or if they are numpy.nan, the output is set to this value.
+        The value set where :math:`\rho` is outside :math:`[0, 1]`, or :math:`\rho` or :math:`\theta` is not finite.
+        Default is ``numpy.nan``.
 
     precompute : bool, optional
-        If True, precomputes the useful terms for better performance when computing multiple polynomials with the same rho values.
-        If False, computes the useful terms on the fly for each polynomial to avoid memory overhead.
-        The default is True.
+        If True, the powers of :math:`\rho` and the cosine and sine terms are cached and shared between the
+        polynomials, which is faster when several polynomials are computed at once. If False, they are
+        recomputed for each polynomial, which uses less memory. Default is True.
 
+    to_list : bool, optional
+        Only used when several polynomials are computed. If True, the output is a list of arrays.
+        If False, the output is a single array of shape :math:`(N, \dots)`. Default is True.
 
     Returns
     -------
-    List[numpy.ndarray]
-        A list of numpy arrays containing the Zernike polynomial values for each order and azimuthal frequency.
-        Each array has the same shape as ``rho`` and the list has the same length as the input sequences.
-        The dtype of the arrays is the same as the dtype of ``rho`` and ``theta`` is given, otherwise ``numpy.float64``.
+    Union[numpy.ndarray, List[numpy.ndarray]]
+        - If ``n``, ``m``, ``rho_derivative`` and ``theta_derivative`` are integers: an array with the shape of ``rho``.
+        - Otherwise, if ``to_list`` is True: a list of :math:`N` arrays with the shape of ``rho``.
+        - Otherwise: an array of shape :math:`(N, \dots)`, where ``output[i]`` corresponds to
+          ``(n[i], m[i], rho_derivative[i], theta_derivative[i])``.
+
+        The dtype is the common floating point dtype of ``rho`` and ``theta`` (``numpy.float64`` by default).
 
     Raises
     ------
     TypeError
-        If the rho or theta values can not be converted to a numpy array of floating points values.
-        If n, m, rho_derivative or theta_derivative (if not None) are not sequences of integers.
+        If ``rho`` or ``theta`` can not be converted to a floating point array, if ``n``, ``m``,
+        ``rho_derivative`` or ``theta_derivative`` is not an integer or a sequence of integers, if
+        ``default`` is not a real number, or if ``precompute`` or ``to_list`` is not a boolean.
 
     ValueError
-        If the rho and theta do not have the same shape.
-        If the lengths of n, m, rho_derivative and theta_derivative (if not None) are not the same.
+        If ``rho`` and ``theta`` do not have the same shape, if the sequences do not have the same
+        length, or if a derivative order is negative.
+
+    References
+    ----------
+    .. [1] F. Zernike, "Beugungstheorie des Schneidenverfahrens und seiner verbesserten Form, der
+       Phasenkontrastmethode," Physica 1(7-12), 689-704 (1934). https://doi.org/10.1016/S0031-8914(34)80259-5
+
+    .. [2] R. J. Noll, "Zernike polynomials and atmospheric turbulence," Journal of the Optical Society
+       of America 66(3), 207-211 (1976). https://doi.org/10.1364/JOSA.66.000207
 
     Examples
     --------
-    Compute the Zernike polynomial :math:`Z_{2}^{0}(\rho, \theta)` for :math:`\rho \leq 1`:
+    Compute the defocus :math:`Z_{2}^{0}(\rho, \theta)` on a polar grid:
 
     .. code-block:: python
 
         import numpy
         from pyzernike import zernike_polynomial
-        rho = numpy.linspace(0, 1, 100)
-        theta = numpy.linspace(0, 2*numpy.pi, 100)
-        result = zernike_polynomial(rho, theta, n=[2], m=[0])
-        polynomial = result[0]  # result is a list, we take the first element
 
-    Compute the radial Zernike polynomial :math:`Z_{2}^{0}(\rho, \theta)` and its first derivative for :math:`\rho \leq 1`:
+        rho, theta = numpy.meshgrid(numpy.linspace(0, 1, 100), numpy.linspace(0, 2 * numpy.pi, 100))
+        Z20 = zernike_polynomial(rho, theta, n=2, m=0)  # array of shape (100, 100)
+
+    Compute :math:`Z_{2}^{2}` and its gradient in polar coordinates (``n`` and ``m`` are repeated):
 
     .. code-block:: python
 
-        import numpy
-        from pyzernike import zernike_polynomial
-        rho = numpy.linspace(0, 1, 100)
-        theta = numpy.linspace(0, 2*numpy.pi, 100)
-        result = zernike_polynomial(rho, theta, n=[2,2], m=[0,0], rho_derivative=[0, 1])
-        polynomial = result[0]  # result is a list, we take the first element
-        derivative = result[1]  # result is a list, we take the second element
+        Z, dZ_drho, dZ_dtheta = zernike_polynomial(rho, theta, n=2, m=2, rho_derivative=[0, 1, 0], theta_derivative=[0, 0, 1])
+
+    Compute the first 15 polynomials in the OSA/ANSI ordering as a single array:
+
+    .. code-block:: python
+
+        from pyzernike import zernike_index_to_order
+
+        n, m = zernike_index_to_order(range(15))
+        Z = zernike_polynomial(rho, theta, n=n, m=m, to_list=False)  # array of shape (15, 100, 100)
 
     """
-    # Convert rho and theta to numpy arrays of floating point values
-    if not isinstance(rho, numpy.ndarray):
-        rho = numpy.asarray(rho, dtype=numpy.float64)
-    if not isinstance(theta, numpy.ndarray):
-        theta = numpy.asarray(theta, dtype=numpy.float64)
-
-    # Convert rho and theta in arrays of floating point values if they are not already
-    if not numpy.issubdtype(rho.dtype, numpy.floating):
-        rho = rho.astype(numpy.float64)
-    if not numpy.issubdtype(theta.dtype, numpy.floating):
-        theta = theta.astype(numpy.float64)
-
-    # If rho and theta are not of the same dtype, convert them to float64
-    if rho.dtype != theta.dtype:
-        theta = theta.astype(numpy.float64)
-        rho = rho.astype(numpy.float64)
-
-    # Check that rho and theta have the same shape
-    if rho.shape != theta.shape:
-        raise ValueError("rho and theta must have the same shape.")
-
-    # Determine the float type
-    float_type = rho.dtype.type
-    int_type = core_corresponding_signed_integer_type(float_type)
-
-    # Check the input parameters
-    if not isinstance(n, (Sequence, numpy.ndarray)) or not all(isinstance(i, Integral) for i in n):
-        raise TypeError("n must be a sequence or a 1D array of integers.")
-    if not isinstance(m, (Sequence, numpy.ndarray)) or not all(isinstance(i, Integral) for i in m):
-        raise TypeError("m must be a sequence or a 1D array of integers.")
-    if rho_derivative is not None:
-        if not isinstance(rho_derivative, (Sequence, numpy.ndarray)) or not all(isinstance(i, Integral) and i >= 0 for i in rho_derivative):
-            raise TypeError("rho_derivative must be a sequence or a 1D array of non-negative integers.")
-    if theta_derivative is not None:
-        if not isinstance(theta_derivative, (Sequence, numpy.ndarray)) or not all(isinstance(i, Integral) and i >= 0 for i in theta_derivative):
-            raise TypeError("theta_derivative must be a sequence or a 1D array of non-negative integers.")
+    rho, theta = _as_common_floating_arrays(rho=rho, theta=theta)
     if not isinstance(default, Real):
-        raise TypeError("Default value must be a real number.")
+        raise TypeError("default must be a real number.")
     if not isinstance(precompute, bool):
         raise TypeError("precompute must be a boolean.")
-    
-    # Convert n, m and rho_derivative to arrays for length checking
-    n = numpy.asarray(n, dtype=int_type)
-    m = numpy.asarray(m, dtype=int_type)
-    if rho_derivative is not None:
-        rho_derivative = numpy.asarray(rho_derivative, dtype=int_type)
-    else:
-        rho_derivative = numpy.zeros_like(n, dtype=int_type)
-    if theta_derivative is not None:
-        theta_derivative = numpy.asarray(theta_derivative, dtype=int_type)
-    else:
-        theta_derivative = numpy.zeros_like(n, dtype=int_type)
+    if not isinstance(to_list, bool):
+        raise TypeError("to_list must be a boolean.")
 
-    # Check lengths
-    if not n.ndim == 1:
-        raise TypeError("n must be a sequence or a 1D array of integers.")
-    if not m.ndim == 1:
-        raise TypeError("m must be a sequence or a 1D array of integers.")
-    if rho_derivative.ndim != 1:
-        raise TypeError("rho_derivative must be a sequence or a 1D array of integers.")
-    if theta_derivative.ndim != 1:
-        raise TypeError("theta_derivative must be a sequence or a 1D array of integers.")
+    if rho_derivative is None:
+        rho_derivative = 0
+    if theta_derivative is None:
+        theta_derivative = 0
 
-    if not (n.size == m.size == rho_derivative.size == theta_derivative.size):
-        raise ValueError(f"n, m, rho_derivative (if given) and theta_derivative (if given) must have the same length. got lengths: {n.size}, {m.size}, {rho_derivative.size}, {theta_derivative.size}.")
+    indices, single = _broadcast_integers(n=n, m=m, rho_derivative=rho_derivative, theta_derivative=theta_derivative)
+    if any(a < 0 for a in indices["rho_derivative"]):
+        raise ValueError("rho_derivative must contain non-negative integers.")
+    if any(b < 0 for b in indices["theta_derivative"]):
+        raise ValueError("theta_derivative must contain non-negative integers.")
 
-    # Convert the default value to the proper float type
-    default = float_type(default)
+    valid_mask = numpy.isfinite(rho) & numpy.isfinite(theta) & (rho >= 0) & (rho <= 1)
 
-    # Compute the Mask for valid rho values
-    domain_mask = (rho >= 0) & (rho <= 1)
-    finite_mask = numpy.isfinite(rho) & numpy.isfinite(theta)
-    valid_mask = domain_mask & finite_mask
-
-    # Conserve only the valid values and save the input shape
-    original_shape = rho.shape
-    rho = rho[valid_mask]
-    theta = theta[valid_mask]
-
-    # Compute the polynomials using the core_polynomial function
-    zernike_polynomials = core_polynomial(
-        rho=rho,
-        theta=theta,
-        n=n,
-        m=m,
-        rho_derivative=rho_derivative,
-        theta_derivative=theta_derivative,
-        flag_radial=False,
-        precompute=precompute,
-        float_type=float_type
+    output = numpy.full((len(indices["n"]),) + rho.shape, default, dtype=rho.dtype)
+    output[:, valid_mask] = _core_polynomials(
+        rho[valid_mask],
+        theta[valid_mask],
+        indices["n"],
+        indices["m"],
+        indices["rho_derivative"],
+        indices["theta_derivative"],
+        False,
+        precompute,
     )
 
-    # If rho is not in the valid domain, set the output to the default value
-    for index in range(len(zernike_polynomials)):
-        # Reshape the radial polynomial to the original shape of rho and set the invalid values to the default value
-        output_default = numpy.full(original_shape, default, dtype=float_type)
-        output_default[valid_mask] = zernike_polynomials[index]
-        zernike_polynomials[index] = output_default
-
-    # Return the radial polynomials
-    return zernike_polynomials
+    if single:
+        return output[0]
+    if to_list:
+        return list(output)
+    return output

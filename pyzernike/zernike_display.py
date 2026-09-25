@@ -13,68 +13,81 @@
 # limitations under the License.
 
 from numbers import Integral
-from typing import Sequence, Optional, Union
+from typing import Optional, Sequence, Union
+
 import numpy
 
-from .core.core_display import core_display
-from .core.core_corresponding_signed_integer_type import core_corresponding_signed_integer_type
+from .core.parsing import _broadcast_integers, _check_display_parameters
+from .core.core_display import _core_display
+
 
 def zernike_display(
-    n: Union[numpy.array, Sequence[Integral]],
-    m: Union[numpy.array, Sequence[Integral]],
-    rho_derivative: Optional[Union[numpy.array, Sequence[Integral]]] = None,
-    theta_derivative: Optional[Union[numpy.array, Sequence[Integral]]] = None,
+    n: Union[Integral, Sequence[Integral], numpy.ndarray],
+    m: Union[Integral, Sequence[Integral], numpy.ndarray],
+    rho_derivative: Optional[Union[Integral, Sequence[Integral], numpy.ndarray]] = 0,
+    theta_derivative: Optional[Union[Integral, Sequence[Integral], numpy.ndarray]] = 0,
+    *,
     precompute: bool = True,
-    float_type: numpy.floating = numpy.float64
+    resolution: int = 200,
+    rho_power: float = 1.0,
 ) -> None:
     r"""
-    Display the Zernike polynomial :math:`Z_{n}^{m}(\rho, \theta)` for :math:`\rho \leq 1` and :math:`\theta \in [0, 2\pi]` in an interactive matplotlib figure.
+    Display the Zernike polynomials :math:`Z_{n}^{m}(\rho, \theta)` and their derivatives in a ``matplotlib`` figure.
 
-    The Zernike polynomial is defined as follows:
+    Each polynomial is drawn as a colormap on the unit disk (polar axes). When several polynomials are
+    given, the "Previous" and "Next" buttons of the figure navigate through them. The color scale spans
+    :math:`[\min(-1, Z), \max(1, Z)]`.
+
+    The Zernike polynomials [1]_ are defined on the unit disk for :math:`|m| \leq n` and :math:`n - m` even by:
 
     .. math::
 
-        Z_{n}^{m}(\rho, \theta) = R_{n}^{m}(\rho) \cos(m \theta) \quad \text{if} \quad m \geq 0
+        Z_{n}^{m}(\rho, \theta) = \begin{cases}
+            R_{n}^{m}(\rho) \cos(m \theta) & \text{if } m \geq 0 \\
+            R_{n}^{|m|}(\rho) \sin(|m| \theta) & \text{if } m < 0
+        \end{cases}
 
-    .. math::
+    and their derivatives are given in :func:`pyzernike.zernike_polynomial`. If :math:`|m| > n`,
+    :math:`n - m` is odd, :math:`a > n`, or :math:`m = 0` and :math:`b > 0`, the displayed polynomial is zero.
 
-        Z_{n}^{m}(\rho, \theta) = R_{n}^{-m}(\rho) \sin(-m \theta) \quad \text{if} \quad m < 0
-
-    If :math:`n < 0`, :math:`n < |m|`, or :math:`(n - m)` is odd, the polynomial is zero.
+    **Shape of the inputs.** ``n``, ``m``, ``rho_derivative`` and ``theta_derivative`` can each be a
+    single integer or a sequence of integers (list, tuple or 1D numpy array). The integers are repeated
+    to the length of the sequences, which must all have the same length.
 
     .. seealso::
 
-        - :func:`pyzernike.radial_display` for displaying the radial part of the Zernike polynomial :math:`R_{n}^{m}(\rho)`.
-        - :func:`pyzernike.core.core_display` to inspect the core implementation of the display.
-        - The page :doc:`../../mathematical_description` in the documentation for the detailed mathematical description of the Zernike polynomials.
-
-    The function allows to display several Zernike polynomials for different sets of (order, azimuthal frequency, derivative orders) given as sequences.
-
-    - The parameters ``n``, ``m``, ``rho_derivative`` and ``theta_derivative`` must be sequences of integers with the same length.
+        - :func:`pyzernike.zernike_polynomial` for the numerical evaluation of the Zernike polynomials.
+        - :func:`pyzernike.radial_display` to display the radial polynomials.
+        - :func:`pyzernike.core._core_display` for the implementation of the display.
 
     Parameters
     ----------
-    n : Sequence[Integral] or numpy.array
-        A sequence (List, Tuple) or 1D numpy array of the radial order(s) of the Zernike polynomial(s) to display. Must be non-negative integers.
+    n : Union[Integral, Sequence[Integral], numpy.ndarray]
+        The radial order(s) :math:`n`.
 
-    m : Sequence[Integral] or numpy.array
-        A sequence (List, Tuple) or 1D numpy array of the azimuthal frequency(ies) of the Zernike polynomial(s) to display. Must be non-negative integers.
+    m : Union[Integral, Sequence[Integral], numpy.ndarray]
+        The azimuthal frequency(ies) :math:`m`.
 
-    rho_derivative : Optional[Union[Sequence[Integral], numpy.array]], optional
-        A sequence (List, Tuple) or 1D numpy array of the order(s) of the radial derivative(s) to display. Must be non-negative integers.
-        If None, is it assumed that rho_derivative is 0 for all polynomials.
+    rho_derivative : Optional[Union[Integral, Sequence[Integral], numpy.ndarray]], optional
+        The order(s) :math:`a \geq 0` of the derivative with respect to :math:`\rho`. Default is 0 (no derivative).
+        None is accepted and means 0.
 
-    theta_derivative : Optional[Union[Sequence[Integral], numpy.array]], optional
-        A sequence (List, Tuple) or 1D numpy array of the order(s) of the angular derivative(s) to display. Must be non-negative integers.
-        If None, is it assumed that theta_derivative is 0 for all polynomials.
+    theta_derivative : Optional[Union[Integral, Sequence[Integral], numpy.ndarray]], optional
+        The order(s) :math:`b \geq 0` of the derivative with respect to :math:`\theta`. Default is 0 (no derivative).
+        None is accepted and means 0.
 
     precompute : bool, optional
-        If True, the useful terms for the Zernike polynomials are precomputed to optimize the computation.
-        If False, the useful terms are computed on-the-fly to avoid memory overhead.
-        Default is True.
+        If True, the powers of :math:`\rho` and the cosine and sine terms are cached and shared between
+        the polynomials. Default is True.
 
-    float_type : numpy.floating, optional
-        The floating point type to use for the computations. Default is numpy.float64.
+    resolution : int, optional
+        The number of points along each axis of the display grid. Default is 200.
+
+    rho_power : float, optional
+        The strictly positive exponent :math:`p` of the display mapping: at the displayed radial coordinate
+        :math:`s \in [0, 1]`, the polynomial is evaluated at :math:`\rho = s^{p}`. With :math:`p < 1`
+        (e.g. ``0.5``), the edge of the disk, where the high order polynomials oscillate the most, is
+        enlarged; with :math:`p > 1`, the center is enlarged. Default is 1 (no mapping).
 
     Returns
     -------
@@ -83,81 +96,56 @@ def zernike_display(
     Raises
     ------
     TypeError
-        If n, m, rho_derivative or theta_derivative (if not None) are not sequences of integers.
+        If ``n``, ``m``, ``rho_derivative`` or ``theta_derivative`` is not an integer or a sequence of
+        integers, if ``precompute`` is not a boolean, or if ``resolution`` is not an integer or ``rho_power`` is not a real number.
 
     ValueError
-        If the lengths of n, m, rho_derivative and theta_derivative (if not None) are not the same.
+        If the sequences do not have the same length or are empty, if a derivative order is negative, or if
+        ``resolution`` is lower than 2 or ``rho_power`` is not strictly positive.
+
+    References
+    ----------
+    .. [1] F. Zernike, "Beugungstheorie des Schneidenverfahrens und seiner verbesserten Form, der
+       Phasenkontrastmethode," Physica 1(7-12), 689-704 (1934). https://doi.org/10.1016/S0031-8914(34)80259-5
 
     Examples
     --------
-    Display the Zernike polynomial :math:`Z_{2}^{0}(\rho, \theta)`:
+    Display the defocus :math:`Z_{2}^{0}(\rho, \theta)`:
 
     .. code-block:: python
 
         from pyzernike import zernike_display
-        zernike_display(n=[2], m=[0]) # This will display the Zernike polynomial Z_2^0 in an interactive matplotlib figure.
 
-    To display multiple Zernike polynomials, you can pass sequences for `n` and `m`:
+        zernike_display(n=2, m=0)
+
+    Display the first 15 polynomials in the OSA/ANSI ordering:
 
     .. code-block:: python
 
-        from pyzernike import zernike_display
-        zernike_display(n=[2, 3, 4], m=[0, 1, 2], rho_derivative=[0, 0, 1], theta_derivative=[0, 1, 0])
+        from pyzernike import zernike_index_to_order
+
+        n, m = zernike_index_to_order(range(15))
+        zernike_display(n=n, m=m)
 
     .. image:: ../../../pyzernike/resources/zernike_display.png
         :width: 600px
         :align: center
 
     """
-    # Get the corresponding integer types
-    int_type = core_corresponding_signed_integer_type(float_type)
-
-    # Check the input parameters
-    if not isinstance(n, (Sequence, numpy.ndarray)) or not all(isinstance(i, Integral) for i in n):
-        raise TypeError("n must be a sequence or a 1D array of integers.")
-    if not isinstance(m, (Sequence, numpy.ndarray)) or not all(isinstance(i, Integral) for i in m):
-        raise TypeError("m must be a sequence or a 1D array of integers.")
-    if rho_derivative is not None:
-        if not isinstance(rho_derivative, (Sequence, numpy.ndarray)) or not all(isinstance(i, Integral) and i >= 0 for i in rho_derivative):
-            raise TypeError("rho_derivative must be a sequence or a 1D array of non-negative integers.")
-    if theta_derivative is not None:
-        if not isinstance(theta_derivative, (Sequence, numpy.ndarray)) or not all(isinstance(i, Integral) and i >= 0 for i in theta_derivative):
-            raise TypeError("theta_derivative must be a sequence or a 1D array of non-negative integers.")
     if not isinstance(precompute, bool):
         raise TypeError("precompute must be a boolean.")
-    
-    # Convert n, m and rho_derivative to arrays for length checking
-    n = numpy.asarray(n, dtype=int_type)
-    m = numpy.asarray(m, dtype=int_type)
-    if rho_derivative is not None:
-        rho_derivative = numpy.asarray(rho_derivative, dtype=int_type)
-    else:
-        rho_derivative = numpy.zeros_like(n, dtype=int_type)
-    if theta_derivative is not None:
-        theta_derivative = numpy.asarray(theta_derivative, dtype=int_type)
-    else:
-        theta_derivative = numpy.zeros_like(n, dtype=int_type)
-    
-    # Check lengths
-    if not n.ndim == 1:
-        raise TypeError("n must be a sequence or a 1D array of integers.")
-    if not m.ndim == 1:
-        raise TypeError("m must be a sequence or a 1D array of integers.")
-    if rho_derivative.ndim != 1:
-        raise TypeError("rho_derivative must be a sequence or a 1D array of integers.")
-    if theta_derivative.ndim != 1:
-        raise TypeError("theta_derivative must be a sequence or a 1D array of integers.")
+    resolution, rho_power = _check_display_parameters(resolution, rho_power)
+    if rho_derivative is None:
+        rho_derivative = 0
+    if theta_derivative is None:
+        theta_derivative = 0
 
-    if not (n.size == m.size == rho_derivative.size == theta_derivative.size):
-        raise ValueError("n, m, rho_derivative and theta_derivative (if given) must have the same length.")
+    indices, _ = _broadcast_integers(n=n, m=m, rho_derivative=rho_derivative, theta_derivative=theta_derivative)
+    if not indices["n"]:
+        raise ValueError("At least one polynomial must be given.")
+    if any(a < 0 for a in indices["rho_derivative"]):
+        raise ValueError("rho_derivative must contain non-negative integers.")
+    if any(b < 0 for b in indices["theta_derivative"]):
+        raise ValueError("theta_derivative must contain non-negative integers.")
 
-    # Compute the radial polynomials using the core_polynomial function
-    core_display(
-        n=n,
-        m=m,
-        rho_derivative=rho_derivative,
-        theta_derivative=theta_derivative,
-        flag_radial=False,
-        precompute=precompute,
-        float_type=float_type,
-    )
+    _core_display(indices["n"], indices["m"], indices["rho_derivative"], indices["theta_derivative"], False, precompute, resolution, rho_power)

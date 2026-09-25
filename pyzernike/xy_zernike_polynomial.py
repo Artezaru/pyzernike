@@ -12,471 +12,329 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import numpy
 from numbers import Integral, Real
-from typing import Sequence, List, Optional, Union
+from typing import Dict, List, Optional, Sequence, Tuple, Union
 
-from .core.core_polynomial import core_polynomial
-from .core.core_cartesian_to_elliptic_annulus import core_cartesian_to_elliptic_annulus
-from .core.core_corresponding_signed_integer_type import core_corresponding_signed_integer_type
+import numpy
+
+from .core.parsing import _as_common_floating_arrays, _as_ellipse_parameters, _broadcast_integers
+from .core.core_polynomial import _core_polynomials
+from .core.cartesian_to_elliptic_annulus import _cartesian_to_elliptic_annulus
+
+Pair = Tuple[int, int]
+
+# Cartesian derivative (dx, dy) -> polar derivatives (a, b) of Z required by the chain rule
+POLAR_DERIVATIVES: Dict[Pair, List[Pair]] = {
+    (0, 0): [(0, 0)],
+    (1, 0): [(1, 0), (0, 1)],
+    (0, 1): [(1, 0), (0, 1)],
+    (2, 0): [(1, 0), (0, 1), (2, 0), (0, 2), (1, 1)],
+    (0, 2): [(1, 0), (0, 1), (2, 0), (0, 2), (1, 1)],
+    (1, 1): [(1, 0), (0, 1), (2, 0), (0, 2), (1, 1)],
+}
+
+# Cartesian derivative (dx, dy) -> Cartesian derivatives of (rho_eq, theta_eq) required by the chain rule
+COORDINATE_DERIVATIVES: Dict[Pair, List[Pair]] = {
+    (0, 0): [],
+    (1, 0): [(1, 0)],
+    (0, 1): [(0, 1)],
+    (2, 0): [(1, 0), (2, 0)],
+    (0, 2): [(0, 1), (0, 2)],
+    (1, 1): [(1, 0), (0, 1), (1, 1)],
+}
+
+
+def _chain_rule(
+    derivative: Pair,
+    Z: Dict[Pair, numpy.ndarray],
+    rho: Dict[Pair, numpy.ndarray],
+    theta: Dict[Pair, numpy.ndarray],
+) -> numpy.ndarray:
+    r"""
+    Assemble a Cartesian derivative of :math:`Z(\rho_{eq}(x, y), \theta_{eq}(x, y))` with the chain rule.
+
+    For :math:`z, w \in \{x, y\}`:
+
+    .. math::
+
+        \frac{\partial Z}{\partial z} = Z_{\rho} \rho_{z} + Z_{\theta} \theta_{z}
+
+    .. math::
+
+        \frac{\partial^2 Z}{\partial z \partial w} = Z_{\rho\rho} \rho_{z} \rho_{w}
+        + Z_{\rho\theta} \left( \rho_{z} \theta_{w} + \theta_{z} \rho_{w} \right)
+        + Z_{\theta\theta} \theta_{z} \theta_{w}
+        + Z_{\rho} \rho_{zw} + Z_{\theta} \theta_{zw}
+
+    Parameters
+    ----------
+    derivative : Tuple[int, int]
+        The Cartesian derivative orders ``(dx, dy)``, with :math:`dx + dy \leq 2`.
+
+    Z : Dict[Tuple[int, int], numpy.ndarray]
+        The polar derivatives of the polynomial, indexed by ``(a, b)`` (see ``POLAR_DERIVATIVES``).
+
+    rho, theta : Dict[Tuple[int, int], numpy.ndarray]
+        The Cartesian derivatives of :math:`\rho_{eq}` and :math:`\theta_{eq}`, indexed by ``(dx, dy)``
+        (see ``COORDINATE_DERIVATIVES``).
+
+    Returns
+    -------
+    numpy.ndarray
+        The Cartesian derivative of the polynomial.
+
+    """
+    if derivative == (0, 0):
+        return Z[(0, 0)]
+
+    if sum(derivative) == 1:
+        return Z[(1, 0)] * rho[derivative] + Z[(0, 1)] * theta[derivative]
+
+    z, w = {(2, 0): ((1, 0), (1, 0)), (0, 2): ((0, 1), (0, 1)), (1, 1): ((1, 0), (0, 1))}[derivative]
+    return (
+        Z[(2, 0)] * rho[z] * rho[w]
+        + Z[(1, 1)] * (rho[z] * theta[w] + theta[z] * rho[w])
+        + Z[(0, 2)] * theta[z] * theta[w]
+        + Z[(1, 0)] * rho[derivative]
+        + Z[(0, 1)] * theta[derivative]
+    )
+
 
 def xy_zernike_polynomial(
     x: numpy.ndarray,
     y: numpy.ndarray,
-    n: Union[numpy.array, Sequence[Integral]],
-    m: Union[numpy.array, Sequence[Integral]],
-    Rx: Real = 1.0, 
-    Ry: Real = 1.0, 
-    x0: Real = 0.0, 
-    y0: Real = 0.0, 
-    alpha: Real = 0.0, 
-    h: Real = 0.0, 
-    x_derivative:  Optional[Union[numpy.array, Sequence[Integral]]] = None,
-    y_derivative:  Optional[Union[numpy.array, Sequence[Integral]]] = None,
+    n: Union[Integral, Sequence[Integral], numpy.ndarray],
+    m: Union[Integral, Sequence[Integral], numpy.ndarray],
+    Rx: Optional[Real] = 1.0,
+    Ry: Optional[Real] = 1.0,
+    x0: Optional[Real] = 0.0,
+    y0: Optional[Real] = 0.0,
+    alpha: Optional[Real] = 0.0,
+    h: Optional[Real] = 0.0,
+    x_derivative: Optional[Union[Integral, Sequence[Integral], numpy.ndarray]] = 0,
+    y_derivative: Optional[Union[Integral, Sequence[Integral], numpy.ndarray]] = 0,
     default: Real = numpy.nan,
+    *,
     precompute: bool = True,
-) -> List[numpy.ndarray]:
+    to_list: bool = True,
+) -> Union[numpy.ndarray, List[numpy.ndarray]]:
     r"""
-    Computes the Zernike polynomial :math:`Z_{n}^{m}(\rho_{eq}, \theta_{eq})` for given cartesian coordinates :math:`(x, y)` on an elliptic annulus domain.
-
-    .. seealso::
-
-        - :func:`pyzernike.zernike_polynomial` for computing the Zernike polynomial :math:`Z_{n}^{m}` for polar coordinates :math:`(\rho, \theta)`. 
-        - :func:`pyzernike.cartesian_to_elliptic_annulus` to convert Cartesian coordinates to elliptic annulus domain polar coordinates.
-        - The page :doc:`../../mathematical_description` in the documentation for the mathematical extension of the Zernike polynomials on the elliptic domain.
-
-    .. seealso::
-
-        For the mathematical development of the method, see the paper `Generalization of Zernike polynomials for regular portions of circles and ellipses` by Rafael Navarro, José L. López, José Rx. Díaz, and Ester Pérez Sinusía.
-        The associated paper is available in the resources folder of the package.
-
-        Download the PDF : :download:`PDF <../../../pyzernike/resources/Navarro and al. Generalization of Zernike polynomials for regular portions of circles and ellipses.pdf>`
-
-    Lets consider the extended elliptic annulus domain defined by the following parameters:
+    Compute the Zernike polynomials on an elliptic annulus for Cartesian coordinates :math:`(x, y)`, and
+    their first and second derivatives with respect to :math:`x` and :math:`y`.
 
     .. figure:: ../../../pyzernike/resources/elliptic_annulus_domain.png
         :width: 400px
         :align: center
 
-        The parameters to define the extended domain of the Zernike polynomial.
+        The parameters of the elliptic annulus domain.
 
-    The parameters are:
+    The Zernike polynomials are extended to an elliptic annulus [1]_ by evaluating them at the equivalent
+    polar coordinates :math:`(\rho_{eq}, \theta_{eq})` of the point (see :func:`pyzernike.cartesian_to_elliptic_annulus`):
 
-    - :math:`R_x` and :math:`R_y` are the lengths of the semi-axis of the ellipse.
-    - :math:`x_0` and :math:`y_0` are the coordinates of the center of the ellipse.
-    - :math:`\alpha` is the rotation angle of the ellipse in radians.
-    - :math:`h=\frac{a}{R_x}=\frac{b}{R_y}` defining the inner boundary of the ellipse.
+    .. math::
 
-    The Zernike polynomial :math:`Z_{n}^{m}(\rho_{eq}, \theta_{eq})` is computed for the equivalent polar coordinates.
-    
-    This function allows to compute several Zernike polynomials at once for different sets of (order, azimuthal frequency, derivative orders) given as sequences,
-    which can be more efficient than calling the polynomial function multiple times.
+        Zxy_{n}^{m}(x, y) = Z_{n}^{m}\left(\rho_{eq}(x, y), \theta_{eq}(x, y)\right)
 
-    - The parameters ``x`` and ``y`` must be numpy arrays of the same shape.
-    - The parameters ``n``, ``m``, ``x_derivative`` and ``y_derivative`` must be sequences of integers with the same length.
+    The derivatives with respect to :math:`x` and :math:`y` are obtained with the chain rule. For
+    :math:`z, w \in \{x, y\}`:
 
-    The output is a list of numpy arrays, each containing the values of the Zernike polynomial for the corresponding order and azimuthal frequency.
-    The list has the same length as the input sequences and the arrays have the same shape as ``x``.
+    .. math::
 
-    .. note::
+        \frac{\partial Zxy_{n}^{m}}{\partial z} = \frac{\partial Z_{n}^{m}}{\partial \rho} \frac{\partial \rho_{eq}}{\partial z} + \frac{\partial Z_{n}^{m}}{\partial \theta} \frac{\partial \theta_{eq}}{\partial z}
 
-        If the input ``x`` or ``y`` are not floating point numpy arrays, it is converted to one with ``numpy.float64`` dtype.
-        If the input ``x`` or ``y`` are floating point numpy arrays (ex: ``numpy.float32``), the computation will be done in ``numpy.float32``.
-        If the input ``x`` and ``y`` are not of the same dtype, they are both converted to ``numpy.float64``.
+    .. math::
 
-    .. warning::
+        \frac{\partial^2 Zxy_{n}^{m}}{\partial z \partial w} =
+        \frac{\partial^2 Z_{n}^{m}}{\partial \rho^2} \frac{\partial \rho_{eq}}{\partial z} \frac{\partial \rho_{eq}}{\partial w}
+        + \frac{\partial^2 Z_{n}^{m}}{\partial \rho \partial \theta} \left( \frac{\partial \rho_{eq}}{\partial z} \frac{\partial \theta_{eq}}{\partial w} + \frac{\partial \theta_{eq}}{\partial z} \frac{\partial \rho_{eq}}{\partial w} \right)
+        + \frac{\partial^2 Z_{n}^{m}}{\partial \theta^2} \frac{\partial \theta_{eq}}{\partial z} \frac{\partial \theta_{eq}}{\partial w}
+        + \frac{\partial Z_{n}^{m}}{\partial \rho} \frac{\partial^2 \rho_{eq}}{\partial z \partial w}
+        + \frac{\partial Z_{n}^{m}}{\partial \theta} \frac{\partial^2 \theta_{eq}}{\partial z \partial w}
 
-        The only available derivatives are the first and second order derivatives with respect to x or y independently (jacobian and hessian matrix).
-        For more complex derivatives, please implement the Faa di Bruno's formula using the standard Zernike polynomial function with polar coordinates.
+    The available derivatives ``(x_derivative, y_derivative)`` are ``(0, 0)``, ``(1, 0)``, ``(0, 1)``
+    (gradient), and ``(2, 0)``, ``(0, 2)``, ``(1, 1)`` (Hessian matrix). For higher orders, use
+    :func:`pyzernike.cartesian_to_elliptic_annulus` and :func:`pyzernike.zernike_polynomial` with the
+    Faà di Bruno's formula.
 
-        - Available derivatives (:math:(dx, dy)): (0, 0), (1, 0), (0, 1), (2, 0), (0, 2), (1, 1).
+    - If :math:`|m| > n` or :math:`n - m` is odd, the polynomial is zero.
+    - Where the point is outside the elliptic annulus (:math:`\rho_{eq}` outside :math:`[0, 1]`), or the
+      coordinates are not finite, the output is set to ``default``.
+
+    **Shape of the inputs and of the output.** ``n``, ``m``, ``x_derivative`` and ``y_derivative`` can
+    each be a single integer or a sequence of integers (list, tuple or 1D numpy array):
+
+    - If all of them are integers, a single polynomial is computed and returned as an array with the
+      shape of ``x``.
+    - If at least one of them is a sequence, the integers are repeated to the length :math:`N` of the
+      sequences (which must all have the same length), and :math:`N` polynomials are computed. They are
+      returned as a list of :math:`N` arrays with the shape of ``x`` (``to_list=True``), or as a single
+      array of shape :math:`(N, \dots)` (``to_list=False``).
+
+    .. seealso::
+
+        - :func:`pyzernike.zernike_polynomial` to compute the Zernike polynomials in polar coordinates.
+        - :func:`pyzernike.cartesian_to_elliptic_annulus` to compute the equivalent polar coordinates.
+        - The page :doc:`../../mathematical_description` for the extension of the Zernike polynomials to the elliptic annulus.
 
     Parameters
     ----------
     x : numpy.ndarray
-        The x coordinates in Cartesian system with shape (...,).
+        The x Cartesian coordinates with any shape ``(...)``.
 
     y : numpy.ndarray
-        The y coordinates in Cartesian system with shape (...,).
+        The y Cartesian coordinates with the same shape as ``x``.
+        If ``x`` and ``y`` are floating point arrays of the same dtype (e.g. ``numpy.float32``), this
+        dtype is kept. Otherwise, both are converted to ``numpy.float64``.
 
-    n : Sequence[Integral] or numpy.array
-        A sequence (List, Tuple) or 1D numpy array of the radial order(s) of the Zernike polynomial(s) to compute. Must be non-negative integers.
+    n : Union[Integral, Sequence[Integral], numpy.ndarray]
+        The radial order(s) :math:`n`.
 
-    m : Sequence[Integral] or numpy.array
-        A sequence (List, Tuple) or 1D numpy array of the azimuthal frequency(ies) of the Zernike polynomial(s) to compute. Must be non-negative integers.
+    m : Union[Integral, Sequence[Integral], numpy.ndarray]
+        The azimuthal frequency(ies) :math:`m`.
 
-    Rx : Real, optional
-        The length of the semi-axis of the ellipse along x axis. Must be strictly positive.
-        The default is 1.0, which corresponds to the unit circle.
+    Rx : Optional[Real], optional
+        The semi-axis :math:`R_x` of the ellipse along its x axis. Must be strictly positive. Default is 1.0.
 
-    Ry : Real, optional
-        The length of the semi-axis of the ellipse along y axis. Must be strictly positive.
-        The default is 1.0, which corresponds to the unit circle.
+    Ry : Optional[Real], optional
+        The semi-axis :math:`R_y` of the ellipse along its y axis. Must be strictly positive. Default is 1.0.
 
-    x0 : Real, optional
-        The x coordinate of the center of the ellipse. Can be any real number.
-        The default is 0.0, which corresponds to an ellipse centered at the origin.
+    x0 : Optional[Real], optional
+        The x coordinate :math:`x_0` of the center of the ellipse. Default is 0.0.
 
-    y0 : Real, optional
-        The y coordinate of the center of the ellipse. Can be any real number.
-        The default is 0.0, which corresponds to an ellipse centered at the origin.
+    y0 : Optional[Real], optional
+        The y coordinate :math:`y_0` of the center of the ellipse. Default is 0.0.
 
-    alpha : Real, optional
-        The rotation angle of the ellipse in radians. Can be any real number.
-        The default is 0.0, such as :math:`x` and :math:`y` axis are aligned with the ellipse axes.
+    alpha : Optional[Real], optional
+        The rotation angle :math:`\alpha` of the ellipse in radians. Default is 0.0.
 
-    h : Real, optional
-        The ratio of the inner semi-axis to the outer semi-axis. Must be in the range [0, 1).
-        The default is 0.0, which corresponds to a filled ellipse.
+    h : Optional[Real], optional
+        The ratio :math:`h` of the inner to the outer semi-axes, in :math:`[0, 1)`. Default is 0.0 (full ellipse).
 
-    x_derivative : Optional[Union[Sequence[Integral], numpy.array]], optional
-        A sequence (List, Tuple) or 1D numpy array of the order(s) of the x derivative(s) to compute. Must be non-negative integers.
-        If None, is it assumed that x_derivative is 0 for all polynomials.
+    x_derivative : Optional[Union[Integral, Sequence[Integral], numpy.ndarray]], optional
+        The order(s) of the derivative with respect to :math:`x`. Default is 0 (no derivative).
 
-    y_derivative : Optional[Union[Sequence[Integral], numpy.array]], optional
-        A sequence (List, Tuple) or 1D numpy array of the order(s) of the y derivative(s) to compute. Must be non-negative integers.
-        If None, is it assumed that y_derivative is 0 for all polynomials.
+    y_derivative : Optional[Union[Integral, Sequence[Integral], numpy.ndarray]], optional
+        The order(s) of the derivative with respect to :math:`y`. Default is 0 (no derivative).
 
     default : Real, optional
-        The default value to use for points outside the elliptic annulus domain. Must be a real number.
-        The default is numpy.nan.
+        The value set outside the elliptic annulus or where the coordinates are not finite. Default is ``numpy.nan``.
 
     precompute : bool, optional
-        If True, precomputes the useful terms for better performance when computing multiple polynomials with the same rho values.
-        If False, computes the useful terms on the fly for each polynomial to avoid memory overhead.
-        The default is True.
+        If True, the powers of :math:`\rho` and the cosine and sine terms are cached and shared between the
+        polynomials, which is faster when several polynomials are computed at once. If False, they are
+        recomputed for each polynomial, which uses less memory. Default is True.
 
+    to_list : bool, optional
+        Only used when several polynomials are computed. If True, the output is a list of arrays.
+        If False, the output is a single array of shape :math:`(N, \dots)`. Default is True.
+
+    None is accepted for all the parameters of the ellipse and for the derivative orders, and means the default value.
 
     Returns
     -------
-    List[numpy.ndarray]
-        A list of numpy arrays containing the Zernike polynomial values for each order and azimuthal frequency.
-        Each array has the same shape as ``x``.
+    Union[numpy.ndarray, List[numpy.ndarray]]
+        - If ``n``, ``m``, ``x_derivative`` and ``y_derivative`` are integers: an array with the shape of ``x``.
+        - Otherwise, if ``to_list`` is True: a list of :math:`N` arrays with the shape of ``x``.
+        - Otherwise: an array of shape :math:`(N, \dots)`, where ``output[i]`` corresponds to
+          ``(n[i], m[i], x_derivative[i], y_derivative[i])``.
+
+        The dtype is the common floating point dtype of ``x`` and ``y`` (``numpy.float64`` by default).
 
     Raises
     ------
     TypeError
-        If the x or y values can not be converted to a numpy array of floating points values.
-        If n, m, x_derivative or y_derivative (if not None) are not sequences of integers.
+        If ``x`` or ``y`` can not be converted to a floating point array, if a parameter of the ellipse
+        or ``default`` is not a real number, if ``n``, ``m``, ``x_derivative`` or ``y_derivative`` is not
+        an integer or a sequence of integers, or if ``precompute`` or ``to_list`` is not a boolean.
 
     ValueError
-        If the x and y do not have the same shape.
-        If the lengths of n, m, x_derivative and y_derivative (if not None) are not the same.
-        If Rx or Ry are not strictly positive.
-        If h is not in the range [0, 1[.
-        If the derivative orders are higher than 2 or mixed (ex: (1, 1)).
+        If ``x`` and ``y`` do not have the same shape, if ``Rx`` or ``Ry`` is not strictly positive, if
+        ``h`` is not in :math:`[0, 1)`, if the sequences do not have the same length, or if a derivative
+        ``(x_derivative, y_derivative)`` is not available.
+
+    References
+    ----------
+    .. [1] R. Navarro et al., "Generalization of Zernike polynomials for regular portions of circles
+       and ellipses," Optics Express 22(18), 21263-21279 (2014). https://doi.org/10.1364/OE.22.021263
 
     Examples
     --------
-    Let's consider a full circle with a radius of 10 centered at the origin (1, 1).
-    The value of the zernike polynomial :math:`Z_{2}^{0}` at the point (x, y) is given by:
+    Compute the defocus :math:`Z_{2}^{0}` on a circle of radius 10 centered at :math:`(1, 1)`:
 
     .. code-block:: python
 
         import numpy
-        from pyzernike import xy_zernike_polynomial # or Zxy
-        x = numpy.linspace(-10, 10, 100)
-        y = numpy.linspace(-10, 10, 100)
-        X, Y = numpy.meshgrid(x, y)
+        from pyzernike import xy_zernike_polynomial
 
-        output = xy_zernike_polynomial(X, Y, n=[2], m=[0], Rx=10, Ry=10, x0=1.0, y0=1.0) # List with a single numpy array
-        zernike_n2_m0 = output[0] # Shape similar to X and Y
+        X, Y = numpy.meshgrid(numpy.linspace(-10, 10, 100), numpy.linspace(-10, 10, 100))
+        Z20 = xy_zernike_polynomial(X, Y, n=2, m=0, Rx=10, Ry=10, x0=1.0, y0=1.0)  # array of shape (100, 100)
 
-    returns a list with a single numpy array containing the values of the Zernike polynomial :math:`Z_{2}^{0}` at the points (X, Y) within the circle of radius 10.
-
-    To compute the first derivative with respect to x and y, we can use:
+    Compute its gradient and its Hessian matrix (``n`` and ``m`` are repeated):
 
     .. code-block:: python
 
-        output = xy_zernike_polynomial(X, Y, n=[2, 2], m=[0, 0], Rx=10, Ry=10, x0=1.0, y0=1.0, x_derivative=[1, 0], y_derivative=[0, 1]) # List with two numpy arrays
-        zernike_n2_m0_dx = output[0] # First derivative with respect to x
-        zernike_n2_m0_dy = output[1] # First derivative with respect to y
-    
+        dZ_dx, dZ_dy = xy_zernike_polynomial(X, Y, n=2, m=0, Rx=10, Ry=10, x0=1.0, y0=1.0, x_derivative=[1, 0], y_derivative=[0, 1])
+        d2Z_dx2, d2Z_dy2, d2Z_dxdy = xy_zernike_polynomial(X, Y, n=2, m=0, Rx=10, Ry=10, x0=1.0, y0=1.0, x_derivative=[2, 0, 1], y_derivative=[0, 2, 1])
+
     """
-    # Convert x and y to numpy arrays of floating point values
-    if not isinstance(x, numpy.ndarray):
-        x = numpy.asarray(x, dtype=numpy.float64)
-    if not isinstance(y, numpy.ndarray):
-        y = numpy.asarray(y, dtype=numpy.float64)
-
-    # Convert x and y in arrays of floating point values if they are not already
-    if not numpy.issubdtype(x.dtype, numpy.floating):
-        x = x.astype(numpy.float64)
-    if not numpy.issubdtype(y.dtype, numpy.floating):
-        y = y.astype(numpy.float64)
-
-    # If x and y are not of the same dtype, convert them to float64
-    if x.dtype != y.dtype:
-        x = x.astype(numpy.float64)
-        y = y.astype(numpy.float64)
-
-    # Check that x and y have the same shape
-    if x.shape != y.shape:
-        raise ValueError("x and y must have the same shape.")
-
-    # Determine the float type
-    float_type = y.dtype.type
-    int_type = core_corresponding_signed_integer_type(float_type)
-
-    # Check the input parameters
-    if not isinstance(n, (Sequence, numpy.ndarray)) or not all(isinstance(i, Integral) for i in n):
-        raise TypeError("n must be a sequence or a 1D array of integers.")
-    if not isinstance(m, (Sequence, numpy.ndarray)) or not all(isinstance(i, Integral) for i in m):
-        raise TypeError("m must be a sequence or a 1D array of integers.")
-    if x_derivative is not None:
-        if not isinstance(x_derivative, (Sequence, numpy.ndarray)) or not all(isinstance(i, Integral) and i >= 0 for i in x_derivative):
-            raise TypeError("x_derivative must be a sequence or a 1D array of non-negative integers.")
-    if y_derivative is not None:
-        if not isinstance(y_derivative, (Sequence, numpy.ndarray)) or not all(isinstance(i, Integral) and i >= 0 for i in y_derivative):
-            raise TypeError("y_derivative must be a sequence or a 1D array of non-negative integers.")
-    if Rx is not None:
-        if not isinstance(Rx, Real) or Rx <= 0:
-            raise TypeError("Rx must be a positive real number.")
-    if Ry is not None:
-        if not isinstance(Ry, Real) or Ry <= 0:
-            raise TypeError("Ry must be a positive real number.")
-    if x0 is not None:
-        if not isinstance(x0, Real):
-            raise TypeError("x0 must be a real number.")
-    if y0 is not None:
-        if not isinstance(y0, Real):
-            raise TypeError("y0 must be a real number.")
-    if alpha is not None:
-        if not isinstance(alpha, Real):
-            raise TypeError("Alpha must be a real number.")
-    if h is not None:
-        if not isinstance(h, Real) or not (0 <= h < 1):
-            raise TypeError("h must be a real number in the range [0, 1[.")
+    x, y = _as_common_floating_arrays(x=x, y=y)
+    Rx, Ry, x0, y0, alpha, h = _as_ellipse_parameters(Rx, Ry, x0, y0, alpha, h)
     if not isinstance(default, Real):
-        raise TypeError("Default value must be a real number.")
+        raise TypeError("default must be a real number.")
     if not isinstance(precompute, bool):
         raise TypeError("precompute must be a boolean.")
-    
-    
-    # Convert rho_derivative to arrays for length checking
-    n = numpy.asarray(n, dtype=int_type)
-    m = numpy.asarray(m, dtype=int_type)
-    if x_derivative is not None:
-        x_derivative = numpy.asarray(x_derivative, dtype=int_type)
-    else:
-        x_derivative = numpy.zeros_like(n, dtype=int_type)
-    if y_derivative is not None:
-        y_derivative = numpy.asarray(y_derivative, dtype=int_type)
-    else:
-        y_derivative = numpy.zeros_like(n, dtype=int_type)
-    
-    # Check lengths
-    if not n.ndim == 1:
-        raise TypeError("n must be a sequence or a 1D array of integers.")
-    if not m.ndim == 1:
-        raise TypeError("m must be a sequence or a 1D array of integers.")
-    if not x_derivative.ndim == 1:
-        raise TypeError("x_derivative must be a sequence or a 1D array of integers.")
-    if not y_derivative.ndim == 1:
-        raise TypeError("y_derivative must be a sequence or a 1D array of integers.")
-    if not (n.size == m.size ==x_derivative.size == y_derivative.size):
-        raise ValueError("n, m, x_derivative (if given) and y_derivative (if given) must have the same length.")
+    if not isinstance(to_list, bool):
+        raise TypeError("to_list must be a boolean.")
 
-    # Check that the derivative orders are supported
-    for index in range(len(x_derivative)):
-        if (x_derivative[index], y_derivative[index]) not in [(0, 0), (1, 0), (0, 1), (2, 0), (0, 2), (1, 1)]:
-            raise ValueError("The function supports only the derivatives (0, 0), (1, 0), (0, 1), (2, 0), (0, 2), and (1, 1). For more complex derivatives, use the standard Zernike polynomial function with polar coordinates.")
-        
-    # Convert the float parameters to the correct type
-    if Rx is None:
-        Rx = float_type(1.0)
-    else:
-        Rx = float_type(Rx)
+    if x_derivative is None:
+        x_derivative = 0
+    if y_derivative is None:
+        y_derivative = 0
 
-    if Ry is None:
-        Ry = float_type(1.0)
-    else:
-        Ry = float_type(Ry)
+    indices, single = _broadcast_integers(n=n, m=m, x_derivative=x_derivative, y_derivative=y_derivative)
+    derivatives = list(zip(indices["x_derivative"], indices["y_derivative"]))
+    for derivative in derivatives:
+        if derivative not in POLAR_DERIVATIVES:
+            raise ValueError(
+                f"The derivative (x_derivative, y_derivative) = {derivative} is not available. "
+                "The available derivatives are (0, 0), (1, 0), (0, 1), (2, 0), (0, 2) and (1, 1)."
+            )
 
-    if x0 is None:
-        x0 = float_type(0.0)
-    else:
-        x0 = float_type(x0)
+    coordinate_derivatives = sorted({(0, 0)} | {pair for d in derivatives for pair in COORDINATE_DERIVATIVES[d]})
+    float_type = x.dtype.type
+    rho_list, theta_list = _cartesian_to_elliptic_annulus(
+        x, y,
+        float_type(Rx), float_type(Ry), float_type(x0), float_type(y0), float_type(alpha), float_type(h),
+        [dx for dx, _ in coordinate_derivatives],
+        [dy for _, dy in coordinate_derivatives],
+    )
+    rho_eq = dict(zip(coordinate_derivatives, rho_list))
+    theta_eq = dict(zip(coordinate_derivatives, theta_list))
 
-    if y0 is None:
-        y0 = float_type(0.0)
-    else:
-        y0 = float_type(y0)
+    valid_mask = numpy.isfinite(rho_eq[(0, 0)]) & numpy.isfinite(theta_eq[(0, 0)]) & (rho_eq[(0, 0)] >= 0) & (rho_eq[(0, 0)] <= 1)
+    rho_valid = {pair: value[valid_mask] for pair, value in rho_eq.items()}
+    theta_valid = {pair: value[valid_mask] for pair, value in theta_eq.items()}
 
-    if alpha is None:
-        alpha = float_type(0.0)
-    else:
-        alpha = float_type(alpha)
+    polar_keys = sorted({(n_i, m_i, a, b) for n_i, m_i, d in zip(indices["n"], indices["m"], derivatives) for a, b in POLAR_DERIVATIVES[d]})
+    polar_values = _core_polynomials(
+        rho_valid[(0, 0)],
+        theta_valid[(0, 0)],
+        [key[0] for key in polar_keys],
+        [key[1] for key in polar_keys],
+        [key[2] for key in polar_keys],
+        [key[3] for key in polar_keys],
+        False,
+        precompute,
+    )
+    polar = dict(zip(polar_keys, polar_values))
 
-    if h is None:
-        h = float_type(0.0)
-    else:
-        h = float_type(h)
+    output = numpy.full((len(derivatives),) + x.shape, default, dtype=x.dtype)
+    for index, (n_i, m_i, derivative) in enumerate(zip(indices["n"], indices["m"], derivatives)):
+        Z = {(a, b): polar[(n_i, m_i, a, b)] for a, b in POLAR_DERIVATIVES[derivative]}
+        output[index, valid_mask] = _chain_rule(derivative, Z, rho_valid, theta_valid)
 
-    # Convert default to the correct type
-    default = float_type(default)
-
-    # Searching what is the derivatives to compute
-    total_derivative_orders = numpy.array(x_derivative) + numpy.array(y_derivative)
-    max_derivative_order = numpy.max(total_derivative_orders)
-    min_derivative_order = numpy.min(total_derivative_orders)
-    skip_0_derivative = min_derivative_order >= 1
-    shift_0_derivative = 1 if skip_0_derivative else 0
-
-    # Compute rho_eq, theta_eq on the elliptic annulus domain and their derivatives if needed
-    if max_derivative_order == 0:
-        # Only extract rho and theta
-        list_rho_eq, list_theta_eq = core_cartesian_to_elliptic_annulus(x, y, Rx, Ry, x0, y0, alpha, h, x_derivative=numpy.array([0], dtype=int_type), y_derivative=numpy.array([0], dtype=int_type), float_type=float_type)
-    elif max_derivative_order == 1:
-        # Extract rho, theta and their first derivatives
-        list_rho_eq, list_theta_eq = core_cartesian_to_elliptic_annulus(x, y, Rx, Ry, x0, y0, alpha, h, x_derivative=numpy.array([0, 1, 0], dtype=int_type), y_derivative=numpy.array([0, 0, 1], dtype=int_type), float_type=float_type)
-    elif max_derivative_order == 2:
-        # Extract rho, theta and their first and second derivatives
-        list_rho_eq, list_theta_eq = core_cartesian_to_elliptic_annulus(x, y, Rx, Ry, x0, y0, alpha, h, x_derivative=numpy.array([0, 1, 0, 2, 0, 1], dtype=int_type), y_derivative=numpy.array([0, 0, 1, 0, 2, 1], dtype=int_type), float_type=float_type)
-    else:
-        raise ValueError("The function supports only the derivatives (0, 0), (1, 0), (0, 1), (2, 0), (0, 2), and (1, 1). For more complex derivatives, use the standard Zernike polynomial function with polar coordinates.")
-
-    rho = list_rho_eq[0]
-    theta = list_theta_eq[0]
-
-    # Compute the Mask for valid rho values
-    domain_mask = (rho >= 0) & (rho <= 1)
-    finite_mask = numpy.isfinite(rho) & numpy.isfinite(theta)
-    valid_mask = domain_mask & finite_mask
-
-    # Conserve only the valid values and save the input shape
-    original_shape = rho.shape
-    rho = rho[valid_mask]
-    theta = theta[valid_mask]
-
-    # Compute the Zernike polynomial and its derivatives if needed
-    if max_derivative_order == 0:
-        # Only the polynomial is computed
-        rho_derivative = theta_derivative = [0] * len(n)
-        rho_derivative = numpy.array(rho_derivative, dtype=int_type)
-        theta_derivative = numpy.array(theta_derivative, dtype=int_type)
-        output_polynomials = core_polynomial(rho, theta, n, m, rho_derivative=rho_derivative, theta_derivative=theta_derivative, flag_radial=False, precompute=precompute, float_type=float_type)
-    elif max_derivative_order == 1 and not skip_0_derivative:
-        # The first derivatives of the Zernike polynomial are also computed
-        rho_derivative = [0] * len(n) + [1] * len(n) + [0] * len(n)
-        rho_derivative = numpy.array(rho_derivative, dtype=int_type)
-        theta_derivative = [0] * len(n) + [0] * len(n) + [1] * len(n)   
-        theta_derivative = numpy.array(theta_derivative, dtype=int_type)
-        compute_n = numpy.concatenate([n, n, n], axis=0, dtype=int_type)
-        compute_m = numpy.concatenate([m, m, m], axis=0, dtype=int_type)
-        output_polynomials = core_polynomial(rho, theta, compute_n, compute_m, rho_derivative=rho_derivative, theta_derivative=theta_derivative, flag_radial=False, precompute=precompute, float_type=float_type)
-    elif max_derivative_order == 1 and skip_0_derivative:
-        # The first derivatives of the Zernike polynomial are also computed
-        rho_derivative = [1] * len(n) + [0] * len(n)
-        rho_derivative = numpy.array(rho_derivative, dtype=int_type)
-        theta_derivative = [0] * len(n) + [1] * len(n)
-        theta_derivative = numpy.array(theta_derivative, dtype=int_type)
-        compute_n = numpy.concatenate([n, n], axis=0, dtype=int_type)
-        compute_m = numpy.concatenate([m, m], axis=0, dtype=int_type)
-        output_polynomials = core_polynomial(rho, theta, compute_n, compute_m, rho_derivative=rho_derivative, theta_derivative=theta_derivative, flag_radial=False, precompute=precompute, float_type=float_type)
-    elif max_derivative_order == 2 and not skip_0_derivative:
-        # The second derivatives of the Zernike polynomial are also computed
-        rho_derivative = [0] * len(n) + [1] * len(n) + [0] * len(n) + [2] * len(n) + [0] * len(n) + [1] * len(n)
-        rho_derivative = numpy.array(rho_derivative, dtype=int_type)
-        theta_derivative = [0] * len(n) + [0] * len(n) + [1] * len(n) + [0] * len(n) + [2] * len(n) + [1] * len(n)
-        theta_derivative = numpy.array(theta_derivative, dtype=int_type)
-        compute_n = numpy.concatenate([n, n, n], axis=0, dtype=int_type)
-        compute_m = numpy.concatenate([m, m, m], axis=0, dtype=int_type)
-        output_polynomials = core_polynomial(rho, theta, compute_n, compute_m, rho_derivative=rho_derivative, theta_derivative=theta_derivative, flag_radial=False, precompute=precompute, float_type=float_type)
-    elif max_derivative_order == 2 and skip_0_derivative:
-        # The second derivatives of the Zernike polynomial are also computed
-        rho_derivative = [1] * len(n) + [0] * len(n) + [2] * len(n) + [0] * len(n) + [1] * len(n)
-        rho_derivative = numpy.array(rho_derivative, dtype=int_type)
-        theta_derivative = [0] * len(n) + [1] * len(n) + [0] * len(n) + [2] * len(n) + [1] * len(n)
-        theta_derivative = numpy.array(theta_derivative, dtype=int_type)
-        compute_n = numpy.concatenate([n, n, n, n, n], axis=0, dtype=int_type)
-        compute_m = numpy.concatenate([m, m, m, m, m], axis=0, dtype=int_type)
-        output_polynomials = core_polynomial(rho, theta, compute_n, compute_m, rho_derivative=rho_derivative, theta_derivative=theta_derivative, flag_radial=False, precompute=precompute, float_type=float_type)
-    else:
-        raise ValueError("The function supports only the derivatives (0, 0), (1, 0), (0, 1), (2, 0), (0, 2), and (1, 1). For more complex derivatives, use the standard Zernike polynomial function with polar coordinates.")
-
-    # Compose the final output depending on the derivative orders
-    output = []
-    for index in range(len(n)):
-        # Case (0, 0) : Only extract the polynomial
-        if (x_derivative[index], y_derivative[index]) == (0, 0):
-            output.append(output_polynomials[index])
-
-        # Case (1, 0) : Extract the first derivative with respect to x
-        elif (x_derivative[index], y_derivative[index]) == (1, 0):
-            drho_dx = list_rho_eq[1]
-            dtheta_dx = list_theta_eq[1]
-            dZ_drho = output_polynomials[(1 - shift_0_derivative) * len(n) + index]
-            dZ_dtheta = output_polynomials[(2 - shift_0_derivative) * len(n) + index]
-            dZ_dx = dZ_drho * drho_dx[valid_mask] + dZ_dtheta * dtheta_dx[valid_mask]
-            output.append(dZ_dx)
-
-        # Case (0, 1) : Extract the first derivative with respect to y
-        elif (x_derivative[index], y_derivative[index]) == (0, 1):
-            drho_dy = list_rho_eq[2]
-            dtheta_dy = list_theta_eq[2]
-            dZ_drho = output_polynomials[(1 - shift_0_derivative) * len(n) + index]
-            dZ_dtheta = output_polynomials[(2 - shift_0_derivative) * len(n) + index]
-            dZ_dy = dZ_drho * drho_dy[valid_mask] + dZ_dtheta * dtheta_dy[valid_mask]
-            output.append(dZ_dy)
-
-        # Case (2, 0) : Extract the second derivative with respect to x
-        elif (x_derivative[index], y_derivative[index]) == (2, 0):
-            drho_dx = list_rho_eq[1]
-            dtheta_dx = list_theta_eq[1]
-            d2rho_dx2 = list_rho_eq[3]
-            d2theta_dx2 = list_theta_eq[3]
-            dZ_drho = output_polynomials[(1 - shift_0_derivative) * len(n) + index]
-            dZ_dtheta = output_polynomials[(2 - shift_0_derivative) * len(n) + index]
-            d2Z_drho2 = output_polynomials[(3 - shift_0_derivative) * len(n) + index]
-            d2Z_dtheta2 = output_polynomials[(4 - shift_0_derivative) * len(n) + index]
-            d2Z_drhodtheta = output_polynomials[(5 - shift_0_derivative) * len(n) + index]
-            d2Z_dx2 = (d2Z_drho2 * drho_dx[valid_mask] + d2Z_drhodtheta * dtheta_dx[valid_mask]) * drho_dx[valid_mask] + \
-                      dZ_drho * d2rho_dx2[valid_mask] + \
-                      (d2Z_dtheta2 * dtheta_dx[valid_mask] + d2Z_drhodtheta * drho_dx[valid_mask]) * dtheta_dx[valid_mask] + \
-                      dZ_dtheta * d2theta_dx2[valid_mask]
-            output.append(d2Z_dx2)
-
-        # Case (0, 2) : Extract the second derivative with respect to y
-        elif (x_derivative[index], y_derivative[index]) == (0, 2):
-            drho_dy = list_rho_eq[2]
-            dtheta_dy = list_theta_eq[2]
-            d2rho_dy2 = list_rho_eq[4]
-            d2theta_dy2 = list_theta_eq[4]
-            dZ_drho = output_polynomials[(1 - shift_0_derivative) * len(n) + index]
-            dZ_dtheta = output_polynomials[(2 - shift_0_derivative) * len(n) + index]
-            d2Z_drho2 = output_polynomials[(3 - shift_0_derivative) * len(n) + index]
-            d2Z_dtheta2 = output_polynomials[(4 - shift_0_derivative) * len(n) + index]
-            d2Z_drhodtheta = output_polynomials[(5 - shift_0_derivative) * len(n) + index]
-            d2Z_dy2 = (d2Z_drho2 * drho_dy[valid_mask] + d2Z_drhodtheta * dtheta_dy[valid_mask]) * drho_dy[valid_mask] + \
-                      dZ_drho * d2rho_dy2[valid_mask] + \
-                      (d2Z_dtheta2 * dtheta_dy[valid_mask] + d2Z_drhodtheta * drho_dy[valid_mask]) * dtheta_dy[valid_mask] + \
-                      dZ_dtheta * d2theta_dy2[valid_mask]
-            output.append(d2Z_dy2)
-
-        # Case (1, 1) : Extract the mixed second derivative
-        elif (x_derivative[index], y_derivative[index]) == (1, 1):
-            drho_dx = list_rho_eq[1]
-            dtheta_dx = list_theta_eq[1]
-            drho_dy = list_rho_eq[2]
-            dtheta_dy = list_theta_eq[2]
-            d2rho_dxdy = list_rho_eq[5]
-            d2theta_dxdy = list_theta_eq[5]
-            dZ_drho = output_polynomials[(1 - shift_0_derivative) * len(n) + index]
-            dZ_dtheta = output_polynomials[(2 - shift_0_derivative) * len(n) + index]
-            d2Z_drho2 = output_polynomials[(3 - shift_0_derivative) * len(n) + index]
-            d2Z_dtheta2 = output_polynomials[(4 - shift_0_derivative) * len(n) + index]
-            d2Z_drhodtheta = output_polynomials[(5 - shift_0_derivative) * len(n) + index]
-            d2Z_dxdy = (d2Z_drho2 * drho_dx[valid_mask] + d2Z_drhodtheta * dtheta_dx[valid_mask]) * drho_dy[valid_mask] + \
-                       dZ_drho * d2rho_dxdy[valid_mask] + \
-                       (d2Z_dtheta2 * dtheta_dx[valid_mask] + d2Z_drhodtheta * drho_dx[valid_mask]) * dtheta_dy[valid_mask] + \
-                       dZ_dtheta * d2theta_dxdy[valid_mask]
-            output.append(d2Z_dxdy)
-
-    # Reinsert the values into the original shape and set the default value for invalid points
-    for index in range(len(output)):
-        full_output = numpy.full(original_shape, default, dtype=float_type)
-        full_output[valid_mask] = output[index]
-        output[index] = full_output
-
+    if single:
+        return output[0]
+    if to_list:
+        return list(output)
     return output

@@ -12,408 +12,447 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from typing import List, Optional
+
 import numpy
-from typing import Optional
 import matplotlib.pyplot as plt
-from matplotlib.gridspec import GridSpec
-from matplotlib.widgets import Button, TextBox, CheckButtons
+from matplotlib.widgets import Button, RadioButtons, TextBox
 
-from .core_polynomial import core_polynomial
-from .core_corresponding_signed_integer_type import core_corresponding_signed_integer_type
+from .core_polynomial import _core_polynomials
 
-def core_display(
-        n: numpy.array,
-        m: numpy.array,
-        rho_derivative: numpy.array,
-        theta_derivative: Optional[numpy.array],
+
+N_SAMPLES = 200
+
+
+def _mapping_label(rho_power: float) -> str:
+    r"""
+    Build the LaTeX label of the display mapping :math:`\rho = s^{p}`, or an empty string if :math:`p = 1`.
+
+    Parameters
+    ----------
+    rho_power : float
+        The strictly positive exponent :math:`p`.
+
+    Returns
+    -------
+    str
+        The label.
+
+    """
+    if rho_power == 1:
+        return ""
+    return rf"$\rho = s^{{{rho_power:g}}}$"
+
+
+def _display_grid(resolution: int, rho_power: float):
+    r"""
+    Build the display grid and the corresponding evaluation points.
+
+    The display coordinate :math:`s` spans :math:`[0, 1]` with ``resolution`` points (and :math:`\theta`
+    spans :math:`[0, 2\pi]` with ``resolution`` points). The polynomials are evaluated at :math:`\rho = s^{p}`
+    with :math:`p` = ``rho_power`` > 0, which also spans :math:`[0, 1]`.
+
+    Parameters
+    ----------
+    resolution : int
+        The number of points along each axis.
+
+    rho_power : float
+        The strictly positive exponent :math:`p`.
+
+    Returns
+    -------
+    Tuple[numpy.ndarray, numpy.ndarray, numpy.ndarray, numpy.ndarray, numpy.ndarray]
+        ``(s, rho, S, Rho, Theta)``: the 1D display coordinate, the 1D evaluation points, and the 2D grids
+        of the display coordinate, of the evaluation points and of the angles (``indexing='ij'``).
+
+    """
+    s = numpy.linspace(0, 1.0, resolution)
+    theta = numpy.linspace(0, 2 * numpy.pi, resolution)
+    S, Theta = numpy.meshgrid(s, theta, indexing='ij')
+    return s, s ** rho_power, S, S ** rho_power, Theta
+
+
+def _radial_title(n: int, m: int, rho_derivative: int) -> str:
+    r"""
+    Build the LaTeX title of a radial polynomial plot.
+
+    Parameters
+    ----------
+    n : int
+        The radial order.
+
+    m : int
+        The azimuthal frequency.
+
+    rho_derivative : int
+        The order of the derivative with respect to rho.
+
+    Returns
+    -------
+    str
+        The title :math:`R_{n}^{m}(\rho), \frac{d^{a}}{d\rho^{a}}`.
+
+    """
+    return rf"$\mathrm{{Radial\ Zernike}}\ R_{{{n}}}^{{{m}}}(\rho),\ \frac{{d^{{{rho_derivative}}}}}{{d\rho^{{{rho_derivative}}}}}$"
+
+
+def _zernike_title(n: int, m: int, rho_derivative: int, theta_derivative: int) -> str:
+    r"""
+    Build the LaTeX title of a Zernike polynomial plot.
+
+    Parameters
+    ----------
+    n : int
+        The radial order.
+
+    m : int
+        The azimuthal frequency.
+
+    rho_derivative : int
+        The order of the derivative with respect to rho.
+
+    theta_derivative : int
+        The order of the derivative with respect to theta.
+
+    Returns
+    -------
+    str
+        The title :math:`Z_{n}^{m}, \frac{\partial^{a}}{\partial \rho^{a}} \frac{\partial^{b}}{\partial \theta^{b}}`.
+
+    """
+    return rf"$Z_{{{n}}}^{{{m}}},\ \frac{{\partial^{{{rho_derivative}}}}}{{\partial \rho^{{{rho_derivative}}}}}\ \frac{{\partial^{{{theta_derivative}}}}}{{\partial \theta^{{{theta_derivative}}}}}$"
+
+
+def _color_limits(data: numpy.ndarray) -> tuple:
+    r"""
+    Compute the display limits of a polynomial: :math:`[\min(\text{data}, -1), \max(\text{data}, 1)]`.
+
+    Parameters
+    ----------
+    data : numpy.ndarray
+        The values of the polynomial.
+
+    Returns
+    -------
+    tuple
+        The lower and upper limits.
+
+    """
+    return min(numpy.min(data), -1), max(numpy.max(data), 1)
+
+
+def _core_display(
+        n: List[int],
+        m: List[int],
+        rho_derivative: List[int],
+        theta_derivative: Optional[List[int]],
         flag_radial: bool,
         precompute: bool,
-        float_type: type[numpy.floating]
+        resolution: int = N_SAMPLES,
+        rho_power: float = 1.0,
     ) -> None:
     r"""
-    Display Zernike polynomials for given `n`, `m`, `rho_derivative`, and `theta_derivative` values.
+    Display the Zernike polynomials :math:`Z_{n}^{m}(\rho, \theta)` (or the radial polynomials
+    :math:`R_{n}^{m}(\rho)` if ``flag_radial`` is True) and their derivatives in a ``matplotlib``
+    figure, with "Previous" and "Next" buttons to navigate through the given tuples
+    ``(n, m, rho_derivative, theta_derivative)``.
 
-    .. warning::
+    The polynomials are evaluated with :func:`pyzernike.core._core_polynomials` in double precision on
+    a regular grid of ``resolution`` points for the display coordinate :math:`s \in [0, 1]` (and
+    ``resolution`` points for :math:`\theta \in [0, 2\pi]`), at the radial coordinate :math:`\rho = s^{p}`
+    with :math:`p` = ``rho_power`` > 0. With :math:`p < 1` (e.g. :math:`p = 1/2`), the region near the edge
+    of the disk, where the high order polynomials oscillate the most, is enlarged; with :math:`p > 1`, the
+    center of the disk is enlarged. The derivatives are the
+    derivatives with respect to :math:`\rho` (not :math:`s`), evaluated at :math:`\rho = s^{p}`.
 
-        This method is a core function of ``pyzernike`` that is not designed to be use by the users directly.
-        Please use the high level functions.
+    - Radial polynomials are drawn as curves :math:`\rho \mapsto R_{n}^{m}(\rho)`.
+    - Zernike polynomials are drawn as colormaps on the unit disk (polar axes).
 
-    .. seealso::
-
-        - :func:`pyzernike.radial_display` for the radial Zernike polynomial display.
-        - :func:`pyzernike.zernike_display` for the full Zernike polynomial display.
-        - The page :doc:`../../mathematical_description` in the documentation for the mathematical description of the Zernike polynomials.
-
-    - ``n``, ``m``, ``rho_derivative`` and ``theta_derivative`` are expected to be sequences of integers of the same length and valid values.
-
-    The displays are including in a interactive matplotlib figure with buttons to navigate through the different Zernike polynomials.
+    The vertical axis (radial) or the color scale (Zernike) spans :math:`[\min(-1, Z), \max(1, Z)]`,
+    so that polynomials of different orders are displayed on comparable scales.
 
     Parameters
-    ----------    
-    n : numpy.array[numpy.integer]
-        The orders of the Zernike polynomials to compute. Must be a 1D array of integers of type compatible with ``float_type``.
+    ----------
+    n : List[int]
+        The radial orders.
 
-    m : numpy.array[numpy.integer]
-        The azimuthal frequencies of the Zernike polynomials. Must be a 1D array of integers of type compatible with ``float_type``.
+    m : List[int]
+        The azimuthal frequencies. Must have the same length as ``n``.
 
-    numpy.array[numpy.integer]
-        The orders of the derivatives with respect to rho. Must be a 1D array of integers of type compatible with ``float_type``.
+    rho_derivative : List[int]
+        The orders of the derivatives with respect to rho. Must have the same length as ``n``.
 
-    theta_derivative : Optional[numpy.array[numpy.integer]]
-        The orders of the derivatives with respect to theta. Must be None if ``flag_radial`` is True. Otherwise, must be a 1D array of integers of type compatible with ``float_type``.
+    theta_derivative : Optional[List[int]]
+        The orders of the derivatives with respect to theta. Must have the same length as ``n``.
+        Must be None if ``flag_radial`` is True.
 
     flag_radial : bool
-        If True, computes the sets for radial polynomials only (no angular part). The output sine and cosine frequency sets will be empty.
-        If False, computes the sets for full Zernike polynomials (including angular part).
+        If True, displays the radial polynomials only. If False, displays the full Zernike polynomials.
 
     precompute : bool
-        If True, the useful terms for the Zernike polynomials are precomputed to optimize the computation.
-        This is useful when computing multiple Zernike polynomials with the same `rho` and `theta` values.
-        If False, the useful terms are computed on-the-fly for each polynomial, which may be slower but avoid memory overhead.
+        Passed to :func:`pyzernike.core._core_polynomials`.
 
-    float_type : type[numpy.floating]
-        The floating point type used for the computations (e.g., numpy.float32, numpy.float64).
+    resolution : int, optional
+        The number of points along each axis. Default is 200.
+
+    rho_power : float, optional
+        The strictly positive exponent :math:`p` of the display mapping :math:`\rho = s^{p}`. Default is 1 (no mapping).
 
     Returns
     -------
     None
+
     """
-    # Get the corresponding integer types
-    int_type = core_corresponding_signed_integer_type(float_type)
+    s, rho, S, Rho, Theta = _display_grid(resolution, rho_power)
+    mapping = _mapping_label(rho_power)
 
-    # Fast assertions on the inputs
-    assert issubclass(float_type, numpy.floating), "[pyzernike-core] float_type must be a numpy floating point type."
-    assert isinstance(n, numpy.ndarray) and n.ndim == 1 and numpy.issubdtype(n.dtype, int_type), "[pyzernike-core] n must be a 1D numpy array of integers of type compatible with float_type."
-    assert isinstance(m, numpy.ndarray) and m.ndim == 1 and numpy.issubdtype(m.dtype, int_type), "[pyzernike-core] m must be a 1D numpy array of integers of type compatible with float_type."
-    assert isinstance(rho_derivative, numpy.ndarray) and rho_derivative.ndim == 1 and numpy.issubdtype(rho_derivative.dtype, int_type), "[pyzernike-core] rho_derivative must be a 1D numpy array of integers of type compatible with float_type."
-    assert isinstance(flag_radial, bool), "[pyzernike-core] flag_radial must be a boolean."
-    assert flag_radial or (isinstance(theta_derivative, numpy.ndarray) and theta_derivative.ndim == 1 and numpy.issubdtype(theta_derivative.dtype, int_type)), "[pyzernike-core] theta_derivative must be a 1D numpy array of integers of type compatible with float_type when flag_radial is False."
-    assert not flag_radial or theta_derivative is None, "[pyzernike-core] theta_derivative must be None when flag_radial is True."
-    assert n.size == m.size == rho_derivative.size and (flag_radial or n.size == theta_derivative.size), "[pyzernike-core] n, m, rho_derivative and theta_derivative (if flag_radial is False) must have the same size."
-
-    # Compute the Zernike polynomial values
-    rho = numpy.linspace(0, 1.0, 200, dtype=float_type)
-    theta = numpy.linspace(0, 2 * numpy.pi, 200, dtype=float_type)
-    Rho, Theta = numpy.meshgrid(rho, theta, indexing='ij')
-    
-    # Compute the values of the Zernike polynomials
     if flag_radial:
-        # Radial Zernike polynomial
-        Values = core_polynomial(
-            rho=rho,
-            theta=None,
-            n=n,
-            m=m,
-            rho_derivative=rho_derivative,
-            theta_derivative=None,
-            flag_radial=True,
-            precompute=precompute,
-            float_type=float_type,
-        )
+        values = _core_polynomials(rho, None, n, m, rho_derivative, None, True, precompute)
     else:
-        # Full Zernike polynomial
-        Values = core_polynomial(
-            rho=Rho,
-            theta=Theta,
-            n=n,
-            m=m,
-            rho_derivative=rho_derivative,
-            theta_derivative=theta_derivative,
-            flag_radial=False,
-            precompute=precompute,
-            float_type=float_type,
-        )
+        values = _core_polynomials(Rho, Theta, n, m, rho_derivative, theta_derivative, False, precompute)
 
-    # Indexes for the current plot
-    current_plot: list[int] = [0]  # List to hold the current index for mutability
-
-    # Prepare the radial coordinates for plotting
-    fig, ax = plt.subplots(subplot_kw={'projection': 'polar'} if not flag_radial else {})
+    fig, ax = plt.subplots(subplot_kw={} if flag_radial else {'projection': 'polar'})
     plt.subplots_adjust(bottom=0.2)
 
-    # Plotting the data
     if flag_radial:
-        plot_radial, = ax.plot(rho, Values[0])
-        title = rf"$\mathrm{{Radial\ Zernike}}\ R_{{{n[0]}}}^{{{m[0]}}}(\rho),\ \frac{{d^{{{rho_derivative[0]}}}}}{{d\rho^{{{rho_derivative[0]}}}}}$"
+        curve, = ax.plot(s, values[0])
+        ax.set_xlabel(f"s  ({mapping})" if mapping else 'ρ (radial coordinate)')
         ax.set_ylabel('Amplitude')
-        ax.set_xlabel('ρ (radial coordinate)')
         ax.set_xlim(0, 1)
-        ax.set_ylim(-1, 1)
         ax.grid(True)
-        pcm_zernike = None # For radial plots, we don't use pcolormesh
     else:
-        pcm_zernike = ax.pcolormesh(Theta, Rho, Values[0], shading='auto', cmap='jet', vmin=-1, vmax=1)
-        colorbar = fig.colorbar(pcm_zernike, ax=ax, orientation='vertical')
-        title = rf"$Z_{{{n[0]}}}^{{{m[0]}}},\ \frac{{\partial^{rho_derivative[0]}}}{{\partial \rho^{rho_derivative[0]}}}\ \frac{{\partial^{theta_derivative[0]}}}{{\partial \theta^{theta_derivative[0]}}}$"
-        plot_radial = None  # For full Zernike plots, we don't use a radial plot
+        colormap = ax.pcolormesh(Theta, S, values[0], shading='auto', cmap='jet', vmin=-1, vmax=1)
+        fig.colorbar(colormap, ax=ax, orientation='vertical')
+        if mapping:
+            ax.set_xlabel(f"radial axis: s  ({mapping})")
 
-    ax.set_title(title)
+    current = 0
 
-    # Function to update the plot with new data
-    def update_plot_data(index, fig, ax, n, m, rho_derivative, theta_derivative, Values, flag_radial, plot_radial, pcm_zernike):
-        # Extract the data for the current index
-        data = Values[index]
-
+    def _update() -> None:
+        data = values[current]
         if flag_radial:
-            # Plot radial Zernike polynomial
-            plot_radial.set_ydata(data)
-            title = rf"$\mathrm{{Radial\ Zernike}}\ R_{{{n[index]}}}^{{{m[index]}}}(\rho),\ \frac{{d^{{{rho_derivative[index]}}}}}{{d\rho^{{{rho_derivative[index]}}}}}$"
-            ax.set_ylim(min(numpy.min(data), -1), max(numpy.max(data), 1))
+            curve.set_ydata(data)
+            ax.set_ylim(*_color_limits(data))
+            ax.set_title(_radial_title(n[current], m[current], rho_derivative[current]))
         else:
-            # Plot full Zernike polynomial
-            pcm_zernike.set_array(data.flatten())
-            title = rf"$Z_{{{n[index]}}}^{{{m[index]}}},\ \frac{{\partial^{rho_derivative[index]}}}{{\partial \rho^{rho_derivative[index]}}}\ \frac{{\partial^{theta_derivative[index]}}}{{\partial \theta^{theta_derivative[index]}}}$"
-            pcm_zernike.set_clim(min(numpy.min(data), -1), max(numpy.max(data), 1))
-
-        ax.set_title(title)
+            colormap.set_array(data.flatten())
+            colormap.set_clim(*_color_limits(data))
+            ax.set_title(_zernike_title(n[current], m[current], rho_derivative[current], theta_derivative[current]))
         fig.canvas.draw_idle()
 
-    update_plot_data(current_plot[0], fig, ax, n, m, rho_derivative, theta_derivative, Values, flag_radial, plot_radial, pcm_zernike)
+    def _move(step: int) -> None:
+        nonlocal current
+        current = (current + step) % len(n)
+        _update()
 
-    # Create buttons for navigation
-    axprev = plt.axes([0.3, 0.01, 0.1, 0.075])
-    axnext = plt.axes([0.6, 0.01, 0.1, 0.075])
-    bprev = Button(axprev, 'Previous')
-    bnext = Button(axnext, 'Next')
+    _update()
 
-    def next(event, fig, ax, n, m, rho_derivative, theta_derivative, Values, flag_radial, plot_radial, pcm_zernike):
-        current_plot[0] = (current_plot[0] + 1) % len(n)
-        update_plot_data(current_plot[0], fig, ax, n, m, rho_derivative, theta_derivative, Values, flag_radial, plot_radial, pcm_zernike)
-
-    next_event = lambda event: next(event, fig, ax, n, m, rho_derivative, theta_derivative, Values, flag_radial, plot_radial, pcm_zernike)
-
-    def prev(event, fig, ax, n, m, rho_derivative, theta_derivative, Values, flag_radial, plot_radial, pcm_zernike):
-        current_plot[0] = (current_plot[0] - 1) % len(n)
-        update_plot_data(current_plot[0], fig, ax, n, m, rho_derivative, theta_derivative, Values, flag_radial, plot_radial, pcm_zernike)
-
-    prev_event = lambda event: prev(event, fig, ax, n, m, rho_derivative, theta_derivative, Values, flag_radial, plot_radial, pcm_zernike)
-
-    bnext.on_clicked(next_event)
-    bprev.on_clicked(prev_event)
+    button_previous = Button(fig.add_axes([0.3, 0.01, 0.1, 0.075]), 'Previous')
+    button_next = Button(fig.add_axes([0.6, 0.01, 0.1, 0.075]), 'Next')
+    button_previous.on_clicked(lambda event: _move(-1))
+    button_next.on_clicked(lambda event: _move(+1))
+    fig._pyzernike_buttons = (button_previous, button_next)
 
     plt.show()
-    
-    
-    
-def core_display_interactive(
-    float_type: type[numpy.floating]
-    ) -> None:
+
+
+
+def _parse_integer(text: str, name: str, minimum: Optional[int] = None) -> int:
     r"""
-    Display Zernike polynomials using a GUI interface (selecting radial or full Zernike polynomials, order, and derivatives).
+    Parse an integer typed in a text box.
 
-    .. warning::
-
-        This method is a core function of ``pyzernike`` that is not designed to be use by the users directly.
-        Please use the high level functions.
-
-    .. seealso::
-
-        - :func:`pyzernike.radial_display_interactive` for the radial Zernike polynomial display.
-        - :func:`pyzernike.zernike_display_interactive` for the full Zernike polynomial display.
-        - The page :doc:`../../mathematical_description` in the documentation for the mathematical description of the Zernike polynomials.
-
-    This method launches a graphical user interface (GUI) with ``matplotlib`` widgets to allow the user to select parameters for displaying Zernike polynomials.
-    The user can choose between radial and full Zernike polynomials, specify the maximum order, and set the orders of derivatives with respect to rho and theta.
-    Once the parameters are set, the corresponding Zernike polynomials are displayed in an interactive figure.
-    
     Parameters
-    ----------    
-    float_type : type[numpy.floating]
-        The floating point type used for the computations (e.g., numpy.float32, numpy.float64).
-    
+    ----------
+    text : str
+        The text of the box. Integers written as floats (e.g. ``"3.0"``) are accepted.
+
+    name : str
+        The name of the parameter, used in the error message.
+
+    minimum : Optional[int], optional
+        The minimum accepted value. Default is None (no minimum).
+
+    Returns
+    -------
+    int
+        The parsed integer.
+
+    Raises
+    ------
+    ValueError
+        If the text is not an integer or is lower than ``minimum``.
+
+    """
+    try:
+        value = float(text.strip())
+    except ValueError:
+        raise ValueError(f"Invalid {name}: integer expected.")
+    if not value.is_integer():
+        raise ValueError(f"Invalid {name}: integer expected.")
+    if minimum is not None and value < minimum:
+        raise ValueError(f"Invalid {name}: must be >= {minimum}.")
+    return int(value)
+
+
+def _parse_positive_float(text: str, name: str) -> float:
+    r"""
+    Parse a strictly positive real number typed in a text box.
+
+    Parameters
+    ----------
+    text : str
+        The text of the box.
+
+    name : str
+        The name of the parameter, used in the error message.
+
+    Returns
+    -------
+    float
+        The parsed number.
+
+    Raises
+    ------
+    ValueError
+        If the text is not a finite number strictly greater than 0.
+
+    """
+    try:
+        value = float(text.strip())
+    except ValueError:
+        raise ValueError(f"Invalid {name}: number expected.")
+    if not numpy.isfinite(value) or value <= 0:
+        raise ValueError(f"Invalid {name}: must be > 0.")
+    return value
+
+
+def _core_display_interactive(precompute: bool, resolution: int = N_SAMPLES, rho_power: float = 1.0) -> None:
+    r"""
+    Display the Zernike polynomials :math:`Z_{n}^{m}(\rho, \theta)` or the radial polynomials
+    :math:`R_{n}^{m}(\rho)` and their derivatives in an interactive ``matplotlib`` figure.
+
+    The left panel of the figure contains:
+
+    - a selector to switch between the full Zernike polynomials and the radial polynomials,
+    - text boxes to set :math:`n`, :math:`m`, the derivative order with respect to :math:`\rho` and the
+      derivative order with respect to :math:`\theta` (ignored for the radial polynomials),
+    - text boxes to set the resolution of the grid and the exponent ``rho_power`` > 0 of the display
+      mapping :math:`\rho = s^{p}` (see :func:`_core_display`),
+    - a message line reporting invalid inputs.
+
+    The plot is updated when a value is submitted (``Enter``) or when the selector is changed. The
+    polynomials are evaluated with :func:`pyzernike.core._core_polynomials` as in :func:`_core_display`:
+    curves for the radial polynomials, colormaps on the unit disk for the Zernike polynomials, with the
+    scale :math:`[\min(-1, Z), \max(1, Z)]`.
+
+    Parameters
+    ----------
+    precompute : bool
+        Passed to :func:`pyzernike.core._core_polynomials`.
+
+    resolution : int, optional
+        The initial number of points along each axis. Default is 200.
+
+    rho_power : float, optional
+        The initial strictly positive exponent of the display mapping :math:`\rho = s^{p}`. Default is 1.
+
     Returns
     -------
     None
+
     """
-    # Get the corresponding integer types
-    int_type = core_corresponding_signed_integer_type(float_type)
+    fig = plt.figure(figsize=(11, 6.5))
+    ax_radial = fig.add_axes([0.40, 0.12, 0.48, 0.76])
+    ax_zernike = fig.add_axes([0.40, 0.12, 0.48, 0.76], projection='polar')
+    ax_colorbar = fig.add_axes([0.92, 0.12, 0.02, 0.76])
 
-    # Fast assertions on the inputs
-    assert issubclass(float_type, numpy.floating), "[pyzernike-core] float_type must be a numpy floating point type."
-    
-    # Compute the Zernike polynomial values
-    rho = numpy.linspace(0, 1.0, 200, dtype=float_type)
-    theta = numpy.linspace(0, 2 * numpy.pi, 200, dtype=float_type)
-    Rho, Theta = numpy.meshgrid(rho, theta, indexing='ij')
-    
-    # Create the figure and the axes (graph and polar plot)
-    fig = plt.figure(figsize=(10, 6))
-    gs = GridSpec(1, 2, width_ratios=[1, 3]) # GridSpec to manage layout 0-> widgets 1-> plots
-    ax_graph = fig.add_subplot(gs[1])
-    ax_polar = fig.add_subplot(gs[1], projection='polar')
-    
-    # Create the GUI widgets (checkboxes, text boxes, buttons)
-    flag_radial = None # Placeholder for radial checkbox value
-    n = None # Placeholder for order textbox value
-    m = None # Placeholder for azimuthal frequency textbox value
-    dr = None # Placeholder for rho derivative textbox value
-    dt = None # Placeholder for theta derivative textbox value
+    curve, = ax_radial.plot([0, 1], [0, 0])
+    ax_radial.set_ylabel('Amplitude')
+    ax_radial.set_xlim(0, 1)
+    ax_radial.grid(True)
 
-    right_position = 0.3 # Horizontal right position for all widgets
-    text_widget_width = 0.05   # Width of the text widgets (same for all)
-    checkbox_widget_width = 0.2   # Width of the checkbox widget
-    button_widget_width = 0.1   # Width of the button widget
-    log_widget_width = 0.28   # Width of the log message widget
-    widget_height = 0.05 # Height of the widgets (same for all)
-    vertical_padding = 0.06  # Spacing between each widget (for good vertical spacing)
-    vertical_upper = 0.8  # Vertical position of the first widget (at the top)
+    state = {"grid": None, "colormap": None, "colorbar": None}
 
-    n_textbox = TextBox(plt.axes([right_position - text_widget_width, vertical_upper - (widget_height + vertical_padding), text_widget_width, widget_height]), 'Order/Degree n ', initial='5')
-    m_textbox = TextBox(plt.axes([right_position - text_widget_width, vertical_upper - 2 * (widget_height + vertical_padding), text_widget_width, widget_height]), 'Azimuthal frequency m ', initial='0')
-    rho_derivative_textbox = TextBox(plt.axes([right_position - text_widget_width, vertical_upper - 3 * (widget_height + vertical_padding), text_widget_width, widget_height]), r'$\rho$ derivative dr', initial='0')
-    theta_derivative_textbox = TextBox(plt.axes([right_position - text_widget_width, vertical_upper - 4 * (widget_height + vertical_padding), text_widget_width, widget_height]), r'$\theta$ derivative dt', initial='0')
-    flag_radial_checkbox = CheckButtons(plt.axes([right_position - checkbox_widget_width, vertical_upper, checkbox_widget_width, widget_height]), ['Radial Zernike'], [False])
-    log_message_box = TextBox(plt.axes([right_position - log_widget_width, vertical_upper - 5 * (widget_height + vertical_padding), log_widget_width, widget_height]), initial='Set parameters and click \"Display\"', label='')
-    log_message_box.set_active(False)  # Disable editing of the log message box
-    display_button = Button(plt.axes([right_position - button_widget_width, vertical_upper - 6 * (widget_height + vertical_padding), button_widget_width, widget_height]), 'Display')
+    fig.text(0.05, 0.93, "Zernike polynomials", fontsize=13, fontweight='bold')
+    selector = RadioButtons(fig.add_axes([0.05, 0.77, 0.22, 0.13]), ['Zernike Z(ρ, θ)', 'Radial R(ρ)'])
+    boxes = {
+        "n": TextBox(fig.add_axes([0.20, 0.66, 0.08, 0.055]), 'Order n  ', initial='4'),
+        "m": TextBox(fig.add_axes([0.20, 0.58, 0.08, 0.055]), 'Frequency m  ', initial='2'),
+        "rho_derivative": TextBox(fig.add_axes([0.20, 0.50, 0.08, 0.055]), 'ρ derivative  ', initial='0'),
+        "theta_derivative": TextBox(fig.add_axes([0.20, 0.42, 0.08, 0.055]), 'θ derivative  ', initial='0'),
+        "resolution": TextBox(fig.add_axes([0.20, 0.30, 0.08, 0.055]), 'Resolution  ', initial=str(resolution)),
+        "rho_power": TextBox(fig.add_axes([0.20, 0.22, 0.08, 0.055]), 'ρ power  ', initial=f"{rho_power:g}"),
+    }
+    message = fig.text(0.05, 0.12, "", fontsize=10, wrap=True)
 
-    # Create a reference for the colorbar
-    colorbar_ref = None
+    def _set_grid(new_resolution: int, new_rho_power: float) -> None:
+        if state["grid"] is not None and state["grid"][:2] == (new_resolution, new_rho_power):
+            return
+        s, rho, S, Rho, Theta = _display_grid(new_resolution, new_rho_power)
+        state["grid"] = (new_resolution, new_rho_power, s, rho, S, Rho, Theta)
 
-    # Function to update the plot based on user inputs
-    def update_plot(event):
-        nonlocal colorbar_ref
-        
-        # Remove the previous colorbar if it exists
-        if colorbar_ref is not None:
-            colorbar_ref.remove()
-            colorbar_ref = None
+        if state["colormap"] is not None:
+            state["colormap"].remove()
+        state["colormap"] = ax_zernike.pcolormesh(Theta, S, numpy.zeros_like(S), shading='auto', cmap='jet', vmin=-1, vmax=1)
+        if state["colorbar"] is None:
+            state["colorbar"] = fig.colorbar(state["colormap"], cax=ax_colorbar, orientation='vertical')
+        else:
+            state["colorbar"].update_normal(state["colormap"])
 
-        # Clear previous plots
-        ax_graph.clear()
-        ax_polar.clear()
-        
-        # Get user inputs from the GUI widgets
-        n = n_textbox.text
-        m = m_textbox.text
-        dr = rho_derivative_textbox.text
-        dt = theta_derivative_textbox.text
-        flag_radial = flag_radial_checkbox.get_status()[0]
+        mapping = _mapping_label(new_rho_power)
+        ax_radial.set_xlabel(f"s  ({mapping})" if mapping else 'ρ (radial coordinate)')
+        ax_zernike.set_xlabel(f"radial axis: s  ({mapping})" if mapping else '')
 
-        # Validate inputs
+    def _update(_=None) -> None:
+        flag_radial = selector.value_selected.startswith('Radial')
+        ax_radial.set_visible(flag_radial)
+        ax_zernike.set_visible(not flag_radial)
+        ax_colorbar.set_visible(not flag_radial)
+        boxes["theta_derivative"].ax.set_visible(not flag_radial)
+
         try:
-            n = float(n)
-            if not n.is_integer():
-                raise ValueError("The maximum order of the Zernike polynomials must be a non-negative integer.")
-            n = int(n)
-        except Exception as e:
-            log_message_box.set_val("Invalid `n` - integer expected.")
-            log_message_box.ax.set_facecolor((1.0, 0.8, 0.8))  # Light red background for error
-            log_message_box.ax.figure.canvas.draw_idle()
+            n = _parse_integer(boxes["n"].text, "n", minimum=0)
+            m = _parse_integer(boxes["m"].text, "m")
+            rho_derivative = _parse_integer(boxes["rho_derivative"].text, "ρ derivative", minimum=0)
+            theta_derivative = 0 if flag_radial else _parse_integer(boxes["theta_derivative"].text, "θ derivative", minimum=0)
+            new_resolution = _parse_integer(boxes["resolution"].text, "resolution", minimum=2)
+            new_rho_power = _parse_positive_float(boxes["rho_power"].text, "ρ power")
+            if flag_radial and m < 0:
+                raise ValueError("Invalid m: must be >= 0 for the radial polynomials.")
+        except ValueError as error:
+            message.set_text(str(error))
+            message.set_color('red')
+            fig.canvas.draw_idle()
             return
 
-        if n < 0:
-            log_message_box.set_val("Invalid `n` - non-negative expected.")
-            log_message_box.ax.set_facecolor((1.0, 0.8, 0.8))  # Light red background for error
-            log_message_box.ax.figure.canvas.draw_idle()
-            return  
-        
-        try:
-            m = float(m)
-            if not m.is_integer():
-                raise ValueError("The azimuthal frequency of the Zernike polynomials must be a non-negative integer.")
-            m = int(m)
-        except Exception as e:
-            log_message_box.set_val("Invalid `m` - integer expected.")
-            log_message_box.ax.set_facecolor((1.0, 0.8, 0.8))  # Light red background for error
-            log_message_box.ax.figure.canvas.draw_idle()
-            return
-        
-        try:
-            dr = float(dr)
-            if not dr.is_integer():
-                raise ValueError("The radial derivative must be a non-negative integer.")
-            dr = int(dr)
-        except Exception as e:
-            log_message_box.set_val("Invalid `dr` - integer expected.")
-            log_message_box.ax.set_facecolor((1.0, 0.8, 0.8))  # Light red background for error
-            log_message_box.ax.figure.canvas.draw_idle()
-            return
-        
-        if dr < 0:
-            log_message_box.set_val("Invalid `dr` - non-negative expected.")
-            log_message_box.ax.set_facecolor((1.0, 0.8, 0.8))  # Light red background for error
-            log_message_box.ax.figure.canvas.draw_idle()
-            return
-        
-        try:
-            dt = float(dt)
-            if not dt.is_integer():
-                raise ValueError("The angular derivative must be a non-negative integer.")
-            dt = int(dt)
-        except Exception as e:
-            log_message_box.set_val("Invalid `dt` - integer expected.")
-            log_message_box.ax.set_facecolor((1.0, 0.8, 0.8))  # Light red background for error
-            log_message_box.ax.figure.canvas.draw_idle()
-            return
-        
-        if dt < 0:
-            log_message_box.set_val("Invalid `dt` - non-negative expected.")
-            log_message_box.ax.set_facecolor((1.0, 0.8, 0.8))  # Light red background for error
-            log_message_box.ax.figure.canvas.draw_idle()
-            return
-        
-        log_message_box.set_val("Set parameters and click \"Display\"")
-        log_message_box.ax.set_facecolor((1.0, 1.0, 1.0))  # Reset to white background
-        log_message_box.ax.figure.canvas.draw_idle()
-        
-        # Compute the Zernike polynomial values
-        rho = numpy.linspace(0, 1.0, 200, dtype=float_type)
-        theta = numpy.linspace(0, 2 * numpy.pi, 200, dtype=float_type)
-        Rho, Theta = numpy.meshgrid(rho, theta, indexing='ij')
+        if abs(m) > n or (n - m) % 2 != 0:
+            message.set_text("|m| > n or n - m odd: the polynomial is zero.")
+            message.set_color('darkorange')
+        else:
+            message.set_text("Press Enter in a box to update.")
+            message.set_color('black')
+
+        _set_grid(new_resolution, new_rho_power)
+        _, _, s, rho, S, Rho, Theta = state["grid"]
 
         if flag_radial:
-            # Radial Zernike polynomial
-            values = core_polynomial(
-                rho=rho,
-                theta=None,
-                n=numpy.array([n]),
-                m=numpy.array([m]),
-                rho_derivative=numpy.array([dr]),
-                theta_derivative=None,
-                flag_radial=True,
-                precompute=False,
-                float_type=float_type,
-            )[0]
-            # Plotting the radial part
-            ax_graph.plot(rho, values)
-            ax_graph.set_title(rf"$\mathrm{{Radial\ Zernike}}\ R_{{{n}}}^{{{m}}}(\rho),\ \frac{{d^{{{dr}}}}}{{d\rho^{{{dr}}}}}$")
-            ax_graph.set_xlabel('ρ (radial coordinate)')
-            ax_graph.set_ylabel('Amplitude')
-            ax_graph.set_xlim(0, 1)
-            ax_graph.set_ylim(min(numpy.min(values), -1), max(numpy.max(values), 1))
-            ax_graph.grid(True)
-            ax_graph.set_visible(True)
-            ax_polar.set_visible(False)
+            data = _core_polynomials(rho, None, [n], [m], [rho_derivative], None, True, precompute)[0]
+            curve.set_data(s, data)
+            ax_radial.set_ylim(*_color_limits(data))
+            ax_radial.set_title(_radial_title(n, m, rho_derivative))
         else:
-            # Full Zernike polynomial
-            values = core_polynomial(
-                rho=Rho,
-                theta=Theta,
-                n=numpy.array([n]),
-                m=numpy.array([m]),
-                rho_derivative=numpy.array([dr]),
-                theta_derivative=numpy.array([dt]),
-                flag_radial=False,
-                precompute=False,
-                float_type=float_type,
-            )[0]
-            
-            # Plotting the full Zernike part
-            pcm = ax_polar.pcolormesh(Theta, Rho, values, shading='auto', cmap='jet', vmin=min(numpy.min(values), -1), vmax=max(numpy.max(values), 1))
-            colorbar_ref = fig.colorbar(pcm, ax=ax_polar, orientation='vertical')
-            ax_polar.set_title(rf"$Z_{{{n}}}^{{{m}}},\ \frac{{\partial^{dr}}}{{\partial \rho^{dr}}}\ \frac{{\partial^{dt}}}{{\partial \theta^{dt}}}$")
-            ax_polar.set_visible(True)
-            ax_graph.set_visible(False)
+            data = _core_polynomials(Rho, Theta, [n], [m], [rho_derivative], [theta_derivative], False, precompute)[0]
+            state["colormap"].set_array(data.flatten())
+            state["colormap"].set_clim(*_color_limits(data))
+            ax_zernike.set_title(_zernike_title(n, m, rho_derivative, theta_derivative))
 
-        # Redraw the figure
         fig.canvas.draw_idle()
 
-    # Attach the update function to the button
-    display_button.on_clicked(update_plot)
-    
-    # Initial plot
-    update_plot(None)
+    selector.on_clicked(_update)
+    for box in boxes.values():
+        box.on_submit(_update)
+    fig._pyzernike_widgets = (selector, boxes)
 
-    # Show the figure
+    _update()
     plt.show()

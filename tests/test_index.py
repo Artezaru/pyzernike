@@ -1,5 +1,16 @@
-from pyzernike import zernike_order_to_index, zernike_index_to_order
 import pytest
+
+try:
+    import pyzernike
+except:
+    import os 
+    import sys
+    sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+    import pyzernike
+
+
+from pyzernike import zernike_order_to_index, zernike_index_to_order
+
 
 
 

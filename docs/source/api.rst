@@ -80,6 +80,7 @@ Display
 
 - ``radial_display`` displays the radial polynomials for several sets of ``[n, m, a]`` at once in a interactive plot.
 - ``zernike_display`` displays the Zernike polynomials for several sets of ``[n, m, a, b]`` at once in a interactive plot.
+- ``display_interactive`` opens an interface to select polynomials to display.
 
 .. toctree::
    :maxdepth: 1
@@ -87,6 +88,7 @@ Display
 
    ./api_doc/radial_display
    ./api_doc/zernike_display
+   ./api_doc/display_interactive
 
 
 Additional Functions
@@ -106,19 +108,3 @@ Additional Functions
    ./api_doc/cartesian_to_elliptic_annulus
    ./api_doc/xy_zernike_polynomial_up_to_order
 
-
-Core Development
----------------------
-
-For developers interested in the core functionalities of the package, the ``core`` module provides essential functions that underpin the computations and symbolic representations of Zernike polynomials.
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Core Development API:
-
-   ./api_doc/core/core_polynomial
-   ./api_doc/core/core_symbolic
-   ./api_doc/core/core_display
-   ./api_doc/core/core_create_precomputing_terms
-   ./api_doc/core/core_corresponding_signed_integer_type
-   ./api_doc/core/core_cartesian_to_elliptic_annulus

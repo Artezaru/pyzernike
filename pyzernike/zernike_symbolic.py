@@ -13,157 +13,146 @@
 # limitations under the License.
 
 from numbers import Integral
-from typing import Sequence, List, Optional, Union
+from typing import List, Optional, Sequence, Union
+
 import numpy
 import sympy
 
-from .core.core_symbolic import core_symbolic
+from .core.parsing import _broadcast_integers
+from .core.core_symbolic import _core_symbolic
+
 
 def zernike_symbolic(
-    n: Union[numpy.array, Sequence[Integral]],
-    m: Union[numpy.array, Sequence[Integral]],
-    rho_derivative: Optional[Union[numpy.array, Sequence[Integral]]] = None,
-    theta_derivative: Optional[Union[numpy.array, Sequence[Integral]]] = None,
-) -> List[sympy.Expr]:
+    n: Union[Integral, Sequence[Integral], numpy.ndarray],
+    m: Union[Integral, Sequence[Integral], numpy.ndarray],
+    rho_derivative: Optional[Union[Integral, Sequence[Integral], numpy.ndarray]] = 0,
+    theta_derivative: Optional[Union[Integral, Sequence[Integral], numpy.ndarray]] = 0,
+) -> Union[sympy.Expr, List[sympy.Expr]]:
     r"""
-    Compute the symbolic expression of the Zernike polynomial :math:`Z_{n}^{m}(\rho, \theta)` for :math:`\rho \leq 1` and :math:`\theta \in [0, 2\pi]`.
+    Compute the symbolic expressions of the Zernike polynomials :math:`Z_{n}^{m}(\rho, \theta)` and of their derivatives.
 
-    The Zernike polynomial is defined as follows:
-
-    .. math::
-
-        Z_{n}^{m}(\rho, \theta) = R_{n}^{m}(\rho) \cos(m \theta) \quad \text{if} \quad m \geq 0
+    The Zernike polynomials [1]_ are defined on the unit disk for :math:`|m| \leq n` and :math:`n - m` even by:
 
     .. math::
 
-        Z_{n}^{m}(\rho, \theta) = R_{n}^{-m}(\rho) \sin(-m \theta) \quad \text{if} \quad m < 0
+        Z_{n}^{m}(\rho, \theta) = \begin{cases}
+            R_{n}^{m}(\rho) \cos(m \theta) & \text{if } m \geq 0 \\
+            R_{n}^{|m|}(\rho) \sin(|m| \theta) & \text{if } m < 0
+        \end{cases}
 
-    If :math:`n < 0`, :math:`n < |m|`, or :math:`(n - m)` is odd, the polynomial is zero.
+    where :math:`R_{n}^{m}` is the radial polynomial (see :func:`pyzernike.radial_symbolic`). The
+    polynomials are not normalized (see :func:`pyzernike.zernike_polynomial`).
+
+    The derivative of order :math:`a` with respect to :math:`\rho` and :math:`b` with respect to :math:`\theta` is:
+
+    .. math::
+
+        \frac{\partial^{a+b} Z_{n}^{m}}{\partial \rho^{a} \partial \theta^{b}} = \begin{cases}
+            \frac{d^a R_{n}^{m}}{d\rho^a}(\rho) \, m^{b} \cos\left(m\theta + b\frac{\pi}{2}\right) & \text{if } m > 0 \\
+            \frac{d^a R_{n}^{0}}{d\rho^a}(\rho) \, \delta_{b,0} & \text{if } m = 0 \\
+            \frac{d^a R_{n}^{|m|}}{d\rho^a}(\rho) \, |m|^{b} \sin\left(|m|\theta + b\frac{\pi}{2}\right) & \text{if } m < 0
+        \end{cases}
+
+    where the phase shift :math:`b\frac{\pi}{2}` is written exactly as a sign and a swap between
+    ``cos`` and ``sin``. The expressions use the symbols ``r`` for :math:`\rho` and ``t`` for :math:`\theta`
+    (see :func:`pyzernike.core._core_symbolic`).
+
+    - If :math:`|m| > n` or :math:`n - m` is odd, the expression is ``0``.
+    - If :math:`a > n`, or :math:`m = 0` and :math:`b > 0`, the expression is ``0``.
+
+    **Shape of the inputs and of the output.** ``n``, ``m``, ``rho_derivative`` and ``theta_derivative``
+    can each be a single integer or a sequence of integers (list, tuple or 1D numpy array):
+
+    - If all of them are integers, a single expression is returned.
+    - If at least one of them is a sequence, the integers are repeated to the length :math:`N` of the
+      sequences (which must all have the same length), and a list of :math:`N` expressions is returned.
 
     .. seealso::
 
-        - :func:`pyzernike.radial_polynomial` for computing the radial part of the Zernike polynomial :math:`R_{n}^{m}(\rho)`.
-        - :func:`pyzernike.core.core_polynomial` to inspect the core implementation of the computation.
-        - The page :doc:`../../mathematical_description` in the documentation for the detailed mathematical description of the Zernike polynomials.
-    
-    The function allows to display several Zernike polynomials for different sets of (order, azimuthal frequency, derivative orders) given as sequences.
-
-    - The parameters ``n``, ``m``, ``rho_derivative`` and ``theta_derivative`` must be sequences of integers with the same length.
-
-    The output is a list of sympy expressions, each containing the symbolic expression of the Zernike polynomial for the corresponding order and azimuthal frequency.
-    The list has the same length as the input sequences.
-
-    .. note::
-
-        - The symbol `r` is used to represent the radial coordinate :math:`\rho` in the symbolic expression.
-        - The symbol `t` is used to represent the angular coordinate :math:`\theta` in the symbolic expression.
+        - :func:`pyzernike.zernike_polynomial` for the numerical evaluation of the Zernike polynomials.
+        - :func:`pyzernike.radial_symbolic` for the symbolic expressions of the radial polynomials.
+        - The page :doc:`../../mathematical_description` for the mathematical description of the Zernike polynomials.
 
     Parameters
     ----------
-    n : Sequence[Integral] or numpy.array
-        A sequence (List, Tuple) or 1D numpy array of the radial order(s) of the Zernike polynomial(s) to compute. Must be non-negative integers.
+    n : Union[Integral, Sequence[Integral], numpy.ndarray]
+        The radial order(s) :math:`n`.
 
-    m : Sequence[Integral] or numpy.array
-        A sequence (List, Tuple) or 1D numpy array of the azimuthal frequency(ies) of the Zernike polynomial(s) to compute. Must be non-negative integers.
+    m : Union[Integral, Sequence[Integral], numpy.ndarray]
+        The azimuthal frequency(ies) :math:`m`.
 
-    rho_derivative : Optional[Union[Sequence[Integral], numpy.array]], optional
-        A sequence (List, Tuple) or 1D numpy array of the order(s) of the radial derivative(s) to compute. Must be non-negative integers.
-        If None, is it assumed that rho_derivative is 0 for all polynomials.
+    rho_derivative : Optional[Union[Integral, Sequence[Integral], numpy.ndarray]], optional
+        The order(s) :math:`a \geq 0` of the derivative with respect to :math:`\rho`. Default is 0 (no derivative).
+        None is accepted and means 0.
 
-    theta_derivative : Optional[Union[Sequence[Integral], numpy.array]], optional
-        A sequence (List, Tuple) or 1D numpy array of the order(s) of the angular derivative(s) to compute. Must be non-negative integers.
-        If None, is it assumed that theta_derivative is 0 for all polynomials.
+    theta_derivative : Optional[Union[Integral, Sequence[Integral], numpy.ndarray]], optional
+        The order(s) :math:`b \geq 0` of the derivative with respect to :math:`\theta`. Default is 0 (no derivative).
+        None is accepted and means 0.
 
     Returns
     -------
-    List[sympy.Expr]
-        A list of symbolic expressions containing the Zernike polynomial values for each order and azimuthal frequency.
-        Each expression is a sympy expression that can be evaluated for specific values of :math:`\rho` and :math:`\theta`.
+    Union[sympy.Expr, List[sympy.Expr]]
+        - If ``n``, ``m``, ``rho_derivative`` and ``theta_derivative`` are integers: a single expression in the symbols ``r`` and ``t``.
+        - Otherwise: a list of :math:`N` expressions, where ``output[i]`` corresponds to
+          ``(n[i], m[i], rho_derivative[i], theta_derivative[i])``.
 
     Raises
     ------
     TypeError
-        If n, m, rho_derivative or theta_derivative (if not None) are not sequences of integers.
+        If ``n``, ``m``, ``rho_derivative`` or ``theta_derivative`` is not an integer or a sequence of integers.
 
     ValueError
-        If the lengths of n, m, rho_derivative or theta_derivative (if not None) are not the same.
+        If the sequences do not have the same length, or if a derivative order is negative.
+
+    References
+    ----------
+    .. [1] F. Zernike, "Beugungstheorie des Schneidenverfahrens und seiner verbesserten Form, der
+       Phasenkontrastmethode," Physica 1(7-12), 689-704 (1934). https://doi.org/10.1016/S0031-8914(34)80259-5
 
     Examples
     --------
-    Compute the expression of the radial Zernike polynomial :math:`Z_{2}^{1}(\rho, \theta)`:
+    Get the expression of the coma :math:`Z_{3}^{1}(\rho, \theta)` and of its derivative with respect to :math:`\theta`:
 
     .. code-block:: python
 
         from pyzernike import zernike_symbolic
-        result = zernike_symbolic(n=[2], m=[1])
-        expression = result[0]  # result is a list, we take the first element
-        print(expression)
+
+        print(zernike_symbolic(n=3, m=1))
+        print(zernike_symbolic(n=3, m=1, theta_derivative=1))
 
     .. code-block:: console
 
-        (2*r**2 - 1)*cos(t)
+        (3*r**3 - 2*r)*cos(t)
+        -(3*r**3 - 2*r)*sin(t)
 
-    Then evaluate the expression for a specific value of :math:`\rho` and :math:`\theta`:
+    Evaluate the gradient in polar coordinates with ``numpy``:
 
     .. code-block:: python
 
         import numpy
         import sympy
-        rho = numpy.linspace(0, 1, 100)
-        theta = numpy.linspace(0, 2 * numpy.pi, 100)
 
-        # `r` represents the radial coordinate in the symbolic expression
-        # `t` represents the angular coordinate in the symbolic expression
+        expressions = zernike_symbolic(n=3, m=1, rho_derivative=[1, 0], theta_derivative=[0, 1])
+        rho, theta = numpy.meshgrid(numpy.linspace(0, 1, 100), numpy.linspace(0, 2 * numpy.pi, 100))
+        dZ_drho, dZ_dtheta = [sympy.lambdify(['r', 't'], expression, 'numpy')(rho, theta) for expression in expressions]
 
-        func = sympy.lambdify(['r', 't'], expression, 'numpy')
-        evaluated_result = func(rho, theta)
+    .. note::
+
+        For an expression equal to a constant (e.g. ``0``), ``sympy.lambdify`` returns a scalar and
+        not an array. Use ``numpy.broadcast_to(value, rho.shape)`` if an array is needed.
 
     """
-    # Check the input parameters
-    if not isinstance(n, (Sequence, numpy.ndarray)) or not all(isinstance(i, Integral) for i in n):
-        raise TypeError("n must be a sequence or a 1D array of integers.")
-    if not isinstance(m, (Sequence, numpy.ndarray)) or not all(isinstance(i, Integral) for i in m):
-        raise TypeError("m must be a sequence or a 1D array of integers.")
-    if rho_derivative is not None:
-        if not isinstance(rho_derivative, (Sequence, numpy.ndarray)) or not all(isinstance(i, Integral) and i >= 0 for i in rho_derivative):
-            raise TypeError("rho_derivative must be a sequence or a 1D array of non-negative integers.")
-    if theta_derivative is not None:
-        if not isinstance(theta_derivative, (Sequence, numpy.ndarray)) or not all(isinstance(i, Integral) and i >= 0 for i in theta_derivative):
-            raise TypeError("theta_derivative must be a sequence or a 1D array of non-negative integers.")
-    
-    # Convert n, m and rho_derivative to arrays for length checking
-    n = numpy.asarray(n, dtype=numpy.int32)
-    m = numpy.asarray(m, dtype=numpy.int32)
-    if rho_derivative is not None:
-        rho_derivative = numpy.asarray(rho_derivative, dtype=numpy.int32)
-    else:
-        rho_derivative = numpy.zeros_like(n, dtype=numpy.int32)
-    if theta_derivative is not None:
-        theta_derivative = numpy.asarray(theta_derivative, dtype=numpy.int32)
-    else:
-        theta_derivative = numpy.zeros_like(n, dtype=numpy.int32)
+    if rho_derivative is None:
+        rho_derivative = 0
+    if theta_derivative is None:
+        theta_derivative = 0
 
-    # Check lengths
-    if not n.ndim == 1:
-        raise TypeError("n must be a sequence or a 1D array of integers.")
-    if not m.ndim == 1:
-        raise TypeError("m must be a sequence or a 1D array of integers.")
-    if rho_derivative.ndim != 1:
-        raise TypeError("rho_derivative must be a sequence or a 1D array of integers.")
-    if theta_derivative.ndim != 1:
-        raise TypeError("theta_derivative must be a sequence or a 1D array of integers.")
+    indices, single = _broadcast_integers(n=n, m=m, rho_derivative=rho_derivative, theta_derivative=theta_derivative)
+    if any(a < 0 for a in indices["rho_derivative"]):
+        raise ValueError("rho_derivative must contain non-negative integers.")
+    if any(b < 0 for b in indices["theta_derivative"]):
+        raise ValueError("theta_derivative must contain non-negative integers.")
 
-    if not (n.size == m.size == rho_derivative.size == theta_derivative.size):
-        raise ValueError("n, m, rho_derivative (if given) and theta_derivative (if given) must have the same length.")
+    expressions = _core_symbolic(indices["n"], indices["m"], indices["rho_derivative"], indices["theta_derivative"], False)
 
-    # Compute the radial polynomials using the core_polynomial function
-    radial_expressions = core_symbolic(
-        n=n,
-        m=m,
-        rho_derivative=rho_derivative,
-        theta_derivative=theta_derivative,
-        flag_radial=False
-    )
-
-    # Return the radial polynomials
-    return radial_expressions
+    return expressions[0] if single else expressions

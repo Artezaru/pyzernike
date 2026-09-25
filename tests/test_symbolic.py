@@ -2,6 +2,14 @@ import numpy as np
 import pytest
 import sympy
 
+try:
+    import pyzernike
+except:
+    import os 
+    import sys
+    sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+    import pyzernike
+    
 from pyzernike import radial_polynomial, zernike_polynomial, radial_symbolic, zernike_symbolic
 
 
@@ -10,7 +18,7 @@ def test_symbolic_radial():
     """Test that the symbolic radial polynomial matches the computed radial polynomial for a range of (n, m, rho_derivative) values."""
     
     # Generate 100 random rho values between 0 and 1
-    rho_test = np.linspace(0, 1, 100)
+    rho = np.linspace(0, 1, 100)
 
     for n in range(15):
         for m in range(0, n + 1):
@@ -21,10 +29,10 @@ def test_symbolic_radial():
 
                 # `r` represents the radial coordinate in the symbolic expression
                 func = sympy.lambdify('r', symbolic_expression, 'numpy')
-                symbolic_result = func(rho_test)
+                symbolic_result = np.broadcast_to(np.asarray(func(rho), dtype=np.float64), rho.shape)
 
                 # Compute using core_polynomial
-                result = radial_polynomial(rho=rho_test, n=[n], m=[m], rho_derivative=[rho_derivative])[0]
+                result = radial_polynomial(rho=rho, n=[n], m=[m], rho_derivative=[rho_derivative])[0]
 
                 # Compute the error between the two results
                 error = np.abs(symbolic_result - result)
@@ -53,7 +61,7 @@ def test_symbolic_zernike():
                     # `r` represents the radial coordinate in the symbolic expression
                     # `t` represents the angular coordinate in the symbolic expression
                     func = sympy.lambdify(['r', 't'], symbolic_expression, 'numpy')
-                    symbolic_result = func(rho, theta)
+                    symbolic_result = np.broadcast_to(np.asarray(func(rho, theta), dtype=np.float64), rho.shape)
 
                     # Compute using core_polynomial
                     result = zernike_polynomial(rho=rho, theta=theta, n=[n], m=[m], rho_derivative=[rho_derivative], theta_derivative=[theta_derivative])[0]

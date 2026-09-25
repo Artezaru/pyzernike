@@ -1,7 +1,15 @@
 import pytest
 import numpy as np
-from pyzernike import xy_zernike_polynomial, zernike_polynomial
 
+try:
+    import pyzernike
+except:
+    import os 
+    import sys
+    sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+    import pyzernike
+    
+from pyzernike import xy_zernike_polynomial, zernike_polynomial
 
 def test_xy_zernike_polynomial():
     """Test that the xy_zernike_polynomial function produces same result as zernike_polynomial for the unit disk."""

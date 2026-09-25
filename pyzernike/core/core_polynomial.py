@@ -12,320 +12,178 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import math
+from typing import Dict, List, Optional
+
 import numpy
-from typing import List, Optional, Tuple
-from scipy.special import gammaln
 
-from .core_create_precomputing_terms import core_create_precomputing_terms
-from .core_corresponding_signed_integer_type import core_corresponding_signed_integer_type
 
-def core_polynomial(
+def _radial_coefficients(n: int, abs_m: int, rho_derivative: int) -> List[int]:
+    r"""
+    Exact integer coefficients of :math:`\frac{d^a R_{n}^{m}}{d\rho^a}` by decreasing power of :math:`\rho`:
+
+    .. math::
+
+        c_k = (-1)^k \binom{n-k}{k} \binom{n-2k}{\frac{n-|m|}{2}-k} \frac{(n-2k)!}{(n-2k-a)!}
+
+    associated with :math:`\rho^{n-2k-a}`, for :math:`k = 0, 1, \dots` while :math:`n - 2k \geq a`.
+    """
+    s = (n - abs_m) // 2
+    coefficients = []
+    for k in range(s + 1):
+        exponent = n - 2 * k
+        if exponent < rho_derivative:
+            break
+        c = math.comb(n - k, k) * math.comb(exponent, s - k) * math.perm(exponent, rho_derivative)
+        coefficients.append(-c if k % 2 else c)
+    return coefficients
+
+
+def _core_polynomials(
         rho: numpy.ndarray,
         theta: Optional[numpy.ndarray],
-        n: numpy.array,
-        m: numpy.array,
-        rho_derivative: numpy.array,
-        theta_derivative: Optional[numpy.array],
+        n: List[int],
+        m: List[int],
+        rho_derivative: List[int],
+        theta_derivative: Optional[List[int]],
         flag_radial: bool,
         precompute: bool,
-        float_type: type[numpy.floating]
-    ) -> List[numpy.ndarray]:
+    ) -> numpy.ndarray:
     r"""
+    Compute the Zernike polynomials :math:`Z_{n}^{m}(\rho, \theta)` (or the radial polynomials
+    :math:`R_{n}^{m}(\rho)` if ``flag_radial`` is True) and their derivatives for each given
+    tuple ``(n, m, rho_derivative, theta_derivative)`` using the explicit formula.
 
-    Assemble the Zernike polynomial :math:`Z_{n}^{m}(\rho, \theta)` or the radial Zernike polynomial :math:`R_{n}^{m}(\rho)` (if the flag `flag_radial` 
-    is set to True) for each given tuple of (n, m, rho_derivative, theta_derivative) in the input lists.
+    The :math:`a`-th derivative of the radial polynomial is:
 
-    .. warning::
+    .. math::
 
-        This method is a core function of ``pyzernike`` that is not designed to be use by the users directly. 
-        Please use the high level functions.
+        \frac{d^a R_{n}^{m}}{d\rho^a}(\rho) = \sum_{k=0}^{K} c_k \, \rho^{n-2k-a}
+        \quad \text{with} \quad
+        c_k = (-1)^k \frac{(n-k)!}{k! \left(\frac{n+|m|}{2}-k\right)! \left(\frac{n-|m|}{2}-k\right)!} \frac{(n-2k)!}{(n-2k-a)!}
 
-    .. seealso::
+    where :math:`K` is the largest :math:`k \leq \frac{n-|m|}{2}` such that :math:`n - 2k \geq a`.
 
-        - :func:`pyzernike.radial_polynomial` for the radial Zernike polynomial computation.
-        - :func:`pyzernike.zernike_polynomial` for the full Zernike polynomial computation.
-        - The page :doc:`../../mathematical_description` in the documentation for the mathematical description of the Zernike polynomials.
+    The coefficients are computed exactly as integers with ``math.comb`` and ``math.perm``
+    and rounded once to the dtype of ``rho``. The sum is evaluated with the Horner scheme in :math:`\rho^2`:
 
-    - ``rho`` and ``theta`` are expected to be floating point type numpy arrays of the same shape, dtype and in the range [0, 1] for ``rho``.
-    - ``n``, ``m``, ``rho_derivative`` and ``theta_derivative`` are expected to be arrays of integers of the same length and valid values.
+    .. math::
 
-    The function is designed to precompute the useful terms for the Zernike polynomials, such as the powers of rho, the cosine and sine terms, and the logarithm of the factorials.
+        \frac{d^a R_{n}^{m}}{d\rho^a}(\rho) = \rho^{n-2K-a} \left( \left( c_0 \rho^2 + c_1 \right) \rho^2 + \dots + c_K \right)
+
+    The full Zernike polynomials and their angular derivatives are then assembled as:
+
+    .. math::
+
+        \frac{\partial^{a+b} Z_{n}^{m}}{\partial \rho^{a} \partial \theta^{b}} = \begin{cases}
+            \frac{d^a R_{n}^{m}}{d\rho^a} \, m^{b} \cos\left(m\theta + b\frac{\pi}{2}\right) & \text{if } m > 0 \\
+            \frac{d^a R_{n}^{0}}{d\rho^a} \, \delta_{b,0} & \text{if } m = 0 \\
+            \frac{d^a R_{n}^{|m|}}{d\rho^a} \, |m|^{b} \sin\left(|m|\theta + b\frac{\pi}{2}\right) & \text{if } m < 0
+        \end{cases}
+
+    .. note::
+
+        The alternating sum suffers from cancellation for high orders (absolute error of the order of
+        :math:`\epsilon \sum_k |c_k|`). In double precision, it stays below :math:`10^{-10}` up to
+        :math:`n \approx 20` for :math:`m = 0`. For higher orders, prefer
+        :func:`pyzernike.core._zernike_recursive_up_to_order`.
 
     Parameters
     ----------
     rho : numpy.ndarray (N-D array)
-        The radial coordinate values with shape (...,) and floating point dtype corresponding to `float_type`.
+        The radial coordinate values with shape ``(...,)`` and floating point dtype.
 
-    theta : numpy.ndarray (N-D array)
-        The angular coordinate values with shape (...,) and floating point dtype corresponding to `float_type`. Must be None if `flag_radial` is True.
+    theta : Optional[numpy.ndarray] (N-D array)
+        The angular coordinate values with same shape and dtype as ``rho``.
+        Must be None if ``flag_radial`` is True.
 
-    n : numpy.array[numpy.integer]
-        The orders of the Zernike polynomials to compute. Must be a 1D array of integers of type compatible with ``float_type``.
+    n : List[int]
+        The radial orders.
 
-    m : numpy.array[numpy.integer]
-        The azimuthal frequencies of the Zernike polynomials. Must be a 1D array of integers of type compatible with ``float_type``.
+    m : List[int]
+        The azimuthal frequencies. Must have the same length as ``n``.
 
-    numpy.array[numpy.integer]
-        The orders of the derivatives with respect to rho. Must be a 1D array of integers of type compatible with ``float_type``.
+    rho_derivative : List[int]
+        The orders of the derivatives with respect to rho. Must have the same length as ``n``.
 
-    theta_derivative : Optional[numpy.array[numpy.integer]]
-        The orders of the derivatives with respect to theta. Must be None if ``flag_radial`` is True. Otherwise, must be a 1D array of integers of type compatible with ``float_type``.
+    theta_derivative : Optional[List[int]]
+        The orders of the derivatives with respect to theta. Must have the same length as ``n``.
+        Must be None if ``flag_radial`` is True.
 
     flag_radial : bool
-        If True, computes the sets for radial polynomials only (no angular part). The output sine and cosine frequency sets will be empty.
-        If False, computes the sets for full Zernike polynomials (including angular part).
+        If True, computes the radial polynomials only. If False, computes the full Zernike polynomials.
 
     precompute : bool
-        If True, the useful terms for the Zernike polynomials are precomputed to optimize the computation.
-        This is useful when computing multiple Zernike polynomials with the same `rho` and `theta` values.
-        If False, the useful terms are computed on-the-fly for each polynomial, which may be slower but avoid memory overhead.
-
-    float_type : type[numpy.floating]
-        The floating point type used for the computations (e.g., numpy.float32, numpy.float64).
+        If True, the powers of rho and the cosine and sine terms are cached and shared between the polynomials.
 
     Returns
     -------
-    List[numpy.ndarray[numpy.floating]]
-        A list of numpy.ndarray containing the Zernike polynomials for each (n, m, rho_derivative, theta_derivative) tuple, or the radial Zernike polynomials if `flag_radial` is True.
-        Each polynomial has the shape of `rho` (and `theta` if `flag_radial` is False).
+    numpy.ndarray
+        An array of shape ``(Q, ...)`` and dtype of ``rho``, where :math:`Q` is the length of ``n``.
+        ``output[q]`` is the polynomial for the tuple ``(n[q], m[q], rho_derivative[q], theta_derivative[q])``.
+        Invalid tuples (:math:`|m| > n`, :math:`n - m` odd, :math:`a > n`, or
+        :math:`m < 0` if ``flag_radial`` is True) give zeros.
 
     """
-    # Get the corresponding integer types
-    int_type = core_corresponding_signed_integer_type(float_type)
-
-    # Fast assertions on the inputs
-    assert issubclass(float_type, numpy.floating), "[pyzernike-core] float_type must be a numpy floating point type."
-    assert isinstance(n, numpy.ndarray) and n.ndim == 1 and numpy.issubdtype(n.dtype, int_type), "[pyzernike-core] n must be a 1D numpy array of integers of type compatible with float_type."
-    assert isinstance(m, numpy.ndarray) and m.ndim == 1 and numpy.issubdtype(m.dtype, int_type), "[pyzernike-core] m must be a 1D numpy array of integers of type compatible with float_type."
-    assert isinstance(rho_derivative, numpy.ndarray) and rho_derivative.ndim == 1 and numpy.issubdtype(rho_derivative.dtype, int_type), "[pyzernike-core] rho_derivative must be a 1D numpy array of integers of type compatible with float_type."
-    assert isinstance(flag_radial, bool), "[pyzernike-core] flag_radial must be a boolean."
-    assert flag_radial or (isinstance(theta_derivative, numpy.ndarray) and theta_derivative.ndim == 1 and numpy.issubdtype(theta_derivative.dtype, int_type)), "[pyzernike-core] theta_derivative must be a 1D numpy array of integers of type compatible with float_type when flag_radial is False."
-    assert not flag_radial or theta_derivative is None, "[pyzernike-core] theta_derivative must be None when flag_radial is True."
-    assert n.size == m.size == rho_derivative.size and (flag_radial or n.size == theta_derivative.size), "[pyzernike-core] n, m, rho_derivative and theta_derivative (if flag_radial is False) must have the same size."
-    assert isinstance(rho, numpy.ndarray) and numpy.issubdtype(rho.dtype, float_type), "[pyzernike-core] rho must be a numpy array of floating point values of type compatible with float_type."
-    assert flag_radial or (isinstance(theta, numpy.ndarray) and numpy.issubdtype(theta.dtype, float_type)), "[pyzernike-core] theta must be a numpy array of floating point values of type compatible with float_type when flag_radial is False."
-    assert flag_radial or rho.shape == theta.shape, "[pyzernike-core] rho and theta must have the same shape when flag_radial is False."
-
-    # Extract the shape
     shape = rho.shape
+    dtype = rho.dtype
 
-    # Create the output list
-    output: List[numpy.ndarray] = []
+    rho_squared = rho * rho
+    powers_cache: Dict[int, numpy.ndarray] = {}
+    angular_cache: Dict[tuple, numpy.ndarray] = {}
 
-    # =================================================================
-    # Precomputation of the useful terms
-    # =================================================================
-    #
-    # rho_powers_indices_map : numpy.ndarray (1-D array)
-    #     An array of shape=(max(n) + 1,) containing the indices of the rho powers in `rho_powers` for a given exponent.
-    #     This is used to map the computed radial polynomial to the precomputed rho powers.
-    # 
-    # rho_powers : numpy.ndarray (2-D array)
-    #     An array of shape=(..., Nexponents) containing the precomputed powers of rho for the useful exponents.
-    # 
-    # cosine_terms_indices_map : numpy.ndarray (1-D array)
-    #     An array of shape=(max(m) + 1,) containing the indices of the cosine terms in `cosine_terms` for a given azimuthal frequency.
-    #     This is used to map the computed angular polynomial coefficients to the precomputed cosine terms. ONLY USED IF `flag_radial` IS False.
-    # 
-    # cosine_terms : numpy.ndarray (2-D array)
-    #     An array of shape=(..., Ncosine_terms) containing the cosine terms for the useful angular polynomials. ONLY USED IF `flag_radial` IS False.
-    #   
-    # sine_terms_indices_map : numpy.ndarray (1-D array)
-    #     An array of shape=(max(m) + 1,) containing the indices of the sine terms in `sine_terms` for a given azimuthal frequency.
-    #     This is used to map the computed angular polynomial coefficients to the precomputed sine terms. ONLY USED IF `flag_radial` IS False.
-    # 
-    # sine_terms : numpy.ndarray (2-D array)
-    #     An array of shape=(..., Nsine_terms) containing the sine terms for the useful angular polynomials. ONLY USED IF `flag_radial` IS False.
-    # 
-    # log_factorials_indices_map : numpy.ndarray (1-D array)
-    #     An array of shape=(max(n) + 1,) containing the indices of the logarithm of the factorials in `log_factorials` for a given integer.
-    #     This is used to map the computed radial polynomial coefficients to the precomputed logarithm of the factorials.
-    # 
-    # log_factorials : numpy.ndarray (1-D array)
-    #     An array of shape=(Nfactorials,) containing the logarithm of the factorials for the useful integers.
-    # 
-    # =================================================================
+    def _rho_power(exponent: int) -> numpy.ndarray:
+        if exponent == 1:
+            return rho
+        if exponent == 2:
+            return rho_squared
+        if not precompute:
+            return numpy.power(rho, exponent)
+        if exponent not in powers_cache:
+            powers_cache[exponent] = numpy.power(rho, exponent)
+        return powers_cache[exponent]
 
-    if precompute:
+    def _angular(func: str, abs_m: int) -> numpy.ndarray:
+        if not precompute:
+            return numpy.cos(abs_m * theta) if func == "cos" else numpy.sin(abs_m * theta)
+        key = (func, abs_m)
+        if key not in angular_cache:
+            angular_cache[key] = numpy.cos(abs_m * theta) if func == "cos" else numpy.sin(abs_m * theta)
+        return angular_cache[key]
 
-        # Construct the sets for the useful terms
-        precomputed_sets = core_create_precomputing_terms(n, m, rho_derivative, theta_derivative, flag_radial, float_type)
-        powers_exponents: numpy.ndarray = precomputed_sets[0] # dtype=numpy.integer
-        cosine_frequencies: numpy.ndarray = precomputed_sets[1] # dtype=numpy.integer
-        sine_frequencies: numpy.ndarray = precomputed_sets[2] # dtype=numpy.integer
-        factorials_integers: numpy.ndarray = precomputed_sets[3] # dtype=numpy.integer
-        max_n: numpy.integer = precomputed_sets[4]
-        max_m: numpy.integer = precomputed_sets[5]
+    COSINE_DERIVATIVE = {0: (1, "cos"), 1: (-1, "sin"), 2: (-1, "cos"), 3: (1, "sin")}
+    SINE_DERIVATIVE = {0: (1, "sin"), 1: (1, "cos"), 2: (-1, "sin"), 3: (-1, "cos")}
 
-        # Precompute the rho powers
-        rho_powers_indices_map: numpy.ndarray = numpy.zeros(max_n + 1, dtype=int_type) # dtype=numpy.integer
-        rho_powers_indices_map[powers_exponents] = numpy.arange(powers_exponents.size, dtype=int_type) # dtype=numpy.integer
-        rho_powers: numpy.ndarray = numpy.power(rho[..., numpy.newaxis], powers_exponents, dtype=float_type) # dtype=numpy.floating
-        assert rho_powers.dtype == float_type, "[pyzernike-core] Rho powers array has incorrect dtype."
+    output = numpy.empty((len(n),) + shape, dtype=dtype)
 
-        # Precompute the logarithm of the factorials
-        log_factorials_indices_map: numpy.ndarray = numpy.zeros((max_n + 1,), dtype=int_type) # dtype=numpy.integer
-        log_factorials_indices_map[factorials_integers] = numpy.arange(factorials_integers.size, dtype=int_type) # dtype=numpy.integer
-        log_factorials: numpy.ndarray = gammaln(factorials_integers + 1).astype(float_type) # dtype=numpy.floating
-        assert log_factorials.dtype == float_type, "[pyzernike-core] Log factorials array has incorrect dtype."
-
-        # If flag_radial is True, we do not compute the angular terms
-        if not flag_radial:
-
-            # Precompute the cosine terms
-            cosine_terms_indices_map: numpy.ndarray = numpy.zeros((max_m + 1,), dtype=int_type) # dtype=numpy.integer
-            cosine_terms_indices_map[cosine_frequencies] = numpy.arange(cosine_frequencies.size, dtype=int_type) # dtype=numpy.integer
-            cosine_terms: numpy.ndarray = numpy.cos(cosine_frequencies * theta[..., numpy.newaxis], dtype=float_type) # dtype=numpy.floating
-            assert cosine_terms.dtype == float_type, "[pyzernike-core] Cosine terms array has incorrect dtype."
-
-            # Precompute the sine terms
-            sine_terms_indices_map: numpy.ndarray = numpy.zeros((max_m + 1,), dtype=int_type) # dtype=numpy.integer
-            sine_terms_indices_map[sine_frequencies] = numpy.arange(sine_frequencies.size, dtype=int_type) # dtype=numpy.integer
-            sine_terms: numpy.ndarray = numpy.sin(sine_frequencies * theta[..., numpy.newaxis], dtype=float_type) # dtype=numpy.floating
-            assert sine_terms.dtype == float_type, "[pyzernike-core] Sine terms array has incorrect dtype."
-
-
-    # =================================================================
-    # Boucle over the polynomials to compute
-    # =================================================================
-    # Loop over the input lists to compute each polynomial
     for idx in range(len(n)):
+        n_idx = n[idx]
+        m_idx = m[idx]
+        abs_m_idx = abs(m_idx)
+        a = rho_derivative[idx]
+        b = 0 if flag_radial else theta_derivative[idx]
 
-        # Extract the n, m, rho_derivative
-        n_idx: numpy.integer = int_type(n[idx])
-        m_idx: numpy.integer = int_type(m[idx])
-        abs_m_idx: numpy.integer = int_type(abs(m_idx))
-        rho_derivative_idx: numpy.integer = int_type(rho_derivative[idx])
-
-        # Case of n < 0, (n - m) is odd or |m| > n
-        if n_idx < 0 or (n_idx - m_idx) % 2 != 0 or abs(m_idx) > n_idx:
-            output.append(numpy.zeros(shape, dtype=float_type))
+        if abs_m_idx > n_idx or (n_idx - m_idx) % 2 != 0 or a > n_idx \
+                or (flag_radial and m_idx < 0) or (m_idx == 0 and b > 0):
+            output[idx] = 0.0
             continue
 
-        # Case for derivatives of order greater than n_idx
-        if rho_derivative_idx > n_idx:
-            output.append(numpy.zeros(shape, dtype=float_type))
-            continue
+        coefficients = _radial_coefficients(n_idx, abs_m_idx, a)
+        lowest_exponent = n_idx - a - 2 * (len(coefficients) - 1)
 
-        # Case for radial polynomial and negative m
-        if flag_radial and m_idx < 0:
-            output.append(numpy.zeros(shape, dtype=float_type))
-            continue
+        result = output[idx]
+        result.fill(coefficients[0])
+        for coefficient in coefficients[1:]:
+            result *= rho_squared
+            result += float(coefficient)
+        if lowest_exponent > 0:
+            result *= _rho_power(lowest_exponent)
 
-        # Compute the number of terms of the radial polynomial
-        s: numpy.integer = min((n_idx - abs_m_idx) // 2, (n_idx - rho_derivative_idx) // 2)  # No computation for terms derivated more than the index of the polynomial
-        k: numpy.ndarray = numpy.arange(0, s + 1, dtype=int_type)  # dtype=numpy.integer
-
-        # Compute the coefficients of the radial polynomial
-        if precompute:
-            log_k_coef: numpy.ndarray = log_factorials[log_factorials_indices_map[n_idx - k]] - \
-                                        log_factorials[log_factorials_indices_map[k]] - \
-                                        log_factorials[log_factorials_indices_map[(n_idx + abs_m_idx) // 2 - k]] - \
-                                        log_factorials[log_factorials_indices_map[(n_idx - abs_m_idx) // 2 - k]] # dtype=numpy.floating
-        else:
-            log_k_coef: numpy.ndarray = gammaln(n_idx - k + 1).astype(float_type) - \
-                                        gammaln(k + 1).astype(float_type) - \
-                                        gammaln((n_idx + abs_m_idx) // 2 - k + 1).astype(float_type) - \
-                                        gammaln((n_idx - abs_m_idx) // 2 - k + 1).astype(float_type) # dtype=numpy.floating
-
-        sign = 1 - 2 * (k % 2) # dtype=numpy.integer
-
-        if rho_derivative_idx != 0:
-            if precompute:
-                log_k_coef += log_factorials[log_factorials_indices_map[n_idx - 2 * k]] - \
-                              log_factorials[log_factorials_indices_map[n_idx - 2 * k - rho_derivative_idx]] # dtype=numpy.floating
-            else:
-                log_k_coef += gammaln(n_idx - 2 * k + 1).astype(float_type) - \
-                              gammaln(n_idx - 2 * k - rho_derivative_idx + 1).astype(float_type) # dtype=numpy.floating
-                
-        # Assemble the coefficients
-        coef: numpy.ndarray = numpy.multiply(sign, numpy.exp(log_k_coef, dtype=float_type), dtype=float_type)  # dtype=numpy.floating
-        assert coef.dtype == float_type, "[pyzernike-core] Coefficients array has incorrect dtype."
-
-        # Compute the rho power terms
-        exponent: numpy.ndarray = n_idx - 2 * k - rho_derivative_idx # dtype=numpy.integer
-        if precompute:
-            rho_orders: numpy.ndarray = rho_powers[..., rho_powers_indices_map[exponent]] # dtype=numpy.floating
-        else:
-            rho_orders: numpy.ndarray = numpy.power(rho[..., numpy.newaxis], list(exponent)) # dtype=numpy.floating
-
-        # Assemble the radial polynomial
-        result: numpy.ndarray = numpy.tensordot(rho_orders, coef, axes=[[-1], [0]]) # dtype=numpy.floating
-
-        # Theta part of the Zernike polynomial if flag_radial is False
-        if not flag_radial:
-
-            # Extract the angular theta derivative
-            theta_derivative_idx: numpy.integer = theta_derivative[idx] # dtype=numpy.integer
-            
-            # According to the angular derivative, we compute the cosine factor
-            if m_idx == 0:
-                if theta_derivative_idx == 0:
-                    cosine: numpy.ndarray = float_type(1.0)
-                else:
-                    cosine: numpy.ndarray = float_type(0.0)
-                
-            if m_idx > 0:
-                if theta_derivative_idx == 0:
-                    cosine: numpy.ndarray = cosine_terms[..., cosine_terms_indices_map[abs(m_idx)]] if precompute else numpy.cos(m_idx * theta, dtype=float_type)
-                elif theta_derivative_idx % 4 == 0:
-                    if precompute:
-                        cosine: numpy.ndarray = (abs(m_idx) ** theta_derivative_idx) * cosine_terms[..., cosine_terms_indices_map[abs(m_idx)]]
-                    else:
-                        cosine: numpy.ndarray = (abs(m_idx) ** theta_derivative_idx) * numpy.cos(m_idx * theta, dtype=float_type)
-                elif theta_derivative_idx % 4 == 1:
-                    if precompute:
-                        cosine: numpy.ndarray = - (abs(m_idx) ** theta_derivative_idx) * sine_terms[..., sine_terms_indices_map[abs(m_idx)]]
-                    else:
-                        cosine: numpy.ndarray = - (abs(m_idx) ** theta_derivative_idx) * numpy.sin(m_idx * theta, dtype=float_type)
-                elif theta_derivative_idx % 4 == 2:
-                    if precompute:
-                        cosine: numpy.ndarray = - (abs(m_idx) ** theta_derivative_idx) * cosine_terms[..., cosine_terms_indices_map[abs(m_idx)]]
-                    else:
-                        cosine: numpy.ndarray = - (abs(m_idx) ** theta_derivative_idx) * numpy.cos(m_idx * theta, dtype=float_type)
-                else:
-                    if precompute:
-                        cosine: numpy.ndarray = (abs(m_idx) ** theta_derivative_idx) * sine_terms[..., sine_terms_indices_map[abs(m_idx)]]
-                    else:
-                        cosine: numpy.ndarray = (abs(m_idx) ** theta_derivative_idx) * numpy.sin(m_idx * theta, dtype=float_type)
-
-            if m_idx < 0:
-                if theta_derivative_idx == 0:
-                    cosine: numpy.ndarray = sine_terms[..., sine_terms_indices_map[abs(m_idx)]] if precompute else numpy.sin(abs(m_idx) * theta, dtype=float_type)
-                elif theta_derivative_idx % 4 == 0:
-                    if precompute:
-                        cosine: numpy.ndarray = (abs(m_idx) ** theta_derivative_idx) * sine_terms[..., sine_terms_indices_map[abs(m_idx)]]
-                    else:
-                        cosine: numpy.ndarray = (abs(m_idx) ** theta_derivative_idx) * numpy.sin(abs(m_idx) * theta, dtype=float_type)
-                elif theta_derivative_idx % 4 == 1:
-                    if precompute:
-                        cosine: numpy.ndarray = (abs(m_idx) ** theta_derivative_idx) * cosine_terms[..., cosine_terms_indices_map[abs(m_idx)]]
-                    else:
-                        cosine: numpy.ndarray = (abs(m_idx) ** theta_derivative_idx) * numpy.cos(abs(m_idx) * theta, dtype=float_type)
-                elif theta_derivative_idx % 4 == 2:
-                    if precompute:
-                        cosine: numpy.ndarray = - (abs(m_idx) ** theta_derivative_idx) * sine_terms[..., sine_terms_indices_map[abs(m_idx)]]
-                    else:
-                        cosine: numpy.ndarray = - (abs(m_idx) ** theta_derivative_idx) * numpy.sin(abs(m_idx) * theta, dtype=float_type)
-                else:
-                    if precompute:
-                        cosine: numpy.ndarray = - (abs(m_idx) ** theta_derivative_idx) * cosine_terms[..., cosine_terms_indices_map[abs(m_idx)]]
-                    else:
-                        cosine: numpy.ndarray = - (abs(m_idx) ** theta_derivative_idx) * numpy.cos(abs(m_idx) * theta, dtype=float_type)
-
-            # Multiply the radial polynomial by the cosine factor
-            cosine: numpy.ndarray = cosine.astype(float_type, copy=False)  # dtype=numpy.floating
-    
-            assert cosine.dtype == float_type, "[pyzernike-core] Cosine array has incorrect dtype."
-            assert result.dtype == float_type, "[pyzernike-core] Radial polynomial array has incorrect dtype."
-
-            numpy.multiply(result, cosine, dtype=float_type, out=result) # dtype=numpy.floating
-            
-            assert result.shape == rho.shape, "[pyzernike-core] Radial polynomial array has incorrect shape."
-
-        # Save the polynomial
-        output.append(result)
+        if not flag_radial and m_idx != 0:
+            sign, func = (COSINE_DERIVATIVE if m_idx > 0 else SINE_DERIVATIVE)[b % 4]
+            result *= _angular(func, abs_m_idx)
+            factor = sign * abs_m_idx ** b
+            if factor != 1:
+                result *= float(factor)
 
     return output
-
-

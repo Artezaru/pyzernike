@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pyzernike.xy_zernike_polynomial &#8212; pyzernike 2.3.1 documentation</title>
+    <title>pyzernike.xy_zernike_polynomial &#8212; pyzernike 3.0.0 documentation</title>
   
   
   
@@ -26,40 +26,47 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+  <link href="../../_static/styles/theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
   
   <!-- So that users can add custom icons -->
-  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <script defer src="../../_static/scripts/fontawesome.js?digest=a95f357e85573c9b56d5"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
-    <script src="../../_static/documentation_options.js?v=67b02a41"></script>
+    <script src="../../_static/documentation_options.js?v=acc74ff5"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/pyzernike/xy_zernike_polynomial';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
   </head>
-  
-  
-  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
-
+  <body data-default-mode="">
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
   
   <div id="pst-scroll-pixel-helper"></div>
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
-
+  
+  
+  
   
   <dialog id="pst-search-dialog">
     
@@ -85,7 +92,7 @@
 </div>
 
   
-    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
 <div class="bd-header__inner bd-page-width">
   <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
     <span class="fa-solid fa-bars"></span>
@@ -107,7 +114,7 @@
   
   
   
-    <p class="title logo__title">pyzernike 2.3.1 documentation</p>
+    <p class="title logo__title">pyzernike 3.0.0 documentation</p>
   
 </a></div>
     
@@ -169,11 +176,18 @@
       
         <div class="navbar-item">
 
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button></div>
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
       
     </div>
     
@@ -258,11 +272,18 @@
         
           <div class="navbar-item">
 
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button></div>
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
         
       </div>
     
@@ -326,487 +347,345 @@
   <h1>Source code for pyzernike.xy_zernike_polynomial</h1><div class="highlight"><pre>
 <span></span><span class="c1"># Copyright 2025 Artezaru</span>
 <span class="c1">#</span>
-<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the "License");</span>
 <span class="c1"># you may not use this file except in compliance with the License.</span>
 <span class="c1"># You may obtain a copy of the License at</span>
 <span class="c1">#</span>
 <span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
 <span class="c1">#</span>
 <span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
-<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># distributed under the License is distributed on an "AS IS" BASIS,</span>
 <span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
 <span class="c1"># See the License for the specific language governing permissions and</span>
 <span class="c1"># limitations under the License.</span>
 
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">numbers</span><span class="w"> </span><span class="kn">import</span> <span class="n">Integral</span><span class="p">,</span> <span class="n">Real</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">.core.core_polynomial</span><span class="w"> </span><span class="kn">import</span> <span class="n">core_polynomial</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">.core.core_cartesian_to_elliptic_annulus</span><span class="w"> </span><span class="kn">import</span> <span class="n">core_cartesian_to_elliptic_annulus</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">.core.core_corresponding_signed_integer_type</span><span class="w"> </span><span class="kn">import</span> <span class="n">core_corresponding_signed_integer_type</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">.core.parsing</span><span class="w"> </span><span class="kn">import</span> <span class="n">_as_common_floating_arrays</span><span class="p">,</span> <span class="n">_as_ellipse_parameters</span><span class="p">,</span> <span class="n">_broadcast_integers</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.core.core_polynomial</span><span class="w"> </span><span class="kn">import</span> <span class="n">_core_polynomials</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.core.cartesian_to_elliptic_annulus</span><span class="w"> </span><span class="kn">import</span> <span class="n">_cartesian_to_elliptic_annulus</span>
+
+<span class="n">Pair</span> <span class="o">=</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span>
+
+<span class="c1"># Cartesian derivative (dx, dy) -&gt; polar derivatives (a, b) of Z required by the chain rule</span>
+<span class="n">POLAR_DERIVATIVES</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Pair</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Pair</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)],</span>
+    <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)],</span>
+    <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)],</span>
+    <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)],</span>
+    <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)],</span>
+    <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)],</span>
+<span class="p">}</span>
+
+<span class="c1"># Cartesian derivative (dx, dy) -&gt; Cartesian derivatives of (rho_eq, theta_eq) required by the chain rule</span>
+<span class="n">COORDINATE_DERIVATIVES</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Pair</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Pair</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span> <span class="p">[],</span>
+    <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)],</span>
+    <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)],</span>
+    <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)],</span>
+    <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)],</span>
+    <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)],</span>
+<span class="p">}</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_chain_rule</span><span class="p">(</span>
+    <span class="n">derivative</span><span class="p">:</span> <span class="n">Pair</span><span class="p">,</span>
+    <span class="n">Z</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Pair</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
+    <span class="n">rho</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Pair</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
+    <span class="n">theta</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Pair</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""</span>
+<span class="sd">    Assemble a Cartesian derivative of :math:`Z(\rho_{eq}(x, y), \theta_{eq}(x, y))` with the chain rule.</span>
+
+<span class="sd">    For :math:`z, w \in \{x, y\}`:</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \frac{\partial Z}{\partial z} = Z_{\rho} \rho_{z} + Z_{\theta} \theta_{z}</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \frac{\partial^2 Z}{\partial z \partial w} = Z_{\rho\rho} \rho_{z} \rho_{w}</span>
+<span class="sd">        + Z_{\rho\theta} \left( \rho_{z} \theta_{w} + \theta_{z} \rho_{w} \right)</span>
+<span class="sd">        + Z_{\theta\theta} \theta_{z} \theta_{w}</span>
+<span class="sd">        + Z_{\rho} \rho_{zw} + Z_{\theta} \theta_{zw}</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    derivative : Tuple[int, int]</span>
+<span class="sd">        The Cartesian derivative orders ``(dx, dy)``, with :math:`dx + dy \leq 2`.</span>
+
+<span class="sd">    Z : Dict[Tuple[int, int], numpy.ndarray]</span>
+<span class="sd">        The polar derivatives of the polynomial, indexed by ``(a, b)`` (see ``POLAR_DERIVATIVES``).</span>
+
+<span class="sd">    rho, theta : Dict[Tuple[int, int], numpy.ndarray]</span>
+<span class="sd">        The Cartesian derivatives of :math:`\rho_{eq}` and :math:`\theta_{eq}`, indexed by ``(dx, dy)``</span>
+<span class="sd">        (see ``COORDINATE_DERIVATIVES``).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    numpy.ndarray</span>
+<span class="sd">        The Cartesian derivative of the polynomial.</span>
+
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">derivative</span> <span class="o">==</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Z</span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]</span>
+
+    <span class="k">if</span> <span class="nb">sum</span><span class="p">(</span><span class="n">derivative</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Z</span><span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]</span> <span class="o">*</span> <span class="n">rho</span><span class="p">[</span><span class="n">derivative</span><span class="p">]</span> <span class="o">+</span> <span class="n">Z</span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">*</span> <span class="n">theta</span><span class="p">[</span><span class="n">derivative</span><span class="p">]</span>
+
+    <span class="n">z</span><span class="p">,</span> <span class="n">w</span> <span class="o">=</span> <span class="p">{(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span> <span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))}[</span><span class="n">derivative</span><span class="p">]</span>
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="n">Z</span><span class="p">[(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]</span> <span class="o">*</span> <span class="n">rho</span><span class="p">[</span><span class="n">z</span><span class="p">]</span> <span class="o">*</span> <span class="n">rho</span><span class="p">[</span><span class="n">w</span><span class="p">]</span>
+        <span class="o">+</span> <span class="n">Z</span><span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">*</span> <span class="p">(</span><span class="n">rho</span><span class="p">[</span><span class="n">z</span><span class="p">]</span> <span class="o">*</span> <span class="n">theta</span><span class="p">[</span><span class="n">w</span><span class="p">]</span> <span class="o">+</span> <span class="n">theta</span><span class="p">[</span><span class="n">z</span><span class="p">]</span> <span class="o">*</span> <span class="n">rho</span><span class="p">[</span><span class="n">w</span><span class="p">])</span>
+        <span class="o">+</span> <span class="n">Z</span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)]</span> <span class="o">*</span> <span class="n">theta</span><span class="p">[</span><span class="n">z</span><span class="p">]</span> <span class="o">*</span> <span class="n">theta</span><span class="p">[</span><span class="n">w</span><span class="p">]</span>
+        <span class="o">+</span> <span class="n">Z</span><span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]</span> <span class="o">*</span> <span class="n">rho</span><span class="p">[</span><span class="n">derivative</span><span class="p">]</span>
+        <span class="o">+</span> <span class="n">Z</span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">*</span> <span class="n">theta</span><span class="p">[</span><span class="n">derivative</span><span class="p">]</span>
+    <span class="p">)</span>
+
 
 <div class="viewcode-block" id="xy_zernike_polynomial">
 <a class="viewcode-back" href="../../api_doc/xy_zernike_polynomial.html#pyzernike.xy_zernike_polynomial">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">xy_zernike_polynomial</span><span class="p">(</span>
     <span class="n">x</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
     <span class="n">y</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
-    <span class="n">n</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Integral</span><span class="p">]],</span>
-    <span class="n">m</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Integral</span><span class="p">]],</span>
-    <span class="n">Rx</span><span class="p">:</span> <span class="n">Real</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> 
-    <span class="n">Ry</span><span class="p">:</span> <span class="n">Real</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> 
-    <span class="n">x0</span><span class="p">:</span> <span class="n">Real</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> 
-    <span class="n">y0</span><span class="p">:</span> <span class="n">Real</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> 
-    <span class="n">alpha</span><span class="p">:</span> <span class="n">Real</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> 
-    <span class="n">h</span><span class="p">:</span> <span class="n">Real</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> 
-    <span class="n">x_derivative</span><span class="p">:</span>  <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Integral</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">y_derivative</span><span class="p">:</span>  <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Integral</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">n</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Integral</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Integral</span><span class="p">],</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
+    <span class="n">m</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Integral</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Integral</span><span class="p">],</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
+    <span class="n">Rx</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Real</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">Ry</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Real</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">x0</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Real</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+    <span class="n">y0</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Real</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Real</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+    <span class="n">h</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Real</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+    <span class="n">x_derivative</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Integral</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Integral</span><span class="p">],</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">y_derivative</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Integral</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Integral</span><span class="p">],</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
     <span class="n">default</span><span class="p">:</span> <span class="n">Real</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
     <span class="n">precompute</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Computes the Zernike polynomial :math:`Z_{n}^{m}(\rho_{eq}, \theta_{eq})` for given cartesian coordinates :math:`(x, y)` on an elliptic annulus domain.</span>
-
-<span class="sd">    .. seealso::</span>
-
-<span class="sd">        - :func:`pyzernike.zernike_polynomial` for computing the Zernike polynomial :math:`Z_{n}^{m}` for polar coordinates :math:`(\rho, \theta)`. </span>
-<span class="sd">        - :func:`pyzernike.cartesian_to_elliptic_annulus` to convert Cartesian coordinates to elliptic annulus domain polar coordinates.</span>
-<span class="sd">        - The page :doc:`../../mathematical_description` in the documentation for the mathematical extension of the Zernike polynomials on the elliptic domain.</span>
-
-<span class="sd">    .. seealso::</span>
-
-<span class="sd">        For the mathematical development of the method, see the paper `Generalization of Zernike polynomials for regular portions of circles and ellipses` by Rafael Navarro, José L. López, José Rx. Díaz, and Ester Pérez Sinusía.</span>
-<span class="sd">        The associated paper is available in the resources folder of the package.</span>
-
-<span class="sd">        Download the PDF : :download:`PDF &lt;../../../pyzernike/resources/Navarro and al. Generalization of Zernike polynomials for regular portions of circles and ellipses.pdf&gt;`</span>
-
-<span class="sd">    Lets consider the extended elliptic annulus domain defined by the following parameters:</span>
+    <span class="n">to_list</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""</span>
+<span class="sd">    Compute the Zernike polynomials on an elliptic annulus for Cartesian coordinates :math:`(x, y)`, and</span>
+<span class="sd">    their first and second derivatives with respect to :math:`x` and :math:`y`.</span>
 
 <span class="sd">    .. figure:: ../../../pyzernike/resources/elliptic_annulus_domain.png</span>
 <span class="sd">        :width: 400px</span>
 <span class="sd">        :align: center</span>
 
-<span class="sd">        The parameters to define the extended domain of the Zernike polynomial.</span>
+<span class="sd">        The parameters of the elliptic annulus domain.</span>
 
-<span class="sd">    The parameters are:</span>
+<span class="sd">    The Zernike polynomials are extended to an elliptic annulus [1]_ by evaluating them at the equivalent</span>
+<span class="sd">    polar coordinates :math:`(\rho_{eq}, \theta_{eq})` of the point (see :func:`pyzernike.cartesian_to_elliptic_annulus`):</span>
 
-<span class="sd">    - :math:`R_x` and :math:`R_y` are the lengths of the semi-axis of the ellipse.</span>
-<span class="sd">    - :math:`x_0` and :math:`y_0` are the coordinates of the center of the ellipse.</span>
-<span class="sd">    - :math:`\alpha` is the rotation angle of the ellipse in radians.</span>
-<span class="sd">    - :math:`h=\frac{a}{R_x}=\frac{b}{R_y}` defining the inner boundary of the ellipse.</span>
+<span class="sd">    .. math::</span>
 
-<span class="sd">    The Zernike polynomial :math:`Z_{n}^{m}(\rho_{eq}, \theta_{eq})` is computed for the equivalent polar coordinates.</span>
-<span class="sd">    </span>
-<span class="sd">    This function allows to compute several Zernike polynomials at once for different sets of (order, azimuthal frequency, derivative orders) given as sequences,</span>
-<span class="sd">    which can be more efficient than calling the polynomial function multiple times.</span>
+<span class="sd">        Zxy_{n}^{m}(x, y) = Z_{n}^{m}\left(\rho_{eq}(x, y), \theta_{eq}(x, y)\right)</span>
 
-<span class="sd">    - The parameters ``x`` and ``y`` must be numpy arrays of the same shape.</span>
-<span class="sd">    - The parameters ``n``, ``m``, ``x_derivative`` and ``y_derivative`` must be sequences of integers with the same length.</span>
+<span class="sd">    The derivatives with respect to :math:`x` and :math:`y` are obtained with the chain rule. For</span>
+<span class="sd">    :math:`z, w \in \{x, y\}`:</span>
 
-<span class="sd">    The output is a list of numpy arrays, each containing the values of the Zernike polynomial for the corresponding order and azimuthal frequency.</span>
-<span class="sd">    The list has the same length as the input sequences and the arrays have the same shape as ``x``.</span>
+<span class="sd">    .. math::</span>
 
-<span class="sd">    .. note::</span>
+<span class="sd">        \frac{\partial Zxy_{n}^{m}}{\partial z} = \frac{\partial Z_{n}^{m}}{\partial \rho} \frac{\partial \rho_{eq}}{\partial z} + \frac{\partial Z_{n}^{m}}{\partial \theta} \frac{\partial \theta_{eq}}{\partial z}</span>
 
-<span class="sd">        If the input ``x`` or ``y`` are not floating point numpy arrays, it is converted to one with ``numpy.float64`` dtype.</span>
-<span class="sd">        If the input ``x`` or ``y`` are floating point numpy arrays (ex: ``numpy.float32``), the computation will be done in ``numpy.float32``.</span>
-<span class="sd">        If the input ``x`` and ``y`` are not of the same dtype, they are both converted to ``numpy.float64``.</span>
+<span class="sd">    .. math::</span>
 
-<span class="sd">    .. warning::</span>
+<span class="sd">        \frac{\partial^2 Zxy_{n}^{m}}{\partial z \partial w} =</span>
+<span class="sd">        \frac{\partial^2 Z_{n}^{m}}{\partial \rho^2} \frac{\partial \rho_{eq}}{\partial z} \frac{\partial \rho_{eq}}{\partial w}</span>
+<span class="sd">        + \frac{\partial^2 Z_{n}^{m}}{\partial \rho \partial \theta} \left( \frac{\partial \rho_{eq}}{\partial z} \frac{\partial \theta_{eq}}{\partial w} + \frac{\partial \theta_{eq}}{\partial z} \frac{\partial \rho_{eq}}{\partial w} \right)</span>
+<span class="sd">        + \frac{\partial^2 Z_{n}^{m}}{\partial \theta^2} \frac{\partial \theta_{eq}}{\partial z} \frac{\partial \theta_{eq}}{\partial w}</span>
+<span class="sd">        + \frac{\partial Z_{n}^{m}}{\partial \rho} \frac{\partial^2 \rho_{eq}}{\partial z \partial w}</span>
+<span class="sd">        + \frac{\partial Z_{n}^{m}}{\partial \theta} \frac{\partial^2 \theta_{eq}}{\partial z \partial w}</span>
 
-<span class="sd">        The only available derivatives are the first and second order derivatives with respect to x or y independently (jacobian and hessian matrix).</span>
-<span class="sd">        For more complex derivatives, please implement the Faa di Bruno&#39;s formula using the standard Zernike polynomial function with polar coordinates.</span>
+<span class="sd">    The available derivatives ``(x_derivative, y_derivative)`` are ``(0, 0)``, ``(1, 0)``, ``(0, 1)``</span>
+<span class="sd">    (gradient), and ``(2, 0)``, ``(0, 2)``, ``(1, 1)`` (Hessian matrix). For higher orders, use</span>
+<span class="sd">    :func:`pyzernike.cartesian_to_elliptic_annulus` and :func:`pyzernike.zernike_polynomial` with the</span>
+<span class="sd">    Faà di Bruno's formula.</span>
 
-<span class="sd">        - Available derivatives (:math:(dx, dy)): (0, 0), (1, 0), (0, 1), (2, 0), (0, 2), (1, 1).</span>
+<span class="sd">    - If :math:`|m| &gt; n` or :math:`n - m` is odd, the polynomial is zero.</span>
+<span class="sd">    - Where the point is outside the elliptic annulus (:math:`\rho_{eq}` outside :math:`[0, 1]`), or the</span>
+<span class="sd">      coordinates are not finite, the output is set to ``default``.</span>
+
+<span class="sd">    **Shape of the inputs and of the output.** ``n``, ``m``, ``x_derivative`` and ``y_derivative`` can</span>
+<span class="sd">    each be a single integer or a sequence of integers (list, tuple or 1D numpy array):</span>
+
+<span class="sd">    - If all of them are integers, a single polynomial is computed and returned as an array with the</span>
+<span class="sd">      shape of ``x``.</span>
+<span class="sd">    - If at least one of them is a sequence, the integers are repeated to the length :math:`N` of the</span>
+<span class="sd">      sequences (which must all have the same length), and :math:`N` polynomials are computed. They are</span>
+<span class="sd">      returned as a list of :math:`N` arrays with the shape of ``x`` (``to_list=True``), or as a single</span>
+<span class="sd">      array of shape :math:`(N, \dots)` (``to_list=False``).</span>
+
+<span class="sd">    .. seealso::</span>
+
+<span class="sd">        - :func:`pyzernike.zernike_polynomial` to compute the Zernike polynomials in polar coordinates.</span>
+<span class="sd">        - :func:`pyzernike.cartesian_to_elliptic_annulus` to compute the equivalent polar coordinates.</span>
+<span class="sd">        - The page :doc:`../../mathematical_description` for the extension of the Zernike polynomials to the elliptic annulus.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    x : numpy.ndarray</span>
-<span class="sd">        The x coordinates in Cartesian system with shape (...,).</span>
+<span class="sd">        The x Cartesian coordinates with any shape ``(...)``.</span>
 
 <span class="sd">    y : numpy.ndarray</span>
-<span class="sd">        The y coordinates in Cartesian system with shape (...,).</span>
+<span class="sd">        The y Cartesian coordinates with the same shape as ``x``.</span>
+<span class="sd">        If ``x`` and ``y`` are floating point arrays of the same dtype (e.g. ``numpy.float32``), this</span>
+<span class="sd">        dtype is kept. Otherwise, both are converted to ``numpy.float64``.</span>
 
-<span class="sd">    n : Sequence[Integral] or numpy.array</span>
-<span class="sd">        A sequence (List, Tuple) or 1D numpy array of the radial order(s) of the Zernike polynomial(s) to compute. Must be non-negative integers.</span>
+<span class="sd">    n : Union[Integral, Sequence[Integral], numpy.ndarray]</span>
+<span class="sd">        The radial order(s) :math:`n`.</span>
 
-<span class="sd">    m : Sequence[Integral] or numpy.array</span>
-<span class="sd">        A sequence (List, Tuple) or 1D numpy array of the azimuthal frequency(ies) of the Zernike polynomial(s) to compute. Must be non-negative integers.</span>
+<span class="sd">    m : Union[Integral, Sequence[Integral], numpy.ndarray]</span>
+<span class="sd">        The azimuthal frequency(ies) :math:`m`.</span>
 
-<span class="sd">    Rx : Real, optional</span>
-<span class="sd">        The length of the semi-axis of the ellipse along x axis. Must be strictly positive.</span>
-<span class="sd">        The default is 1.0, which corresponds to the unit circle.</span>
+<span class="sd">    Rx : Optional[Real], optional</span>
+<span class="sd">        The semi-axis :math:`R_x` of the ellipse along its x axis. Must be strictly positive. Default is 1.0.</span>
 
-<span class="sd">    Ry : Real, optional</span>
-<span class="sd">        The length of the semi-axis of the ellipse along y axis. Must be strictly positive.</span>
-<span class="sd">        The default is 1.0, which corresponds to the unit circle.</span>
+<span class="sd">    Ry : Optional[Real], optional</span>
+<span class="sd">        The semi-axis :math:`R_y` of the ellipse along its y axis. Must be strictly positive. Default is 1.0.</span>
 
-<span class="sd">    x0 : Real, optional</span>
-<span class="sd">        The x coordinate of the center of the ellipse. Can be any real number.</span>
-<span class="sd">        The default is 0.0, which corresponds to an ellipse centered at the origin.</span>
+<span class="sd">    x0 : Optional[Real], optional</span>
+<span class="sd">        The x coordinate :math:`x_0` of the center of the ellipse. Default is 0.0.</span>
 
-<span class="sd">    y0 : Real, optional</span>
-<span class="sd">        The y coordinate of the center of the ellipse. Can be any real number.</span>
-<span class="sd">        The default is 0.0, which corresponds to an ellipse centered at the origin.</span>
+<span class="sd">    y0 : Optional[Real], optional</span>
+<span class="sd">        The y coordinate :math:`y_0` of the center of the ellipse. Default is 0.0.</span>
 
-<span class="sd">    alpha : Real, optional</span>
-<span class="sd">        The rotation angle of the ellipse in radians. Can be any real number.</span>
-<span class="sd">        The default is 0.0, such as :math:`x` and :math:`y` axis are aligned with the ellipse axes.</span>
+<span class="sd">    alpha : Optional[Real], optional</span>
+<span class="sd">        The rotation angle :math:`\alpha` of the ellipse in radians. Default is 0.0.</span>
 
-<span class="sd">    h : Real, optional</span>
-<span class="sd">        The ratio of the inner semi-axis to the outer semi-axis. Must be in the range [0, 1).</span>
-<span class="sd">        The default is 0.0, which corresponds to a filled ellipse.</span>
+<span class="sd">    h : Optional[Real], optional</span>
+<span class="sd">        The ratio :math:`h` of the inner to the outer semi-axes, in :math:`[0, 1)`. Default is 0.0 (full ellipse).</span>
 
-<span class="sd">    x_derivative : Optional[Union[Sequence[Integral], numpy.array]], optional</span>
-<span class="sd">        A sequence (List, Tuple) or 1D numpy array of the order(s) of the x derivative(s) to compute. Must be non-negative integers.</span>
-<span class="sd">        If None, is it assumed that x_derivative is 0 for all polynomials.</span>
+<span class="sd">    x_derivative : Optional[Union[Integral, Sequence[Integral], numpy.ndarray]], optional</span>
+<span class="sd">        The order(s) of the derivative with respect to :math:`x`. Default is 0 (no derivative).</span>
 
-<span class="sd">    y_derivative : Optional[Union[Sequence[Integral], numpy.array]], optional</span>
-<span class="sd">        A sequence (List, Tuple) or 1D numpy array of the order(s) of the y derivative(s) to compute. Must be non-negative integers.</span>
-<span class="sd">        If None, is it assumed that y_derivative is 0 for all polynomials.</span>
+<span class="sd">    y_derivative : Optional[Union[Integral, Sequence[Integral], numpy.ndarray]], optional</span>
+<span class="sd">        The order(s) of the derivative with respect to :math:`y`. Default is 0 (no derivative).</span>
 
 <span class="sd">    default : Real, optional</span>
-<span class="sd">        The default value to use for points outside the elliptic annulus domain. Must be a real number.</span>
-<span class="sd">        The default is numpy.nan.</span>
+<span class="sd">        The value set outside the elliptic annulus or where the coordinates are not finite. Default is ``numpy.nan``.</span>
 
 <span class="sd">    precompute : bool, optional</span>
-<span class="sd">        If True, precomputes the useful terms for better performance when computing multiple polynomials with the same rho values.</span>
-<span class="sd">        If False, computes the useful terms on the fly for each polynomial to avoid memory overhead.</span>
-<span class="sd">        The default is True.</span>
+<span class="sd">        If True, the powers of :math:`\rho` and the cosine and sine terms are cached and shared between the</span>
+<span class="sd">        polynomials, which is faster when several polynomials are computed at once. If False, they are</span>
+<span class="sd">        recomputed for each polynomial, which uses less memory. Default is True.</span>
 
+<span class="sd">    to_list : bool, optional</span>
+<span class="sd">        Only used when several polynomials are computed. If True, the output is a list of arrays.</span>
+<span class="sd">        If False, the output is a single array of shape :math:`(N, \dots)`. Default is True.</span>
+
+<span class="sd">    None is accepted for all the parameters of the ellipse and for the derivative orders, and means the default value.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    List[numpy.ndarray]</span>
-<span class="sd">        A list of numpy arrays containing the Zernike polynomial values for each order and azimuthal frequency.</span>
-<span class="sd">        Each array has the same shape as ``x``.</span>
+<span class="sd">    Union[numpy.ndarray, List[numpy.ndarray]]</span>
+<span class="sd">        - If ``n``, ``m``, ``x_derivative`` and ``y_derivative`` are integers: an array with the shape of ``x``.</span>
+<span class="sd">        - Otherwise, if ``to_list`` is True: a list of :math:`N` arrays with the shape of ``x``.</span>
+<span class="sd">        - Otherwise: an array of shape :math:`(N, \dots)`, where ``output[i]`` corresponds to</span>
+<span class="sd">          ``(n[i], m[i], x_derivative[i], y_derivative[i])``.</span>
+
+<span class="sd">        The dtype is the common floating point dtype of ``x`` and ``y`` (``numpy.float64`` by default).</span>
 
 <span class="sd">    Raises</span>
 <span class="sd">    ------</span>
 <span class="sd">    TypeError</span>
-<span class="sd">        If the x or y values can not be converted to a numpy array of floating points values.</span>
-<span class="sd">        If n, m, x_derivative or y_derivative (if not None) are not sequences of integers.</span>
+<span class="sd">        If ``x`` or ``y`` can not be converted to a floating point array, if a parameter of the ellipse</span>
+<span class="sd">        or ``default`` is not a real number, if ``n``, ``m``, ``x_derivative`` or ``y_derivative`` is not</span>
+<span class="sd">        an integer or a sequence of integers, or if ``precompute`` or ``to_list`` is not a boolean.</span>
 
 <span class="sd">    ValueError</span>
-<span class="sd">        If the x and y do not have the same shape.</span>
-<span class="sd">        If the lengths of n, m, x_derivative and y_derivative (if not None) are not the same.</span>
-<span class="sd">        If Rx or Ry are not strictly positive.</span>
-<span class="sd">        If h is not in the range [0, 1[.</span>
-<span class="sd">        If the derivative orders are higher than 2 or mixed (ex: (1, 1)).</span>
+<span class="sd">        If ``x`` and ``y`` do not have the same shape, if ``Rx`` or ``Ry`` is not strictly positive, if</span>
+<span class="sd">        ``h`` is not in :math:`[0, 1)`, if the sequences do not have the same length, or if a derivative</span>
+<span class="sd">        ``(x_derivative, y_derivative)`` is not available.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    .. [1] R. Navarro et al., "Generalization of Zernike polynomials for regular portions of circles</span>
+<span class="sd">       and ellipses," Optics Express 22(18), 21263-21279 (2014). https://doi.org/10.1364/OE.22.021263</span>
 
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
-<span class="sd">    Let&#39;s consider a full circle with a radius of 10 centered at the origin (1, 1).</span>
-<span class="sd">    The value of the zernike polynomial :math:`Z_{2}^{0}` at the point (x, y) is given by:</span>
+<span class="sd">    Compute the defocus :math:`Z_{2}^{0}` on a circle of radius 10 centered at :math:`(1, 1)`:</span>
 
 <span class="sd">    .. code-block:: python</span>
 
 <span class="sd">        import numpy</span>
-<span class="sd">        from pyzernike import xy_zernike_polynomial # or Zxy</span>
-<span class="sd">        x = numpy.linspace(-10, 10, 100)</span>
-<span class="sd">        y = numpy.linspace(-10, 10, 100)</span>
-<span class="sd">        X, Y = numpy.meshgrid(x, y)</span>
+<span class="sd">        from pyzernike import xy_zernike_polynomial</span>
 
-<span class="sd">        output = xy_zernike_polynomial(X, Y, n=[2], m=[0], Rx=10, Ry=10, x0=1.0, y0=1.0) # List with a single numpy array</span>
-<span class="sd">        zernike_n2_m0 = output[0] # Shape similar to X and Y</span>
+<span class="sd">        X, Y = numpy.meshgrid(numpy.linspace(-10, 10, 100), numpy.linspace(-10, 10, 100))</span>
+<span class="sd">        Z20 = xy_zernike_polynomial(X, Y, n=2, m=0, Rx=10, Ry=10, x0=1.0, y0=1.0)  # array of shape (100, 100)</span>
 
-<span class="sd">    returns a list with a single numpy array containing the values of the Zernike polynomial :math:`Z_{2}^{0}` at the points (X, Y) within the circle of radius 10.</span>
-
-<span class="sd">    To compute the first derivative with respect to x and y, we can use:</span>
+<span class="sd">    Compute its gradient and its Hessian matrix (``n`` and ``m`` are repeated):</span>
 
 <span class="sd">    .. code-block:: python</span>
 
-<span class="sd">        output = xy_zernike_polynomial(X, Y, n=[2, 2], m=[0, 0], Rx=10, Ry=10, x0=1.0, y0=1.0, x_derivative=[1, 0], y_derivative=[0, 1]) # List with two numpy arrays</span>
-<span class="sd">        zernike_n2_m0_dx = output[0] # First derivative with respect to x</span>
-<span class="sd">        zernike_n2_m0_dy = output[1] # First derivative with respect to y</span>
-<span class="sd">    </span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># Convert x and y to numpy arrays of floating point values</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
-        <span class="n">y</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+<span class="sd">        dZ_dx, dZ_dy = xy_zernike_polynomial(X, Y, n=2, m=0, Rx=10, Ry=10, x0=1.0, y0=1.0, x_derivative=[1, 0], y_derivative=[0, 1])</span>
+<span class="sd">        d2Z_dx2, d2Z_dy2, d2Z_dxdy = xy_zernike_polynomial(X, Y, n=2, m=0, Rx=10, Ry=10, x0=1.0, y0=1.0, x_derivative=[2, 0, 1], y_derivative=[0, 2, 1])</span>
 
-    <span class="c1"># Convert x and y in arrays of floating point values if they are not already</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">numpy</span><span class="o">.</span><span class="n">issubdtype</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">floating</span><span class="p">):</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">numpy</span><span class="o">.</span><span class="n">issubdtype</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">floating</span><span class="p">):</span>
-        <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
-
-    <span class="c1"># If x and y are not of the same dtype, convert them to float64</span>
-    <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="n">y</span><span class="o">.</span><span class="n">dtype</span><span class="p">:</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
-        <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
-
-    <span class="c1"># Check that x and y have the same shape</span>
-    <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;x and y must have the same shape.&quot;</span><span class="p">)</span>
-
-    <span class="c1"># Determine the float type</span>
-    <span class="n">float_type</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span>
-    <span class="n">int_type</span> <span class="o">=</span> <span class="n">core_corresponding_signed_integer_type</span><span class="p">(</span><span class="n">float_type</span><span class="p">)</span>
-
-    <span class="c1"># Check the input parameters</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="p">(</span><span class="n">Sequence</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">))</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">Integral</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">n</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;n must be a sequence or a 1D array of integers.&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="p">(</span><span class="n">Sequence</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">))</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">Integral</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">m</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;m must be a sequence or a 1D array of integers.&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">x_derivative</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x_derivative</span><span class="p">,</span> <span class="p">(</span><span class="n">Sequence</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">))</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">Integral</span><span class="p">)</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">x_derivative</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;x_derivative must be a sequence or a 1D array of non-negative integers.&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">y_derivative</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">y_derivative</span><span class="p">,</span> <span class="p">(</span><span class="n">Sequence</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">))</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">Integral</span><span class="p">)</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">y_derivative</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;y_derivative must be a sequence or a 1D array of non-negative integers.&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">Rx</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">Rx</span><span class="p">,</span> <span class="n">Real</span><span class="p">)</span> <span class="ow">or</span> <span class="n">Rx</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Rx must be a positive real number.&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">Ry</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">Ry</span><span class="p">,</span> <span class="n">Real</span><span class="p">)</span> <span class="ow">or</span> <span class="n">Ry</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Ry must be a positive real number.&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">x0</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">Real</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;x0 must be a real number.&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">y0</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">y0</span><span class="p">,</span> <span class="n">Real</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;y0 must be a real number.&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">alpha</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">Real</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Alpha must be a real number.&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">h</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">Real</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">h</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;h must be a real number in the range [0, 1[.&quot;</span><span class="p">)</span>
+<span class="sd">    """</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">_as_common_floating_arrays</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">Rx</span><span class="p">,</span> <span class="n">Ry</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">_as_ellipse_parameters</span><span class="p">(</span><span class="n">Rx</span><span class="p">,</span> <span class="n">Ry</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">default</span><span class="p">,</span> <span class="n">Real</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Default value must be a real number.&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"default must be a real number."</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">precompute</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;precompute must be a boolean.&quot;</span><span class="p">)</span>
-    
-    
-    <span class="c1"># Convert rho_derivative to arrays for length checking</span>
-    <span class="n">n</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">int_type</span><span class="p">)</span>
-    <span class="n">m</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">int_type</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">x_derivative</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">x_derivative</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x_derivative</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">int_type</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">x_derivative</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">int_type</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">y_derivative</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">y_derivative</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">y_derivative</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">int_type</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">y_derivative</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">int_type</span><span class="p">)</span>
-    
-    <span class="c1"># Check lengths</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">n</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;n must be a sequence or a 1D array of integers.&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">m</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;m must be a sequence or a 1D array of integers.&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">x_derivative</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;x_derivative must be a sequence or a 1D array of integers.&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">y_derivative</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;y_derivative must be a sequence or a 1D array of integers.&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="n">m</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span><span class="n">x_derivative</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="n">y_derivative</span><span class="o">.</span><span class="n">size</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;n, m, x_derivative (if given) and y_derivative (if given) must have the same length.&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"precompute must be a boolean."</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">to_list</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"to_list must be a boolean."</span><span class="p">)</span>
 
-    <span class="c1"># Check that the derivative orders are supported</span>
-    <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x_derivative</span><span class="p">)):</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">x_derivative</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">y_derivative</span><span class="p">[</span><span class="n">index</span><span class="p">])</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The function supports only the derivatives (0, 0), (1, 0), (0, 1), (2, 0), (0, 2), and (1, 1). For more complex derivatives, use the standard Zernike polynomial function with polar coordinates.&quot;</span><span class="p">)</span>
-        
-    <span class="c1"># Convert the float parameters to the correct type</span>
-    <span class="k">if</span> <span class="n">Rx</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">Rx</span> <span class="o">=</span> <span class="n">float_type</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">Rx</span> <span class="o">=</span> <span class="n">float_type</span><span class="p">(</span><span class="n">Rx</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">x_derivative</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">x_derivative</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="n">y_derivative</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">y_derivative</span> <span class="o">=</span> <span class="mi">0</span>
 
-    <span class="k">if</span> <span class="n">Ry</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">Ry</span> <span class="o">=</span> <span class="n">float_type</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">Ry</span> <span class="o">=</span> <span class="n">float_type</span><span class="p">(</span><span class="n">Ry</span><span class="p">)</span>
+    <span class="n">indices</span><span class="p">,</span> <span class="n">single</span> <span class="o">=</span> <span class="n">_broadcast_integers</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="n">m</span><span class="p">,</span> <span class="n">x_derivative</span><span class="o">=</span><span class="n">x_derivative</span><span class="p">,</span> <span class="n">y_derivative</span><span class="o">=</span><span class="n">y_derivative</span><span class="p">)</span>
+    <span class="n">derivatives</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">indices</span><span class="p">[</span><span class="s2">"x_derivative"</span><span class="p">],</span> <span class="n">indices</span><span class="p">[</span><span class="s2">"y_derivative"</span><span class="p">]))</span>
+    <span class="k">for</span> <span class="n">derivative</span> <span class="ow">in</span> <span class="n">derivatives</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">derivative</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">POLAR_DERIVATIVES</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"The derivative (x_derivative, y_derivative) = </span><span class="si">{</span><span class="n">derivative</span><span class="si">}</span><span class="s2"> is not available. "</span>
+                <span class="s2">"The available derivatives are (0, 0), (1, 0), (0, 1), (2, 0), (0, 2) and (1, 1)."</span>
+            <span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">x0</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">x0</span> <span class="o">=</span> <span class="n">float_type</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">x0</span> <span class="o">=</span> <span class="n">float_type</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span>
+    <span class="n">coordinate_derivatives</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">({(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)}</span> <span class="o">|</span> <span class="p">{</span><span class="n">pair</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">derivatives</span> <span class="k">for</span> <span class="n">pair</span> <span class="ow">in</span> <span class="n">COORDINATE_DERIVATIVES</span><span class="p">[</span><span class="n">d</span><span class="p">]})</span>
+    <span class="n">float_type</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span>
+    <span class="n">rho_list</span><span class="p">,</span> <span class="n">theta_list</span> <span class="o">=</span> <span class="n">_cartesian_to_elliptic_annulus</span><span class="p">(</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span>
+        <span class="n">float_type</span><span class="p">(</span><span class="n">Rx</span><span class="p">),</span> <span class="n">float_type</span><span class="p">(</span><span class="n">Ry</span><span class="p">),</span> <span class="n">float_type</span><span class="p">(</span><span class="n">x0</span><span class="p">),</span> <span class="n">float_type</span><span class="p">(</span><span class="n">y0</span><span class="p">),</span> <span class="n">float_type</span><span class="p">(</span><span class="n">alpha</span><span class="p">),</span> <span class="n">float_type</span><span class="p">(</span><span class="n">h</span><span class="p">),</span>
+        <span class="p">[</span><span class="n">dx</span> <span class="k">for</span> <span class="n">dx</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">coordinate_derivatives</span><span class="p">],</span>
+        <span class="p">[</span><span class="n">dy</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">dy</span> <span class="ow">in</span> <span class="n">coordinate_derivatives</span><span class="p">],</span>
+    <span class="p">)</span>
+    <span class="n">rho_eq</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">coordinate_derivatives</span><span class="p">,</span> <span class="n">rho_list</span><span class="p">))</span>
+    <span class="n">theta_eq</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">coordinate_derivatives</span><span class="p">,</span> <span class="n">theta_list</span><span class="p">))</span>
 
-    <span class="k">if</span> <span class="n">y0</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">y0</span> <span class="o">=</span> <span class="n">float_type</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">y0</span> <span class="o">=</span> <span class="n">float_type</span><span class="p">(</span><span class="n">y0</span><span class="p">)</span>
+    <span class="n">valid_mask</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">rho_eq</span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)])</span> <span class="o">&amp;</span> <span class="n">numpy</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">theta_eq</span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)])</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">rho_eq</span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">rho_eq</span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">rho_valid</span> <span class="o">=</span> <span class="p">{</span><span class="n">pair</span><span class="p">:</span> <span class="n">value</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">]</span> <span class="k">for</span> <span class="n">pair</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">rho_eq</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+    <span class="n">theta_valid</span> <span class="o">=</span> <span class="p">{</span><span class="n">pair</span><span class="p">:</span> <span class="n">value</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">]</span> <span class="k">for</span> <span class="n">pair</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">theta_eq</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
 
-    <span class="k">if</span> <span class="n">alpha</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">alpha</span> <span class="o">=</span> <span class="n">float_type</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">alpha</span> <span class="o">=</span> <span class="n">float_type</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span>
+    <span class="n">polar_keys</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">({(</span><span class="n">n_i</span><span class="p">,</span> <span class="n">m_i</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="k">for</span> <span class="n">n_i</span><span class="p">,</span> <span class="n">m_i</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">indices</span><span class="p">[</span><span class="s2">"n"</span><span class="p">],</span> <span class="n">indices</span><span class="p">[</span><span class="s2">"m"</span><span class="p">],</span> <span class="n">derivatives</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">POLAR_DERIVATIVES</span><span class="p">[</span><span class="n">d</span><span class="p">]})</span>
+    <span class="n">polar_values</span> <span class="o">=</span> <span class="n">_core_polynomials</span><span class="p">(</span>
+        <span class="n">rho_valid</span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)],</span>
+        <span class="n">theta_valid</span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)],</span>
+        <span class="p">[</span><span class="n">key</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">polar_keys</span><span class="p">],</span>
+        <span class="p">[</span><span class="n">key</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">polar_keys</span><span class="p">],</span>
+        <span class="p">[</span><span class="n">key</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">polar_keys</span><span class="p">],</span>
+        <span class="p">[</span><span class="n">key</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">polar_keys</span><span class="p">],</span>
+        <span class="kc">False</span><span class="p">,</span>
+        <span class="n">precompute</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">polar</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">polar_keys</span><span class="p">,</span> <span class="n">polar_values</span><span class="p">))</span>
 
-    <span class="k">if</span> <span class="n">h</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">h</span> <span class="o">=</span> <span class="n">float_type</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">h</span> <span class="o">=</span> <span class="n">float_type</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">derivatives</span><span class="p">),)</span> <span class="o">+</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">default</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="p">(</span><span class="n">n_i</span><span class="p">,</span> <span class="n">m_i</span><span class="p">,</span> <span class="n">derivative</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">indices</span><span class="p">[</span><span class="s2">"n"</span><span class="p">],</span> <span class="n">indices</span><span class="p">[</span><span class="s2">"m"</span><span class="p">],</span> <span class="n">derivatives</span><span class="p">)):</span>
+        <span class="n">Z</span> <span class="o">=</span> <span class="p">{(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span> <span class="n">polar</span><span class="p">[(</span><span class="n">n_i</span><span class="p">,</span> <span class="n">m_i</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)]</span> <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">POLAR_DERIVATIVES</span><span class="p">[</span><span class="n">derivative</span><span class="p">]}</span>
+        <span class="n">output</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="n">valid_mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">_chain_rule</span><span class="p">(</span><span class="n">derivative</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">rho_valid</span><span class="p">,</span> <span class="n">theta_valid</span><span class="p">)</span>
 
-    <span class="c1"># Convert default to the correct type</span>
-    <span class="n">default</span> <span class="o">=</span> <span class="n">float_type</span><span class="p">(</span><span class="n">default</span><span class="p">)</span>
-
-    <span class="c1"># Searching what is the derivatives to compute</span>
-    <span class="n">total_derivative_orders</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">x_derivative</span><span class="p">)</span> <span class="o">+</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y_derivative</span><span class="p">)</span>
-    <span class="n">max_derivative_order</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">total_derivative_orders</span><span class="p">)</span>
-    <span class="n">min_derivative_order</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">total_derivative_orders</span><span class="p">)</span>
-    <span class="n">skip_0_derivative</span> <span class="o">=</span> <span class="n">min_derivative_order</span> <span class="o">&gt;=</span> <span class="mi">1</span>
-    <span class="n">shift_0_derivative</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">skip_0_derivative</span> <span class="k">else</span> <span class="mi">0</span>
-
-    <span class="c1"># Compute rho_eq, theta_eq on the elliptic annulus domain and their derivatives if needed</span>
-    <span class="k">if</span> <span class="n">max_derivative_order</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="c1"># Only extract rho and theta</span>
-        <span class="n">list_rho_eq</span><span class="p">,</span> <span class="n">list_theta_eq</span> <span class="o">=</span> <span class="n">core_cartesian_to_elliptic_annulus</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">Rx</span><span class="p">,</span> <span class="n">Ry</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">x_derivative</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">int_type</span><span class="p">),</span> <span class="n">y_derivative</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">int_type</span><span class="p">),</span> <span class="n">float_type</span><span class="o">=</span><span class="n">float_type</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">max_derivative_order</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="c1"># Extract rho, theta and their first derivatives</span>
-        <span class="n">list_rho_eq</span><span class="p">,</span> <span class="n">list_theta_eq</span> <span class="o">=</span> <span class="n">core_cartesian_to_elliptic_annulus</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">Rx</span><span class="p">,</span> <span class="n">Ry</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">x_derivative</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">int_type</span><span class="p">),</span> <span class="n">y_derivative</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">int_type</span><span class="p">),</span> <span class="n">float_type</span><span class="o">=</span><span class="n">float_type</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">max_derivative_order</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-        <span class="c1"># Extract rho, theta and their first and second derivatives</span>
-        <span class="n">list_rho_eq</span><span class="p">,</span> <span class="n">list_theta_eq</span> <span class="o">=</span> <span class="n">core_cartesian_to_elliptic_annulus</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">Rx</span><span class="p">,</span> <span class="n">Ry</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">x_derivative</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">int_type</span><span class="p">),</span> <span class="n">y_derivative</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">int_type</span><span class="p">),</span> <span class="n">float_type</span><span class="o">=</span><span class="n">float_type</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The function supports only the derivatives (0, 0), (1, 0), (0, 1), (2, 0), (0, 2), and (1, 1). For more complex derivatives, use the standard Zernike polynomial function with polar coordinates.&quot;</span><span class="p">)</span>
-
-    <span class="n">rho</span> <span class="o">=</span> <span class="n">list_rho_eq</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">theta</span> <span class="o">=</span> <span class="n">list_theta_eq</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-
-    <span class="c1"># Compute the Mask for valid rho values</span>
-    <span class="n">domain_mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">rho</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">rho</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="n">finite_mask</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">rho</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">numpy</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
-    <span class="n">valid_mask</span> <span class="o">=</span> <span class="n">domain_mask</span> <span class="o">&amp;</span> <span class="n">finite_mask</span>
-
-    <span class="c1"># Conserve only the valid values and save the input shape</span>
-    <span class="n">original_shape</span> <span class="o">=</span> <span class="n">rho</span><span class="o">.</span><span class="n">shape</span>
-    <span class="n">rho</span> <span class="o">=</span> <span class="n">rho</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">]</span>
-    <span class="n">theta</span> <span class="o">=</span> <span class="n">theta</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">]</span>
-
-    <span class="c1"># Compute the Zernike polynomial and its derivatives if needed</span>
-    <span class="k">if</span> <span class="n">max_derivative_order</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="c1"># Only the polynomial is computed</span>
-        <span class="n">rho_derivative</span> <span class="o">=</span> <span class="n">theta_derivative</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
-        <span class="n">rho_derivative</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">rho_derivative</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">int_type</span><span class="p">)</span>
-        <span class="n">theta_derivative</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">theta_derivative</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">int_type</span><span class="p">)</span>
-        <span class="n">output_polynomials</span> <span class="o">=</span> <span class="n">core_polynomial</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">rho_derivative</span><span class="o">=</span><span class="n">rho_derivative</span><span class="p">,</span> <span class="n">theta_derivative</span><span class="o">=</span><span class="n">theta_derivative</span><span class="p">,</span> <span class="n">flag_radial</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">precompute</span><span class="o">=</span><span class="n">precompute</span><span class="p">,</span> <span class="n">float_type</span><span class="o">=</span><span class="n">float_type</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">max_derivative_order</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">skip_0_derivative</span><span class="p">:</span>
-        <span class="c1"># The first derivatives of the Zernike polynomial are also computed</span>
-        <span class="n">rho_derivative</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
-        <span class="n">rho_derivative</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">rho_derivative</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">int_type</span><span class="p">)</span>
-        <span class="n">theta_derivative</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>   
-        <span class="n">theta_derivative</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">theta_derivative</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">int_type</span><span class="p">)</span>
-        <span class="n">compute_n</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">int_type</span><span class="p">)</span>
-        <span class="n">compute_m</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">m</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">m</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">int_type</span><span class="p">)</span>
-        <span class="n">output_polynomials</span> <span class="o">=</span> <span class="n">core_polynomial</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">compute_n</span><span class="p">,</span> <span class="n">compute_m</span><span class="p">,</span> <span class="n">rho_derivative</span><span class="o">=</span><span class="n">rho_derivative</span><span class="p">,</span> <span class="n">theta_derivative</span><span class="o">=</span><span class="n">theta_derivative</span><span class="p">,</span> <span class="n">flag_radial</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">precompute</span><span class="o">=</span><span class="n">precompute</span><span class="p">,</span> <span class="n">float_type</span><span class="o">=</span><span class="n">float_type</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">max_derivative_order</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">skip_0_derivative</span><span class="p">:</span>
-        <span class="c1"># The first derivatives of the Zernike polynomial are also computed</span>
-        <span class="n">rho_derivative</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
-        <span class="n">rho_derivative</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">rho_derivative</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">int_type</span><span class="p">)</span>
-        <span class="n">theta_derivative</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
-        <span class="n">theta_derivative</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">theta_derivative</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">int_type</span><span class="p">)</span>
-        <span class="n">compute_n</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">int_type</span><span class="p">)</span>
-        <span class="n">compute_m</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">m</span><span class="p">,</span> <span class="n">m</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">int_type</span><span class="p">)</span>
-        <span class="n">output_polynomials</span> <span class="o">=</span> <span class="n">core_polynomial</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">compute_n</span><span class="p">,</span> <span class="n">compute_m</span><span class="p">,</span> <span class="n">rho_derivative</span><span class="o">=</span><span class="n">rho_derivative</span><span class="p">,</span> <span class="n">theta_derivative</span><span class="o">=</span><span class="n">theta_derivative</span><span class="p">,</span> <span class="n">flag_radial</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">precompute</span><span class="o">=</span><span class="n">precompute</span><span class="p">,</span> <span class="n">float_type</span><span class="o">=</span><span class="n">float_type</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">max_derivative_order</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">skip_0_derivative</span><span class="p">:</span>
-        <span class="c1"># The second derivatives of the Zernike polynomial are also computed</span>
-        <span class="n">rho_derivative</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
-        <span class="n">rho_derivative</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">rho_derivative</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">int_type</span><span class="p">)</span>
-        <span class="n">theta_derivative</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
-        <span class="n">theta_derivative</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">theta_derivative</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">int_type</span><span class="p">)</span>
-        <span class="n">compute_n</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">int_type</span><span class="p">)</span>
-        <span class="n">compute_m</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">m</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">m</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">int_type</span><span class="p">)</span>
-        <span class="n">output_polynomials</span> <span class="o">=</span> <span class="n">core_polynomial</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">compute_n</span><span class="p">,</span> <span class="n">compute_m</span><span class="p">,</span> <span class="n">rho_derivative</span><span class="o">=</span><span class="n">rho_derivative</span><span class="p">,</span> <span class="n">theta_derivative</span><span class="o">=</span><span class="n">theta_derivative</span><span class="p">,</span> <span class="n">flag_radial</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">precompute</span><span class="o">=</span><span class="n">precompute</span><span class="p">,</span> <span class="n">float_type</span><span class="o">=</span><span class="n">float_type</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">max_derivative_order</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">skip_0_derivative</span><span class="p">:</span>
-        <span class="c1"># The second derivatives of the Zernike polynomial are also computed</span>
-        <span class="n">rho_derivative</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
-        <span class="n">rho_derivative</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">rho_derivative</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">int_type</span><span class="p">)</span>
-        <span class="n">theta_derivative</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
-        <span class="n">theta_derivative</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">theta_derivative</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">int_type</span><span class="p">)</span>
-        <span class="n">compute_n</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">int_type</span><span class="p">)</span>
-        <span class="n">compute_m</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">m</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">m</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">int_type</span><span class="p">)</span>
-        <span class="n">output_polynomials</span> <span class="o">=</span> <span class="n">core_polynomial</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">compute_n</span><span class="p">,</span> <span class="n">compute_m</span><span class="p">,</span> <span class="n">rho_derivative</span><span class="o">=</span><span class="n">rho_derivative</span><span class="p">,</span> <span class="n">theta_derivative</span><span class="o">=</span><span class="n">theta_derivative</span><span class="p">,</span> <span class="n">flag_radial</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">precompute</span><span class="o">=</span><span class="n">precompute</span><span class="p">,</span> <span class="n">float_type</span><span class="o">=</span><span class="n">float_type</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The function supports only the derivatives (0, 0), (1, 0), (0, 1), (2, 0), (0, 2), and (1, 1). For more complex derivatives, use the standard Zernike polynomial function with polar coordinates.&quot;</span><span class="p">)</span>
-
-    <span class="c1"># Compose the final output depending on the derivative orders</span>
-    <span class="n">output</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)):</span>
-        <span class="c1"># Case (0, 0) : Only extract the polynomial</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">x_derivative</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">y_derivative</span><span class="p">[</span><span class="n">index</span><span class="p">])</span> <span class="o">==</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span>
-            <span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">output_polynomials</span><span class="p">[</span><span class="n">index</span><span class="p">])</span>
-
-        <span class="c1"># Case (1, 0) : Extract the first derivative with respect to x</span>
-        <span class="k">elif</span> <span class="p">(</span><span class="n">x_derivative</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">y_derivative</span><span class="p">[</span><span class="n">index</span><span class="p">])</span> <span class="o">==</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span>
-            <span class="n">drho_dx</span> <span class="o">=</span> <span class="n">list_rho_eq</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-            <span class="n">dtheta_dx</span> <span class="o">=</span> <span class="n">list_theta_eq</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-            <span class="n">dZ_drho</span> <span class="o">=</span> <span class="n">output_polynomials</span><span class="p">[(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">shift_0_derivative</span><span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="n">index</span><span class="p">]</span>
-            <span class="n">dZ_dtheta</span> <span class="o">=</span> <span class="n">output_polynomials</span><span class="p">[(</span><span class="mi">2</span> <span class="o">-</span> <span class="n">shift_0_derivative</span><span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="n">index</span><span class="p">]</span>
-            <span class="n">dZ_dx</span> <span class="o">=</span> <span class="n">dZ_drho</span> <span class="o">*</span> <span class="n">drho_dx</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">]</span> <span class="o">+</span> <span class="n">dZ_dtheta</span> <span class="o">*</span> <span class="n">dtheta_dx</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">]</span>
-            <span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dZ_dx</span><span class="p">)</span>
-
-        <span class="c1"># Case (0, 1) : Extract the first derivative with respect to y</span>
-        <span class="k">elif</span> <span class="p">(</span><span class="n">x_derivative</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">y_derivative</span><span class="p">[</span><span class="n">index</span><span class="p">])</span> <span class="o">==</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
-            <span class="n">drho_dy</span> <span class="o">=</span> <span class="n">list_rho_eq</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-            <span class="n">dtheta_dy</span> <span class="o">=</span> <span class="n">list_theta_eq</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-            <span class="n">dZ_drho</span> <span class="o">=</span> <span class="n">output_polynomials</span><span class="p">[(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">shift_0_derivative</span><span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="n">index</span><span class="p">]</span>
-            <span class="n">dZ_dtheta</span> <span class="o">=</span> <span class="n">output_polynomials</span><span class="p">[(</span><span class="mi">2</span> <span class="o">-</span> <span class="n">shift_0_derivative</span><span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="n">index</span><span class="p">]</span>
-            <span class="n">dZ_dy</span> <span class="o">=</span> <span class="n">dZ_drho</span> <span class="o">*</span> <span class="n">drho_dy</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">]</span> <span class="o">+</span> <span class="n">dZ_dtheta</span> <span class="o">*</span> <span class="n">dtheta_dy</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">]</span>
-            <span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dZ_dy</span><span class="p">)</span>
-
-        <span class="c1"># Case (2, 0) : Extract the second derivative with respect to x</span>
-        <span class="k">elif</span> <span class="p">(</span><span class="n">x_derivative</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">y_derivative</span><span class="p">[</span><span class="n">index</span><span class="p">])</span> <span class="o">==</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span>
-            <span class="n">drho_dx</span> <span class="o">=</span> <span class="n">list_rho_eq</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-            <span class="n">dtheta_dx</span> <span class="o">=</span> <span class="n">list_theta_eq</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-            <span class="n">d2rho_dx2</span> <span class="o">=</span> <span class="n">list_rho_eq</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
-            <span class="n">d2theta_dx2</span> <span class="o">=</span> <span class="n">list_theta_eq</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
-            <span class="n">dZ_drho</span> <span class="o">=</span> <span class="n">output_polynomials</span><span class="p">[(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">shift_0_derivative</span><span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="n">index</span><span class="p">]</span>
-            <span class="n">dZ_dtheta</span> <span class="o">=</span> <span class="n">output_polynomials</span><span class="p">[(</span><span class="mi">2</span> <span class="o">-</span> <span class="n">shift_0_derivative</span><span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="n">index</span><span class="p">]</span>
-            <span class="n">d2Z_drho2</span> <span class="o">=</span> <span class="n">output_polynomials</span><span class="p">[(</span><span class="mi">3</span> <span class="o">-</span> <span class="n">shift_0_derivative</span><span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="n">index</span><span class="p">]</span>
-            <span class="n">d2Z_dtheta2</span> <span class="o">=</span> <span class="n">output_polynomials</span><span class="p">[(</span><span class="mi">4</span> <span class="o">-</span> <span class="n">shift_0_derivative</span><span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="n">index</span><span class="p">]</span>
-            <span class="n">d2Z_drhodtheta</span> <span class="o">=</span> <span class="n">output_polynomials</span><span class="p">[(</span><span class="mi">5</span> <span class="o">-</span> <span class="n">shift_0_derivative</span><span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="n">index</span><span class="p">]</span>
-            <span class="n">d2Z_dx2</span> <span class="o">=</span> <span class="p">(</span><span class="n">d2Z_drho2</span> <span class="o">*</span> <span class="n">drho_dx</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">]</span> <span class="o">+</span> <span class="n">d2Z_drhodtheta</span> <span class="o">*</span> <span class="n">dtheta_dx</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">])</span> <span class="o">*</span> <span class="n">drho_dx</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">]</span> <span class="o">+</span> \
-                      <span class="n">dZ_drho</span> <span class="o">*</span> <span class="n">d2rho_dx2</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">]</span> <span class="o">+</span> \
-                      <span class="p">(</span><span class="n">d2Z_dtheta2</span> <span class="o">*</span> <span class="n">dtheta_dx</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">]</span> <span class="o">+</span> <span class="n">d2Z_drhodtheta</span> <span class="o">*</span> <span class="n">drho_dx</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">])</span> <span class="o">*</span> <span class="n">dtheta_dx</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">]</span> <span class="o">+</span> \
-                      <span class="n">dZ_dtheta</span> <span class="o">*</span> <span class="n">d2theta_dx2</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">]</span>
-            <span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d2Z_dx2</span><span class="p">)</span>
-
-        <span class="c1"># Case (0, 2) : Extract the second derivative with respect to y</span>
-        <span class="k">elif</span> <span class="p">(</span><span class="n">x_derivative</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">y_derivative</span><span class="p">[</span><span class="n">index</span><span class="p">])</span> <span class="o">==</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
-            <span class="n">drho_dy</span> <span class="o">=</span> <span class="n">list_rho_eq</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-            <span class="n">dtheta_dy</span> <span class="o">=</span> <span class="n">list_theta_eq</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-            <span class="n">d2rho_dy2</span> <span class="o">=</span> <span class="n">list_rho_eq</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
-            <span class="n">d2theta_dy2</span> <span class="o">=</span> <span class="n">list_theta_eq</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
-            <span class="n">dZ_drho</span> <span class="o">=</span> <span class="n">output_polynomials</span><span class="p">[(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">shift_0_derivative</span><span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="n">index</span><span class="p">]</span>
-            <span class="n">dZ_dtheta</span> <span class="o">=</span> <span class="n">output_polynomials</span><span class="p">[(</span><span class="mi">2</span> <span class="o">-</span> <span class="n">shift_0_derivative</span><span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="n">index</span><span class="p">]</span>
-            <span class="n">d2Z_drho2</span> <span class="o">=</span> <span class="n">output_polynomials</span><span class="p">[(</span><span class="mi">3</span> <span class="o">-</span> <span class="n">shift_0_derivative</span><span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="n">index</span><span class="p">]</span>
-            <span class="n">d2Z_dtheta2</span> <span class="o">=</span> <span class="n">output_polynomials</span><span class="p">[(</span><span class="mi">4</span> <span class="o">-</span> <span class="n">shift_0_derivative</span><span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="n">index</span><span class="p">]</span>
-            <span class="n">d2Z_drhodtheta</span> <span class="o">=</span> <span class="n">output_polynomials</span><span class="p">[(</span><span class="mi">5</span> <span class="o">-</span> <span class="n">shift_0_derivative</span><span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="n">index</span><span class="p">]</span>
-            <span class="n">d2Z_dy2</span> <span class="o">=</span> <span class="p">(</span><span class="n">d2Z_drho2</span> <span class="o">*</span> <span class="n">drho_dy</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">]</span> <span class="o">+</span> <span class="n">d2Z_drhodtheta</span> <span class="o">*</span> <span class="n">dtheta_dy</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">])</span> <span class="o">*</span> <span class="n">drho_dy</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">]</span> <span class="o">+</span> \
-                      <span class="n">dZ_drho</span> <span class="o">*</span> <span class="n">d2rho_dy2</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">]</span> <span class="o">+</span> \
-                      <span class="p">(</span><span class="n">d2Z_dtheta2</span> <span class="o">*</span> <span class="n">dtheta_dy</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">]</span> <span class="o">+</span> <span class="n">d2Z_drhodtheta</span> <span class="o">*</span> <span class="n">drho_dy</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">])</span> <span class="o">*</span> <span class="n">dtheta_dy</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">]</span> <span class="o">+</span> \
-                      <span class="n">dZ_dtheta</span> <span class="o">*</span> <span class="n">d2theta_dy2</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">]</span>
-            <span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d2Z_dy2</span><span class="p">)</span>
-
-        <span class="c1"># Case (1, 1) : Extract the mixed second derivative</span>
-        <span class="k">elif</span> <span class="p">(</span><span class="n">x_derivative</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">y_derivative</span><span class="p">[</span><span class="n">index</span><span class="p">])</span> <span class="o">==</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
-            <span class="n">drho_dx</span> <span class="o">=</span> <span class="n">list_rho_eq</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-            <span class="n">dtheta_dx</span> <span class="o">=</span> <span class="n">list_theta_eq</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-            <span class="n">drho_dy</span> <span class="o">=</span> <span class="n">list_rho_eq</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-            <span class="n">dtheta_dy</span> <span class="o">=</span> <span class="n">list_theta_eq</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-            <span class="n">d2rho_dxdy</span> <span class="o">=</span> <span class="n">list_rho_eq</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
-            <span class="n">d2theta_dxdy</span> <span class="o">=</span> <span class="n">list_theta_eq</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
-            <span class="n">dZ_drho</span> <span class="o">=</span> <span class="n">output_polynomials</span><span class="p">[(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">shift_0_derivative</span><span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="n">index</span><span class="p">]</span>
-            <span class="n">dZ_dtheta</span> <span class="o">=</span> <span class="n">output_polynomials</span><span class="p">[(</span><span class="mi">2</span> <span class="o">-</span> <span class="n">shift_0_derivative</span><span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="n">index</span><span class="p">]</span>
-            <span class="n">d2Z_drho2</span> <span class="o">=</span> <span class="n">output_polynomials</span><span class="p">[(</span><span class="mi">3</span> <span class="o">-</span> <span class="n">shift_0_derivative</span><span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="n">index</span><span class="p">]</span>
-            <span class="n">d2Z_dtheta2</span> <span class="o">=</span> <span class="n">output_polynomials</span><span class="p">[(</span><span class="mi">4</span> <span class="o">-</span> <span class="n">shift_0_derivative</span><span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="n">index</span><span class="p">]</span>
-            <span class="n">d2Z_drhodtheta</span> <span class="o">=</span> <span class="n">output_polynomials</span><span class="p">[(</span><span class="mi">5</span> <span class="o">-</span> <span class="n">shift_0_derivative</span><span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="n">index</span><span class="p">]</span>
-            <span class="n">d2Z_dxdy</span> <span class="o">=</span> <span class="p">(</span><span class="n">d2Z_drho2</span> <span class="o">*</span> <span class="n">drho_dx</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">]</span> <span class="o">+</span> <span class="n">d2Z_drhodtheta</span> <span class="o">*</span> <span class="n">dtheta_dx</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">])</span> <span class="o">*</span> <span class="n">drho_dy</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">]</span> <span class="o">+</span> \
-                       <span class="n">dZ_drho</span> <span class="o">*</span> <span class="n">d2rho_dxdy</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">]</span> <span class="o">+</span> \
-                       <span class="p">(</span><span class="n">d2Z_dtheta2</span> <span class="o">*</span> <span class="n">dtheta_dx</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">]</span> <span class="o">+</span> <span class="n">d2Z_drhodtheta</span> <span class="o">*</span> <span class="n">drho_dx</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">])</span> <span class="o">*</span> <span class="n">dtheta_dy</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">]</span> <span class="o">+</span> \
-                       <span class="n">dZ_dtheta</span> <span class="o">*</span> <span class="n">d2theta_dxdy</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">]</span>
-            <span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d2Z_dxdy</span><span class="p">)</span>
-
-    <span class="c1"># Reinsert the values into the original shape and set the default value for invalid points</span>
-    <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">output</span><span class="p">)):</span>
-        <span class="n">full_output</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">original_shape</span><span class="p">,</span> <span class="n">default</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float_type</span><span class="p">)</span>
-        <span class="n">full_output</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">output</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
-        <span class="n">output</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">full_output</span>
-
+    <span class="k">if</span> <span class="n">single</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">output</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">to_list</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">output</span></div>
 
 </pre></div>
@@ -838,8 +717,8 @@
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
-<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+  <script defer src="../../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -873,7 +752,7 @@
         <div class="footer-item">
 <p class="theme-version">
   <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.19.0.
 </p></div>
       
     </div>

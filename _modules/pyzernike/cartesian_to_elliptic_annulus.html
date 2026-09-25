@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pyzernike.cartesian_to_elliptic_annulus &#8212; pyzernike 2.3.1 documentation</title>
+    <title>pyzernike.cartesian_to_elliptic_annulus &#8212; pyzernike 3.0.0 documentation</title>
   
   
   
@@ -26,40 +26,47 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+  <link href="../../_static/styles/theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
   
   <!-- So that users can add custom icons -->
-  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <script defer src="../../_static/scripts/fontawesome.js?digest=a95f357e85573c9b56d5"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
-    <script src="../../_static/documentation_options.js?v=67b02a41"></script>
+    <script src="../../_static/documentation_options.js?v=acc74ff5"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/pyzernike/cartesian_to_elliptic_annulus';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
   </head>
-  
-  
-  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
-
+  <body data-default-mode="">
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
   
   <div id="pst-scroll-pixel-helper"></div>
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
-
+  
+  
+  
   
   <dialog id="pst-search-dialog">
     
@@ -85,7 +92,7 @@
 </div>
 
   
-    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
 <div class="bd-header__inner bd-page-width">
   <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
     <span class="fa-solid fa-bars"></span>
@@ -107,7 +114,7 @@
   
   
   
-    <p class="title logo__title">pyzernike 2.3.1 documentation</p>
+    <p class="title logo__title">pyzernike 3.0.0 documentation</p>
   
 </a></div>
     
@@ -169,11 +176,18 @@
       
         <div class="navbar-item">
 
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button></div>
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
       
     </div>
     
@@ -258,11 +272,18 @@
         
           <div class="navbar-item">
 
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button></div>
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
         
       </div>
     
@@ -326,302 +347,219 @@
   <h1>Source code for pyzernike.cartesian_to_elliptic_annulus</h1><div class="highlight"><pre>
 <span></span><span class="c1"># Copyright 2025 Artezaru</span>
 <span class="c1">#</span>
-<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the "License");</span>
 <span class="c1"># you may not use this file except in compliance with the License.</span>
 <span class="c1"># You may obtain a copy of the License at</span>
 <span class="c1">#</span>
 <span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
 <span class="c1">#</span>
 <span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
-<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># distributed under the License is distributed on an "AS IS" BASIS,</span>
 <span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
 <span class="c1"># See the License for the specific language governing permissions and</span>
 <span class="c1"># limitations under the License.</span>
 
-
-<span class="kn">from</span><span class="w"> </span><span class="nn">email.policy</span><span class="w"> </span><span class="kn">import</span> <span class="n">default</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">numbers</span><span class="w"> </span><span class="kn">import</span> <span class="n">Integral</span><span class="p">,</span> <span class="n">Real</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">.core.core_cartesian_to_elliptic_annulus</span><span class="w"> </span><span class="kn">import</span> <span class="n">core_cartesian_to_elliptic_annulus</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">.core.core_corresponding_signed_integer_type</span><span class="w"> </span><span class="kn">import</span> <span class="n">core_corresponding_signed_integer_type</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">.core.parsing</span><span class="w"> </span><span class="kn">import</span> <span class="n">_as_common_floating_arrays</span><span class="p">,</span> <span class="n">_as_ellipse_parameters</span><span class="p">,</span> <span class="n">_broadcast_integers</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.core.cartesian_to_elliptic_annulus</span><span class="w"> </span><span class="kn">import</span> <span class="n">_cartesian_to_elliptic_annulus</span>
+
 
 <div class="viewcode-block" id="cartesian_to_elliptic_annulus">
 <a class="viewcode-back" href="../../api_doc/cartesian_to_elliptic_annulus.html#pyzernike.cartesian_to_elliptic_annulus">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">cartesian_to_elliptic_annulus</span><span class="p">(</span>
     <span class="n">x</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
     <span class="n">y</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
-    <span class="n">Rx</span><span class="p">:</span> <span class="n">Real</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
-    <span class="n">Ry</span><span class="p">:</span> <span class="n">Real</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
-    <span class="n">x0</span><span class="p">:</span> <span class="n">Real</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
-    <span class="n">y0</span><span class="p">:</span> <span class="n">Real</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
-    <span class="n">alpha</span><span class="p">:</span> <span class="n">Real</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
-    <span class="n">h</span><span class="p">:</span> <span class="n">Real</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
-    <span class="n">x_derivative</span><span class="p">:</span>  <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Integral</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">y_derivative</span><span class="p">:</span>  <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Integral</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Transform Cartesian coordinates :math:`(x, y)` to elliptic annulus domain polar coordinates :math:`(\rho_{eq}, \theta_{eq})`.</span>
-
-<span class="sd">    .. seealso::</span>
-
-<span class="sd">        - :func:`pyzernike.elliptic_domain_to_cartesian` to convert elliptic annulus domain polar coordinates to Cartesian coordinates.</span>
-<span class="sd">        - :func:`pyzernike.xy_zernike_polynomial` to compute Zernike polynomials on the elliptic annulus domain.</span>
-<span class="sd">        - :func:`pyzernike.core.core_cartesian_to_elliptic_annulus` to inspect the core implementation of the computation.</span>
-<span class="sd">        - The page :doc:`../../mathematical_description` in the documentation for the mathematical extension of the Zernike polynomials on the elliptic domain.</span>
-
-<span class="sd">    Lets consider the extended elliptic annulus domain defined by the following parameters:</span>
+    <span class="n">Rx</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Real</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">Ry</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Real</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">x0</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Real</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+    <span class="n">y0</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Real</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Real</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+    <span class="n">h</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Real</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+    <span class="n">x_derivative</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Integral</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Integral</span><span class="p">],</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">y_derivative</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Integral</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Integral</span><span class="p">],</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">to_list</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]]:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""</span>
+<span class="sd">    Transform Cartesian coordinates :math:`(x, y)` into the equivalent polar coordinates</span>
+<span class="sd">    :math:`(\rho_{eq}, \theta_{eq})` of an elliptic annulus, and compute their derivatives with</span>
+<span class="sd">    respect to :math:`x` and :math:`y`.</span>
 
 <span class="sd">    .. figure:: ../../../pyzernike/resources/elliptic_annulus_domain.png</span>
 <span class="sd">        :width: 400px</span>
 <span class="sd">        :align: center</span>
 
-<span class="sd">        The parameters to define the extended domain of the Zernike polynomial.</span>
+<span class="sd">        The parameters of the elliptic annulus domain.</span>
 
-<span class="sd">    The parameters are:</span>
+<span class="sd">    The elliptic annulus is defined by its semi-axes :math:`R_x` and :math:`R_y`, its center</span>
+<span class="sd">    :math:`(x_0, y_0)`, its rotation angle :math:`\alpha` and the ratio :math:`h = \frac{a}{R_x} = \frac{b}{R_y}`</span>
+<span class="sd">    of the inner to the outer semi-axes. The coordinates are first expressed in the frame of the ellipse:</span>
 
-<span class="sd">    - :math:`R_x` and :math:`R_y` are the lengths of the semi-axis of the ellipse.</span>
-<span class="sd">    - :math:`x_0` and :math:`y_0` are the coordinates of the center of the ellipse.</span>
-<span class="sd">    - :math:`\alpha` is the rotation angle of the ellipse in radians.</span>
-<span class="sd">    - :math:`h=\frac{a}{R_x}=\frac{b}{R_y}` defining the inner boundary of the ellipse.</span>
+<span class="sd">    .. math::</span>
 
-<span class="sd">    The methods allow to compute the polar coordinates :math:`(\rho_{eq}, \theta_{eq})` and their derivatives with respect to the Cartesian coordinates :math:`(x, y)`.</span>
+<span class="sd">        X = \cos(\alpha) (x - x_0) + \sin(\alpha) (y - y_0)</span>
+<span class="sd">        \quad \text{and} \quad</span>
+<span class="sd">        Y = -\sin(\alpha) (x - x_0) + \cos(\alpha) (y - y_0)</span>
 
-<span class="sd">    - ``x`` and ``y`` are expected to be numpy arrays of the same shape.</span>
-<span class="sd">    - ``x_derivative`` and ``y_derivative`` must be sequences of non-negative integers of the same length.</span>
+<span class="sd">    then mapped onto the unit annulus [1]_:</span>
 
-<span class="sd">    The output is a tuple of two lists with lengths equal to the length of ``x_derivative`` and ``y_derivative``:</span>
+<span class="sd">    .. math::</span>
 
-<span class="sd">    - The first list contains the equivalent polar radius :math:`\rho_{eq}` and its derivatives with respect to the given orders.</span>
-<span class="sd">    - The second list contains the equivalent polar angle :math:`\theta_{eq}` and its derivatives with respect to the given orders.</span>
+<span class="sd">        r = \sqrt{\left(\frac{X}{R_x}\right)^2 + \left(\frac{Y}{R_y}\right)^2},</span>
+<span class="sd">        \quad</span>
+<span class="sd">        \rho_{eq} = \frac{r - h}{1 - h}</span>
+<span class="sd">        \quad \text{and} \quad</span>
+<span class="sd">        \theta_{eq} = \operatorname{atan2}\left(\frac{Y}{R_y}, \frac{X}{R_x}\right) \in [-\pi, \pi]</span>
 
-<span class="sd">    .. note::</span>
+<span class="sd">    The points of the elliptic annulus are those with :math:`0 \leq \rho_{eq} \leq 1`. The coordinates</span>
+<span class="sd">    :math:`(\rho_{eq}, \theta_{eq})` can be passed directly to :func:`pyzernike.zernike_polynomial`.</span>
 
-<span class="sd">        If the input ``x`` or ``y`` are not floating point numpy arrays, it is converted to one with ``numpy.float64`` dtype.</span>
-<span class="sd">        If the input ``x`` or ``y`` are floating point numpy arrays (ex: ``numpy.float32``), the computation will be done in ``numpy.float32``.</span>
-<span class="sd">        If the input ``x`` and ``y`` are not of the same dtype, they are both converted to ``numpy.float64``.</span>
+<span class="sd">    The derivatives of total order 1 and 2 are computed with the analytical expressions obtained by the</span>
+<span class="sd">    chain rule (see the page :doc:`../../mathematical_description`). The derivatives of total order 3 and</span>
+<span class="sd">    more are computed by symbolic differentiation with ``sympy``, which has a high computational cost.</span>
 
-<span class="sd">    The derivatives for orders higher than 2 are computed using symbolic differentiation with sympy library (high computational cost).</span>
-<span class="sd">    For orders 0, 1 and 2, the derivatives are computed using the analytical expressions derived from the chain rule.</span>
+<span class="sd">    **Shape of the inputs and of the output.** ``x_derivative`` and ``y_derivative`` can each be a single</span>
+<span class="sd">    integer or a sequence of integers (list, tuple or 1D numpy array):</span>
+
+<span class="sd">    - If both are integers, the output is a tuple ``(rho_eq, theta_eq)`` of two arrays with the shape of ``x``.</span>
+<span class="sd">    - If at least one of them is a sequence, the integer is repeated to the length :math:`N` of the</span>
+<span class="sd">      sequence (the sequences must have the same length). The output is a tuple of two lists of</span>
+<span class="sd">      :math:`N` arrays (``to_list=True``), or of two arrays of shape :math:`(N, \dots)` (``to_list=False``).</span>
+
+<span class="sd">    .. seealso::</span>
+
+<span class="sd">        - :func:`pyzernike.xy_zernike_polynomial` to compute the Zernike polynomials on the elliptic annulus directly.</span>
+<span class="sd">        - :func:`pyzernike.zernike_polynomial` to compute the Zernike polynomials in polar coordinates.</span>
+<span class="sd">        - The page :doc:`../../mathematical_description` for the extension of the Zernike polynomials to the elliptic annulus.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    x : numpy.ndarray</span>
-<span class="sd">        The x coordinates in Cartesian system with shape (...,).</span>
+<span class="sd">        The x Cartesian coordinates with any shape ``(...)``.</span>
 
 <span class="sd">    y : numpy.ndarray</span>
-<span class="sd">        The y coordinates in Cartesian system with shape (...,).</span>
+<span class="sd">        The y Cartesian coordinates with the same shape as ``x``.</span>
+<span class="sd">        If ``x`` and ``y`` are floating point arrays of the same dtype (e.g. ``numpy.float32``), this</span>
+<span class="sd">        dtype is kept. Otherwise, both are converted to ``numpy.float64``.</span>
 
-<span class="sd">    Rx : Real, optional</span>
-<span class="sd">        The length of the semi-axis of the ellipse along x axis. Must be strictly positive.</span>
-<span class="sd">        The default is 1.0, which corresponds to the unit circle.</span>
+<span class="sd">    Rx : Optional[Real], optional</span>
+<span class="sd">        The semi-axis :math:`R_x` of the ellipse along its x axis. Must be strictly positive. Default is 1.0.</span>
 
-<span class="sd">    Ry : Real, optional</span>
-<span class="sd">        The length of the semi-axis of the ellipse along y axis. Must be strictly positive.</span>
-<span class="sd">        The default is 1.0, which corresponds to the unit circle.</span>
+<span class="sd">    Ry : Optional[Real], optional</span>
+<span class="sd">        The semi-axis :math:`R_y` of the ellipse along its y axis. Must be strictly positive. Default is 1.0.</span>
 
-<span class="sd">    x0 : Real, optional</span>
-<span class="sd">        The x coordinate of the center of the ellipse. Can be any real number.</span>
-<span class="sd">        The default is 0.0, which corresponds to an ellipse centered at the origin.</span>
+<span class="sd">    x0 : Optional[Real], optional</span>
+<span class="sd">        The x coordinate :math:`x_0` of the center of the ellipse. Default is 0.0.</span>
 
-<span class="sd">    y0 : Real, optional</span>
-<span class="sd">        The y coordinate of the center of the ellipse. Can be any real number.</span>
-<span class="sd">        The default is 0.0, which corresponds to an ellipse centered at the origin.</span>
+<span class="sd">    y0 : Optional[Real], optional</span>
+<span class="sd">        The y coordinate :math:`y_0` of the center of the ellipse. Default is 0.0.</span>
 
-<span class="sd">    alpha : Real, optional</span>
-<span class="sd">        The rotation angle of the ellipse in radians. Can be any real number.</span>
-<span class="sd">        The default is 0.0, such as :math:`x` and :math:`y` axis are aligned with the ellipse axes.</span>
+<span class="sd">    alpha : Optional[Real], optional</span>
+<span class="sd">        The rotation angle :math:`\alpha` of the ellipse in radians. Default is 0.0.</span>
 
-<span class="sd">    h : Real, optional</span>
-<span class="sd">        The ratio of the inner semi-axis to the outer semi-axis. Must be in the range [0, 1).</span>
-<span class="sd">        The default is 0.0, which corresponds to a filled ellipse.</span>
+<span class="sd">    h : Optional[Real], optional</span>
+<span class="sd">        The ratio :math:`h` of the inner to the outer semi-axes, in :math:`[0, 1)`. Default is 0.0 (full ellipse).</span>
 
-<span class="sd">    x_derivative : Optional[Union[Sequence[Integral], numpy.array]], optional</span>
-<span class="sd">        A sequence (List, Tuple) or 1D numpy array of the order(s) of the x derivative(s) to compute. Must be non-negative integers.</span>
-<span class="sd">        If None, is it assumed that x_derivative is 0 for all polynomials.</span>
+<span class="sd">    x_derivative : Optional[Union[Integral, Sequence[Integral], numpy.ndarray]], optional</span>
+<span class="sd">        The order(s) of the derivative with respect to :math:`x`. Default is 0 (no derivative).</span>
 
-<span class="sd">    y_derivative : Optional[Union[Sequence[Integral], numpy.array]], optional</span>
-<span class="sd">        A sequence (List, Tuple) or 1D numpy array of the order(s) of the y derivative(s) to compute. Must be non-negative integers.</span>
-<span class="sd">        If None, is it assumed that y_derivative is 0 for all polynomials.</span>
+<span class="sd">    y_derivative : Optional[Union[Integral, Sequence[Integral], numpy.ndarray]], optional</span>
+<span class="sd">        The order(s) of the derivative with respect to :math:`y`. Default is 0 (no derivative).</span>
+
+<span class="sd">    to_list : bool, optional</span>
+<span class="sd">        Only used when several derivatives are computed. If True, the output is a tuple of two lists of</span>
+<span class="sd">        arrays. If False, it is a tuple of two arrays of shape :math:`(N, \dots)`. Default is True.</span>
+
+<span class="sd">    None is accepted for all the parameters with a default value and means this default value.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    Tuple[List[numpy.ndarray], List[numpy.ndarray]]</span>
+<span class="sd">    Union[Tuple[numpy.ndarray, numpy.ndarray], Tuple[List[numpy.ndarray], List[numpy.ndarray]]]</span>
+<span class="sd">        The tuple ``(rho_eq, theta_eq)``:</span>
 
-<span class="sd">        The polar coordinates (:math:`\rho_{eq}, \theta_{eq}`) and their derivatives with respect to the Cartesian coordinates :math:`(x, y)` as two lists of numpy arrays with shape (...,) and dtype matching the input arrays.</span>
-<span class="sd">        ``output[0][i]`` is the derivative with respect to x of order ``x_derivative[i]`` and with respect to y of order ``y_derivative[i]`` of :math:`\rho_{eq}`.</span>
-<span class="sd">        ``output[1][i]`` is the derivative with respect to x of order ``x_derivative[i]`` and with respect to y of order ``y_derivative[i]`` of :math:`\theta_{eq}`.</span>
+<span class="sd">        - If ``x_derivative`` and ``y_derivative`` are integers: two arrays with the shape of ``x``.</span>
+<span class="sd">        - Otherwise, if ``to_list`` is True: two lists of :math:`N` arrays with the shape of ``x``.</span>
+<span class="sd">        - Otherwise: two arrays of shape :math:`(N, \dots)`.</span>
 
-<span class="sd">        </span>
+<span class="sd">        ``rho_eq[i]`` (resp. ``theta_eq[i]``) is the derivative of :math:`\rho_{eq}` (resp.</span>
+<span class="sd">        :math:`\theta_{eq}`) of order ``x_derivative[i]`` with respect to :math:`x` and</span>
+<span class="sd">        ``y_derivative[i]`` with respect to :math:`y`.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    TypeError</span>
+<span class="sd">        If ``x`` or ``y`` can not be converted to a floating point array, if a parameter of the ellipse</span>
+<span class="sd">        is not a real number, if ``x_derivative`` or ``y_derivative`` is not an integer or a sequence of</span>
+<span class="sd">        integers, or if ``to_list`` is not a boolean.</span>
+
+<span class="sd">    ValueError</span>
+<span class="sd">        If ``x`` and ``y`` do not have the same shape, if ``Rx`` or ``Ry`` is not strictly positive, if</span>
+<span class="sd">        ``h`` is not in :math:`[0, 1)`, if the sequences do not have the same length, or if a derivative</span>
+<span class="sd">        order is negative.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    .. [1] R. Navarro et al., "Generalization of Zernike polynomials for regular portions of circles</span>
+<span class="sd">       and ellipses," Optics Express 22(18), 21263-21279 (2014). https://doi.org/10.1364/OE.22.021263</span>
+
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
-<span class="sd">    Lets compute Zernike polynomial :math:`Z_2^0` on an extended circle of radius 2 centered at (1,1).</span>
-
-<span class="sd">    First, we convert a grid of Cartesian coordinates to elliptic annulus polar coordinates using :func:`pyzernike.cartesian_to_elliptic_annulus`:</span>
+<span class="sd">    Compute the defocus :math:`Z_{2}^{0}` on a circle of radius 2 centered at :math:`(1, 1)`:</span>
 
 <span class="sd">    .. code-block:: python</span>
 
 <span class="sd">        import numpy</span>
-<span class="sd">        from pyzernike import cartesian_to_elliptic_annulus</span>
+<span class="sd">        from pyzernike import cartesian_to_elliptic_annulus, zernike_polynomial</span>
 
-<span class="sd">        # Define the elliptic annulus domain parameters</span>
-<span class="sd">        Rx = 2.0  # Semi-axis along x</span>
-<span class="sd">        Ry = 2.0  # Semi-axis along y</span>
-<span class="sd">        x0 = 1.0  # Center x</span>
-<span class="sd">        y0 = 1.0  # Center y</span>
+<span class="sd">        X, Y = numpy.meshgrid(numpy.linspace(-1, 3, 100), numpy.linspace(-1, 3, 100))</span>
+<span class="sd">        rho_eq, theta_eq = cartesian_to_elliptic_annulus(X, Y, Rx=2.0, Ry=2.0, x0=1.0, y0=1.0)</span>
+<span class="sd">        Z20 = zernike_polynomial(rho_eq, theta_eq, n=2, m=0)</span>
 
-<span class="sd">        # Create a grid of Cartesian coordinates</span>
-<span class="sd">        x = np.linspace(-1, 3, 100)</span>
-<span class="sd">        y = np.linspace(-1, 3, 100)</span>
-<span class="sd">        X, Y = np.meshgrid(x, y)</span>
+<span class="sd">    The complete process can be done in one step with :func:`pyzernike.xy_zernike_polynomial`.</span>
 
-<span class="sd">        # Convert to elliptic annulus polar coordinates</span>
-<span class="sd">        list_rho_eq, list_theta_eq = cartesian_to_elliptic_annulus(X, Y, Rx, Ry, x0, y0)</span>
-
-<span class="sd">        # Extract the polar coordinates (0th order derivatives)</span>
-<span class="sd">        rho_eq = list_rho_eq[0]</span>
-<span class="sd">        theta_eq = list_theta_eq[0]</span>
-
-<span class="sd">    Then the variables ``rho_eq`` and ``theta_eq`` can be directly used to compute Zernike polynomials on the elliptic annulus domain using :func:`pyzernike.zernike_polynomial`.</span>
-<span class="sd">    Note that the complete process can be done in one step using :func:`pyzernike.xy_zernike_polynomial`.</span>
+<span class="sd">    Compute the coordinates and their first derivatives with respect to :math:`x` and :math:`y`:</span>
 
 <span class="sd">    .. code-block:: python</span>
 
-<span class="sd">        from pyzernike import zernike_polynomial</span>
+<span class="sd">        rho_eq, theta_eq = cartesian_to_elliptic_annulus(X, Y, Rx=2.0, Ry=2.0, x0=1.0, y0=1.0, x_derivative=[0, 1, 0], y_derivative=[0, 0, 1])</span>
+<span class="sd">        rho, drho_dx, drho_dy = rho_eq</span>
+<span class="sd">        theta, dtheta_dx, dtheta_dy = theta_eq</span>
 
-<span class="sd">        # Compute the Zernike polynomial Z_2^0 on the elliptic annulus domain</span>
-<span class="sd">        Z20 = zernike_polynomial(rho_eq, theta_eq, n=2, m=0)[0]</span>
+<span class="sd">    """</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">_as_common_floating_arrays</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">Rx</span><span class="p">,</span> <span class="n">Ry</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">_as_ellipse_parameters</span><span class="p">(</span><span class="n">Rx</span><span class="p">,</span> <span class="n">Ry</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">to_list</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"to_list must be a boolean."</span><span class="p">)</span>
 
-<span class="sd">    If you also want to extract ``rho_eq`` and ``theta_eq``  and their first derivatives with respect to x and y, you can specify the derivative orders:</span>
+    <span class="k">if</span> <span class="n">x_derivative</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">x_derivative</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="n">y_derivative</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">y_derivative</span> <span class="o">=</span> <span class="mi">0</span>
 
-<span class="sd">    .. code-block:: python</span>
+    <span class="n">derivatives</span><span class="p">,</span> <span class="n">single</span> <span class="o">=</span> <span class="n">_broadcast_integers</span><span class="p">(</span><span class="n">x_derivative</span><span class="o">=</span><span class="n">x_derivative</span><span class="p">,</span> <span class="n">y_derivative</span><span class="o">=</span><span class="n">y_derivative</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">d</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">derivatives</span><span class="p">[</span><span class="s2">"x_derivative"</span><span class="p">]</span> <span class="o">+</span> <span class="n">derivatives</span><span class="p">[</span><span class="s2">"y_derivative"</span><span class="p">]):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"x_derivative and y_derivative must contain non-negative integers."</span><span class="p">)</span>
 
-<span class="sd">        # Define the derivative orders</span>
-<span class="sd">        x_derivative = [0, 1, 0]  # 0th and 1st derivative with respect to x</span>
-<span class="sd">        y_derivative = [0, 0, 1]  # 0th and 1st derivative with respect to y</span>
+    <span class="n">float_type</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span>
+    <span class="n">rho_eq</span><span class="p">,</span> <span class="n">theta_eq</span> <span class="o">=</span> <span class="n">_cartesian_to_elliptic_annulus</span><span class="p">(</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span>
+        <span class="n">float_type</span><span class="p">(</span><span class="n">Rx</span><span class="p">),</span> <span class="n">float_type</span><span class="p">(</span><span class="n">Ry</span><span class="p">),</span> <span class="n">float_type</span><span class="p">(</span><span class="n">x0</span><span class="p">),</span> <span class="n">float_type</span><span class="p">(</span><span class="n">y0</span><span class="p">),</span> <span class="n">float_type</span><span class="p">(</span><span class="n">alpha</span><span class="p">),</span> <span class="n">float_type</span><span class="p">(</span><span class="n">h</span><span class="p">),</span>
+        <span class="n">derivatives</span><span class="p">[</span><span class="s2">"x_derivative"</span><span class="p">],</span>
+        <span class="n">derivatives</span><span class="p">[</span><span class="s2">"y_derivative"</span><span class="p">],</span>
+    <span class="p">)</span>
 
-<span class="sd">        # Convert to elliptic annulus polar coordinates and compute derivatives</span>
-<span class="sd">        list_rho_eq, list_theta_eq = cartesian_to_elliptic_annulus(X, Y, Rx, Ry, x0, y0, x_derivative=x_derivative, y_derivative=y_derivative)</span>
-
-<span class="sd">        # Extract the polar coordinates and their derivatives</span>
-<span class="sd">        rho_eq = list_rho_eq[0]          # 0th order derivative of rho_eq</span>
-<span class="sd">        drho_eq_dx = list_rho_eq[1]      # 1st order derivative of rho_eq with respect to x</span>
-<span class="sd">        drho_eq_dy = list_rho_eq[2]      # 1st order derivative of rho_eq with respect to y</span>
-
-<span class="sd">        theta_eq = list_theta_eq[0]      # 0th order derivative of theta_eq</span>
-<span class="sd">        dtheta_eq_dx = list_theta_eq[1]  # 1st order derivative of theta_eq with respect to x</span>
-<span class="sd">        dtheta_eq_dy = list_theta_eq[2]  # 1st order derivative of theta_eq with respect to y</span>
-
-<span class="sd">    These derivatives can be useful for computing gradients or Jacobians of Zernike polynomials on the elliptic annulus domain, see :func:`pyzernike.xy_zernike_polynomial` for more details.</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># Convert x and y to numpy arrays of floating point values</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
-        <span class="n">y</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
-
-    <span class="c1"># Convert x and y in arrays of floating point values if they are not already</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">numpy</span><span class="o">.</span><span class="n">issubdtype</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">floating</span><span class="p">):</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">numpy</span><span class="o">.</span><span class="n">issubdtype</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">floating</span><span class="p">):</span>
-        <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
-
-    <span class="c1"># If x and y are not of the same dtype, convert them to float64</span>
-    <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="n">y</span><span class="o">.</span><span class="n">dtype</span><span class="p">:</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
-        <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
-
-    <span class="c1"># Check that x and y have the same shape</span>
-    <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;x and y must have the same shape.&quot;</span><span class="p">)</span>
-
-    <span class="c1"># Determine the float type</span>
-    <span class="n">float_type</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span>
-    <span class="n">int_type</span> <span class="o">=</span> <span class="n">core_corresponding_signed_integer_type</span><span class="p">(</span><span class="n">float_type</span><span class="p">)</span>
-
-    <span class="c1"># Check the input parameters</span>
-    <span class="k">if</span> <span class="n">x_derivative</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x_derivative</span><span class="p">,</span> <span class="p">(</span><span class="n">Sequence</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">))</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">Integral</span><span class="p">)</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">x_derivative</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;x_derivative must be a sequence or a 1D array of non-negative integers.&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">y_derivative</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">y_derivative</span><span class="p">,</span> <span class="p">(</span><span class="n">Sequence</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">))</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">Integral</span><span class="p">)</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">y_derivative</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;y_derivative must be a sequence or a 1D array of non-negative integers.&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">Rx</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">Rx</span><span class="p">,</span> <span class="n">Real</span><span class="p">)</span> <span class="ow">or</span> <span class="n">Rx</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Rx must be a positive real number.&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">Ry</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">Ry</span><span class="p">,</span> <span class="n">Real</span><span class="p">)</span> <span class="ow">or</span> <span class="n">Ry</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Ry must be a positive real number.&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">x0</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">Real</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;x0 must be a real number.&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">y0</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">y0</span><span class="p">,</span> <span class="n">Real</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;y0 must be a real number.&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">alpha</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">Real</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Alpha must be a real number.&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">h</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">Real</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">h</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;h must be a real number in the range [0, 1[.&quot;</span><span class="p">)</span>
-    
-    
-    <span class="c1"># Convert rho_derivative to arrays for length checking</span>
-    <span class="k">if</span> <span class="n">x_derivative</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">y_derivative</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">x_derivative</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">int_type</span><span class="p">)</span>
-        <span class="n">y_derivative</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">int_type</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">x_derivative</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">y_derivative</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">x_derivative</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">y_derivative</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">int_type</span><span class="p">)</span>
-        <span class="n">y_derivative</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">y_derivative</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">int_type</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">x_derivative</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">y_derivative</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">y_derivative</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">x_derivative</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">int_type</span><span class="p">)</span>
-        <span class="n">x_derivative</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x_derivative</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">int_type</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">x_derivative</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x_derivative</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">int_type</span><span class="p">)</span>
-        <span class="n">y_derivative</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">y_derivative</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">int_type</span><span class="p">)</span>
-    
-    <span class="c1"># Check lengths</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">x_derivative</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;x_derivative must be a sequence or a 1D array of integers.&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">y_derivative</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;y_derivative must be a sequence or a 1D array of integers.&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">x_derivative</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="n">y_derivative</span><span class="o">.</span><span class="n">size</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;x_derivative (if given) and y_derivative (if given) must have the same length.&quot;</span><span class="p">)</span>
-    
-    <span class="c1"># Convert the float parameters to the correct type</span>
-    <span class="k">if</span> <span class="n">Rx</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">Rx</span> <span class="o">=</span> <span class="n">float_type</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">Rx</span> <span class="o">=</span> <span class="n">float_type</span><span class="p">(</span><span class="n">Rx</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">Ry</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">Ry</span> <span class="o">=</span> <span class="n">float_type</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">Ry</span> <span class="o">=</span> <span class="n">float_type</span><span class="p">(</span><span class="n">Ry</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">x0</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">x0</span> <span class="o">=</span> <span class="n">float_type</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">x0</span> <span class="o">=</span> <span class="n">float_type</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">y0</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">y0</span> <span class="o">=</span> <span class="n">float_type</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">y0</span> <span class="o">=</span> <span class="n">float_type</span><span class="p">(</span><span class="n">y0</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">alpha</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">alpha</span> <span class="o">=</span> <span class="n">float_type</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">alpha</span> <span class="o">=</span> <span class="n">float_type</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">h</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">h</span> <span class="o">=</span> <span class="n">float_type</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">h</span> <span class="o">=</span> <span class="n">float_type</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
-        
-    <span class="k">return</span> <span class="n">core_cartesian_to_elliptic_annulus</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">Rx</span><span class="p">,</span> <span class="n">Ry</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">x_derivative</span><span class="p">,</span> <span class="n">y_derivative</span><span class="p">,</span> <span class="n">float_type</span><span class="p">)</span></div>
+    <span class="k">if</span> <span class="n">single</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">rho_eq</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">theta_eq</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">to_list</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">rho_eq</span><span class="p">,</span> <span class="n">theta_eq</span>
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="n">numpy</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">numpy</span><span class="o">.</span><span class="n">broadcast_to</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">rho_eq</span><span class="p">])</span> <span class="k">if</span> <span class="n">rho_eq</span> <span class="k">else</span> <span class="n">numpy</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">0</span><span class="p">,)</span> <span class="o">+</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">dtype</span><span class="p">),</span>
+        <span class="n">numpy</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">numpy</span><span class="o">.</span><span class="n">broadcast_to</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">theta_eq</span><span class="p">])</span> <span class="k">if</span> <span class="n">theta_eq</span> <span class="k">else</span> <span class="n">numpy</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">0</span><span class="p">,)</span> <span class="o">+</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">dtype</span><span class="p">),</span>
+    <span class="p">)</span></div>
 
 </pre></div>
 
@@ -652,8 +590,8 @@
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
-<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+  <script defer src="../../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -687,7 +625,7 @@
         <div class="footer-item">
 <p class="theme-version">
   <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.19.0.
 </p></div>
       
     </div>

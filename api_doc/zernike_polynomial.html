@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>pyzernike.zernike_polynomial &#8212; pyzernike 2.3.1 documentation</title>
+    <title>pyzernike.zernike_polynomial &#8212; pyzernike 3.0.0 documentation</title>
   
   
   
@@ -27,22 +27,23 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
   
   <!-- So that users can add custom icons -->
-  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <script defer src="../_static/scripts/fontawesome.js?digest=a95f357e85573c9b56d5"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
-    <script src="../_static/documentation_options.js?v=67b02a41"></script>
+    <script src="../_static/documentation_options.js?v=acc74ff5"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'api_doc/zernike_polynomial';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="pyzernike.zernike_polynomial_up_to_order" href="zernike_polynomial_up_to_order.html" />
@@ -50,20 +51,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
   </head>
-  
-  
-  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
-
+  <body data-default-mode="">
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
   
   <div id="pst-scroll-pixel-helper"></div>
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
-
+  
+  
+  
   
   <dialog id="pst-search-dialog">
     
@@ -89,7 +96,7 @@
 </div>
 
   
-    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
 <div class="bd-header__inner bd-page-width">
   <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
     <span class="fa-solid fa-bars"></span>
@@ -111,7 +118,7 @@
   
   
   
-    <p class="title logo__title">pyzernike 2.3.1 documentation</p>
+    <p class="title logo__title">pyzernike 3.0.0 documentation</p>
   
 </a></div>
     
@@ -173,11 +180,18 @@
       
         <div class="navbar-item">
 
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button></div>
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
       
     </div>
     
@@ -264,18 +278,32 @@
         
           <div class="navbar-item">
 
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button></div>
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
         
       </div>
     
   </div>
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item pst-sidebar-collapse"><button id="pst-collapse-sidebar-button" aria-expanded="true" aria-controls="pst-primary-sidebar"><svg class="pst-icon svg-inline--fa" role="img" aria-hidden="true" focusable="false" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <path fill="currentColor" d="M3 15.5C2.36232 15.5 1.74874 15.2564 1.28478 14.8189C0.820828 14.3815 0.541576 13.7832 0.504167 13.1467L0.5 13L0.5 3C0.499965 2.36232 0.743605 1.74874 1.18107 1.28478C1.61854 0.820828 2.21676 0.541576 2.85333 0.504167L3 0.5L13 0.5C13.6377 0.499965 14.2513 0.743605 14.7152 1.18107C15.1792 1.61854 15.4584 2.21676 15.4958 2.85333L15.5 3L15.5 13C15.5 13.6377 15.2564 14.2513 14.8189 14.7152C14.3815 15.1792 13.7832 15.4584 13.1467 15.4958L13 15.5L3 15.5ZM3 13.8333L10.5 13.8333L10.5 2.16667L3 2.16667C2.79589 2.16669 2.59889 2.24163 2.44636 2.37726C2.29383 2.5129 2.19638 2.69979 2.1725 2.9025L2.16667 3L2.16667 13C2.16669 13.2041 2.24163 13.4011 2.37726 13.5536C2.5129 13.7062 2.69979 13.8036 2.9025 13.8275L3 13.8333ZM6.65583 10.325L6.5775 10.2558L4.91083 8.58917C4.76735 8.44567 4.68116 8.25476 4.66843 8.05223C4.65569 7.84971 4.71729 7.6495 4.84167 7.48917L4.91083 7.41083L6.5775 5.74417C6.72747 5.59471 6.9287 5.50794 7.14032 5.50148C7.35194 5.49502 7.55809 5.56935 7.7169 5.70937C7.8757 5.8494 7.97525 6.04463 7.99533 6.25539C8.01541 6.46616 7.95451 6.67667 7.825 6.84417L7.75583 6.9225L6.67917 8L7.75583 9.0775C7.89931 9.22099 7.98551 9.41191 7.99824 9.61443C8.01097 9.81695 7.94938 10.0172 7.825 10.1775L7.75583 10.2558C7.61234 10.3993 7.42142 10.4855 7.2189 10.4982C7.01638 10.511 6.81617 10.4494 6.65583 10.325Z"/>
+  </svg>
+  <span class="pst-collapse-sidebar-label">Collapse Sidebar</span>
+  <span class="pst-expand-sidebar-label">Expand Sidebar</span>
+</button></div>
         <div class="sidebar-primary-item">
+
 <nav class="bd-docs-nav bd-links"
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
@@ -295,6 +323,7 @@
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="radial_display.html">pyzernike.radial_display</a></li>
 <li class="toctree-l1"><a class="reference internal" href="zernike_display.html">pyzernike.zernike_display</a></li>
+<li class="toctree-l1"><a class="reference internal" href="display_interactive.html">pyzernike.display_interactive</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Additional Functions API:</span></p>
 <ul class="nav bd-sidenav">
@@ -302,15 +331,6 @@
 <li class="toctree-l1"><a class="reference internal" href="zernike_order_to_index.html">pyzernike.zernike_order_to_index</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cartesian_to_elliptic_annulus.html">pyzernike.cartesian_to_elliptic_annulus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="xy_zernike_polynomial_up_to_order.html">pyzernike.xy_zernike_polynomial_up_to_order</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Core Development API:</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="core/core_polynomial.html">pyzernike.core.core_polynomial</a></li>
-<li class="toctree-l1"><a class="reference internal" href="core/core_symbolic.html">pyzernike.core.core_symbolic</a></li>
-<li class="toctree-l1"><a class="reference internal" href="core/core_display.html">pyzernike.core.core_display</a></li>
-<li class="toctree-l1"><a class="reference internal" href="core/core_create_precomputing_terms.html">pyzernike.core.core_create_precomputing_terms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="core/core_corresponding_signed_integer_type.html">pyzernike.core.core_corresponding_signed_integer_type</a></li>
-<li class="toctree-l1"><a class="reference internal" href="core/core_cartesian_to_elliptic_annulus.html">pyzernike.core.core_cartesian_to_elliptic_annulus</a></li>
 </ul>
 </div>
 </nav></div>
@@ -375,91 +395,134 @@
 <h1>pyzernike.zernike_polynomial<a class="headerlink" href="#pyzernike-zernike-polynomial" title="Link to this heading">#</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="pyzernike.zernike_polynomial">
-<span class="sig-prename descclassname"><span class="pre">pyzernike.</span></span><span class="sig-name descname"><span class="pre">zernike_polynomial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rho</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Integral</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Integral</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho_derivative</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Integral</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta_derivative</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Integral</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">nan</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">precompute</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pyzernike/zernike_polynomial.html#zernike_polynomial"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyzernike.zernike_polynomial" title="Link to this definition">#</a></dt>
-<dd><p>Computes the Zernike polynomial <span class="math notranslate nohighlight">\(Z_{n}^{m}(\rho, \theta)\)</span> for <span class="math notranslate nohighlight">\(\rho \leq 1\)</span> and <span class="math notranslate nohighlight">\(\theta \in [0, 2\pi]\)</span>.</p>
-<p>The Zernike polynomial is defined as follows:</p>
+<span class="sig-prename descclassname"><span class="pre">pyzernike.</span></span><span class="sig-name descname"><span class="pre">zernike_polynomial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rho</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Integral</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Integral</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Integral</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Integral</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho_derivative</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Integral</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Integral</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta_derivative</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Integral</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Integral</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">nan</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">precompute</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pyzernike/zernike_polynomial.html#zernike_polynomial"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyzernike.zernike_polynomial" title="Link to this definition">#</a></dt>
+<dd><p>Compute the Zernike polynomials <span class="math notranslate nohighlight">\(Z_{n}^{m}(\rho, \theta)\)</span> and their derivatives.</p>
+<p>The Zernike polynomials <a class="footnote-reference brackets" href="#id3" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> are defined on the unit disk for <span class="math notranslate nohighlight">\(|m| \leq n\)</span> and <span class="math notranslate nohighlight">\(n - m\)</span> even by:</p>
 <div class="math notranslate nohighlight">
-\[Z_{n}^{m}(\rho, \theta) = R_{n}^{m}(\rho) \cos(m \theta) \quad \text{if} \quad m \geq 0\]</div>
+\[\begin{split}Z_{n}^{m}(\rho, \theta) = \begin{cases}
+    R_{n}^{m}(\rho) \cos(m \theta) &amp; \text{if } m \geq 0 \\
+    R_{n}^{|m|}(\rho) \sin(|m| \theta) &amp; \text{if } m &lt; 0
+\end{cases}\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(R_{n}^{m}\)</span> is the radial polynomial (see <a class="reference internal" href="radial_polynomial.html#pyzernike.radial_polynomial" title="pyzernike.radial_polynomial"><code class="xref py py-func docutils literal notranslate"><span class="pre">pyzernike.radial_polynomial()</span></code></a>). The
+polynomials are not normalized: <span class="math notranslate nohighlight">\(Z_{n}^{m}(1, \theta)\)</span> has an amplitude of 1. The normalized
+polynomials of Noll <a class="footnote-reference brackets" href="#id4" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> are obtained by multiplying by <span class="math notranslate nohighlight">\(\sqrt{2(n+1)}\)</span> (<span class="math notranslate nohighlight">\(m \neq 0\)</span>)
+or <span class="math notranslate nohighlight">\(\sqrt{n+1}\)</span> (<span class="math notranslate nohighlight">\(m = 0\)</span>).</p>
+<p>The derivative of order <span class="math notranslate nohighlight">\(a\)</span> with respect to <span class="math notranslate nohighlight">\(\rho\)</span> and <span class="math notranslate nohighlight">\(b\)</span> with respect to <span class="math notranslate nohighlight">\(\theta\)</span> is:</p>
 <div class="math notranslate nohighlight">
-\[Z_{n}^{m}(\rho, \theta) = R_{n}^{-m}(\rho) \sin(-m \theta) \quad \text{if} \quad m &lt; 0\]</div>
-<p>If <span class="math notranslate nohighlight">\(n &lt; 0\)</span>, <span class="math notranslate nohighlight">\(n &lt; |m|\)</span>, or <span class="math notranslate nohighlight">\((n - m)\)</span> is odd, the output is a zeros array with the same shape as <span class="math notranslate nohighlight">\(\rho\)</span>.
-If <span class="math notranslate nohighlight">\(\rho\)</span> is not in <span class="math notranslate nohighlight">\(0 \leq \rho \leq 1\)</span> or <span class="math notranslate nohighlight">\(\rho\)</span> is numpy.nan, the output is set to the default value (numpy.nan by default).</p>
+\[\begin{split}\frac{\partial^{a+b} Z_{n}^{m}}{\partial \rho^{a} \partial \theta^{b}} = \begin{cases}
+    \frac{d^a R_{n}^{m}}{d\rho^a}(\rho) \, m^{b} \cos\left(m\theta + b\frac{\pi}{2}\right) &amp; \text{if } m &gt; 0 \\
+    \frac{d^a R_{n}^{0}}{d\rho^a}(\rho) \, \delta_{b,0} &amp; \text{if } m = 0 \\
+    \frac{d^a R_{n}^{|m|}}{d\rho^a}(\rho) \, |m|^{b} \sin\left(|m|\theta + b\frac{\pi}{2}\right) &amp; \text{if } m &lt; 0
+\end{cases}\end{split}\]</div>
+<p>The coefficients of the radial part are computed exactly with integer arithmetic, and the sum is
+evaluated with the Horner scheme (see <code class="xref py py-func docutils literal notranslate"><span class="pre">pyzernike.core._core_polynomials()</span></code>).</p>
+<ul class="simple">
+<li><p>If <span class="math notranslate nohighlight">\(|m| &gt; n\)</span> or <span class="math notranslate nohighlight">\(n - m\)</span> is odd, the polynomial is zero.</p></li>
+<li><p>If <span class="math notranslate nohighlight">\(a &gt; n\)</span>, the derivative is zero.</p></li>
+<li><p>Where <span class="math notranslate nohighlight">\(\rho\)</span> is outside <span class="math notranslate nohighlight">\([0, 1]\)</span>, or <span class="math notranslate nohighlight">\(\rho\)</span> or <span class="math notranslate nohighlight">\(\theta\)</span> is not finite,
+the output is set to <code class="docutils literal notranslate"><span class="pre">default</span></code>.</p></li>
+</ul>
+<p><strong>Shape of the inputs and of the output.</strong> <code class="docutils literal notranslate"><span class="pre">n</span></code>, <code class="docutils literal notranslate"><span class="pre">m</span></code>, <code class="docutils literal notranslate"><span class="pre">rho_derivative</span></code> and <code class="docutils literal notranslate"><span class="pre">theta_derivative</span></code>
+can each be a single integer or a sequence of integers (list, tuple or 1D numpy array):</p>
+<ul class="simple">
+<li><p>If all of them are integers, a single polynomial is computed and returned as an array with the
+shape of <code class="docutils literal notranslate"><span class="pre">rho</span></code>.</p></li>
+<li><p>If at least one of them is a sequence, the integers are repeated to the length <span class="math notranslate nohighlight">\(N\)</span> of the
+sequences (which must all have the same length), and <span class="math notranslate nohighlight">\(N\)</span> polynomials are computed. They are
+returned as a list of <span class="math notranslate nohighlight">\(N\)</span> arrays with the shape of <code class="docutils literal notranslate"><span class="pre">rho</span></code> (<code class="docutils literal notranslate"><span class="pre">to_list=True</span></code>), or as a single
+array of shape <span class="math notranslate nohighlight">\((N, \dots)\)</span> (<code class="docutils literal notranslate"><span class="pre">to_list=False</span></code>).</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The explicit sum of the radial part suffers from cancellation between its large alternating terms
+for high orders. In double precision, the absolute error stays below <span class="math notranslate nohighlight">\(10^{-10}\)</span> up to
+<span class="math notranslate nohighlight">\(n \approx 20\)</span> for <span class="math notranslate nohighlight">\(m = 0\)</span>, and grows quickly beyond.</p>
+</div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="radial_polynomial.html#pyzernike.radial_polynomial" title="pyzernike.radial_polynomial"><code class="xref py py-func docutils literal notranslate"><span class="pre">pyzernike.radial_polynomial()</span></code></a> for computing the radial part of the Zernike polynomial <span class="math notranslate nohighlight">\(R_{n}^{m}(\rho)\)</span>.</p></li>
-<li><p><a class="reference internal" href="core/core_polynomial.html#pyzernike.core.core_polynomial" title="pyzernike.core.core_polynomial"><code class="xref py py-func docutils literal notranslate"><span class="pre">pyzernike.core.core_polynomial()</span></code></a> to inspect the core implementation of the computation.</p></li>
-<li><p>The page <a class="reference internal" href="../mathematical_description.html"><span class="doc">Mathematical description</span></a> in the documentation for the detailed mathematical description of the Zernike polynomials.</p></li>
+<li><p><a class="reference internal" href="radial_polynomial.html#pyzernike.radial_polynomial" title="pyzernike.radial_polynomial"><code class="xref py py-func docutils literal notranslate"><span class="pre">pyzernike.radial_polynomial()</span></code></a> for the radial polynomials <span class="math notranslate nohighlight">\(R_{n}^{m}(\rho)\)</span>.</p></li>
+<li><p><a class="reference internal" href="zernike_symbolic.html#pyzernike.zernike_symbolic" title="pyzernike.zernike_symbolic"><code class="xref py py-func docutils literal notranslate"><span class="pre">pyzernike.zernike_symbolic()</span></code></a> for the symbolic expressions of the Zernike polynomials.</p></li>
+<li><p><a class="reference internal" href="zernike_index_to_order.html#pyzernike.zernike_index_to_order" title="pyzernike.zernike_index_to_order"><code class="xref py py-func docutils literal notranslate"><span class="pre">pyzernike.zernike_index_to_order()</span></code></a> to convert OSA/ANSI indices to orders <span class="math notranslate nohighlight">\((n, m)\)</span>.</p></li>
+<li><p>The page <a class="reference internal" href="../mathematical_description.html"><span class="doc">Mathematical description</span></a> for the mathematical description of the Zernike polynomials.</p></li>
 </ul>
-</div>
-<p>This function allows to compute several Zernike polynomials at once for different sets of (order, azimuthal frequency, derivative orders) given as sequences,
-which can be more efficient than calling the polynomial function multiple times.</p>
-<ul class="simple">
-<li><p>The parameters <code class="docutils literal notranslate"><span class="pre">rho</span></code> and <code class="docutils literal notranslate"><span class="pre">theta</span></code> must be numpy arrays of the same shape.</p></li>
-<li><p>The parameters <code class="docutils literal notranslate"><span class="pre">n</span></code>, <code class="docutils literal notranslate"><span class="pre">m</span></code>, <code class="docutils literal notranslate"><span class="pre">rho_derivative</span></code> and <code class="docutils literal notranslate"><span class="pre">theta_derivative</span></code> must be sequences of integers with the same length.</p></li>
-</ul>
-<p>The <span class="math notranslate nohighlight">\(\rho\)</span> and <span class="math notranslate nohighlight">\(\theta\)</span> values are the same for all the polynomials.
-The output is a list of numpy arrays, each containing the values of the Zernike polynomial for the corresponding order and azimuthal frequency.
-The list has the same length as the input sequences and the arrays have the same shape as <code class="docutils literal notranslate"><span class="pre">rho</span></code>.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>If the input <code class="docutils literal notranslate"><span class="pre">rho</span></code> or <code class="docutils literal notranslate"><span class="pre">theta</span></code> are not floating point numpy arrays, it is converted to one with <code class="docutils literal notranslate"><span class="pre">numpy.float64</span></code> dtype.
-If the input <code class="docutils literal notranslate"><span class="pre">rho</span></code> or <code class="docutils literal notranslate"><span class="pre">theta</span></code> are floating point numpy arrays (ex: <code class="docutils literal notranslate"><span class="pre">numpy.float32</span></code>), the computation will be done in <code class="docutils literal notranslate"><span class="pre">numpy.float32</span></code>.
-If the input <code class="docutils literal notranslate"><span class="pre">rho</span></code> and <code class="docutils literal notranslate"><span class="pre">theta</span></code> are not of the same dtype, they are both converted to <code class="docutils literal notranslate"><span class="pre">numpy.float64</span></code>.</p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>rho</strong> (<em>numpy.ndarray</em><em> (</em><em>N-D array</em><em>)</em>) – The radial coordinate values with shape (…,).</p></li>
-<li><p><strong>theta</strong> (<em>numpy.ndarray</em><em> (</em><em>N-D array</em><em>)</em>) – The angular coordinate values with shape (…,). Same shape as <code class="docutils literal notranslate"><span class="pre">rho</span></code>.</p></li>
-<li><p><strong>n</strong> (<em>Sequence</em><em>[</em><em>Integral</em><em>] or </em><em>numpy.array</em>) – A sequence (List, Tuple) or 1D numpy array of the radial order(s) of the Zernike polynomial(s) to compute. Must be non-negative integers.</p></li>
-<li><p><strong>m</strong> (<em>Sequence</em><em>[</em><em>Integral</em><em>] or </em><em>numpy.array</em>) – A sequence (List, Tuple) or 1D numpy array of the azimuthal frequency(ies) of the Zernike polynomial(s) to compute. Must be non-negative integers.</p></li>
-<li><p><strong>rho_derivative</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>Sequence</em><em>[</em><em>Integral</em><em>]</em><em>, </em><em>numpy.array</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – A sequence (List, Tuple) or 1D numpy array of the order(s) of the radial derivative(s) to compute. Must be non-negative integers.
-If None, is it assumed that rho_derivative is 0 for all polynomials.</p></li>
-<li><p><strong>theta_derivative</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>Sequence</em><em>[</em><em>Integral</em><em>]</em><em>, </em><em>numpy.array</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – A sequence (List, Tuple) or 1D numpy array of the order(s) of the angular derivative(s) to compute. Must be non-negative integers.
-If None, is it assumed that theta_derivative is 0 for all polynomials.</p></li>
-<li><p><strong>default</strong> (<em>Real</em><em>, </em><em>optional</em>) – The default value for invalid rho values. The default is numpy.nan.
-If the radial coordinate values are not in the valid domain (0 &lt;= rho &lt;= 1) or if they are numpy.nan, the output is set to this value.</p></li>
-<li><p><strong>precompute</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, precomputes the useful terms for better performance when computing multiple polynomials with the same rho values.
-If False, computes the useful terms on the fly for each polynomial to avoid memory overhead.
-The default is True.</p></li>
+<li><p><strong>rho</strong> (<em>numpy.ndarray</em>) – The radial coordinates <span class="math notranslate nohighlight">\(\rho\)</span> with any shape <code class="docutils literal notranslate"><span class="pre">(...)</span></code>.</p></li>
+<li><p><strong>theta</strong> (<em>numpy.ndarray</em>) – The angular coordinates <span class="math notranslate nohighlight">\(\theta\)</span> in radians, with the same shape as <code class="docutils literal notranslate"><span class="pre">rho</span></code>.
+If <code class="docutils literal notranslate"><span class="pre">rho</span></code> and <code class="docutils literal notranslate"><span class="pre">theta</span></code> are floating point arrays of the same dtype (e.g. <code class="docutils literal notranslate"><span class="pre">numpy.float32</span></code>),
+this dtype is kept. Otherwise, both are converted to <code class="docutils literal notranslate"><span class="pre">numpy.float64</span></code>.</p></li>
+<li><p><strong>n</strong> (<em>Union</em><em>[</em><em>Integral</em><em>, </em><em>Sequence</em><em>[</em><em>Integral</em><em>]</em><em>, </em><em>numpy.ndarray</em><em>]</em>) – The radial order(s) <span class="math notranslate nohighlight">\(n\)</span>.</p></li>
+<li><p><strong>m</strong> (<em>Union</em><em>[</em><em>Integral</em><em>, </em><em>Sequence</em><em>[</em><em>Integral</em><em>]</em><em>, </em><em>numpy.ndarray</em><em>]</em>) – The azimuthal frequency(ies) <span class="math notranslate nohighlight">\(m\)</span>.</p></li>
+<li><p><strong>rho_derivative</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>Integral</em><em>, </em><em>Sequence</em><em>[</em><em>Integral</em><em>]</em><em>, </em><em>numpy.ndarray</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – The order(s) <span class="math notranslate nohighlight">\(a \geq 0\)</span> of the derivative with respect to <span class="math notranslate nohighlight">\(\rho\)</span>. Default is 0 (no derivative).
+None is accepted and means 0.</p></li>
+<li><p><strong>theta_derivative</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>Integral</em><em>, </em><em>Sequence</em><em>[</em><em>Integral</em><em>]</em><em>, </em><em>numpy.ndarray</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – The order(s) <span class="math notranslate nohighlight">\(b \geq 0\)</span> of the derivative with respect to <span class="math notranslate nohighlight">\(\theta\)</span>. Default is 0 (no derivative).
+None is accepted and means 0.</p></li>
+<li><p><strong>default</strong> (<em>Real</em><em>, </em><em>optional</em>) – The value set where <span class="math notranslate nohighlight">\(\rho\)</span> is outside <span class="math notranslate nohighlight">\([0, 1]\)</span>, or <span class="math notranslate nohighlight">\(\rho\)</span> or <span class="math notranslate nohighlight">\(\theta\)</span> is not finite.
+Default is <code class="docutils literal notranslate"><span class="pre">numpy.nan</span></code>.</p></li>
+<li><p><strong>precompute</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, the powers of <span class="math notranslate nohighlight">\(\rho\)</span> and the cosine and sine terms are cached and shared between the
+polynomials, which is faster when several polynomials are computed at once. If False, they are
+recomputed for each polynomial, which uses less memory. Default is True.</p></li>
+<li><p><strong>to_list</strong> (<em>bool</em><em>, </em><em>optional</em>) – Only used when several polynomials are computed. If True, the output is a list of arrays.
+If False, the output is a single array of shape <span class="math notranslate nohighlight">\((N, \dots)\)</span>. Default is True.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A list of numpy arrays containing the Zernike polynomial values for each order and azimuthal frequency.
-Each array has the same shape as <code class="docutils literal notranslate"><span class="pre">rho</span></code> and the list has the same length as the input sequences.
-The dtype of the arrays is the same as the dtype of <code class="docutils literal notranslate"><span class="pre">rho</span></code> and <code class="docutils literal notranslate"><span class="pre">theta</span></code> is given, otherwise <code class="docutils literal notranslate"><span class="pre">numpy.float64</span></code>.</p>
+<dd class="field-even"><p><ul class="simple">
+<li><p>If <code class="docutils literal notranslate"><span class="pre">n</span></code>, <code class="docutils literal notranslate"><span class="pre">m</span></code>, <code class="docutils literal notranslate"><span class="pre">rho_derivative</span></code> and <code class="docutils literal notranslate"><span class="pre">theta_derivative</span></code> are integers: an array with the shape of <code class="docutils literal notranslate"><span class="pre">rho</span></code>.</p></li>
+<li><p>Otherwise, if <code class="docutils literal notranslate"><span class="pre">to_list</span></code> is True: a list of <span class="math notranslate nohighlight">\(N\)</span> arrays with the shape of <code class="docutils literal notranslate"><span class="pre">rho</span></code>.</p></li>
+<li><p>Otherwise: an array of shape <span class="math notranslate nohighlight">\((N, \dots)\)</span>, where <code class="docutils literal notranslate"><span class="pre">output[i]</span></code> corresponds to
+<code class="docutils literal notranslate"><span class="pre">(n[i],</span> <span class="pre">m[i],</span> <span class="pre">rho_derivative[i],</span> <span class="pre">theta_derivative[i])</span></code>.</p></li>
+</ul>
+<p>The dtype is the common floating point dtype of <code class="docutils literal notranslate"><span class="pre">rho</span></code> and <code class="docutils literal notranslate"><span class="pre">theta</span></code> (<code class="docutils literal notranslate"><span class="pre">numpy.float64</span></code> by default).</p>
+</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>List[numpy.ndarray]</p>
+<dd class="field-odd"><p>Union[numpy.ndarray, List[numpy.ndarray]]</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>TypeError</strong> – If the rho or theta values can not be converted to a numpy array of floating points values.
-    If n, m, rho_derivative or theta_derivative (if not None) are not sequences of integers.</p></li>
-<li><p><strong>ValueError</strong> – If the rho and theta do not have the same shape.
-    If the lengths of n, m, rho_derivative and theta_derivative (if not None) are not the same.</p></li>
+<li><p><strong>TypeError</strong> – If <code class="docutils literal notranslate"><span class="pre">rho</span></code> or <code class="docutils literal notranslate"><span class="pre">theta</span></code> can not be converted to a floating point array, if <code class="docutils literal notranslate"><span class="pre">n</span></code>, <code class="docutils literal notranslate"><span class="pre">m</span></code>,
+    <code class="docutils literal notranslate"><span class="pre">rho_derivative</span></code> or <code class="docutils literal notranslate"><span class="pre">theta_derivative</span></code> is not an integer or a sequence of integers, if
+    <code class="docutils literal notranslate"><span class="pre">default</span></code> is not a real number, or if <code class="docutils literal notranslate"><span class="pre">precompute</span></code> or <code class="docutils literal notranslate"><span class="pre">to_list</span></code> is not a boolean.</p></li>
+<li><p><strong>ValueError</strong> – If <code class="docutils literal notranslate"><span class="pre">rho</span></code> and <code class="docutils literal notranslate"><span class="pre">theta</span></code> do not have the same shape, if the sequences do not have the same
+    length, or if a derivative order is negative.</p></li>
 </ul>
 </dd>
 </dl>
+<p class="rubric">References</p>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id3" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>F. Zernike, “Beugungstheorie des Schneidenverfahrens und seiner verbesserten Form, der
+Phasenkontrastmethode,” Physica 1(7-12), 689-704 (1934). <a class="reference external" href="https://doi.org/10.1016/S0031-8914(34)80259-5">https://doi.org/10.1016/S0031-8914(34)80259-5</a></p>
+</aside>
+<aside class="footnote brackets" id="id4" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>R. J. Noll, “Zernike polynomials and atmospheric turbulence,” Journal of the Optical Society
+of America 66(3), 207-211 (1976). <a class="reference external" href="https://doi.org/10.1364/JOSA.66.000207">https://doi.org/10.1364/JOSA.66.000207</a></p>
+</aside>
+</aside>
 <p class="rubric">Examples</p>
-<p>Compute the Zernike polynomial <span class="math notranslate nohighlight">\(Z_{2}^{0}(\rho, \theta)\)</span> for <span class="math notranslate nohighlight">\(\rho \leq 1\)</span>:</p>
+<p>Compute the defocus <span class="math notranslate nohighlight">\(Z_{2}^{0}(\rho, \theta)\)</span> on a polar grid:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyzernike</span><span class="w"> </span><span class="kn">import</span> <span class="n">zernike_polynomial</span>
-<span class="n">rho</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
-<span class="n">theta</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">numpy</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
-<span class="n">result</span> <span class="o">=</span> <span class="n">zernike_polynomial</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">m</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-<span class="n">polynomial</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># result is a list, we take the first element</span>
+
+<span class="n">rho</span><span class="p">,</span> <span class="n">theta</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="n">numpy</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">numpy</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+<span class="n">Z20</span> <span class="o">=</span> <span class="n">zernike_polynomial</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># array of shape (100, 100)</span>
 </pre></div>
 </div>
-<p>Compute the radial Zernike polynomial <span class="math notranslate nohighlight">\(Z_{2}^{0}(\rho, \theta)\)</span> and its first derivative for <span class="math notranslate nohighlight">\(\rho \leq 1\)</span>:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pyzernike</span><span class="w"> </span><span class="kn">import</span> <span class="n">zernike_polynomial</span>
-<span class="n">rho</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
-<span class="n">theta</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">numpy</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
-<span class="n">result</span> <span class="o">=</span> <span class="n">zernike_polynomial</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="n">m</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">rho_derivative</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
-<span class="n">polynomial</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># result is a list, we take the first element</span>
-<span class="n">derivative</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># result is a list, we take the second element</span>
+<p>Compute <span class="math notranslate nohighlight">\(Z_{2}^{2}\)</span> and its gradient in polar coordinates (<code class="docutils literal notranslate"><span class="pre">n</span></code> and <code class="docutils literal notranslate"><span class="pre">m</span></code> are repeated):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Z</span><span class="p">,</span> <span class="n">dZ_drho</span><span class="p">,</span> <span class="n">dZ_dtheta</span> <span class="o">=</span> <span class="n">zernike_polynomial</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">rho_derivative</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">theta_derivative</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Compute the first 15 polynomials in the OSA/ANSI ordering as a single array:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyzernike</span><span class="w"> </span><span class="kn">import</span> <span class="n">zernike_index_to_order</span>
+
+<span class="n">n</span><span class="p">,</span> <span class="n">m</span> <span class="o">=</span> <span class="n">zernike_index_to_order</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">15</span><span class="p">))</span>
+<span class="n">Z</span> <span class="o">=</span> <span class="n">zernike_polynomial</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="n">m</span><span class="p">,</span> <span class="n">to_list</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>  <span class="c1"># array of shape (15, 100, 100)</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -511,20 +574,20 @@ The dtype of the arrays is the same as the dtype of <code class="docutils litera
     class="page-toc tocsection onthispage">
     <i class="fa-solid fa-list"></i> On this page
   </div>
-  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
-    <ul class="visible nav section-nav flex-column">
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyzernike.zernike_polynomial"><code class="docutils literal notranslate"><span class="pre">zernike_polynomial()</span></code></a></li>
 </ul>
   </nav></div>
 
   <div class="sidebar-secondary-item">
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="../_sources/api_doc/zernike_polynomial.rst.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div></div>
+
+  <div class="tocsection sourcelink">
+    <a href="../_sources/api_doc/zernike_polynomial.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
 
 </div></div>
               
@@ -539,8 +602,8 @@ The dtype of the arrays is the same as the dtype of <code class="docutils litera
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
-<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+  <script defer src="../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -574,7 +637,7 @@ The dtype of the arrays is the same as the dtype of <code class="docutils litera
         <div class="footer-item">
 <p class="theme-version">
   <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.19.0.
 </p></div>
       
     </div>

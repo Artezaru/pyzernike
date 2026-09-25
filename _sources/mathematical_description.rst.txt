@@ -35,17 +35,21 @@ The radial polynomials :math:`R_{n}^{m}(\rho)` are defined as follows:
 
     If :math:` m > n`, or :math:`m < 0` or :math:`n < 0`, or :math:`(n - m)` is odd the radial polynomial is set to zero.
 
-The computation of the factorial is done using the function :func:`scipy.special.gammaln` for better performance and stability.
+The coefficients of the radial polynomial are computed exactly with integer arithmetic (``math.comb``), without forming any factorial,
+as a product of two binomial coefficients:
 
 .. math::
 
-    \text{log}(n!) = \text{gammaln}(n+1)
+    \frac{(n-k)!}{k! ((n+m)/2 - k)! ((n-m)/2 - k)!} = \binom{n-k}{k} \binom{n-2k}{(n-m)/2 - k}
 
-So the coefficient of the radial polynomial is computed as follows:
+The coefficients are exact and cannot overflow. They are rounded only once, when converted to floating point values,
+and the sum is evaluated with the Horner scheme in :math:`\rho^2`.
 
-.. math::
+.. note::
 
-    \frac{(n-k)!}{k! ((n+m)/2 - k)! ((n-m)/2 - k)!} = \text{exp} (\text{gammaln}(n-k+1) - \text{gammaln}(k+1) - \text{gammaln}((n+m)/2 - k + 1) - \text{gammaln}((n-m)/2 - k + 1))
+    Even with exact coefficients, the alternating sum suffers from cancellation between its large terms for high orders:
+    in double precision, the absolute error stays below :math:`10^{-10}` up to :math:`n \approx 20` for :math:`m = 0`,
+    and grows quickly beyond. For high orders, the recurrence relation described below must be preferred.
 
 
 Derivatives of the Zernike polynomials
@@ -66,6 +70,44 @@ The derivative of order (derivative (a)) of the radial Zernike polynomial is def
 .. math::
 
     \frac{d^{a}R_{n}^{m}(\rho)}{d\rho^{a}} = \sum_{k=0}^{(n-m)/2} \frac{(-1)^k (n-k)!}{k! ((n+m)/2 - k)! ((n-m)/2 - k)!} (n-2k) (n-2k-1) \ldots (n-2k-a+1) \rho^{n-2k-a}
+
+The factor :math:`(n-2k) (n-2k-1) \ldots (n-2k-a+1) = \frac{(n-2k)!}{(n-2k-a)!}` is also computed exactly with integer arithmetic (``math.perm``).
+
+
+Recursive computation of the radial polynomials
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When all the polynomials up to a radial order :math:`N` are needed, they are computed with the three-term recurrence relation of
+Shakibaei and Paramesran [1]_:
+
+.. math::
+
+    R_{n}^{m}(\rho) = \rho \, A_{n}^{m}(\rho) - R_{n-2}^{m}(\rho) \quad \text{with} \quad A_{n}^{m}(\rho) = R_{n-1}^{|m-1|}(\rho) + R_{n-1}^{m+1}(\rho)
+
+for :math:`n \geq 1`, :math:`0 \leq m \leq n` and :math:`(n - m)` even, with the initial condition
+:math:`R_{0}^{0}(\rho) = 1` and the convention :math:`R_{n}^{m}(\rho) = 0` whenever :math:`m > n`.
+With this convention, the same relation also gives the diagonal terms :math:`R_{n}^{n}(\rho) = \rho^{n}`.
+
+The polynomials are built row by row (one row per radial order :math:`n`), each row only depending on
+the rows :math:`n-1` and :math:`n-2`. Each polynomial costs one multiplication and two additions whatever
+its order, so that all the polynomials up to the order :math:`N` are computed in :math:`O(N^2)` operations
+per point (instead of :math:`O(N^3)` with the explicit sum). The recurrence only combines polynomials
+bounded by 1 on :math:`[0, 1]`, so its accuracy stays close to the machine precision at any order.
+
+Differentiating the relation :math:`a` times with the Leibniz rule
+:math:`\frac{d^a}{d\rho^a}\left[\rho f(\rho)\right] = \rho f^{(a)}(\rho) + a f^{(a-1)}(\rho)`
+gives a recurrence of the same form for the derivatives:
+
+.. math::
+
+    \frac{d^a R_{n}^{m}}{d\rho^a} = \rho \, \frac{d^a A_{n}^{m}}{d\rho^a} + a \, \frac{d^{a-1} A_{n}^{m}}{d\rho^{a-1}} - \frac{d^a R_{n-2}^{m}}{d\rho^a}
+
+with the diagonal terms :math:`\frac{d^a R_{n}^{n}}{d\rho^a} = \frac{n!}{(n-a)!} \rho^{n-a}` and
+:math:`\frac{d^a R_{n}^{m}}{d\rho^a} = 0` for :math:`a > n`. The derivative orders :math:`0, 1, \dots, a`
+are computed together, since the order :math:`a` requires the order :math:`a - 1`.
+
+.. [1] B. H. Shakibaei and R. Paramesran, "Recursive formula to compute Zernike radial polynomials,"
+   Optics Letters 38(14), 2487 (2013). https://doi.org/10.1364/OL.38.002487
 
 
 Extension of Zernike polynomials to a elliptic annulus domain
@@ -113,12 +155,10 @@ Where:
 
     Y = -\sin(\alpha) (x - x_0) + \cos(\alpha) (y - y_0)
 
-.. seealso::
+For the mathematical development of the method, see Navarro et al. [2]_.
 
-    For the mathematical development of the method, see the paper `Generalization of Zernike polynomials for regular portions of circles and ellipses` by Rafael Navarro, José L. López, José Rx. Díaz, and Ester Pérez Sinusía.
-    The associated paper is available in the resources folder of the package.
-
-    Download the PDF : :download:`PDF <../../pyzernike/resources/Navarro and al. Generalization of Zernike polynomials for regular portions of circles and ellipses.pdf>`
+.. [2] R. Navarro et al., "Generalization of Zernike polynomials for regular portions of circles
+   and ellipses," Optics Express 22(18), 21263-21279 (2014). https://doi.org/10.1364/OE.22.021263
 
 Derivatives of the extended Zernike polynomials
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

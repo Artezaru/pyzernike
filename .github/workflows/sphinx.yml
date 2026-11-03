@@ -21,14 +21,9 @@ on:
 env:
   # Folder containing Sphinx's conf.py.
   DOCS_SOURCE: "docs/source"
-  # Extras of the package installed to build the docs (pip install ".[EXTRAS]"),
-  # so that autodoc can import the optional modules. Leave empty "" for none.
-  DOCS_EXTRAS: "all"
   # Extra pip packages needed to build the docs (Sphinx extensions, theme...).
-  DOCS_REQUIREMENTS: "sphinx pydata-sphinx-theme numpydoc sphinx-copybutton sphinx-gallery sphinx-design"
+  DOCS_REQUIREMENTS: "sphinx pydata-sphinx-theme sphinx-copybutton sphinx-gallery sphinx-design"
   PYTHON_VERSION: "3.11"
-  # matplotlib without a screen, for the examples gallery (harmless otherwise).
-  MPLBACKEND: "Agg"
 
 # =============================================================================
 #  Nothing to change below this line.
@@ -58,11 +53,8 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          if [ -n "$DOCS_EXTRAS" ]; then TARGET=".[$DOCS_EXTRAS]"; else TARGET="."; fi
-          pip install "$TARGET" $DOCS_REQUIREMENTS
-
-      - name: Show the installed versions
-        run: pip list
+          pip install $DOCS_REQUIREMENTS
+          pip install .[all]
 
       - name: Build documentation
         run: sphinx-build -b html "$DOCS_SOURCE" public/

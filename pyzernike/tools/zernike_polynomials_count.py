@@ -15,37 +15,8 @@
 from numbers import Integral
 from typing import List, Sequence, Union, overload
 
-
-def _zernike_polynomials_count(order: List[int]) -> List[int]:
-    r"""
-    Compute the number of Zernike polynomials up to each given radial order without any check.
-
-    .. warning::
-
-        This method is an internal function of ``pyzernike`` that is not designed to be used by the users directly.
-        Please use :func:`pyzernike.zernike_polynomials_count`.
-
-    .. math::
-
-        P(N) = j(N, N) + 1 = \frac{(N + 1)(N + 2)}{2}
-
-    Parameters
-    ----------
-    order : List[int]
-        The maximum radial orders. Must be a list of non-negative Python integers.
-
-    Returns
-    -------
-    List[int]
-        The number of Zernike polynomials with :math:`0 \leq n \leq N` for each order :math:`N`.
-
-    """
-    return [(N + 1) * (N + 2) // 2 for N in order]
-
-
-def _is_integer(value) -> bool:
-    # bool is excluded: True is an Integral but not a radial order
-    return isinstance(value, Integral) and not isinstance(value, bool)
+from ..core.parsing import _as_integers
+from ..core.core_indexing import _core_polynomials_count
 
 
 @overload
@@ -70,17 +41,11 @@ def zernike_polynomials_count(
     In the OSA/ANSI ordering, the last polynomial of order :math:`N` is :math:`Z_{N}^{N}`, with
     index :math:`j(N, N) = N(N + 3)/2`. Since the indices start at 0, the number of polynomials
     is :math:`P(N) = j(N, N) + 1`, and the polynomials up to the order :math:`N` are exactly the
-    indices ``range(P(N))``.
+    indices ``range(P(N))``. The same holds for the Noll indices ``range(1, P(N) + 1)``, but not for the Fringe
+    ordering, which is not sorted by radial order.
 
-    .. seealso::
-
-        - :func:`pyzernike.zernike_order_to_index` for converting Zernike orders to indices.
-        - :func:`pyzernike.zernike_index_to_order` for converting indices to Zernike orders.
-        - :func:`pyzernike.zernike_polynomial_up_to_order` for computing all the polynomials up to an order.
-
-    - ``order`` can be a single non-negative integer, or a sequence of non-negative integers.
-    - If ``order`` is an integer, a single integer is returned.
-    - If ``order`` is a sequence, a list of integers is returned.
+    :math:`P(N)` is also the length of a complete vector of coefficients up to the order :math:`N`, as expected by the
+    functions working on coefficients (e.g. :func:`pyzernike.zernike_evaluate` or :func:`pyzernike.zernike_rms`).
 
     The first values are:
 
@@ -100,10 +65,23 @@ def zernike_polynomials_count(
     |  ...  |  ...      |  ...      |
     +-------+-----------+-----------+
 
+    **Shape of the input and of the output.** ``order`` can be a single non-negative integer, or a sequence (list,
+    tuple or 1D numpy array) of non-negative integers:
+
+    - If ``order`` is an integer, a single integer is returned.
+    - If ``order`` is a sequence, a list of integers is returned.
+
+    .. seealso::
+
+        - :func:`pyzernike.zernike_order_to_index` for converting Zernike orders to indices.
+        - :func:`pyzernike.zernike_index_to_order` for converting indices to Zernike orders.
+        - :func:`pyzernike.zernike_polynomial_up_to_order` for computing all the polynomials up to an order.
+        - The page :doc:`../../mathematical_description/conventions` for the indexing conventions.
+
     Parameters
     ----------
-    order : Union[Integral, Sequence[Integral]]
-        The maximum radial order :math:`N`, or a sequence of maximum radial orders.
+    order : Union[Integral, Sequence[Integral], numpy.ndarray]
+        The maximum radial order :math:`N`, or a sequence (list, tuple or 1D numpy array) of maximum radial orders.
 
     Returns
     -------
@@ -116,7 +94,7 @@ def zernike_polynomials_count(
     Raises
     ------
     TypeError
-        If ``order`` is not an integer or a sequence of integers.
+        If ``order`` is not an integer, a sequence of integers or a 1D numpy array of integers.
 
     ValueError
         If any order is negative.
@@ -143,16 +121,15 @@ def zernike_polynomials_count(
         print(m)  # Output: [0, -1, 1, -2, 0, 2]
 
     """
+    orders = _as_integers(order, "order")
+
     # Single integer
-    if _is_integer(order):
-        if order < 0:
+    if isinstance(orders, int):
+        if orders < 0:
             raise ValueError("order must be a non-negative integer.")
-        return _zernike_polynomials_count([int(order)])[0]
+        return _core_polynomials_count(order=orders)
 
     # Sequence of integers
-    if isinstance(order, (str, bytes)) or not isinstance(order, Sequence) or not all(_is_integer(N) for N in order):
-        raise TypeError("order must be an integer or a sequence of integers.")
-    if any(N < 0 for N in order):
+    if any(N < 0 for N in orders):
         raise ValueError("order must contain non-negative integers.")
-
-    return _zernike_polynomials_count([int(N) for N in order])
+    return [_core_polynomials_count(order=N) for N in orders]

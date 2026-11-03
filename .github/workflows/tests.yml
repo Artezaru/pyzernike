@@ -1,0 +1,162 @@
+# =============================================================================
+#  Run the tests of the Python package on every push to a branch (not on the
+#  version tags), on every pull request, or manually from the Actions tab
+#  (Run workflow > choose a branch).
+#
+#  Three jobs:
+#    tests            : latest dependencies, on all the PYTHON_VERSIONS.
+#    minimum-versions : minimum dependencies (MIN_REQUIREMENTS) on MIN_PYTHON_VERSION.
+#    core-only        : package installed without extras: it must import, and
+#                       the OPTIONAL_ATTRIBUTES must raise an ImportError.
+#
+#  Generic workflow: ONLY edit the `env:` block below for a new repository.
+#  Copy this file to .github/workflows/tests.yml
+# =============================================================================
+
+name: Tests
+
+on:
+  push:
+    branches:
+      - "**"        # every branch, but not the tags
+  pull_request: {}
+  workflow_dispatch: {}
+
+env:
+  # Name used in "import ...".
+  PACKAGE_IMPORT: "pyzernike"
+  # Extras installed for the tests (pip install ".[EXTRAS]"). Leave empty "" for none.
+  EXTRAS: "all"
+  # Extra pip packages needed to run the tests.
+  TEST_REQUIREMENTS: "pytest scipy"
+  # Python versions of the "tests" job (JSON list).
+  PYTHON_VERSIONS: '["3.11", "3.12", "3.13", "3.14"]'
+  # Oldest supported Python and minimum versions of the dependencies (same as
+  # pyproject.toml). Leave MIN_REQUIREMENTS empty "" to skip the job.
+  MIN_PYTHON_VERSION: "3.11"
+  MIN_REQUIREMENTS: "numpy==1.26.* matplotlib==3.8.* sympy==1.12.*"
+  # Attributes of the package that must raise an ImportError when the package is
+  # installed without extras (space separated). Leave empty "" to only check the import.
+  OPTIONAL_ATTRIBUTES: "zernike_display zernike_symbolic"
+  # matplotlib without a screen (harmless if matplotlib is not used).
+  MPLBACKEND: "Agg"
+
+# =============================================================================
+#  Nothing to change below this line.
+# =============================================================================
+
+# A new push on the same branch cancels the tests still running.
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # The `env` context is not available in `strategy.matrix` and in `jobs.<id>.if`:
+  # this job forwards the configuration as outputs.
+  config:
+    runs-on: ubuntu-latest
+    outputs:
+      python-versions: ${{ steps.config.outputs.python-versions }}
+      min-python-version: ${{ steps.config.outputs.min-python-version }}
+      run-minimum: ${{ steps.config.outputs.run-minimum }}
+    steps:
+      - id: config
+        run: |
+          echo "python-versions=$PYTHON_VERSIONS" >> "$GITHUB_OUTPUT"
+          echo "min-python-version=$MIN_PYTHON_VERSION" >> "$GITHUB_OUTPUT"
+          if [ -n "$MIN_REQUIREMENTS" ]; then
+            echo "run-minimum=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "run-minimum=false" >> "$GITHUB_OUTPUT"
+          fi
+
+  tests:
+    name: Python ${{ matrix.python-version }}
+    needs: config
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ${{ fromJSON(needs.config.outputs.python-versions) }}
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -n "$EXTRAS" ]; then TARGET=".[$EXTRAS]"; else TARGET="."; fi
+          pip install "$TARGET" $TEST_REQUIREMENTS
+
+      - name: Run the tests
+        run: python -m pytest
+
+  minimum-versions:
+    name: Minimum versions (Python ${{ needs.config.outputs.min-python-version }})
+    needs: config
+    if: needs.config.outputs.run-minimum == 'true'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ needs.config.outputs.min-python-version }}
+
+      - name: Install dependencies
+        # One single pip command: the other packages (scipy, ...) are resolved
+        # to versions compatible with the minimum versions.
+        run: |
+          set -f   # no glob expansion of the "*" in MIN_REQUIREMENTS
+          python -m pip install --upgrade pip
+          if [ -n "$EXTRAS" ]; then TARGET=".[$EXTRAS]"; else TARGET="."; fi
+          pip install "$TARGET" $TEST_REQUIREMENTS $MIN_REQUIREMENTS
+
+      - name: Show the installed versions
+        run: pip list
+
+      - name: Run the tests
+        run: python -m pytest
+
+  core-only:
+    name: Without extras
+    needs: config
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ needs.config.outputs.min-python-version }}
+
+      - name: Install the package only
+        run: |
+          python -m pip install --upgrade pip
+          pip install .
+
+      - name: Check the import and the optional attributes
+        run: |
+          python - <<'EOF'
+          import importlib
+          import os
+
+          package = importlib.import_module(os.environ["PACKAGE_IMPORT"])
+          print(f"import {package.__name__}: OK")
+
+          for name in os.environ["OPTIONAL_ATTRIBUTES"].split():
+              try:
+                  getattr(package, name)
+              except ImportError as error:
+                  print(f"{name}: OK -> {error}")
+              else:
+                  raise SystemExit(f"{name} should raise an ImportError without the extras")
+          EOF

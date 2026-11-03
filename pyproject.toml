@@ -1,29 +1,73 @@
 [build-system]
 requires = [
-  "setuptools>=42",
+  "setuptools>=64",
   "setuptools-scm>=8.0"
 ]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "pyzernike-polynomials"
-requires-python = ">= 3.10"
+requires-python = ">= 3.11"
 dynamic = ["version"]
-description = "Zernike polynomials computation and visualization."
+description = "Zernike polynomials on the unit disk and on elliptic annuli: computation, derivatives, fitting and display."
+readme = {file = "README.md", content-type = "text/markdown"}
 license = {file = "LICENSE"}
 authors = [
-{name = "Artezaru", email = "artezaru.github@proton.me"}
+    {name = "Artezaru", email = "artezaru.github@proton.me"}
+]
+keywords = [
+    "zernike",
+    "polynomials",
+    "optics",
+    "wavefront",
+    "aberrations",
+    "pupil",
+    "elliptic annulus",
 ]
 classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Physics",
+    "Topic :: Scientific/Engineering :: Mathematics",
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "License :: OSI Approved :: Apache Software License",
     "Operating System :: OS Independent",
 ]
 dependencies = [
-    "numpy>=1.24.0",
+    "numpy>=1.26.0",
+]
+
+[project.optional-dependencies]
+display = [
+    "matplotlib>=3.8.0",
+]
+symbolic = [
+    "sympy>=1.12",
+]
+all = [
+    "pyzernike-polynomials[display,symbolic]",
+]
+dev = [
+    # Optional features (needed by the tests and the documentation)
+    "pyzernike-polynomials[all]",
+    # Tests
+    "pytest",
+    "pytest-cov",
     "scipy>=1.10.0",
-    "matplotlib>=3.7.0",
-    "sympy>=1.12"
+    # Documentation
+    "sphinx",
+    "pydata-sphinx-theme",
+    "numpydoc",
+    "sphinx-gallery",
+    "sphinx-design",
+    # Packaging and release
+    "build",
+    "twine",
+    "bumpver",
 ]
 
 [project.urls]
@@ -32,35 +76,19 @@ Documentation = "https://Artezaru.github.io/pyzernike"
 Source = "https://github.com/Artezaru/pyzernike"
 Tracker = "https://github.com/Artezaru/pyzernike/issues"
 
+[project.scripts]
+pyzernike = "pyzernike.__main__:__main__"
+
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["pyzernike", "pyzernike*"]
-exclude = ["laboratory", "laboratory.*", "tests", "tests*", "examples", "examples*"]
+include = ["pyzernike", "pyzernike.*"]
+exclude = ["laboratory", "laboratory.*", "tests", "tests.*", "examples", "examples.*"]
 
 [tool.setuptools.package-data]
 "pyzernike.resources" = ["*"]
 
-[project.scripts]
-pyzernike = "pyzernike.__main__:__main__"
-
 [tool.setuptools.dynamic]
 version = {attr = "pyzernike.__version__.__version__"}
 
-[project.optional-dependencies]
-dev = [
-    "sphinx",
-    "pydata-sphinx-theme",
-    "numpydoc",
-    "pytest",
-    "pytest-cov",
-    "bumpver",
-    "twine",
-    "wheel",
-    "build",
-    "setuptools",
-    "setuptools-scm",
-]
-
-[project.readme]
-file = "README.md"
-content-type = "text/markdown"
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -1,0 +1,313 @@
+Method,Derivatives,Order,Number of points,Time (s)
+"explicit, precompute=False",value,3,1000,0.00014385999993464792
+"explicit, precompute=False",value,3,2000,0.00021575999999186025
+"explicit, precompute=False",value,3,5000,0.0005010400000173831
+"explicit, precompute=False",value,3,10000,0.0010926999999355757
+"explicit, precompute=False",value,3,20000,0.0021937200000138545
+"explicit, precompute=False",value,3,50000,0.0058633399999962425
+"explicit, precompute=False",value,3,100000,0.014529399999992166
+"explicit, precompute=False",value,3,200000,0.027722739999990153
+"explicit, precompute=False",value,3,500000,0.0710938399999577
+"explicit, precompute=False",value,3,1000000,0.13995334000001095
+"explicit, precompute=False",value,3,2000000,0.29450088000003233
+"explicit, precompute=False",value,3,5000000,0.7402874800000063
+"explicit, precompute=False",value,3,12000000,1.802433099999962
+"explicit, precompute=False",value,5,1000,0.0003653400000075635
+"explicit, precompute=False",value,5,2000,0.0005940999999438645
+"explicit, precompute=False",value,5,5000,0.0014116199999989476
+"explicit, precompute=False",value,5,10000,0.004052439999941271
+"explicit, precompute=False",value,5,20000,0.006651959999999235
+"explicit, precompute=False",value,5,50000,0.01517465999995693
+"explicit, precompute=False",value,5,100000,0.03645471999998336
+"explicit, precompute=False",value,5,200000,0.0778329599999779
+"explicit, precompute=False",value,5,500000,0.18742590000001655
+"explicit, precompute=False",value,5,1000000,0.425412039999992
+"explicit, precompute=False",value,5,2000000,1.390752639999937
+"explicit, precompute=False",value,5,5000000,1.9412657600000784
+"explicit, precompute=False",value,5,12000000,4.659803420000026
+"explicit, precompute=False",value,7,1000,0.0007118599999557773
+"explicit, precompute=False",value,7,2000,0.0011490800000501622
+"explicit, precompute=False",value,7,5000,0.002960480000001553
+"explicit, precompute=False",value,7,10000,0.00579040000002351
+"explicit, precompute=False",value,7,20000,0.01153545999995913
+"explicit, precompute=False",value,7,50000,0.028620980000050623
+"explicit, precompute=False",value,7,100000,0.06983995999999024
+"explicit, precompute=False",value,7,200000,0.1360085600000275
+"explicit, precompute=False",value,7,500000,0.3507892399999946
+"explicit, precompute=False",value,7,1000000,0.7249353399999563
+"explicit, precompute=False",value,7,2000000,1.5047177000000374
+"explicit, precompute=False",value,7,5000000,3.831604040000002
+"explicit, precompute=False",value,7,12000000,9.179990780000026
+"explicit, precompute=False",value,9,1000,0.0012555999999676714
+"explicit, precompute=False",value,9,2000,0.0022983599999861328
+"explicit, precompute=False",value,9,5000,0.0057122199999867
+"explicit, precompute=False",value,9,10000,0.011021379999965575
+"explicit, precompute=False",value,9,20000,0.02010577999999441
+"explicit, precompute=False",value,9,50000,0.05000482000004922
+"explicit, precompute=False",value,9,100000,0.11426504000000932
+"explicit, precompute=False",value,9,200000,0.23559471999997186
+"explicit, precompute=False",value,9,500000,0.6025192600000082
+"explicit, precompute=False",value,9,1000000,1.2119698000000425
+"explicit, precompute=False",value,9,2000000,2.6125366199999918
+"explicit, precompute=False",value,9,5000000,6.346631020000041
+"explicit, precompute=False",value,9,12000000,nan
+"explicit, precompute=False",value + gradient,3,1000,0.00036113999994995537
+"explicit, precompute=False",value + gradient,3,2000,0.0005962799999906565
+"explicit, precompute=False",value + gradient,3,5000,0.0015335600000071282
+"explicit, precompute=False",value + gradient,3,10000,0.003025939999952243
+"explicit, precompute=False",value + gradient,3,20000,0.006053679999968154
+"explicit, precompute=False",value + gradient,3,50000,0.016289620000043213
+"explicit, precompute=False",value + gradient,3,100000,0.039228819999971166
+"explicit, precompute=False",value + gradient,3,200000,0.07372648000000481
+"explicit, precompute=False",value + gradient,3,500000,0.1880812800000058
+"explicit, precompute=False",value + gradient,3,1000000,0.3869870199999241
+"explicit, precompute=False",value + gradient,3,2000000,0.7990369799999826
+"explicit, precompute=False",value + gradient,3,5000000,2.0245558399999934
+"explicit, precompute=False",value + gradient,3,12000000,4.924455200000011
+"explicit, precompute=False",value + gradient,5,1000,0.0010892199999943842
+"explicit, precompute=False",value + gradient,5,2000,0.0029971199999636157
+"explicit, precompute=False",value + gradient,5,5000,0.0052477000000180855
+"explicit, precompute=False",value + gradient,5,10000,0.008339780000005704
+"explicit, precompute=False",value + gradient,5,20000,0.01637006000000838
+"explicit, precompute=False",value + gradient,5,50000,0.041576239999994866
+"explicit, precompute=False",value + gradient,5,100000,0.10421862000002875
+"explicit, precompute=False",value + gradient,5,200000,0.19924464000005174
+"explicit, precompute=False",value + gradient,5,500000,0.5089291399999638
+"explicit, precompute=False",value + gradient,5,1000000,1.0951257599999735
+"explicit, precompute=False",value + gradient,5,2000000,2.0974992999999813
+"explicit, precompute=False",value + gradient,5,5000000,5.439477560000069
+"explicit, precompute=False",value + gradient,5,12000000,nan
+"explicit, precompute=False",value + gradient,7,1000,0.003291160000026139
+"explicit, precompute=False",value + gradient,7,2000,0.0037414800000078684
+"explicit, precompute=False",value + gradient,7,5000,0.008395219999965776
+"explicit, precompute=False",value + gradient,7,10000,0.01618295999996917
+"explicit, precompute=False",value + gradient,7,20000,0.03215496000002531
+"explicit, precompute=False",value + gradient,7,50000,0.07959326000000147
+"explicit, precompute=False",value + gradient,7,100000,0.20323509999998352
+"explicit, precompute=False",value + gradient,7,200000,0.39309261999997036
+"explicit, precompute=False",value + gradient,7,500000,1.003616239999974
+"explicit, precompute=False",value + gradient,7,1000000,2.0100730799999837
+"explicit, precompute=False",value + gradient,7,2000000,4.096161219999976
+"explicit, precompute=False",value + gradient,7,5000000,nan
+"explicit, precompute=False",value + gradient,7,12000000,nan
+"explicit, precompute=False",value + gradient,9,1000,0.003684019999946031
+"explicit, precompute=False",value + gradient,9,2000,0.006055359999936627
+"explicit, precompute=False",value + gradient,9,5000,0.01438404000000446
+"explicit, precompute=False",value + gradient,9,10000,0.027643299999999725
+"explicit, precompute=False",value + gradient,9,20000,0.05322507999999289
+"explicit, precompute=False",value + gradient,9,50000,0.13638728000005357
+"explicit, precompute=False",value + gradient,9,100000,0.33246909999998026
+"explicit, precompute=False",value + gradient,9,200000,0.640669700000035
+"explicit, precompute=False",value + gradient,9,500000,1.8153405400000338
+"explicit, precompute=False",value + gradient,9,1000000,3.6826657000000522
+"explicit, precompute=False",value + gradient,9,2000000,7.126856659999976
+"explicit, precompute=False",value + gradient,9,5000000,nan
+"explicit, precompute=False",value + gradient,9,12000000,nan
+"explicit, precompute=True",value,3,1000,0.00011800000002040178
+"explicit, precompute=True",value,3,2000,0.00016799999993963866
+"explicit, precompute=True",value,3,5000,0.0003756999999495747
+"explicit, precompute=True",value,3,10000,0.0010384999999587309
+"explicit, precompute=True",value,3,20000,0.002315679999992426
+"explicit, precompute=True",value,3,50000,0.0071862999999211755
+"explicit, precompute=True",value,3,100000,0.009920460000012099
+"explicit, precompute=True",value,3,200000,0.021850540000014008
+"explicit, precompute=True",value,3,500000,0.053889439999966274
+"explicit, precompute=True",value,3,1000000,0.1096833599999627
+"explicit, precompute=True",value,3,2000000,0.22670254000004206
+"explicit, precompute=True",value,3,5000000,0.5844721599999503
+"explicit, precompute=True",value,3,12000000,1.3841705199999523
+"explicit, precompute=True",value,5,1000,0.0002847400000064226
+"explicit, precompute=True",value,5,2000,0.000346720000015921
+"explicit, precompute=True",value,5,5000,0.0010556000000178755
+"explicit, precompute=True",value,5,10000,0.0017502200000308222
+"explicit, precompute=True",value,5,20000,0.003729659999953583
+"explicit, precompute=True",value,5,50000,0.01037532000000283
+"explicit, precompute=True",value,5,100000,0.020432419999997363
+"explicit, precompute=True",value,5,200000,0.0412663000000066
+"explicit, precompute=True",value,5,500000,0.10618249999997716
+"explicit, precompute=True",value,5,1000000,0.21582784000001992
+"explicit, precompute=True",value,5,2000000,0.4378276599999481
+"explicit, precompute=True",value,5,5000000,1.1650287800000114
+"explicit, precompute=True",value,5,12000000,2.9209277799999653
+"explicit, precompute=True",value,7,1000,0.00039486000005126696
+"explicit, precompute=True",value,7,2000,0.0005721200000152749
+"explicit, precompute=True",value,7,5000,0.0013725200000408223
+"explicit, precompute=True",value,7,10000,0.002935880000040925
+"explicit, precompute=True",value,7,20000,0.0067420999999740164
+"explicit, precompute=True",value,7,50000,0.017155640000055428
+"explicit, precompute=True",value,7,100000,0.031120559999999388
+"explicit, precompute=True",value,7,200000,0.0703572599999461
+"explicit, precompute=True",value,7,500000,0.17262855999997556
+"explicit, precompute=True",value,7,1000000,0.346487260000049
+"explicit, precompute=True",value,7,2000000,0.7057477199999994
+"explicit, precompute=True",value,7,5000000,1.9910506199999873
+"explicit, precompute=True",value,7,12000000,4.72110216000001
+"explicit, precompute=True",value,9,1000,0.0005696000000170898
+"explicit, precompute=True",value,9,2000,0.0009010799999487062
+"explicit, precompute=True",value,9,5000,0.0021385600000030534
+"explicit, precompute=True",value,9,10000,0.0043114000000059605
+"explicit, precompute=True",value,9,20000,0.009346059999916178
+"explicit, precompute=True",value,9,50000,0.021888459999991026
+"explicit, precompute=True",value,9,100000,0.046823380000023465
+"explicit, precompute=True",value,9,200000,0.09353713999998944
+"explicit, precompute=True",value,9,500000,0.2533691600000566
+"explicit, precompute=True",value,9,1000000,0.49979975999995074
+"explicit, precompute=True",value,9,2000000,1.0911411000000044
+"explicit, precompute=True",value,9,5000000,2.9511529000000336
+"explicit, precompute=True",value,9,12000000,nan
+"explicit, precompute=True",value + gradient,3,1000,0.00023900000005596666
+"explicit, precompute=True",value + gradient,3,2000,0.0003978599999754806
+"explicit, precompute=True",value + gradient,3,5000,0.0009392999999363383
+"explicit, precompute=True",value + gradient,3,10000,0.001620080000066082
+"explicit, precompute=True",value + gradient,3,20000,0.0033368999999765945
+"explicit, precompute=True",value + gradient,3,50000,0.01187789999994493
+"explicit, precompute=True",value + gradient,3,100000,0.015502199999991717
+"explicit, precompute=True",value + gradient,3,200000,0.03102126000003409
+"explicit, precompute=True",value + gradient,3,500000,0.07986416000003374
+"explicit, precompute=True",value + gradient,3,1000000,0.17750604000002568
+"explicit, precompute=True",value + gradient,3,2000000,0.3652911399999539
+"explicit, precompute=True",value + gradient,3,5000000,0.9346641600000112
+"explicit, precompute=True",value + gradient,3,12000000,2.221759759999986
+"explicit, precompute=True",value + gradient,5,1000,0.0004077999999935855
+"explicit, precompute=True",value + gradient,5,2000,0.0005824199999551638
+"explicit, precompute=True",value + gradient,5,5000,0.0014526600000863254
+"explicit, precompute=True",value + gradient,5,10000,0.0025625000000218277
+"explicit, precompute=True",value + gradient,5,20000,0.006052180000006046
+"explicit, precompute=True",value + gradient,5,50000,0.014533160000064526
+"explicit, precompute=True",value + gradient,5,100000,0.030062780000025668
+"explicit, precompute=True",value + gradient,5,200000,0.06857793999997738
+"explicit, precompute=True",value + gradient,5,500000,0.17211910000005445
+"explicit, precompute=True",value + gradient,5,1000000,0.35903537999993207
+"explicit, precompute=True",value + gradient,5,2000000,0.7644503800000166
+"explicit, precompute=True",value + gradient,5,5000000,2.060598400000072
+"explicit, precompute=True",value + gradient,5,12000000,nan
+"explicit, precompute=True",value + gradient,7,1000,0.0012916800000311924
+"explicit, precompute=True",value + gradient,7,2000,0.001632659999995667
+"explicit, precompute=True",value + gradient,7,5000,0.0025560399999449146
+"explicit, precompute=True",value + gradient,7,10000,0.00503288000008979
+"explicit, precompute=True",value + gradient,7,20000,0.009789739999996527
+"explicit, precompute=True",value + gradient,7,50000,0.02496715999996013
+"explicit, precompute=True",value + gradient,7,100000,0.053252939999947554
+"explicit, precompute=True",value + gradient,7,200000,0.11523310000002311
+"explicit, precompute=True",value + gradient,7,500000,0.30048945999997156
+"explicit, precompute=True",value + gradient,7,1000000,0.5750943000000006
+"explicit, precompute=True",value + gradient,7,2000000,1.381903280000006
+"explicit, precompute=True",value + gradient,7,5000000,nan
+"explicit, precompute=True",value + gradient,7,12000000,nan
+"explicit, precompute=True",value + gradient,9,1000,0.0016198799999983748
+"explicit, precompute=True",value + gradient,9,2000,0.0018032800000582939
+"explicit, precompute=True",value + gradient,9,5000,0.003539699999964796
+"explicit, precompute=True",value + gradient,9,10000,0.0068075799999860465
+"explicit, precompute=True",value + gradient,9,20000,0.013429640000140353
+"explicit, precompute=True",value + gradient,9,50000,0.03548707999998442
+"explicit, precompute=True",value + gradient,9,100000,0.08435958000009122
+"explicit, precompute=True",value + gradient,9,200000,0.17765466000000743
+"explicit, precompute=True",value + gradient,9,500000,0.4425948800000697
+"explicit, precompute=True",value + gradient,9,1000000,0.9077980399999432
+"explicit, precompute=True",value + gradient,9,2000000,1.9370200400000612
+"explicit, precompute=True",value + gradient,9,5000000,nan
+"explicit, precompute=True",value + gradient,9,12000000,nan
+recursive,value,3,1000,0.00015798000003997004
+recursive,value,3,2000,0.00020143999990978044
+recursive,value,3,5000,0.0004571400000713766
+recursive,value,3,10000,0.0012764600000082283
+recursive,value,3,20000,0.0023318199999266655
+recursive,value,3,50000,0.007033539999974891
+recursive,value,3,100000,0.012769800000023679
+recursive,value,3,200000,0.02539042000007612
+recursive,value,3,500000,0.05631534000003739
+recursive,value,3,1000000,0.1144423600000664
+recursive,value,3,2000000,0.2287406400000691
+recursive,value,3,5000000,0.586786100000063
+recursive,value,3,12000000,1.4034139800000047
+recursive,value,5,1000,0.0003170799998770235
+recursive,value,5,2000,0.0003980200001024059
+recursive,value,5,5000,0.0014127800001006107
+recursive,value,5,10000,0.0027982199999314616
+recursive,value,5,20000,0.005193599999984144
+recursive,value,5,50000,0.011747579999973824
+recursive,value,5,100000,0.02153417999998055
+recursive,value,5,200000,0.04331067999992229
+recursive,value,5,500000,0.11504039999999804
+recursive,value,5,1000000,0.23292774000001373
+recursive,value,5,2000000,0.4523097400000552
+recursive,value,5,5000000,1.1290494200000467
+recursive,value,5,12000000,2.6796832400001223
+recursive,value,7,1000,0.0004922399999486516
+recursive,value,7,2000,0.0007403999999951339
+recursive,value,7,5000,0.0026040200000352343
+recursive,value,7,10000,0.007293039999967732
+recursive,value,7,20000,0.011088159999962955
+recursive,value,7,50000,0.017848520000006828
+recursive,value,7,100000,0.033989119999932885
+recursive,value,7,200000,0.06652962000007392
+recursive,value,7,500000,0.17064313999999287
+recursive,value,7,1000000,0.3439477199999601
+recursive,value,7,2000000,0.677982239999983
+recursive,value,7,5000000,1.7348567600000024
+recursive,value,7,12000000,4.099201880000146
+recursive,value,9,1000,0.000540259999979753
+recursive,value,9,2000,0.0007906400000138092
+recursive,value,9,5000,0.002532439999959024
+recursive,value,9,10000,0.00571587999984331
+recursive,value,9,20000,0.012317340000117838
+recursive,value,9,50000,0.024541840000165394
+recursive,value,9,100000,0.043383079999875916
+recursive,value,9,200000,0.08742380000003322
+recursive,value,9,500000,0.23410292000007757
+recursive,value,9,1000000,0.46874380000008387
+recursive,value,9,2000000,0.9474234400000568
+recursive,value,9,5000000,2.389801260000058
+recursive,value,9,12000000,nan
+recursive,value + gradient,3,1000,0.0002570600001490675
+recursive,value + gradient,3,2000,0.00030214000016712814
+recursive,value + gradient,3,5000,0.0010287999999491148
+recursive,value + gradient,3,10000,0.00228183999988687
+recursive,value + gradient,3,20000,0.004002500000024156
+recursive,value + gradient,3,50000,0.011011899999903107
+recursive,value + gradient,3,100000,0.024130940000031843
+recursive,value + gradient,3,200000,0.036920939999981785
+recursive,value + gradient,3,500000,0.09852751999987959
+recursive,value + gradient,3,1000000,0.1978242600000158
+recursive,value + gradient,3,2000000,0.3994680800000424
+recursive,value + gradient,3,5000000,0.9786434999999983
+recursive,value + gradient,3,12000000,2.461188359999869
+recursive,value + gradient,5,1000,0.0004281999999875552
+recursive,value + gradient,5,2000,0.0007445199998983298
+recursive,value + gradient,5,5000,0.0031255799998689327
+recursive,value + gradient,5,10000,0.0060763999999835505
+recursive,value + gradient,5,20000,0.009637180000027001
+recursive,value + gradient,5,50000,0.019362899999941875
+recursive,value + gradient,5,100000,0.039117719999921974
+recursive,value + gradient,5,200000,0.07801451999985147
+recursive,value + gradient,5,500000,0.2043112999999721
+recursive,value + gradient,5,1000000,0.4187372399999731
+recursive,value + gradient,5,2000000,0.8489934400000493
+recursive,value + gradient,5,5000000,2.8817623200000524
+recursive,value + gradient,5,12000000,nan
+recursive,value + gradient,7,1000,0.0014534399999320158
+recursive,value + gradient,7,2000,0.003919780000069295
+recursive,value + gradient,7,5000,0.009329839999918477
+recursive,value + gradient,7,10000,0.014791180000065652
+recursive,value + gradient,7,20000,0.02219327999991947
+recursive,value + gradient,7,50000,0.051403039999968314
+recursive,value + gradient,7,100000,0.10484857999999804
+recursive,value + gradient,7,200000,0.20540522000010242
+recursive,value + gradient,7,500000,0.5163013400000637
+recursive,value + gradient,7,1000000,1.0260860799999136
+recursive,value + gradient,7,2000000,2.0594754399999147
+recursive,value + gradient,7,5000000,nan
+recursive,value + gradient,7,12000000,nan
+recursive,value + gradient,9,1000,0.0027781599999798347
+recursive,value + gradient,9,2000,0.004273480000119889
+recursive,value + gradient,9,5000,0.009074539999892295
+recursive,value + gradient,9,10000,0.019084619999921414
+recursive,value + gradient,9,20000,0.030915839999943275
+recursive,value + gradient,9,50000,0.0820315800001481
+recursive,value + gradient,9,100000,0.16634390000017446
+recursive,value + gradient,9,200000,0.3018359399999099
+recursive,value + gradient,9,500000,0.7350424799999018
+recursive,value + gradient,9,1000000,1.4610948599998665
+recursive,value + gradient,9,2000000,2.942156900000009
+recursive,value + gradient,9,5000000,nan
+recursive,value + gradient,9,12000000,nan

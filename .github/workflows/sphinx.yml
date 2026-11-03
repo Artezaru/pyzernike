@@ -1,41 +1,71 @@
+# =============================================================================
+#  Build the Sphinx documentation and deploy it to GitHub Pages
+#  (branch gh-pages) when a "v*" tag is pushed, or manually from the
+#  Actions tab (Run workflow > choose a branch or tag).
+#
+#  Generic workflow: ONLY edit the `env:` block below for a new repository.
+#  Copy this file to .github/workflows/docs.yml
+#
+#  One-time setup: Settings > Pages > Source = "Deploy from a branch",
+#  branch "gh-pages", folder "/ (root)".
+# =============================================================================
+
 name: Deploy Documentation to GitHub Pages
 
 on:
   push:
-    branches:
-      - master
+    tags:
+      - "v*"
+  workflow_dispatch: {}
+
+env:
+  # Folder containing Sphinx's conf.py.
+  DOCS_SOURCE: "docs/source"
+  # Extra pip packages needed to build the docs (Sphinx extensions, theme...).
+  DOCS_REQUIREMENTS: "sphinx pydata-sphinx-theme sphinx-copybutton sphinx-gallery sphinx-design"
+  PYTHON_VERSION: "3.11"
+
+# =============================================================================
+#  Nothing to change below this line.
+# =============================================================================
 
 permissions:
-  contents: write
-  pages: write
-  id-token: write
+  contents: write   # push to the gh-pages branch
+
+# Never run two deployments at the same time.
+concurrency:
+  group: docs-deploy
+  cancel-in-progress: false
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
-    - name: Checkout the repository
-      uses: actions/checkout@v4
+      - name: Checkout the repository
+        uses: actions/checkout@v5
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: "3.10"
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
 
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install sphinx pydata-sphinx-theme
-        pip install .
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install $DOCS_REQUIREMENTS
+          pip install .
 
-    - name: Build documentation
-      run: sphinx-build -b html docs/source/ public/
+      - name: Build documentation
+        run: sphinx-build -b html "$DOCS_SOURCE" public/
 
-    - name: Deploy to GitHub Pages
-      uses: JamesIves/github-pages-deploy-action@v4
-      
-      with:
-        branch: gh-pages
-        folder: public
-        clean: true
+      - name: Disable Jekyll
+        # Without this, GitHub Pages ignores Sphinx's _static/ folder.
+        run: touch public/.nojekyll
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: public
+          clean: true

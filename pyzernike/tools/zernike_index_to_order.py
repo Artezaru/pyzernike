@@ -12,110 +12,92 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from math import isqrt
 from numbers import Integral
 from typing import List, Sequence, Tuple, Union, overload
 
-
-def _zernike_index_to_order(j: List[int]) -> Tuple[List[int], List[int]]:
-    r"""
-    Convert a list of OSA/ANSI indices to their Zernike orders (n, m) without any check.
-
-    .. warning::
-
-        This method is an internal function of ``pyzernike`` that is not designed to be used by the users directly.
-        Please use :func:`pyzernike.zernike_index_to_order`.
-
-    The radial order is computed with the exact integer square root, so that the result is
-    exact for any index (no floating point rounding for large ``j``):
-
-    .. math::
-
-        n = \left\lfloor \frac{\lfloor \sqrt{8j + 1} \rfloor - 1}{2} \right\rfloor \quad \text{and} \quad m = 2j - n(n + 2)
-
-    Parameters
-    ----------
-    j : List[int]
-        The indices of the Zernike polynomials in the OSA/ANSI ordering. Must be a list of
-        non-negative Python integers.
-
-    Returns
-    -------
-    List[int]
-        The radial orders (n) of the Zernike polynomials.
-
-    List[int]
-        The azimuthal frequencies (m) of the Zernike polynomials.
-
-    """
-    n = [(isqrt(8 * i + 1) - 1) // 2 for i in j]
-    m = [2 * i - n_i * (n_i + 2) for n_i, i in zip(n, j)]
-    return n, m
+from ..core.parsing import _as_indexing, _as_integers
+from ..core.core_indexing import FIRST_INDEX, _core_index_to_order
 
 
 @overload
-def zernike_index_to_order(j: Integral) -> Tuple[int, int]: ...
+def zernike_index_to_order(j: Integral, indexing: str = "OSA") -> Tuple[int, int]: ...
 @overload
-def zernike_index_to_order(j: Sequence[Integral]) -> Tuple[List[int], List[int]]: ...
+def zernike_index_to_order(j: Sequence[Integral], indexing: str = "OSA") -> Tuple[List[int], List[int]]: ...
 
 def zernike_index_to_order(
-    j: Union[Integral, Sequence[Integral]]
+    j: Union[Integral, Sequence[Integral]],
+    indexing: str = "OSA",
 ) -> Union[Tuple[int, int], Tuple[List[int], List[int]]]:
     r"""
-    Convert indices in the OSA/ANSI Zernike polynomial ordering to their corresponding Zernike orders (n, m).
+    Convert indices of a Zernike polynomial ordering to their corresponding Zernike orders :math:`(n, m)`.
 
-    .. math::
+    Three indexing conventions are available (see the page :doc:`../../mathematical_description/conventions` for the
+    formulas and the details):
 
-        j = \frac{n(n + 2) + m}{2}
+    - ``"OSA"`` (or ``"ANSI"``, default): the OSA/ANSI standard [1]_, starting at 0, sorted by increasing :math:`n`,
+      then by increasing :math:`m`, with :math:`j = \frac{n(n + 2) + m}{2}`.
+    - ``"Noll"``: the indices of Noll [2]_, starting at 1, sorted by increasing :math:`n`, then by increasing
+      :math:`|m|`, with the even indices for :math:`m > 0` (cosine) and the odd indices for :math:`m < 0` (sine).
+    - ``"Fringe"``: the Fringe (University of Arizona) indices, starting at 1, sorted by increasing
+      :math:`\frac{n + |m|}{2}`, then by decreasing :math:`|m|`, with
+      :math:`j = \left(1 + \frac{n + |m|}{2}\right)^2 - 2|m| + [m < 0]`. This ordering is not sorted by radial order.
 
-    .. seealso::
+    The first Zernike polynomials in each convention are:
 
-        - :func:`pyzernike.zernike_polynomial` for computing the Zernike polynomial :math:`Z_{n}^{m}(\rho, \theta)`.
-        - :func:`pyzernike.zernike_order_to_index` for converting Zernike orders to indices.
+    +-----+-----+-------+------+--------+
+    |  n  |  m  |  OSA  | Noll | Fringe |
+    +=====+=====+=======+======+========+
+    |  0  |  0  |   0   |  1   |   1    |
+    +-----+-----+-------+------+--------+
+    |  1  | -1  |   1   |  3   |   3    |
+    +-----+-----+-------+------+--------+
+    |  1  |  1  |   2   |  2   |   2    |
+    +-----+-----+-------+------+--------+
+    |  2  | -2  |   3   |  5   |   6    |
+    +-----+-----+-------+------+--------+
+    |  2  |  0  |   4   |  4   |   4    |
+    +-----+-----+-------+------+--------+
+    |  2  |  2  |   5   |  6   |   5    |
+    +-----+-----+-------+------+--------+
+    |  3  | -3  |   6   |  9   |   11   |
+    +-----+-----+-------+------+--------+
+    |  3  | -1  |   7   |  7   |   8    |
+    +-----+-----+-------+------+--------+
+    |  3  |  1  |   8   |  8   |   7    |
+    +-----+-----+-------+------+--------+
+    |  3  |  3  |   9   |  10  |   10   |
+    +-----+-----+-------+------+--------+
+    |  4  |  0  |  12   |  11  |   9    |
+    +-----+-----+-------+------+--------+
 
-    - ``j`` can be a single non-negative integer, or a sequence of non-negative integers.
+    The functions computing all the polynomials up to an order (e.g. :func:`pyzernike.zernike_polynomial_up_to_order`)
+    and the functions working on vectors of coefficients always use the OSA/ANSI ordering. The vectors of coefficients
+    are converted between the conventions with :func:`pyzernike.zernike_coefficients_convert`.
+
+    The conversions use exact integer arithmetic (``math.isqrt``), so that the result is exact for any index.
+
+    **Shape of the input and of the output.** ``j`` can be a single integer or a sequence of integers (list, tuple or
+    1D numpy array):
+
     - If ``j`` is a single integer, a tuple ``(n, m)`` of integers is returned.
     - If ``j`` is a sequence, a tuple ``(n, m)`` of lists of integers is returned.
 
-    The first few Zernike polynomials in the OSA/ANSI ordering are:
+    .. seealso::
 
-    +-----+-----+-----+
-    |  j  |  n  |  m  |
-    +=====+=====+=====+
-    |  0  |  0  |  0  |
-    +-----+-----+-----+
-    |  1  |  1  | -1  |
-    +-----+-----+-----+
-    |  2  |  1  |  1  |
-    +-----+-----+-----+
-    |  3  |  2  | -2  |
-    +-----+-----+-----+
-    |  4  |  2  |  0  |
-    +-----+-----+-----+
-    |  5  |  2  |  2  |
-    +-----+-----+-----+
-    | ... | ... | ... |
-    +-----+-----+-----+
-
-    The process to compute the Zernike orders from the index is as follows. Since
-    :math:`-n \leq m \leq n`:
-
-    .. math::
-
-        n(n+2) = 2j - m \in [2j - n, 2j + n]
-
-    So :math:`n` is the largest integer such that :math:`n(n+2)/2 \leq j`, i.e.:
-
-    .. math::
-
-        n = \left\lfloor \frac{\lfloor \sqrt{8j + 1} \rfloor - 1}{2} \right\rfloor \quad \text{and} \quad m = 2j - n(n + 2)
-
-    The integer square root is used so that the result is exact for any index.
+        - :func:`pyzernike.zernike_order_to_index` for the inverse conversion.
+        - :func:`pyzernike.zernike_polynomials_count` for the number of polynomials up to an order.
+        - :func:`pyzernike.zernike_coefficients_convert` to convert vectors of coefficients between the conventions.
+        - The page :doc:`../../mathematical_description/conventions` for the indexing conventions.
 
     Parameters
     ----------
-    j : Union[Integral, Sequence[Integral]]
-        The index, or the sequence of indices, of the Zernike polynomials in the OSA/ANSI ordering.
+    j : Union[Integral, Sequence[Integral], numpy.ndarray]
+        The index, or the sequence (list, tuple or 1D numpy array) of indices, of the Zernike polynomials. Must be
+        greater than or equal to 0 (OSA/ANSI) or 1 (Noll and Fringe).
+
+    indexing : str, optional
+        The indexing convention: ``"OSA"`` (or ``"ANSI"``), ``"Noll"`` or ``"Fringe"``, case insensitive.
+        Default is ``"OSA"``.
 
     Returns
     -------
@@ -129,10 +111,20 @@ def zernike_index_to_order(
     Raises
     ------
     TypeError
-        If ``j`` is not an integer or a sequence of integers.
+        If ``j`` is not an integer, a sequence of integers or a 1D numpy array of integers, or if ``indexing``
+        is not a string.
 
     ValueError
-        If any index in ``j`` is negative.
+        If an index in ``j`` is lower than the first index of the convention, or if ``indexing`` is unknown.
+
+    References
+    ----------
+    .. [1] L. N. Thibos, R. A. Applegate, J. T. Schwiegerling and R. Webb, "Standards for reporting the optical
+       aberrations of eyes," Journal of Refractive Surgery 18(5), S652-S660 (2002).
+       https://doi.org/10.3928/1081-597X-20020901-30
+
+    .. [2] R. J. Noll, "Zernike polynomials and atmospheric turbulence," Journal of the Optical Society
+       of America 66(3), 207-211 (1976). https://doi.org/10.1364/JOSA.66.000207
 
     Examples
     --------
@@ -149,25 +141,32 @@ def zernike_index_to_order(
 
     .. code-block:: python
 
-        from pyzernike import zernike_index_to_order
-
         j = [2, 3, 4]
         n, m = zernike_index_to_order(j)
         print(n)  # Output: [1, 2, 2]
         print(m)  # Output: [1, -2, 0]
 
+    Convert Noll indices:
+
+    .. code-block:: python
+
+        n, m = zernike_index_to_order([1, 2, 3, 4, 11], indexing="Noll")
+        print(n)  # Output: [0, 1, 1, 2, 4]
+        print(m)  # Output: [0, 1, -1, 0, 0]
+
     """
-    # Single integer (bool is excluded: True is an Integral but not an index)
-    if isinstance(j, Integral) and not isinstance(j, bool):
-        if j < 0:
-            raise ValueError("j must be a non-negative integer.")
-        n, m = _zernike_index_to_order([int(j)])
+    indexing = _as_indexing(indexing)
+    first = FIRST_INDEX[indexing]
+    indices = _as_integers(j, "j")
+
+    # Single integer
+    if isinstance(indices, int):
+        if indices < first:
+            raise ValueError(f"j must be an integer greater than or equal to {first} for the {indexing} indexing.")
+        n, m = _core_index_to_order(j=[indices], indexing=indexing)
         return n[0], m[0]
 
     # Sequence of integers
-    if isinstance(j, (str, bytes)) or not isinstance(j, Sequence) or not all(isinstance(i, Integral) and not isinstance(i, bool) for i in j):
-        raise TypeError("j must be an integer or a sequence of integers.")
-    if any(i < 0 for i in j):
-        raise ValueError("j must contain non-negative integers.")
-
-    return _zernike_index_to_order([int(i) for i in j])
+    if any(i < first for i in indices):
+        raise ValueError(f"j must contain integers greater than or equal to {first} for the {indexing} indexing.")
+    return _core_index_to_order(j=indices, indexing=indexing)

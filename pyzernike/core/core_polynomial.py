@@ -17,6 +17,8 @@ from typing import Dict, List, Optional
 
 import numpy
 
+from .core_normalization import _core_normalization
+
 
 def _radial_coefficients(n: int, abs_m: int, rho_derivative: int) -> List[int]:
     r"""
@@ -27,6 +29,23 @@ def _radial_coefficients(n: int, abs_m: int, rho_derivative: int) -> List[int]:
         c_k = (-1)^k \binom{n-k}{k} \binom{n-2k}{\frac{n-|m|}{2}-k} \frac{(n-2k)!}{(n-2k-a)!}
 
     associated with :math:`\rho^{n-2k-a}`, for :math:`k = 0, 1, \dots` while :math:`n - 2k \geq a`.
+
+    Parameters
+    ----------
+    n : int
+        The radial order, with :math:`n \geq |m|` and :math:`n - |m|` even.
+
+    abs_m : int
+        The absolute value :math:`|m|` of the azimuthal frequency.
+
+    rho_derivative : int
+        The order :math:`a \geq 0` of the derivative with respect to :math:`\rho`.
+
+    Returns
+    -------
+    List[int]
+        The coefficients :math:`c_0, c_1, \dots`.
+
     """
     s = (n - abs_m) // 2
     coefficients = []
@@ -48,6 +67,7 @@ def _core_polynomials(
         theta_derivative: Optional[List[int]],
         flag_radial: bool,
         precompute: bool,
+        normalize: bool,
     ) -> numpy.ndarray:
     r"""
     Compute the Zernike polynomials :math:`Z_{n}^{m}(\rho, \theta)` (or the radial polynomials
@@ -86,7 +106,7 @@ def _core_polynomials(
         The alternating sum suffers from cancellation for high orders (absolute error of the order of
         :math:`\epsilon \sum_k |c_k|`). In double precision, it stays below :math:`10^{-10}` up to
         :math:`n \approx 20` for :math:`m = 0`. For higher orders, prefer
-        :func:`pyzernike.core._zernike_recursive_up_to_order`.
+        :func:`pyzernike.core._core_recursive_up_to_order`.
 
     Parameters
     ----------
@@ -115,6 +135,11 @@ def _core_polynomials(
 
     precompute : bool
         If True, the powers of rho and the cosine and sine terms are cached and shared between the polynomials.
+
+    normalize : bool
+        If True and ``flag_radial`` is False, the Zernike polynomials (and their derivatives) are multiplied by the
+        normalization factors of Noll :math:`N_{n}^{m} = \sqrt{(2 - \delta_{m0})(n + 1)}` (see
+        :func:`pyzernike.core.core_normalization._core_normalization`). Ignored for the radial polynomials.
 
     Returns
     -------
@@ -185,5 +210,8 @@ def _core_polynomials(
             factor = sign * abs_m_idx ** b
             if factor != 1:
                 result *= float(factor)
+
+        if normalize and not flag_radial:
+            result *= _core_normalization([n_idx], [m_idx])[0]
 
     return output

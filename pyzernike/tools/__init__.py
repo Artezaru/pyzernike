@@ -15,3 +15,13 @@
 from .zernike_index_to_order import zernike_index_to_order
 from .zernike_order_to_index import zernike_order_to_index
 from .zernike_polynomials_count import zernike_polynomials_count
+from .zernike_normalization import zernike_normalization
+from .cartesian_to_elliptic_annulus import cartesian_to_elliptic_annulus
+
+__all__ = [
+    "zernike_index_to_order",
+    "zernike_order_to_index",
+    "zernike_polynomials_count",
+    "zernike_normalization",
+    "cartesian_to_elliptic_annulus",
+]

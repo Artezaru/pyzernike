@@ -1,19 +1,25 @@
+# Copyright 2025 Artezaru
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 import math
 from fractions import Fraction
 
 import numpy as np
 import pytest
 
-try:
-    import pyzernike
-except:
-    import os
-    import sys
-    sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-    import pyzernike
-
 from pyzernike.core.core_polynomial import _core_polynomials
-from pyzernike.core.zernike_recursive import _zernike_recursive_up_to_order
+from pyzernike.core.core_recursive import _core_recursive_up_to_order
 from pyzernike.tools import zernike_index_to_order, zernike_polynomials_count
 
 
@@ -29,7 +35,17 @@ def _core_up_to_order(rho, theta, order, rho_derivatives, theta_derivatives):
     n_polynomials = zernike_polynomials_count(order)
     n, m = zernike_index_to_order(list(range(n_polynomials)))
     return np.stack([
-        _core_polynomials(rho, theta, n, m, [dr] * n_polynomials, [dt] * n_polynomials, False, True)
+        _core_polynomials(
+            rho=rho,
+            theta=theta,
+            n=n,
+            m=m,
+            rho_derivative=[dr] * n_polynomials,
+            theta_derivative=[dt] * n_polynomials,
+            flag_radial=False,
+            precompute=True,
+            normalize=False,
+        )
         for dr, dt in zip(rho_derivatives, theta_derivatives)
     ])
 
@@ -46,7 +62,14 @@ def test_recursive_matches_core_values():
     Rho, Theta = _polar_grid()
 
     for order in range(13):
-        recursive = _zernike_recursive_up_to_order(Rho, Theta, order, [0], [0])
+        recursive = _core_recursive_up_to_order(
+            rho=Rho,
+            theta=Theta,
+            order=order,
+            rho_derivative=[0],
+            theta_derivative=[0],
+            normalize=False,
+        )
         reference = _core_up_to_order(Rho, Theta, order, [0], [0])
 
         assert recursive.shape == reference.shape, f"Shape mismatch for order={order}: {recursive.shape} vs {reference.shape}."
@@ -61,7 +84,14 @@ def test_recursive_matches_core_derivatives():
     rho_derivatives = [dr for dr in range(5) for _ in range(5)]
     theta_derivatives = [dt for _ in range(5) for dt in range(5)]
 
-    recursive = _zernike_recursive_up_to_order(Rho, Theta, order, rho_derivatives, theta_derivatives)
+    recursive = _core_recursive_up_to_order(
+        rho=Rho,
+        theta=Theta,
+        order=order,
+        rho_derivative=rho_derivatives,
+        theta_derivative=theta_derivatives,
+        normalize=False,
+    )
     reference = _core_up_to_order(Rho, Theta, order, rho_derivatives, theta_derivatives)
 
     for d, (dr, dt) in enumerate(zip(rho_derivatives, theta_derivatives)):
@@ -75,10 +105,24 @@ def test_recursive_derivative_pairs_consistency():
     rho_derivatives = [0, 1, 0, 2, 1, 3]
     theta_derivatives = [0, 0, 1, 0, 1, 2]
 
-    common_result = _zernike_recursive_up_to_order(Rho, Theta, order, rho_derivatives, theta_derivatives)
+    common_result = _core_recursive_up_to_order(
+        rho=Rho,
+        theta=Theta,
+        order=order,
+        rho_derivative=rho_derivatives,
+        theta_derivative=theta_derivatives,
+        normalize=False,
+    )
 
     for d, (dr, dt) in enumerate(zip(rho_derivatives, theta_derivatives)):
-        single_result = _zernike_recursive_up_to_order(Rho, Theta, order, [dr], [dt])[0]
+        single_result = _core_recursive_up_to_order(
+            rho=Rho,
+            theta=Theta,
+            order=order,
+            rho_derivative=[dr],
+            theta_derivative=[dt],
+            normalize=False,
+        )[0]
         assert np.array_equal(common_result[d], single_result), (
             f"Mismatch between common and single computation for rho_derivative={dr}, theta_derivative={dt}."
         )
@@ -87,7 +131,14 @@ def test_recursive_derivative_pairs_consistency():
 def test_recursive_known_polynomials():
     """Test the recursion against the closed-form expressions of the first polynomials and of some derivatives."""
     Rho, Theta = _polar_grid()
-    Z, dZ_drho, dZ_dtheta = _zernike_recursive_up_to_order(Rho, Theta, 2, [0, 1, 0], [0, 0, 1])
+    Z, dZ_drho, dZ_dtheta = _core_recursive_up_to_order(
+        rho=Rho,
+        theta=Theta,
+        order=2,
+        rho_derivative=[0, 1, 0],
+        theta_derivative=[0, 0, 1],
+        normalize=False,
+    )
 
     # OSA/ANSI ordering: j = 0: Z_0^0, 1: Z_1^-1, 2: Z_1^1, 3: Z_2^-2, 4: Z_2^0, 5: Z_2^2
     expected = {
@@ -112,7 +163,14 @@ def test_recursive_derivative_higher_than_order():
     n, _ = zernike_index_to_order(list(range(zernike_polynomials_count(order))))
 
     for dr in range(1, order + 3):
-        result = _zernike_recursive_up_to_order(Rho, Theta, order, [dr], [0])[0]
+        result = _core_recursive_up_to_order(
+            rho=Rho,
+            theta=Theta,
+            order=order,
+            rho_derivative=[dr],
+            theta_derivative=[0],
+            normalize=False,
+        )[0]
         for j, n_j in enumerate(n):
             if dr > n_j:
                 assert np.all(result[j] == 0.0), f"Non-zero derivative of order {dr} for the polynomial j={j} (n={n_j})."
@@ -123,7 +181,14 @@ def test_recursive_unit_circle():
     order = 30
     n, m = zernike_index_to_order(list(range(zernike_polynomials_count(order))))
 
-    result = _zernike_recursive_up_to_order(np.array([1.0]), np.array([0.0]), order, [0], [0])[0, :, 0]
+    result = _core_recursive_up_to_order(
+        rho=np.array([1.0]),
+        theta=np.array([0.0]),
+        order=order,
+        rho_derivative=[0],
+        theta_derivative=[0],
+        normalize=False,
+    )[0, :, 0]
     for j, (n_j, m_j) in enumerate(zip(n, m)):
         if m_j >= 0:
             assert np.isclose(result[j], 1.0), f"R_{n_j}^{m_j}(1) = {result[j]} instead of 1."
@@ -136,7 +201,14 @@ def test_recursive_high_order_accuracy():
     rho = np.array([float(value) for value in q])
     theta = np.zeros_like(rho)
 
-    result = _zernike_recursive_up_to_order(rho, theta, order, [0], [0])[0]
+    result = _core_recursive_up_to_order(
+        rho=rho,
+        theta=theta,
+        order=order,
+        rho_derivative=[0],
+        theta_derivative=[0],
+        normalize=False,
+    )[0]
 
     for n in range(order + 1):
         for m in range(n % 2, n + 1, 2):
@@ -156,17 +228,38 @@ def test_recursive_dimensions():
     order = 5
     n_polynomials = zernike_polynomials_count(order)
 
-    result = _zernike_recursive_up_to_order(Rho, Theta, order, [0, 1, 0], [0, 0, 1])
+    result = _core_recursive_up_to_order(
+        rho=Rho,
+        theta=Theta,
+        order=order,
+        rho_derivative=[0, 1, 0],
+        theta_derivative=[0, 0, 1],
+        normalize=False,
+    )
     assert result.shape == (3, n_polynomials) + Rho.shape, f"Unexpected shape {result.shape}."
     assert not np.any(np.isnan(result)), "Results contain NaN values."
 
     # Consistency check with flattened inputs
-    flat_result = _zernike_recursive_up_to_order(Rho.flatten(), Theta.flatten(), order, [0, 1, 0], [0, 0, 1])
+    flat_result = _core_recursive_up_to_order(
+        rho=Rho.flatten(),
+        theta=Theta.flatten(),
+        order=order,
+        rho_derivative=[0, 1, 0],
+        theta_derivative=[0, 0, 1],
+        normalize=False,
+    )
     assert flat_result.shape == (3, n_polynomials, Rho.size), f"Unexpected flattened shape {flat_result.shape}."
     assert np.allclose(result.reshape(flat_result.shape), flat_result), "Mismatch between N-D and flattened results."
 
     # No derivative pair
-    empty_result = _zernike_recursive_up_to_order(Rho, Theta, order, [], [])
+    empty_result = _core_recursive_up_to_order(
+        rho=Rho,
+        theta=Theta,
+        order=order,
+        rho_derivative=[],
+        theta_derivative=[],
+        normalize=False,
+    )
     assert empty_result.shape == (0, n_polynomials) + Rho.shape, f"Unexpected shape {empty_result.shape} without derivative pair."
 
 
@@ -176,7 +269,14 @@ def test_recursive_dtype(dtype):
     Rho, Theta = _polar_grid(dtype=dtype)
     order = 6
 
-    recursive = _zernike_recursive_up_to_order(Rho, Theta, order, [0, 1], [0, 1])
+    recursive = _core_recursive_up_to_order(
+        rho=Rho,
+        theta=Theta,
+        order=order,
+        rho_derivative=[0, 1],
+        theta_derivative=[0, 1],
+        normalize=False,
+    )
     reference = _core_up_to_order(Rho, Theta, order, [0, 1], [0, 1])
 
     assert recursive.dtype == dtype, f"Expected dtype {dtype}, got {recursive.dtype}."

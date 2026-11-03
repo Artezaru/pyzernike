@@ -1,62 +1,207 @@
-# 0. Setting default
-SPHINXOPTS    ?=
-SPHINXBUILD   ?= sphinx-build
-SOURCEDIR     = docs/source
-BUILDDIR      = docs/build
+# =============================================================================
+#  Makefile - Python project template
+#
+#  Only edit the "Project settings" block below for a new repository.
+#
+#  Typical release:
+#    make bump level=patch
+#    make commit message="Release 1.2.3"
+#    make push
+#    make pushtag          -> launches build.yml, publish.yml, docs.yml
+#
+#  Documentation (call in this order):
+#    make clean
+#    make html
+#    make open
+# =============================================================================
 
-current_branch := $(shell git rev-parse --abbrev-ref HEAD)
+# --- Project settings --------------------------------------------------------
+# Python package folder (used by "make main" and to find __version__).
+PACKAGE_DIR       := pyzernike
+# File containing __version__ = "x.y.z" (same as VERSION_FILE in publish.yml).
+VERSION_FILE      := $(PACKAGE_DIR)/__version__.py
+TESTS_DIR         := tests
+DOCS_REQUIREMENTS := sphinx pydata-sphinx-theme sphinx-copybutton sphinx-gallery sphinx-design
+DEV_REQUIREMENTS  := pytest bumpver build
 
-message ?= Default-commit-message
-level ?= patch
+# --- Sphinx ------------------------------------------------------------------
+SPHINXOPTS ?=
+SOURCEDIR  := docs/source
+BUILDDIR   := docs/build
 
-# 1. Default help command to list available Sphinx options
+# --- Command-line variables --------------------------------------------------
+venv    ?= venv
+level   ?=
+message ?=
+branch  ?=
+force   ?= false
+
+# =============================================================================
+#  Nothing to change below this line.
+# =============================================================================
+
+SHELL := /bin/bash
+.ONESHELL:
+.SHELLFLAGS := -eu -o pipefail -c
+.DEFAULT_GOAL := help
+
+PYTHON  := $(venv)/bin/python
+
+BUMPVER_FILE = .bumpver.toml
+version = $(shell sed -n 's/^current_version *= *"\(.*\)"/\1/p' $(BUMPVER_FILE))
+
+.PHONY: help install version main test bump clean html open commit push pushtag
+
+# -----------------------------------------------------------------------------
+#  Help
+# -----------------------------------------------------------------------------
 help:
-	@echo "Available commands:"
-	@echo "  help       - Show this help message"
-	@echo "  html       - Generate HTML documentation with sphinx-build (output at docs/build/html/)"
-	@echo "  latexpdf   - Generate LaTeX PDF documentation with Sphinx sphinx-build (output at docs/build/latex/)"
-	@echo "  clean      - Clean the documentation build directory docs/build/"
-	@echo "  bump       - Update the version of the package (default: patch, use level=major/minor/patch)"
-	@echo "  git        - Commit and push changes to master (use message='Your commit message')"
-	@echo "  app        - Build the application with PyInstaller (output at dist/)"
-	@echo "  test       - Run the tests of the package with pytest"
+	@echo "Usage: make <target> [variable=value]"
+	echo ""
+	echo "Setup"
+	echo "  install   [venv=venv]  Create the venv if needed, pip install -e . + docs/dev tools"
+	echo ""
+	echo "Development"
+	echo "  version                Show the current version of the package"
+	echo "  main      [venv=venv]  Run the application (python -m $(PACKAGE_DIR))"
+	echo "  test      [venv=venv]  Run the tests with pytest ($(TESTS_DIR)/)"
+	echo "  bump      level=major|minor|patch  Update the package version with bumpver"
+	echo ""
+	echo "Documentation (in this order)"
+	echo "  clean                  Remove $(BUILDDIR)/ and generated Sphinx files"
+	echo "  html      [venv=venv]  Build the HTML docs in $(BUILDDIR)/html/"
+	echo "  open                   Open $(BUILDDIR)/html/index.html in the browser"
+	echo ""
+	echo "Git"
+	echo "  commit    message=\"...\"  git add -A + git commit"
+	echo "  push      [branch=...]   git push origin <branch> (default: current branch)"
+	echo "  pushtag   [force=true]   Tag HEAD as v<__version__> and push the tag"
+	echo "                           (launches the GitHub Actions workflows)"
+	echo ""
+	echo "Current version: $(version)"
 
-.PHONY: help Makefile
+# -----------------------------------------------------------------------------
+#  Setup
+# -----------------------------------------------------------------------------
+install:
+	@if [ ! -d "$(venv)" ]; then
+		echo "Creating virtual environment at $(venv)..."
+		python3 -m venv "$(venv)"
+	fi
+	echo "Installing the package in editable mode..."
+	"$(PYTHON)" -m pip install --upgrade pip
+	"$(PYTHON)" -m pip install -e .
+	echo "Installing documentation and development tools..."
+	"$(PYTHON)" -m pip install $(DOCS_REQUIREMENTS) $(DEV_REQUIREMENTS)
+	echo "Installation complete."
 
-# 2. Generate HTML documentation
-html:
-	$(SPHINXBUILD) -b html $(SOURCEDIR) $(BUILDDIR)/html
+# -----------------------------------------------------------------------------
+#  Development
+# -----------------------------------------------------------------------------
+version:
+	@echo "$(version)"
 
-# 3. Generate LaTeX PDF documentation
-latexpdf:
-	$(SPHINXBUILD) -b latex $(SOURCEDIR) $(BUILDDIR)/latex
-	cd $(BUILDDIR)/latex && pdflatex pyzernike.tex && pdflatex pyzernike.tex
+main:
+	@"$(PYTHON)" -m $(PACKAGE_DIR)
 
-# 4. Clean the documentation
-clean:
-	@$(SPHINXBUILD) -M clean "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O);
-	cd $(BUILDDIR); mkdir -p html; mkdir -p latex
-
-# 5. Update the version of the package
-bump:
-	bumpver update --$(level) --no-fetch
-
-# 6. Git Push origin Master
-git:
-	git checkout $(current_branch)
-	git add -A .
-	git commit -m "$(message)"
-	git push origin $(current_branch)
-
-# 7. Create the application
-app:
-	echo "from pyzernike.__main__ import __main_gui__" > run_gui.py
-	echo "__main_gui__()" >> run_gui.py
-	pyinstaller --name pyzernike --onefile --windowed run_gui.py
-	rm run_gui.py
-	rm -rf build
-	rm run_gui.spec
-
-# 8. Tests the package
 test:
-	pytest tests
+	@"$(PYTHON)" -m pytest $(TESTS_DIR)
+
+bump:
+	@\
+	case "$(level)" in \
+		major|minor|patch) ;; \
+		*) echo "Error: use 'make bump level=major|minor|patch'"; exit 1 ;; \
+	esac && \
+	echo "Current version: $(version)" && \
+	bumpver update --$(level) --no-fetch && \
+	echo "New version: $$(sed -n 's/^current_version *= *"\(.*\)"/\1/p' $(BUMPVER_FILE))"
+
+# -----------------------------------------------------------------------------
+#  Documentation
+# -----------------------------------------------------------------------------
+clean:
+	@echo "Removing $(BUILDDIR)/ and generated Sphinx files..."
+	rm -rf "$(BUILDDIR)"
+	rm -rf "$(SOURCEDIR)/_autosummary" \
+	       "$(SOURCEDIR)/_gallery" \
+	       "$(SOURCEDIR)/_gallery_backreferences" \
+	       "$(SOURCEDIR)/sg_execution_times.rst"
+	echo "Clean complete."
+
+html:
+	@echo "Building HTML documentation in $(BUILDDIR)/html/..."
+	"$(venv)/bin/sphinx-build" -b html $(SPHINXOPTS) "$(SOURCEDIR)" "$(BUILDDIR)/html"
+	echo "Documentation built: $(BUILDDIR)/html/index.html"
+
+open:
+	@INDEX="$(BUILDDIR)/html/index.html"
+	if [ ! -f "$$INDEX" ]; then
+		echo "Error: $$INDEX not found. Run 'make html' first."
+		exit 1
+	fi
+	if command -v xdg-open >/dev/null 2>&1; then
+		xdg-open "$$INDEX" >/dev/null 2>&1
+	else
+		open "$$INDEX"
+	fi
+
+# -----------------------------------------------------------------------------
+#  Git
+# -----------------------------------------------------------------------------
+commit:
+	@if [ -z "$(message)" ]; then
+		echo 'Error: use make commit message="Your commit message"'
+		exit 1
+	fi
+	git add -A
+	if git diff --cached --quiet; then
+		echo "Nothing to commit."
+		exit 0
+	fi
+	git commit -m "$(message)"
+
+push:
+	@BRANCH="$(branch)"
+	if [ -z "$$BRANCH" ]; then
+		BRANCH="$$(git rev-parse --abbrev-ref HEAD)"
+	fi
+	echo "Pushing $$BRANCH to origin..."
+	git push origin "$$BRANCH"
+
+pushtag:
+	@VERSION="$(version)"
+	if [ -z "$$VERSION" ]; then
+		echo "Error: could not read __version__ from $(VERSION_FILE)"
+		exit 1
+	fi
+	TAG="v$$VERSION"
+
+	# The tag must point to a committed and pushed state.
+	if [ -n "$$(git status --porcelain)" ]; then
+		echo "Error: uncommitted changes. Run 'make commit' first."
+		exit 1
+	fi
+	if git rev-parse '@{u}' >/dev/null 2>&1 && [ -n "$$(git rev-list '@{u}..HEAD')" ]; then
+		echo "Error: local commits not pushed. Run 'make push' first."
+		exit 1
+	fi
+
+	# An existing tag is only moved with force=true.
+	if git rev-parse -q --verify "refs/tags/$$TAG" >/dev/null \
+	   || git ls-remote --exit-code --tags origin "refs/tags/$$TAG" >/dev/null 2>&1; then
+		if [ "$(force)" != "true" ]; then
+			echo "Error: tag $$TAG already exists."
+			echo "  - New release: 'make bump level=...' then commit/push/pushtag."
+			echo "  - Move the tag anyway: 'make pushtag force=true'"
+			echo "    (PyPI will refuse to upload the same version twice)."
+			exit 1
+		fi
+		echo "Moving existing tag $$TAG..."
+		git tag -d "$$TAG" >/dev/null 2>&1 || true
+		git push origin ":refs/tags/$$TAG" || true
+	fi
+
+	git tag "$$TAG"
+	git push origin "$$TAG"
+	echo "Tag $$TAG pushed: GitHub Actions workflows started."

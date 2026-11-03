@@ -1,110 +1,239 @@
 API Reference
 ==============
 
-The package ``pyzernike`` is composed of the following functions, classes, and modules.
-To learn how to use the package effectively, refer to the documentation :doc:`../usage`.
+All the functions are available at the top level of the package (``import pyzernike`` then
+``pyzernike.zernike_polynomial(...)``). To learn how to use them, see :doc:`usage`; for the definitions and the
+methods, see :doc:`mathematical_description`.
 
 .. contents:: Table of Contents
    :local:
    :depth: 1
    :backlinks: top
 
-Generalities and notations about Zernike Polynomials
--------------------------------------------------------
+Common arguments
+----------------
 
-For a polynomial of order/degree :math:`n` and azimuthal frequency :math:`m`, the Zernike polynomial :math:`Z_{n}^{m}(\rho, \theta)` is defined on the unit disk as:
+The functions share the same names of arguments and the same conventions:
 
-.. math::
+.. list-table::
+   :header-rows: 1
+   :widths: 30 70
 
-      Z_{n}^{m}(\rho, \theta) = R_{n}^{m}(\rho) \cos(m \theta) \quad \text{if} \quad m \geq 0
-   
-.. math::
+   * - Argument
+     - Meaning
+   * - ``rho``, ``theta``
+     - Polar coordinates on the unit disk (:math:`0 \leq \rho \leq 1`, :math:`\theta` in radians).
+   * - ``x``, ``y``
+     - Cartesian coordinates, for the functions prefixed by ``xy_``.
+   * - ``n``, ``m``
+     - Radial order :math:`n` and azimuthal frequency :math:`m` of a polynomial :math:`Z_{n}^{m}`
+       (:math:`|m| \leq n`, :math:`n - m` even). See :doc:`mathematical_description/conventions`.
+   * - ``order``
+     - Maximum radial order :math:`N`: all the :math:`P = \frac{(N+1)(N+2)}{2}` polynomials with
+       :math:`n \leq N` are used, in the OSA/ANSI ordering.
+   * - ``rho_derivative``, ``theta_derivative``
+     - Orders :math:`a` and :math:`b` of the derivatives with respect to :math:`\rho` and :math:`\theta`.
+   * - ``x_derivative``, ``y_derivative``
+     - Orders :math:`d_x` and :math:`d_y` of the derivatives with respect to :math:`x` and :math:`y`.
+   * - ``Rx``, ``Ry``, ``x0``, ``y0``, ``alpha``, ``h``
+     - Parameters of the elliptic annulus: semi-axes, center, rotation angle (radians) and ratio
+       :math:`h \in [0, 1)` of the inner to the outer semi-axes. The default is the unit disk. See
+       :doc:`mathematical_description/elliptic_annulus`.
+   * - ``coefficients``
+     - Coefficients :math:`c_j` of a sum :math:`\sum_j c_j Z_j`, in the OSA/ANSI ordering, for all the polynomials
+       up to an order (1, 3, 6, 10, 15, ... values). See :doc:`mathematical_description/coefficients`.
+   * - ``normalize``
+     - If True, the polynomials (or the coefficients) are those normalized by the factors of Noll.
+   * - ``use_recursive``
+     - If True, the polynomials are computed with the recurrence relation (recommended for high orders).
+   * - ``default``
+     - Value set outside the domain (``numpy.nan`` by default).
+   * - ``to_list``
+     - Output as a list of arrays (True) or as a single array (False).
 
-   Z_{n}^{m}(\rho, \theta) = R_{n}^{-m}(\rho) \sin(-m \theta) \quad \text{if} \quad m < 0
+Single integers and sequences of integers can be mixed for ``n``, ``m`` and the derivative orders: the integers
+are repeated to the length of the sequences.
 
-Where :math:`R_{n}^{m}(\rho)` is the radial polynomial defined as:
+Polynomials on the unit disk
+----------------------------
 
-.. math::
+.. list-table::
+   :widths: 40 60
 
-   R_{n}^{m}(\rho) = \sum_{k=0}^{(n-m)/2} \frac{(-1)^k (n-k)!}{k! ((n+m)/2 - k)! ((n-m)/2 - k)!} \rho^{n-2k}
-
-The derivative of order (derivative (a)) of the Zernike polynomial with respect to rho and order (derivative (b)) with respect to theta is defined as follows :
-
-.. math::
-
-   \frac{\partial^{a}\partial^{b}Z_{n}^{m}(\rho, \theta)}{\partial \rho^{a} \partial \theta^{b}} = \frac{\partial^{a}R_{n}^{m}(\rho)}{\partial \rho^{a}} \frac{\partial^{b}\cos(m \theta)}{\partial \theta^{b}} \quad \text{if} \quad m > 0
-
-.. note::
-
-   Thus any polynomial evaluated at :math:`(\rho, \theta)` can be defined by 4 parameters :
-
-   - n : order/degree of the polynomial noted ``n`` in the documentation
-   - m : azimuthal frequency of the polynomial noted ``m`` in the documentation
-   - a : order of the derivative with respect to :math:`\rho` noted ``rho_derivative`` in the arguments.
-   - b : order of the derivative with respect to :math:`\theta` noted ``theta_derivative`` in the arguments.
-
-
-Computation of the Polynomials
---------------------------------
-
-- ``radial_polynomial`` computes radial polynomials for several sets of ``[n, m, a]`` at once.
-- ``zernike_polynomial`` computes Zernike polynomials for several sets of ``[n, m, a, b]`` at once.
-- ``zernike_polynomial_up_to_order`` computes all Zernike polynomials up to a specified order for common sets of ``[a, b]``.
-- ``xy_zernike_polynomial`` computes the Zernike polynomial in Cartesian coordinates (x, y) in an extended elliptic annulus domain ``G``.
+   * - :func:`pyzernike.zernike_polynomial`
+     - Zernike polynomials :math:`Z_{n}^{m}(\rho, \theta)` and their derivatives, for given :math:`(n, m)`.
+   * - :func:`pyzernike.zernike_polynomial_up_to_order`
+     - All the Zernike polynomials up to an order and their derivatives.
+   * - :func:`pyzernike.radial_polynomial`
+     - Radial polynomials :math:`R_{n}^{m}(\rho)` and their derivatives.
 
 .. toctree::
    :maxdepth: 1
-   :caption: Computation API:
+   :caption: Polynomials on the unit disk
+   :hidden:
 
-   ./api_doc/radial_polynomial
    ./api_doc/zernike_polynomial
    ./api_doc/zernike_polynomial_up_to_order
+   ./api_doc/radial_polynomial
+
+Polynomials on an elliptic annulus
+----------------------------------
+
+.. list-table::
+   :widths: 40 60
+
+   * - :func:`pyzernike.xy_zernike_polynomial`
+     - Zernike polynomials in Cartesian coordinates on an elliptic annulus, and their derivatives of any order with
+       respect to :math:`x` and :math:`y`.
+   * - :func:`pyzernike.xy_zernike_polynomial_up_to_order`
+     - All the Zernike polynomials up to an order on an elliptic annulus, and their derivatives.
+   * - :func:`pyzernike.xy_zernike_parameter_derivative`
+     - Derivatives of the polynomials with respect to the parameters :math:`(x_0, y_0, R_x, R_y, \alpha, h)` of the
+       annulus.
+   * - :func:`pyzernike.cartesian_to_elliptic_annulus`
+     - Equivalent polar coordinates :math:`(\rho_{eq}, \theta_{eq})` of Cartesian points, and their derivatives.
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Polynomials on an elliptic annulus
+   :hidden:
+
    ./api_doc/xy_zernike_polynomial
+   ./api_doc/xy_zernike_polynomial_up_to_order
+   ./api_doc/xy_zernike_parameter_derivative
+   ./api_doc/cartesian_to_elliptic_annulus
 
-Symbolic Expressions
----------------------
+Indexing and normalization
+--------------------------
 
-- ``radial_symbolic`` obtains the symbolic ``sympy`` radial polynomials for several sets of ``[n, m, a]`` at once.
-- ``zernike_symbolic`` obtains the symbolic ``sympy`` Zernike polynomials for several sets of ``[n, m, a, b]`` at once.
+.. list-table::
+   :widths: 40 60
 
-.. toctree::
-   :maxdepth: 1
-   :caption: Symbolic API:
-
-   ./api_doc/radial_symbolic
-   ./api_doc/zernike_symbolic
-
-
-Display
----------------------
-
-- ``radial_display`` displays the radial polynomials for several sets of ``[n, m, a]`` at once in a interactive plot.
-- ``zernike_display`` displays the Zernike polynomials for several sets of ``[n, m, a, b]`` at once in a interactive plot.
-- ``display_interactive`` opens an interface to select polynomials to display.
+   * - :func:`pyzernike.zernike_index_to_order`
+     - Orders :math:`(n, m)` of indices in the OSA/ANSI, Noll or Fringe convention.
+   * - :func:`pyzernike.zernike_order_to_index`
+     - Indices of orders :math:`(n, m)` in the OSA/ANSI, Noll or Fringe convention.
+   * - :func:`pyzernike.zernike_polynomials_count`
+     - Number of polynomials up to an order.
+   * - :func:`pyzernike.zernike_normalization`
+     - Normalization factors of Noll.
 
 .. toctree::
    :maxdepth: 1
-   :caption: Display API:
-
-   ./api_doc/radial_display
-   ./api_doc/zernike_display
-   ./api_doc/display_interactive
-
-
-Additional Functions
----------------------
-
-- ``zernike_index_to_order`` converts Zernike OSA/ANSI indices to their corresponding orders (n, m).
-- ``zernike_order_to_index`` converts Zernike orders (n, m) to their corresponding OSA/ANSI indices.
-- ``cartesian_to_elliptic_annulus`` converts Cartesian coordinates (x, y) to elliptic annulus coordinates (rho, theta) in an extended elliptic annulus domain ``G``.
-- ``xy_zernike_polynomial_up_to_order`` computes all the Zernike polynomials up to a specified order in Cartesian coordinates (x, y) in an extended elliptic annulus domain ``G``.
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Additional Functions API:
+   :caption: Indexing and normalization
+   :hidden:
 
    ./api_doc/zernike_index_to_order
    ./api_doc/zernike_order_to_index
-   ./api_doc/cartesian_to_elliptic_annulus
-   ./api_doc/xy_zernike_polynomial_up_to_order
+   ./api_doc/zernike_polynomials_count
+   ./api_doc/zernike_normalization
 
+Coefficients
+------------
+
+.. list-table::
+   :widths: 40 60
+
+   * - :func:`pyzernike.zernike_evaluate`
+     - Sum of polynomials :math:`\sum_j c_j Z_j` and its derivatives on the unit disk.
+   * - :func:`pyzernike.xy_zernike_evaluate`
+     - Sum of polynomials and its derivatives on an elliptic annulus.
+   * - :func:`pyzernike.zernike_coefficients_convert`
+     - Conversion of coefficients between the indexing conventions and the normalizations.
+   * - :func:`pyzernike.zernike_coefficients_rotate`
+     - Coefficients in a rotated pupil.
+   * - :func:`pyzernike.zernike_coefficients_transform`
+     - Coefficients in a scaled, decentered and rotated pupil.
+   * - :func:`pyzernike.zernike_rms`
+     - Root mean square of a sum of polynomials.
+   * - :func:`pyzernike.zernike_peak_to_valley`
+     - Peak-to-valley of a sum of polynomials.
+   * - :func:`pyzernike.zernike_strehl_ratio`
+     - Strehl ratio of a wavefront (extended Maréchal approximation).
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Coefficients
+   :hidden:
+
+   ./api_doc/zernike_evaluate
+   ./api_doc/xy_zernike_evaluate
+   ./api_doc/zernike_coefficients_convert
+   ./api_doc/zernike_coefficients_rotate
+   ./api_doc/zernike_coefficients_transform
+   ./api_doc/zernike_rms
+   ./api_doc/zernike_peak_to_valley
+   ./api_doc/zernike_strehl_ratio
+
+Fitting
+-------
+
+.. list-table::
+   :widths: 40 60
+
+   * - :func:`pyzernike.zernike_fit`
+     - Least squares fit of sampled data on the unit disk.
+   * - :func:`pyzernike.xy_zernike_fit`
+     - Least squares fit of sampled data on an elliptic annulus.
+   * - :func:`pyzernike.xy_zernike_least_squares`
+     - Residual and Jacobian functions to estimate the parameters of the annulus with any least squares solver.
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Fitting
+   :hidden:
+
+   ./api_doc/zernike_fit
+   ./api_doc/xy_zernike_fit
+   ./api_doc/xy_zernike_least_squares
+
+Symbolic expressions
+--------------------
+
+These functions require ``sympy`` (``pip install sympy``, see :doc:`installation`).
+
+.. list-table::
+   :widths: 40 60
+
+   * - :func:`pyzernike.zernike_symbolic`
+     - Exact ``sympy`` expressions of the Zernike polynomials and of their derivatives.
+   * - :func:`pyzernike.radial_symbolic`
+     - Exact ``sympy`` expressions of the radial polynomials and of their derivatives.
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Symbolic expressions
+   :hidden:
+
+   ./api_doc/zernike_symbolic
+   ./api_doc/radial_symbolic
+
+Display
+-------
+
+These functions require ``matplotlib`` (``pip install matplotlib``, see :doc:`installation`).
+
+.. list-table::
+   :widths: 40 60
+
+   * - :func:`pyzernike.zernike_display`
+     - Figure of given Zernike polynomials on the unit disk.
+   * - :func:`pyzernike.radial_display`
+     - Figure of given radial polynomials.
+   * - :func:`pyzernike.display_interactive`
+     - Interactive window to explore the polynomials on the unit disk (command ``pyzernike``).
+   * - :func:`pyzernike.xy_zernike_display`
+     - Figure of given Zernike polynomials on an elliptic annulus.
+   * - :func:`pyzernike.xy_display_interactive`
+     - Interactive window to explore the polynomials on an elliptic annulus (command ``pyzernike --xy``).
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Display
+   :hidden:
+
+   ./api_doc/zernike_display
+   ./api_doc/radial_display
+   ./api_doc/display_interactive
+   ./api_doc/xy_zernike_display
+   ./api_doc/xy_display_interactive

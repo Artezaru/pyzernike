@@ -24,6 +24,8 @@ def read_version():
 
 import datetime
 project = "pyzernike"
+project_directory = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+doc_source_directory = os.path.abspath(os.path.dirname(__file__))
 copyright = f"2025-{datetime.datetime.now().year}, Artezaru"
 author = "Artezaru"
 release = read_version()
@@ -39,20 +41,23 @@ extensions = [
     "sphinx.ext.napoleon", # Support for Google and Numpy docstring formats
     "sphinx.ext.githubpages", # Publish the documentation on GitHub
     "sphinx.ext.autosummary", # Generate summaries of the modules
+    "sphinx_design",  # Add design elements to the documentation
+    "sphinx_gallery.gen_gallery",  # Generate a gallery of examples
+    "sphinx.ext.mathjax",  # Render math in the documentation
 ]
 
 napoleon_google_docstring = False
 napoleon_numpy_docstring = True
 
-# 3. Options for Latex output
-
-latex_elements = {
-    "papersize": "a4paper",
-    "pointsize": "10pt",
-    "preamble": "",
+sphinx_gallery_conf = {
+    "examples_dirs": [
+        os.path.join(project_directory, "gallery"),
+    ],
+    "gallery_dirs": [
+        os.path.join(doc_source_directory, "_gallery"),
+    ],
+    "backreferences_dir": os.path.join(doc_source_directory, "_gallery_backreferences"),
+    "capture_repr": ["__repr__", "__str__", "_repr_html_"],
+    "image_scrapers": ("matplotlib",),
+    "filename_pattern": r"\.py$",
 }
-
-latex_documents = [
-    ("index", "pyzernike.tex", "pyzernike Documentation",
-     "Artezaru", "manual"),
-]

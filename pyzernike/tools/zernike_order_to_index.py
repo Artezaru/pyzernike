@@ -15,98 +15,47 @@
 from numbers import Integral
 from typing import List, Sequence, Union, overload
 
-
-def _zernike_order_to_index(n: List[int], m: List[int]) -> List[int]:
-    r"""
-    Convert lists of Zernike orders (n, m) to their OSA/ANSI indices without any check.
-
-    .. warning::
-
-        This method is an internal function of ``pyzernike`` that is not designed to be used by the users directly.
-        Please use :func:`pyzernike.zernike_order_to_index`.
-
-    .. math::
-
-        j = \frac{n(n + 2) + m}{2}
-
-    The division is an exact integer division since :math:`n(n+2) + m` is even for valid orders.
-
-    Parameters
-    ----------
-    n : List[int]
-        The radial orders of the Zernike polynomials. Must be a list of Python integers.
-
-    m : List[int]
-        The azimuthal frequencies of the Zernike polynomials. Must be a list of Python integers
-        with the same length as ``n``, and each pair ``(n, m)`` must be valid.
-
-    Returns
-    -------
-    List[int]
-        The indices of the Zernike polynomials in the OSA/ANSI ordering.
-
-    """
-    return [(n_i * (n_i + 2) + m_i) // 2 for n_i, m_i in zip(n, m)]
-
-
-def _is_integer(value) -> bool:
-    # bool is excluded: True is an Integral but not a Zernike order
-    return isinstance(value, Integral) and not isinstance(value, bool)
-
-
-def _as_integer_list(values, name: str) -> List[int]:
-    if isinstance(values, (str, bytes)) or not isinstance(values, Sequence) or not all(_is_integer(v) for v in values):
-        raise TypeError(f"{name} must be an integer or a sequence of integers.")
-    return [int(v) for v in values]
+from ..core.parsing import _as_indexing, _as_integers
+from ..core.core_indexing import _core_order_to_index
 
 
 @overload
-def zernike_order_to_index(n: Integral, m: Integral) -> int: ...
+def zernike_order_to_index(n: Integral, m: Integral, indexing: str = "OSA") -> int: ...
 @overload
-def zernike_order_to_index(n: Sequence[Integral], m: Sequence[Integral]) -> List[int]: ...
+def zernike_order_to_index(n: Sequence[Integral], m: Sequence[Integral], indexing: str = "OSA") -> List[int]: ...
 
 def zernike_order_to_index(
     n: Union[Integral, Sequence[Integral]],
     m: Union[Integral, Sequence[Integral]],
+    indexing: str = "OSA",
 ) -> Union[int, List[int]]:
     r"""
-    Convert Zernike orders (n, m) to their corresponding indices in the OSA/ANSI Zernike polynomial ordering.
+    Convert Zernike orders :math:`(n, m)` to their corresponding indices in a Zernike polynomial ordering.
 
-    .. math::
+    Three indexing conventions are available (see the page :doc:`../../mathematical_description/conventions` for the
+    details, and :func:`pyzernike.zernike_index_to_order` for the table of the first indices):
 
-        j = \frac{n(n + 2) + m}{2}
+    - ``"OSA"`` (or ``"ANSI"``, default): the OSA/ANSI standard [1]_, starting at 0, with :math:`j = \frac{n(n + 2) + m}{2}`.
+    - ``"Noll"``: the indices of Noll [2]_, starting at 1, with :math:`j = \frac{n(n + 1)}{2} + |m| + s`, where
+      :math:`s \in \{0, 1\}` is chosen so that the even indices correspond to :math:`m > 0` (cosine) and the odd
+      indices to :math:`m < 0` (sine).
+    - ``"Fringe"``: the Fringe (University of Arizona) indices, starting at 1, with
+      :math:`j = \left(1 + \frac{n + |m|}{2}\right)^2 - 2|m| + [m < 0]`.
 
     If :math:`n < 0`, :math:`|m| > n` or :math:`(n - m)` is odd, an error is raised.
 
-    .. seealso::
+    **Shape of the inputs and of the output.** ``n`` and ``m`` can be two integers, or two sequences of integers
+    (lists, tuples or 1D numpy arrays) with the same length:
 
-        - :func:`pyzernike.zernike_polynomial` for computing the Zernike polynomial :math:`Z_{n}^{m}(\rho, \theta)`.
-        - :func:`pyzernike.zernike_index_to_order` for converting indices back to Zernike orders.
-
-    - ``n`` and ``m`` can be two integers, or two sequences of integers with the same length.
     - If ``n`` and ``m`` are integers, a single integer index is returned.
     - If ``n`` and ``m`` are sequences, a list of integer indices is returned.
     - Mixing an integer and a sequence is not allowed.
 
-    The first few Zernike polynomials in the OSA/ANSI ordering are:
+    .. seealso::
 
-    +-----+-----+-----+
-    |  j  |  n  |  m  |
-    +=====+=====+=====+
-    |  0  |  0  |  0  |
-    +-----+-----+-----+
-    |  1  |  1  | -1  |
-    +-----+-----+-----+
-    |  2  |  1  |  1  |
-    +-----+-----+-----+
-    |  3  |  2  | -2  |
-    +-----+-----+-----+
-    |  4  |  2  |  0  |
-    +-----+-----+-----+
-    |  5  |  2  |  2  |
-    +-----+-----+-----+
-    | ... | ... | ... |
-    +-----+-----+-----+
+        - :func:`pyzernike.zernike_index_to_order` for the inverse conversion and the table of the first indices.
+        - :func:`pyzernike.zernike_coefficients_convert` to convert vectors of coefficients between the conventions.
+        - The page :doc:`../../mathematical_description/conventions` for the indexing conventions.
 
     Parameters
     ----------
@@ -117,22 +66,35 @@ def zernike_order_to_index(
         The azimuthal frequency, or the sequence of azimuthal frequencies, of the Zernike polynomials.
         Must be of the same kind as ``n`` (integer or sequence) and, for sequences, of the same length.
 
+    indexing : str, optional
+        The indexing convention: ``"OSA"`` (or ``"ANSI"``), ``"Noll"`` or ``"Fringe"``, case insensitive.
+        Default is ``"OSA"``.
+
     Returns
     -------
     Union[int, List[int]]
-        If ``n`` and ``m`` are integers, the index ``j`` of the Zernike polynomial.
+        If ``n`` and ``m`` are integers, the index ``j`` of the Zernike polynomial in the given convention.
 
         If ``n`` and ``m`` are sequences, the list of the indices, in the same order as ``n`` and ``m``.
 
     Raises
     ------
     TypeError
-        If ``n`` or ``m`` is not an integer or a sequence of integers, or if an integer is mixed
-        with a sequence.
+        If ``n`` or ``m`` is not an integer, a sequence of integers or a 1D numpy array of integers, if an
+        integer is mixed with a sequence, or if ``indexing`` is not a string.
 
     ValueError
-        If ``n`` and ``m`` do not have the same length, or if a pair ``(n, m)`` is not a valid
-        Zernike order (:math:`n < 0`, :math:`|m| > n` or :math:`(n - m)` odd).
+        If ``n`` and ``m`` do not have the same length, if a pair ``(n, m)`` is not a valid
+        Zernike order (:math:`n < 0`, :math:`|m| > n` or :math:`(n - m)` odd), or if ``indexing`` is unknown.
+
+    References
+    ----------
+    .. [1] L. N. Thibos, R. A. Applegate, J. T. Schwiegerling and R. Webb, "Standards for reporting the optical
+       aberrations of eyes," Journal of Refractive Surgery 18(5), S652-S660 (2002).
+       https://doi.org/10.3928/1081-597X-20020901-30
+
+    .. [2] R. J. Noll, "Zernike polynomials and atmospheric turbulence," Journal of the Optical Society
+       of America 66(3), 207-211 (1976). https://doi.org/10.1364/JOSA.66.000207
 
     Examples
     --------
@@ -165,21 +127,29 @@ def zernike_order_to_index(
         j = [0, 5, 12]
         print(zernike_order_to_index(*zernike_index_to_order(j)))  # Output: [0, 5, 12]
 
+    Convert to Noll and Fringe indices:
+
+    .. code-block:: python
+
+        print(zernike_order_to_index([2, 2, 4], [-2, 2, 0], indexing="Noll"))  # Output: [5, 6, 11]
+        print(zernike_order_to_index([2, 2, 4], [-2, 2, 0], indexing="Fringe"))  # Output: [6, 5, 9]
+
     """
-    scalar_n, scalar_m = _is_integer(n), _is_integer(m)
+    indexing = _as_indexing(indexing)
+    n_values, m_values = _as_integers(n, "n"), _as_integers(m, "m")
+    scalar_n, scalar_m = isinstance(n_values, int), isinstance(m_values, int)
     if scalar_n != scalar_m:
         raise TypeError("n and m must be both integers or both sequences of integers.")
 
     if scalar_n:
-        n_list, m_list = [int(n)], [int(m)]
+        n_list, m_list = [n_values], [m_values]
     else:
-        n_list = _as_integer_list(n, "n")
-        m_list = _as_integer_list(m, "m")
+        n_list, m_list = n_values, m_values
         if len(n_list) != len(m_list):
             raise ValueError("n and m must have the same length.")
 
     if any(n_i < 0 or abs(m_i) > n_i or (n_i - m_i) % 2 != 0 for n_i, m_i in zip(n_list, m_list)):
         raise ValueError("Invalid Zernike orders: n must be non-negative, |m| must be <= n, and (n - m) must be even.")
 
-    indices = _zernike_order_to_index(n_list, m_list)
+    indices = _core_order_to_index(n=n_list, m=m_list, indexing=indexing)
     return indices[0] if scalar_n else indices

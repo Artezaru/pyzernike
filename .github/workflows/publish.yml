@@ -18,7 +18,7 @@ on:
 env:
   # File that contains __version__ = "x.y.z". The tag (v x.y.z) is checked
   # against it before publishing. Leave empty "" to skip the check.
-  VERSION_FILE: "pysolvegn/__version__.py"
+  VERSION_FILE: "pyzernike/__version__.py"
   PYTHON_VERSION: "3.11"
 
 # =============================================================================

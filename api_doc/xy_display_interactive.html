@@ -47,6 +47,7 @@
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/sg-tags.js?v=d80f6fa4"></script>
     <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'api_doc/xy_display_interactive';</script>
     <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -425,6 +426,84 @@
                   
   <section id="pyzernike-display-interactive">
 <h1>pyzernike.display_interactive<a class="headerlink" href="#pyzernike-display-interactive" title="Link to this heading">#</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="pyzernike.xy_display_interactive">
+<span class="sig-prename descclassname"><span class="pre">pyzernike.</span></span><span class="sig-name descname"><span class="pre">xy_display_interactive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">Rx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Real</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Ry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Real</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Real</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Real</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Real</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Real</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">precompute</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolution</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">200</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/pyzernike/display/xy_display_interactive.html#xy_display_interactive"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyzernike.xy_display_interactive" title="Link to this definition">#</a></dt>
+<dd><p>Explore the Zernike polynomials on an elliptic annulus and their derivatives with respect to <span class="math notranslate nohighlight">\(x\)</span> and
+<span class="math notranslate nohighlight">\(y\)</span> in an interactive <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> figure.</p>
+<figure class="align-center" id="id1">
+<a class="reference internal image-reference" href="../_images/elliptic_annulus_domain.png"><img alt="../_images/elliptic_annulus_domain.png" src="../_images/elliptic_annulus_domain.png" style="width: 400px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">The parameters of the elliptic annulus domain.</span><a class="headerlink" href="#id1" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>The left panel of the figure contains:</p>
+<ul class="simple">
+<li><p>text boxes to set the radial order <span class="math notranslate nohighlight">\(n\)</span>, the azimuthal frequency <span class="math notranslate nohighlight">\(m\)</span> and the orders of the
+derivatives with respect to <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span>,</p></li>
+<li><p>text boxes to set the parameters <span class="math notranslate nohighlight">\((R_x, R_y, x_0, y_0, \alpha, h)\)</span> of the elliptic annulus
+(<span class="math notranslate nohighlight">\(\alpha\)</span> in radians),</p></li>
+<li><p>a text box to set the resolution of the grid,</p></li>
+<li><p>a “Generate” button,</p></li>
+<li><p>a message line reporting the invalid inputs.</p></li>
+</ul>
+<p>The plot is computed and updated only when the “Generate” button is clicked, so that the values can be
+typed without triggering a computation at each change. The polynomials are drawn as colormaps on a
+Cartesian grid covering the elliptic annulus, transparent outside the annulus, with the boundaries of the
+annulus. The color scale spans <span class="math notranslate nohighlight">\([\min(-1, Z), \max(1, Z)]\)</span>. If <span class="math notranslate nohighlight">\(|m| &gt; n\)</span> or <span class="math notranslate nohighlight">\(n - m\)</span> is odd,
+the displayed polynomial is zero and a warning is shown.</p>
+<p>The same figure is opened from the command line with <code class="docutils literal notranslate"><span class="pre">pyzernike</span> <span class="pre">--xy</span></code>.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="xy_zernike_display.html#pyzernike.xy_zernike_display" title="pyzernike.xy_zernike_display"><code class="xref py py-func docutils literal notranslate"><span class="pre">pyzernike.xy_zernike_display()</span></code></a> to display a given list of polynomials on the elliptic annulus.</p></li>
+<li><p><a class="reference internal" href="xy_zernike_polynomial.html#pyzernike.xy_zernike_polynomial" title="pyzernike.xy_zernike_polynomial"><code class="xref py py-func docutils literal notranslate"><span class="pre">pyzernike.xy_zernike_polynomial()</span></code></a> for the definition of the polynomials and of their derivatives.</p></li>
+<li><p><a class="reference internal" href="display_interactive.html#pyzernike.display_interactive" title="pyzernike.display_interactive"><code class="xref py py-func docutils literal notranslate"><span class="pre">pyzernike.display_interactive()</span></code></a> to explore the Zernike polynomials on the unit disk.</p></li>
+<li><p>The page <a class="reference internal" href="../mathematical_description/elliptic_annulus.html"><span class="doc">Extension to an elliptic annulus</span></a> for the extension of the Zernike polynomials to the elliptic annulus.</p></li>
+</ul>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Rx</strong> (<em>Optional</em><em>[</em><em>Real</em><em>]</em><em>, </em><em>optional</em>) – The initial semi-axis <span class="math notranslate nohighlight">\(R_x\)</span> of the ellipse along its x axis. Must be finite and strictly positive. Default is 1.0.</p></li>
+<li><p><strong>Ry</strong> (<em>Optional</em><em>[</em><em>Real</em><em>]</em><em>, </em><em>optional</em>) – The initial semi-axis <span class="math notranslate nohighlight">\(R_y\)</span> of the ellipse along its y axis. Must be finite and strictly positive. Default is 1.0.</p></li>
+<li><p><strong>x0</strong> (<em>Optional</em><em>[</em><em>Real</em><em>]</em><em>, </em><em>optional</em>) – The initial x coordinate <span class="math notranslate nohighlight">\(x_0\)</span> of the center of the ellipse. Must be finite. Default is 0.0.</p></li>
+<li><p><strong>y0</strong> (<em>Optional</em><em>[</em><em>Real</em><em>]</em><em>, </em><em>optional</em>) – The initial y coordinate <span class="math notranslate nohighlight">\(y_0\)</span> of the center of the ellipse. Must be finite. Default is 0.0.</p></li>
+<li><p><strong>alpha</strong> (<em>Optional</em><em>[</em><em>Real</em><em>]</em><em>, </em><em>optional</em>) – The initial rotation angle <span class="math notranslate nohighlight">\(\alpha\)</span> of the ellipse in radians. Must be finite. Default is 0.0.</p></li>
+<li><p><strong>h</strong> (<em>Optional</em><em>[</em><em>Real</em><em>]</em><em>, </em><em>optional</em>) – The initial ratio <span class="math notranslate nohighlight">\(h\)</span> of the inner to the outer semi-axes, in <span class="math notranslate nohighlight">\([0, 1)\)</span>. Default is 0.0 (full ellipse).</p></li>
+<li><p><strong>precompute</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, the powers of <span class="math notranslate nohighlight">\(\rho_{eq}\)</span> and <span class="math notranslate nohighlight">\(1/r\)</span> and the cosine and sine terms are cached during
+the computation of each polynomial. Default is True.</p></li>
+<li><p><strong>resolution</strong> (<em>int</em><em>, </em><em>optional</em>) – The initial number of points along each axis of the display grid. Default is 200.</p></li>
+<li><p><strong>ellipse</strong> (<em>None is accepted for all the parameters</em><em> of </em><em>the</em>)</p></li>
+<li><p><strong>value.</strong> (<em>and means the default</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>TypeError</strong> – If a parameter of the ellipse is not a real number, if <code class="docutils literal notranslate"><span class="pre">precompute</span></code> is not a boolean, or if
+    <code class="docutils literal notranslate"><span class="pre">resolution</span></code> is not an integer.</p></li>
+<li><p><strong>ValueError</strong> – If a parameter of the ellipse is not finite, if <code class="docutils literal notranslate"><span class="pre">Rx</span></code> or <code class="docutils literal notranslate"><span class="pre">Ry</span></code> is not strictly positive, if <code class="docutils literal notranslate"><span class="pre">h</span></code> is
+    not in <span class="math notranslate nohighlight">\([0, 1)\)</span>, or if <code class="docutils literal notranslate"><span class="pre">resolution</span></code> is lower than 2.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Open the interactive figure:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyzernike</span><span class="w"> </span><span class="kn">import</span> <span class="n">xy_display_interactive</span>
+
+<span class="n">xy_display_interactive</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Start with a rotated elliptic annulus:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">xy_display_interactive</span><span class="p">(</span><span class="n">Rx</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">Ry</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
 </section>
 
 
@@ -465,6 +544,18 @@
                 <dialog id="pst-secondary-sidebar-modal" tabindex="-1"></dialog>
                 <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyzernike.xy_display_interactive"><code class="docutils literal notranslate"><span class="pre">xy_display_interactive()</span></code></a></li>
+</ul>
+  </nav></div>
 
   <div class="sidebar-secondary-item">
 

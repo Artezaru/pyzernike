@@ -47,6 +47,7 @@
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/sg-tags.js?v=d80f6fa4"></script>
     <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'api_doc/radial_display';</script>
     <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -425,6 +426,79 @@
                   
   <section id="pyzernike-radial-display">
 <h1>pyzernike.radial_display<a class="headerlink" href="#pyzernike-radial-display" title="Link to this heading">#</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="pyzernike.radial_display">
+<span class="sig-prename descclassname"><span class="pre">pyzernike.</span></span><span class="sig-name descname"><span class="pre">radial_display</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Integral</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Integral</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Integral</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Integral</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho_derivative</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Integral</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Integral</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">precompute</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolution</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">200</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho_power</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/pyzernike/display/radial_display.html#radial_display"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyzernike.radial_display" title="Link to this definition">#</a></dt>
+<dd><p>Display the radial Zernike polynomials <span class="math notranslate nohighlight">\(R_{n}^{m}(\rho)\)</span> and their derivatives in a <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> figure.</p>
+<p>Each polynomial is drawn as a curve <span class="math notranslate nohighlight">\(\rho \mapsto \frac{d^a R_{n}^{m}}{d\rho^a}(\rho)\)</span> on
+<span class="math notranslate nohighlight">\([0, 1]\)</span>. When several polynomials are given, the “Previous” and “Next” buttons of the figure
+navigate through them. The vertical axis spans <span class="math notranslate nohighlight">\([\min(-1, R), \max(1, R)]\)</span>.</p>
+<p>The radial Zernike polynomials <a class="footnote-reference brackets" href="#id2" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> are defined for <span class="math notranslate nohighlight">\(0 \leq m \leq n\)</span> and <span class="math notranslate nohighlight">\(n - m\)</span> even by:</p>
+<div class="math notranslate nohighlight">
+\[R_{n}^{m}(\rho) = \sum_{k=0}^{\frac{n-m}{2}} \frac{(-1)^k (n-k)!}{k! \left(\frac{n+m}{2} - k\right)! \left(\frac{n-m}{2} - k\right)!} \rho^{n-2k}\]</div>
+<p>If <span class="math notranslate nohighlight">\(m &lt; 0\)</span>, <span class="math notranslate nohighlight">\(m &gt; n\)</span>, <span class="math notranslate nohighlight">\(n - m\)</span> is odd or <span class="math notranslate nohighlight">\(a &gt; n\)</span>, the displayed polynomial is zero.</p>
+<p><strong>Shape of the inputs.</strong> <code class="docutils literal notranslate"><span class="pre">n</span></code>, <code class="docutils literal notranslate"><span class="pre">m</span></code> and <code class="docutils literal notranslate"><span class="pre">rho_derivative</span></code> can each be a single integer or a
+sequence of integers (list, tuple or 1D numpy array). The integers are repeated to the length of
+the sequences, which must all have the same length.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="radial_polynomial.html#pyzernike.radial_polynomial" title="pyzernike.radial_polynomial"><code class="xref py py-func docutils literal notranslate"><span class="pre">pyzernike.radial_polynomial()</span></code></a> for the numerical evaluation of the radial polynomials.</p></li>
+<li><p><a class="reference internal" href="zernike_display.html#pyzernike.zernike_display" title="pyzernike.zernike_display"><code class="xref py py-func docutils literal notranslate"><span class="pre">pyzernike.zernike_display()</span></code></a> to display the full Zernike polynomials.</p></li>
+<li><p><a class="reference internal" href="display_interactive.html#pyzernike.display_interactive" title="pyzernike.display_interactive"><code class="xref py py-func docutils literal notranslate"><span class="pre">pyzernike.display_interactive()</span></code></a> to explore the polynomials in an interactive figure.</p></li>
+<li><p>The page <a class="reference internal" href="../mathematical_description/polynomials.html"><span class="doc">Computation of the polynomials</span></a> for the radial polynomials and their derivatives.</p></li>
+</ul>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> (<em>Union</em><em>[</em><em>Integral</em><em>, </em><em>Sequence</em><em>[</em><em>Integral</em><em>]</em><em>, </em><em>numpy.ndarray</em><em>]</em>) – The radial order(s) <span class="math notranslate nohighlight">\(n\)</span>.</p></li>
+<li><p><strong>m</strong> (<em>Union</em><em>[</em><em>Integral</em><em>, </em><em>Sequence</em><em>[</em><em>Integral</em><em>]</em><em>, </em><em>numpy.ndarray</em><em>]</em>) – The azimuthal frequency(ies) <span class="math notranslate nohighlight">\(m\)</span>.</p></li>
+<li><p><strong>rho_derivative</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>Integral</em><em>, </em><em>Sequence</em><em>[</em><em>Integral</em><em>]</em><em>, </em><em>numpy.ndarray</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – The order(s) <span class="math notranslate nohighlight">\(a \geq 0\)</span> of the derivative with respect to <span class="math notranslate nohighlight">\(\rho\)</span>. Default is 0 (no derivative).
+None is accepted and means 0.</p></li>
+<li><p><strong>precompute</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, the powers of <span class="math notranslate nohighlight">\(\rho\)</span> are cached and shared between the polynomials. Default is True.</p></li>
+<li><p><strong>resolution</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of points along each axis of the display grid. Default is 200.</p></li>
+<li><p><strong>rho_power</strong> (<em>float</em><em>, </em><em>optional</em>) – The strictly positive exponent <span class="math notranslate nohighlight">\(p\)</span> of the display mapping: at the displayed radial coordinate
+<span class="math notranslate nohighlight">\(s \in [0, 1]\)</span>, the polynomial is evaluated at <span class="math notranslate nohighlight">\(\rho = s^{p}\)</span>. With <span class="math notranslate nohighlight">\(p &lt; 1\)</span>
+(e.g. <code class="docutils literal notranslate"><span class="pre">0.5</span></code>), the edge of the disk, where the high order polynomials oscillate the most, is
+enlarged; with <span class="math notranslate nohighlight">\(p &gt; 1\)</span>, the center is enlarged. Default is 1 (no mapping).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>TypeError</strong> – If <code class="docutils literal notranslate"><span class="pre">n</span></code>, <code class="docutils literal notranslate"><span class="pre">m</span></code> or <code class="docutils literal notranslate"><span class="pre">rho_derivative</span></code> is not an integer or a sequence of integers, if
+    <code class="docutils literal notranslate"><span class="pre">precompute</span></code> is not a boolean, or if <code class="docutils literal notranslate"><span class="pre">resolution</span></code> is not an integer or <code class="docutils literal notranslate"><span class="pre">rho_power</span></code> is not a real number.</p></li>
+<li><p><strong>ValueError</strong> – If the sequences do not have the same length or are empty, if a derivative order is negative, or if
+    <code class="docutils literal notranslate"><span class="pre">resolution</span></code> is lower than 2 or <code class="docutils literal notranslate"><span class="pre">rho_power</span></code> is not strictly positive.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id2" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>F. Zernike, “Beugungstheorie des Schneidenverfahrens und seiner verbesserten Form, der
+Phasenkontrastmethode,” Physica 1(7-12), 689-704 (1934). <a class="reference external" href="https://doi.org/10.1016/S0031-8914(34)80259-5">https://doi.org/10.1016/S0031-8914(34)80259-5</a></p>
+</aside>
+</aside>
+<p class="rubric">Examples</p>
+<p>Display <span class="math notranslate nohighlight">\(R_{2}^{0}(\rho)\)</span>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyzernike</span><span class="w"> </span><span class="kn">import</span> <span class="n">radial_display</span>
+
+<span class="n">radial_display</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Display all the radial polynomials of order 4 and their first derivatives:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">radial_display</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="n">rho_derivative</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/radial_display.png"><img alt="../_images/radial_display.png" class="align-center" src="../_images/radial_display.png" style="width: 600px;" />
+</a>
+</dd></dl>
+
 </section>
 
 
@@ -465,6 +539,18 @@
                 <dialog id="pst-secondary-sidebar-modal" tabindex="-1"></dialog>
                 <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyzernike.radial_display"><code class="docutils literal notranslate"><span class="pre">radial_display()</span></code></a></li>
+</ul>
+  </nav></div>
 
   <div class="sidebar-secondary-item">
 

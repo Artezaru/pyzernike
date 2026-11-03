@@ -47,6 +47,7 @@
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/sg-tags.js?v=d80f6fa4"></script>
     <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'api_doc/display_interactive';</script>
     <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -425,6 +426,78 @@
                   
   <section id="pyzernike-display-interactive">
 <h1>pyzernike.display_interactive<a class="headerlink" href="#pyzernike-display-interactive" title="Link to this heading">#</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="pyzernike.display_interactive">
+<span class="sig-prename descclassname"><span class="pre">pyzernike.</span></span><span class="sig-name descname"><span class="pre">display_interactive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">precompute</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolution</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">200</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho_power</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/pyzernike/display/display_interactive.html#display_interactive"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyzernike.display_interactive" title="Link to this definition">#</a></dt>
+<dd><p>Explore the Zernike polynomials <span class="math notranslate nohighlight">\(Z_{n}^{m}(\rho, \theta)\)</span> and the radial polynomials
+<span class="math notranslate nohighlight">\(R_{n}^{m}(\rho)\)</span>, and their derivatives, in an interactive <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> figure.</p>
+<p>The left panel of the figure contains:</p>
+<ul class="simple">
+<li><p>a selector to switch between the full Zernike polynomials and the radial polynomials,</p></li>
+<li><p>text boxes to set the radial order <span class="math notranslate nohighlight">\(n\)</span>, the azimuthal frequency <span class="math notranslate nohighlight">\(m\)</span>, the order
+<span class="math notranslate nohighlight">\(a\)</span> of the derivative with respect to <span class="math notranslate nohighlight">\(\rho\)</span> and the order <span class="math notranslate nohighlight">\(b\)</span> of the derivative
+with respect to <span class="math notranslate nohighlight">\(\theta\)</span> (hidden for the radial polynomials),</p></li>
+<li><p>text boxes to set the resolution of the grid and the exponent <code class="docutils literal notranslate"><span class="pre">rho_power</span></code> of the display mapping
+(see below),</p></li>
+<li><p>a “Generate” button,</p></li>
+<li><p>a message line reporting the invalid inputs.</p></li>
+</ul>
+<p>The plot is computed and updated only when the “Generate” button is clicked, so that the values can be
+typed without triggering a computation at each change:</p>
+<ul class="simple">
+<li><p>the radial polynomials are drawn as curves <span class="math notranslate nohighlight">\(\rho \mapsto \frac{d^a R_{n}^{m}}{d\rho^a}(\rho)\)</span> on <span class="math notranslate nohighlight">\([0, 1]\)</span>,</p></li>
+<li><p>the Zernike polynomials are drawn as colormaps of
+<span class="math notranslate nohighlight">\(\frac{\partial^{a+b} Z_{n}^{m}}{\partial \rho^{a} \partial \theta^{b}}\)</span> on the unit disk.</p></li>
+</ul>
+<p>The vertical axis (radial) or the color scale (Zernike) spans <span class="math notranslate nohighlight">\([\min(-1, Z), \max(1, Z)]\)</span>.
+If <span class="math notranslate nohighlight">\(|m| &gt; n\)</span> or <span class="math notranslate nohighlight">\(n - m\)</span> is odd, the displayed polynomial is zero and a warning is shown.</p>
+<p>The same figure is opened from the command line with <code class="docutils literal notranslate"><span class="pre">pyzernike</span></code> (and the figure on an elliptic annulus with
+<code class="docutils literal notranslate"><span class="pre">pyzernike</span> <span class="pre">--xy</span></code>, see <a class="reference internal" href="xy_display_interactive.html#pyzernike.xy_display_interactive" title="pyzernike.xy_display_interactive"><code class="xref py py-func docutils literal notranslate"><span class="pre">pyzernike.xy_display_interactive()</span></code></a>).</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="zernike_display.html#pyzernike.zernike_display" title="pyzernike.zernike_display"><code class="xref py py-func docutils literal notranslate"><span class="pre">pyzernike.zernike_display()</span></code></a> to display a given list of Zernike polynomials.</p></li>
+<li><p><a class="reference internal" href="radial_display.html#pyzernike.radial_display" title="pyzernike.radial_display"><code class="xref py py-func docutils literal notranslate"><span class="pre">pyzernike.radial_display()</span></code></a> to display a given list of radial polynomials.</p></li>
+<li><p><a class="reference internal" href="zernike_polynomial.html#pyzernike.zernike_polynomial" title="pyzernike.zernike_polynomial"><code class="xref py py-func docutils literal notranslate"><span class="pre">pyzernike.zernike_polynomial()</span></code></a> for the definition of the polynomials and of their derivatives.</p></li>
+<li><p>The page <a class="reference internal" href="../mathematical_description/conventions.html"><span class="doc">Definition and conventions</span></a> for the definition of the Zernike polynomials.</p></li>
+<li><p>The page <a class="reference internal" href="../mathematical_description/polynomials.html"><span class="doc">Computation of the polynomials</span></a> for the radial polynomials and the derivatives.</p></li>
+</ul>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>precompute</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, the powers of <span class="math notranslate nohighlight">\(\rho\)</span> and the cosine and sine terms are cached during the
+computation of each polynomial. Default is True.</p></li>
+<li><p><strong>resolution</strong> (<em>int</em><em>, </em><em>optional</em>) – The initial number of points along each axis of the display grid. Default is 200.</p></li>
+<li><p><strong>rho_power</strong> (<em>float</em><em>, </em><em>optional</em>) – The initial strictly positive exponent <span class="math notranslate nohighlight">\(p\)</span> of the display mapping: at the displayed radial
+coordinate <span class="math notranslate nohighlight">\(s \in [0, 1]\)</span>, the polynomial is evaluated at <span class="math notranslate nohighlight">\(\rho = s^{p}\)</span>. With <span class="math notranslate nohighlight">\(p &lt; 1\)</span>
+(e.g. <code class="docutils literal notranslate"><span class="pre">0.5</span></code>), the edge of the disk, where the high order polynomials oscillate the most, is
+enlarged; with <span class="math notranslate nohighlight">\(p &gt; 1\)</span>, the center is enlarged. Default is 1 (no mapping).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>TypeError</strong> – If <code class="docutils literal notranslate"><span class="pre">precompute</span></code> is not a boolean, <code class="docutils literal notranslate"><span class="pre">resolution</span></code> is not an integer or <code class="docutils literal notranslate"><span class="pre">rho_power</span></code> is not a real number.</p></li>
+<li><p><strong>ValueError</strong> – If <code class="docutils literal notranslate"><span class="pre">resolution</span></code> is lower than 2 or <code class="docutils literal notranslate"><span class="pre">rho_power</span></code> is not strictly positive.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Open the interactive figure:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyzernike</span><span class="w"> </span><span class="kn">import</span> <span class="n">display_interactive</span>
+
+<span class="n">display_interactive</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Start with a finer grid and enlarge the edge of the disk to explore high orders:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">display_interactive</span><span class="p">(</span><span class="n">resolution</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="n">rho_power</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
 </section>
 
 
@@ -465,6 +538,18 @@
                 <dialog id="pst-secondary-sidebar-modal" tabindex="-1"></dialog>
                 <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyzernike.display_interactive"><code class="docutils literal notranslate"><span class="pre">display_interactive()</span></code></a></li>
+</ul>
+  </nav></div>
 
   <div class="sidebar-secondary-item">
 

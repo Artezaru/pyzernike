@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 
 
@@ -8,7 +7,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Mathematical description &#8212; pyzernike 3.0.0 documentation</title>
+    <title>Mathematical description &#8212; pyzernike 4.0.0 documentation</title>
   
   
   
@@ -27,28 +26,36 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=75c7c72ae941e8b558d8" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=75c7c72ae941e8b558d8" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css?v=c83e6b79" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- So that users can add custom icons -->
-  <script defer src="_static/scripts/fontawesome.js?digest=a95f357e85573c9b56d5"></script>
+  <script defer src="_static/scripts/fontawesome.js?digest=75c7c72ae941e8b558d8"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=75c7c72ae941e8b558d8" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=75c7c72ae941e8b558d8" />
 
-    <script src="_static/documentation_options.js?v=acc74ff5"></script>
-    <script src="_static/doctools.js?v=9bcbadda"></script>
-    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/documentation_options.js?v=3304f9e4"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/sg-tags.js?v=d80f6fa4"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'mathematical_description';</script>
     <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="API Reference" href="api.html" />
+    <link rel="next" title="Definition and conventions" href="mathematical_description/conventions.html" />
     <link rel="prev" title="Installation" href="installation.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="color-scheme" content="light dark"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
   
@@ -98,7 +105,7 @@
   
     <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
 <div class="bd-header__inner bd-page-width">
-  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+  <button type="button" class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation" aria-expanded="false" aria-controls="pst-primary-sidebar-modal">
     <span class="fa-solid fa-bars"></span>
   </button>
   
@@ -118,7 +125,7 @@
   
   
   
-    <p class="title logo__title">pyzernike 3.0.0 documentation</p>
+    <p class="title logo__title">pyzernike 4.0.0 documentation</p>
   
 </a></div>
     
@@ -140,7 +147,7 @@
 
 
 <li class="nav-item current active">
-  <a class="nav-link nav-internal" href="#">
+  <a class="nav-link nav-internal" href="#" aria-current="page">
     Mathematical description
   </a>
 </li>
@@ -170,7 +177,7 @@
         <div class="navbar-item navbar-persistent--container">
           
 
-<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button type="button" class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
  <i class="fa-solid fa-magnifying-glass"></i>
  <span class="search-button__default-text">Search</span>
  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
@@ -181,15 +188,15 @@
         <div class="navbar-item">
 
 <div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
-    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto" title="System Settings"></i>
   </button>
   <ul class="dropdown-menu dropdown-menu-end">
-    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
-    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
-    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg me-1"></i>Dark</button></li>
   </ul>
 </div></div>
       
@@ -200,7 +207,7 @@
   
     <div class="navbar-persistent--mobile">
 
-<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button type="button" class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
  <i class="fa-solid fa-magnifying-glass"></i>
  <span class="search-button__default-text">Search</span>
  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
@@ -209,7 +216,7 @@
   
 
   
-    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+    <button type="button" class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page" aria-expanded="false" aria-controls="pst-secondary-sidebar-modal">
       <span class="fa-solid fa-outdent"></span>
     </button>
   
@@ -223,7 +230,7 @@
       
       
       
-      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <dialog id="pst-primary-sidebar-modal" tabindex="-1"></dialog>
       <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
 
@@ -247,7 +254,7 @@
 
 
 <li class="nav-item current active">
-  <a class="nav-link nav-internal" href="#">
+  <a class="nav-link nav-internal" href="#" aria-current="page">
     Mathematical description
   </a>
 </li>
@@ -279,15 +286,15 @@
           <div class="navbar-item">
 
 <div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
-    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto" title="System Settings"></i>
   </button>
   <ul class="dropdown-menu dropdown-menu-end">
-    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
-    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
-    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg me-1"></i>Dark</button></li>
   </ul>
 </div></div>
         
@@ -296,7 +303,8 @@
   </div>
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
-        <div class="sidebar-primary-item pst-sidebar-collapse"><button id="pst-collapse-sidebar-button" aria-expanded="true" aria-controls="pst-primary-sidebar"><svg class="pst-icon svg-inline--fa" role="img" aria-hidden="true" focusable="false" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+        <div class="sidebar-primary-item pst-sidebar-collapse"><button type="button" id="pst-collapse-sidebar-button" aria-expanded="true" aria-controls="pst-primary-sidebar">
+  <svg class="pst-icon" role="img" aria-hidden="true" focusable="false" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
     <path fill="currentColor" d="M3 15.5C2.36232 15.5 1.74874 15.2564 1.28478 14.8189C0.820828 14.3815 0.541576 13.7832 0.504167 13.1467L0.5 13L0.5 3C0.499965 2.36232 0.743605 1.74874 1.18107 1.28478C1.61854 0.820828 2.21676 0.541576 2.85333 0.504167L3 0.5L13 0.5C13.6377 0.499965 14.2513 0.743605 14.7152 1.18107C15.1792 1.61854 15.4584 2.21676 15.4958 2.85333L15.5 3L15.5 13C15.5 13.6377 15.2564 14.2513 14.8189 14.7152C14.3815 15.1792 13.7832 15.4584 13.1467 15.4958L13 15.5L3 15.5ZM3 13.8333L10.5 13.8333L10.5 2.16667L3 2.16667C2.79589 2.16669 2.59889 2.24163 2.44636 2.37726C2.29383 2.5129 2.19638 2.69979 2.1725 2.9025L2.16667 3L2.16667 13C2.16669 13.2041 2.24163 13.4011 2.37726 13.5536C2.5129 13.7062 2.69979 13.8036 2.9025 13.8275L3 13.8333ZM6.65583 10.325L6.5775 10.2558L4.91083 8.58917C4.76735 8.44567 4.68116 8.25476 4.66843 8.05223C4.65569 7.84971 4.71729 7.6495 4.84167 7.48917L4.91083 7.41083L6.5775 5.74417C6.72747 5.59471 6.9287 5.50794 7.14032 5.50148C7.35194 5.49502 7.55809 5.56935 7.7169 5.70937C7.8757 5.8494 7.97525 6.04463 7.99533 6.25539C8.01541 6.46616 7.95451 6.67667 7.825 6.84417L7.75583 6.9225L6.67917 8L7.75583 9.0775C7.89931 9.22099 7.98551 9.41191 7.99824 9.61443C8.01097 9.81695 7.94938 10.0172 7.825 10.1775L7.75583 10.2558C7.61234 10.3993 7.42142 10.4855 7.2189 10.4982C7.01638 10.511 6.81617 10.4494 6.65583 10.325Z"/>
   </svg>
   <span class="pst-collapse-sidebar-label">Collapse Sidebar</span>
@@ -307,7 +315,15 @@
 <nav class="bd-docs-nav bd-links"
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
-  <div class="bd-toc-item navbar-nav"></div>
+  <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="mathematical_description/conventions.html">Definition and conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mathematical_description/polynomials.html">Computation of the polynomials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mathematical_description/elliptic_annulus.html">Extension to an elliptic annulus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mathematical_description/coefficients.html">Coefficients of a sum of polynomials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mathematical_description/fitting.html">Fitting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mathematical_description/references.html">References</a></li>
+</ul>
+</div>
 </nav></div>
     </div>
   
@@ -343,7 +359,7 @@
     
     <li class="breadcrumb-item breadcrumb-home">
       <a href="index.html" class="nav-link" aria-label="Home">
-        <i class="fa-solid fa-home"></i>
+        <i class="fa-solid fa-house"></i>
       </a>
     </li>
     <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Mathematical description</span></li>
@@ -365,158 +381,63 @@
                   
   <section id="mathematical-description">
 <h1>Mathematical description<a class="headerlink" href="#mathematical-description" title="Link to this heading">#</a></h1>
-<nav class="contents local" id="table-of-contents">
-<p class="topic-title">Table of Contents</p>
+<p>This section describes the mathematics of the Zernike polynomials and the methods used by <code class="docutils literal notranslate"><span class="pre">pyzernike</span></code> to compute
+them, to extend them to an elliptic annulus, to manipulate their coefficients and to fit them to data:</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#the-zernike-polynomials-and-their-derivatives" id="id6">The Zernike polynomials and their derivatives</a></p>
-<ul>
-<li><p><a class="reference internal" href="#definition-of-the-zernike-polynomials" id="id7">Definition of the Zernike polynomials</a></p></li>
-<li><p><a class="reference internal" href="#derivatives-of-the-zernike-polynomials" id="id8">Derivatives of the Zernike polynomials</a></p></li>
-<li><p><a class="reference internal" href="#recursive-computation-of-the-radial-polynomials" id="id9">Recursive computation of the radial polynomials</a></p></li>
+<li><p><a class="reference internal" href="mathematical_description/conventions.html"><span class="doc">Definition and conventions</span></a>: definition, indexing (OSA/ANSI, Noll, Fringe) and normalization.</p></li>
+<li><p><a class="reference internal" href="mathematical_description/polynomials.html"><span class="doc">Computation of the polynomials</span></a>: explicit sum, derivatives and recurrence relation.</p></li>
+<li><p><a class="reference internal" href="mathematical_description/elliptic_annulus.html"><span class="doc">Extension to an elliptic annulus</span></a>: extension to an elliptic annulus and Cartesian derivatives.</p></li>
+<li><p><a class="reference internal" href="mathematical_description/coefficients.html"><span class="doc">Coefficients of a sum of polynomials</span></a>: evaluation, conversion, rotation, change of pupil and statistics.</p></li>
+<li><p><a class="reference internal" href="mathematical_description/fitting.html"><span class="doc">Fitting</span></a>: linear and non-linear least squares fits.</p></li>
 </ul>
-</li>
-<li><p><a class="reference internal" href="#extension-of-zernike-polynomials-to-a-elliptic-annulus-domain" id="id10">Extension of Zernike polynomials to a elliptic annulus domain</a></p>
-<ul>
-<li><p><a class="reference internal" href="#definition-of-the-extended-zernike-polynomials" id="id11">Definition of the extended Zernike polynomials</a></p></li>
-<li><p><a class="reference internal" href="#derivatives-of-the-extended-zernike-polynomials" id="id12">Derivatives of the extended Zernike polynomials</a></p></li>
-</ul>
-</li>
-</ul>
-</nav>
-<section id="the-zernike-polynomials-and-their-derivatives">
-<h2><a class="toc-backref" href="#id6" role="doc-backlink">The Zernike polynomials and their derivatives</a><a class="headerlink" href="#the-zernike-polynomials-and-their-derivatives" title="Link to this heading">#</a></h2>
-<section id="definition-of-the-zernike-polynomials">
-<h3><a class="toc-backref" href="#id7" role="doc-backlink">Definition of the Zernike polynomials</a><a class="headerlink" href="#definition-of-the-zernike-polynomials" title="Link to this heading">#</a></h3>
-<p>The Zernike polynomials <span class="math notranslate nohighlight">\(Z_{n}^{m}(\rho, \theta)\)</span> are defined on the unit disk <span class="math notranslate nohighlight">\((0 \leq \rho \leq 1, \theta)\)</span> as follows:</p>
-<div class="math notranslate nohighlight">
-\[Z_{n}^{m}(\rho, \theta) = R_{n}^{m}(\rho) \cos(m \theta) \quad \text{if} \quad m \geq 0\]</div>
-<div class="math notranslate nohighlight">
-\[Z_{n}^{m}(\rho, \theta) = R_{n}^{-m}(\rho) \sin(-m \theta) \quad \text{if} \quad m &lt; 0\]</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>If <span class="math notranslate nohighlight">\(|m| &gt; n\)</span> or <span class="math notranslate nohighlight">\(n &lt; 0\)</span>, or <span class="math notranslate nohighlight">\((n - m)\)</span> is odd the zernike polynomial is set to zero.</p>
+<div class="toctree-wrapper compound">
 </div>
-<p>The radial polynomials <span class="math notranslate nohighlight">\(R_{n}^{m}(\rho)\)</span> are defined as follows:</p>
-<div class="math notranslate nohighlight">
-\[R_{n}^{m}(\rho) = \sum_{k=0}^{(n-m)/2} \frac{(-1)^k (n-k)!}{k! ((n+m)/2 - k)! ((n-m)/2 - k)!} \rho^{n-2k}\]</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>If :math:` m &gt; n`, or <span class="math notranslate nohighlight">\(m &lt; 0\)</span> or <span class="math notranslate nohighlight">\(n &lt; 0\)</span>, or <span class="math notranslate nohighlight">\((n - m)\)</span> is odd the radial polynomial is set to zero.</p>
+<section id="notations">
+<h2>Notations<a class="headerlink" href="#notations" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 75.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Notation</p></th>
+<th class="head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\((\rho, \theta)\)</span></p></td>
+<td><p>Polar coordinates on the unit disk, <span class="math notranslate nohighlight">\(0 \leq \rho \leq 1\)</span>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(n, m\)</span></p></td>
+<td><p>Radial order <span class="math notranslate nohighlight">\(n \geq 0\)</span> and azimuthal frequency <span class="math notranslate nohighlight">\(m\)</span>, with <span class="math notranslate nohighlight">\(|m| \leq n\)</span> and <span class="math notranslate nohighlight">\(n - m\)</span> even.</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(R_{n}^{m}(\rho)\)</span></p></td>
+<td><p>Radial polynomial (<span class="math notranslate nohighlight">\(m \geq 0\)</span>).</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(Z_{n}^{m}(\rho, \theta)\)</span>, <span class="math notranslate nohighlight">\(Z_j\)</span></p></td>
+<td><p>Zernike polynomial, of index <span class="math notranslate nohighlight">\(j\)</span> in a given ordering (OSA/ANSI by default).</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(N_{n}^{m}\)</span>, <span class="math notranslate nohighlight">\(N_j\)</span></p></td>
+<td><p>Normalization factor of Noll.</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(N\)</span>, <span class="math notranslate nohighlight">\(P\)</span></p></td>
+<td><p>Maximum radial order and number <span class="math notranslate nohighlight">\(P = \frac{(N+1)(N+2)}{2}\)</span> of polynomials with <span class="math notranslate nohighlight">\(n \leq N\)</span>.</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\((R_x, R_y, x_0, y_0, \alpha, h)\)</span></p></td>
+<td><p>Parameters of the elliptic annulus.</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\((\rho_{eq}, \theta_{eq})\)</span></p></td>
+<td><p>Equivalent polar coordinates of a point <span class="math notranslate nohighlight">\((x, y)\)</span> of the elliptic annulus.</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(Zxy_{n}^{m}(x, y)\)</span></p></td>
+<td><p>Zernike polynomial on the elliptic annulus.</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(c_j\)</span></p></td>
+<td><p>Coefficients of a sum of Zernike polynomials <span class="math notranslate nohighlight">\(f = \sum_j c_j Z_j\)</span>.</p></td>
+</tr>
+</tbody>
+</table>
 </div>
-<p>The coefficients of the radial polynomial are computed exactly with integer arithmetic (<code class="docutils literal notranslate"><span class="pre">math.comb</span></code>), without forming any factorial,
-as a product of two binomial coefficients:</p>
-<div class="math notranslate nohighlight">
-\[\frac{(n-k)!}{k! ((n+m)/2 - k)! ((n-m)/2 - k)!} = \binom{n-k}{k} \binom{n-2k}{(n-m)/2 - k}\]</div>
-<p>The coefficients are exact and cannot overflow. They are rounded only once, when converted to floating point values,
-and the sum is evaluated with the Horner scheme in <span class="math notranslate nohighlight">\(\rho^2\)</span>.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Even with exact coefficients, the alternating sum suffers from cancellation between its large terms for high orders:
-in double precision, the absolute error stays below <span class="math notranslate nohighlight">\(10^{-10}\)</span> up to <span class="math notranslate nohighlight">\(n \approx 20\)</span> for <span class="math notranslate nohighlight">\(m = 0\)</span>,
-and grows quickly beyond. For high orders, the recurrence relation described below must be preferred.</p>
-</div>
-</section>
-<section id="derivatives-of-the-zernike-polynomials">
-<h3><a class="toc-backref" href="#id8" role="doc-backlink">Derivatives of the Zernike polynomials</a><a class="headerlink" href="#derivatives-of-the-zernike-polynomials" title="Link to this heading">#</a></h3>
-<p>The derivative of order (derivative (a)) of the Zernike polynomial with respect to rho and order (derivative (b)) with respect to theta is defined as follows :</p>
-<div class="math notranslate nohighlight">
-\[\frac{\partial^{a}\partial^{b}Z_{n}^{m}(\rho, \theta)}{\partial \rho^{a} \partial \theta^{b}} = \frac{\partial^{a}R_{n}^{m}(\rho)}{\partial \rho^{a}} \frac{\partial^{b}\cos(m \theta)}{\partial \theta^{b}} \quad \text{if} \quad m &gt; 0\]</div>
-<div class="math notranslate nohighlight">
-\[\frac{\partial^{a}\partial^{b}Z_{n}^{m}(\rho, \theta)}{\partial \rho^{a} \partial \theta^{b}} = \frac{\partial^{a}R_{n}^{-m}(\rho)}{\partial \rho^{a}} \frac{\partial^{b}\sin(-m \theta)}{\partial \theta^{b}} \quad \text{if} \quad m &lt; 0\]</div>
-<p>The derivative of order (derivative (a)) of the radial Zernike polynomial is defined as follows :</p>
-<div class="math notranslate nohighlight">
-\[\frac{d^{a}R_{n}^{m}(\rho)}{d\rho^{a}} = \sum_{k=0}^{(n-m)/2} \frac{(-1)^k (n-k)!}{k! ((n+m)/2 - k)! ((n-m)/2 - k)!} (n-2k) (n-2k-1) \ldots (n-2k-a+1) \rho^{n-2k-a}\]</div>
-<p>The factor <span class="math notranslate nohighlight">\((n-2k) (n-2k-1) \ldots (n-2k-a+1) = \frac{(n-2k)!}{(n-2k-a)!}\)</span> is also computed exactly with integer arithmetic (<code class="docutils literal notranslate"><span class="pre">math.perm</span></code>).</p>
-</section>
-<section id="recursive-computation-of-the-radial-polynomials">
-<h3><a class="toc-backref" href="#id9" role="doc-backlink">Recursive computation of the radial polynomials</a><a class="headerlink" href="#recursive-computation-of-the-radial-polynomials" title="Link to this heading">#</a></h3>
-<p>When all the polynomials up to a radial order <span class="math notranslate nohighlight">\(N\)</span> are needed, they are computed with the three-term recurrence relation of
-Shakibaei and Paramesran <a class="footnote-reference brackets" href="#id2" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>:</p>
-<div class="math notranslate nohighlight">
-\[R_{n}^{m}(\rho) = \rho \, A_{n}^{m}(\rho) - R_{n-2}^{m}(\rho) \quad \text{with} \quad A_{n}^{m}(\rho) = R_{n-1}^{|m-1|}(\rho) + R_{n-1}^{m+1}(\rho)\]</div>
-<p>for <span class="math notranslate nohighlight">\(n \geq 1\)</span>, <span class="math notranslate nohighlight">\(0 \leq m \leq n\)</span> and <span class="math notranslate nohighlight">\((n - m)\)</span> even, with the initial condition
-<span class="math notranslate nohighlight">\(R_{0}^{0}(\rho) = 1\)</span> and the convention <span class="math notranslate nohighlight">\(R_{n}^{m}(\rho) = 0\)</span> whenever <span class="math notranslate nohighlight">\(m &gt; n\)</span>.
-With this convention, the same relation also gives the diagonal terms <span class="math notranslate nohighlight">\(R_{n}^{n}(\rho) = \rho^{n}\)</span>.</p>
-<p>The polynomials are built row by row (one row per radial order <span class="math notranslate nohighlight">\(n\)</span>), each row only depending on
-the rows <span class="math notranslate nohighlight">\(n-1\)</span> and <span class="math notranslate nohighlight">\(n-2\)</span>. Each polynomial costs one multiplication and two additions whatever
-its order, so that all the polynomials up to the order <span class="math notranslate nohighlight">\(N\)</span> are computed in <span class="math notranslate nohighlight">\(O(N^2)\)</span> operations
-per point (instead of <span class="math notranslate nohighlight">\(O(N^3)\)</span> with the explicit sum). The recurrence only combines polynomials
-bounded by 1 on <span class="math notranslate nohighlight">\([0, 1]\)</span>, so its accuracy stays close to the machine precision at any order.</p>
-<p>Differentiating the relation <span class="math notranslate nohighlight">\(a\)</span> times with the Leibniz rule
-<span class="math notranslate nohighlight">\(\frac{d^a}{d\rho^a}\left[\rho f(\rho)\right] = \rho f^{(a)}(\rho) + a f^{(a-1)}(\rho)\)</span>
-gives a recurrence of the same form for the derivatives:</p>
-<div class="math notranslate nohighlight">
-\[\frac{d^a R_{n}^{m}}{d\rho^a} = \rho \, \frac{d^a A_{n}^{m}}{d\rho^a} + a \, \frac{d^{a-1} A_{n}^{m}}{d\rho^{a-1}} - \frac{d^a R_{n-2}^{m}}{d\rho^a}\]</div>
-<p>with the diagonal terms <span class="math notranslate nohighlight">\(\frac{d^a R_{n}^{n}}{d\rho^a} = \frac{n!}{(n-a)!} \rho^{n-a}\)</span> and
-<span class="math notranslate nohighlight">\(\frac{d^a R_{n}^{m}}{d\rho^a} = 0\)</span> for <span class="math notranslate nohighlight">\(a &gt; n\)</span>. The derivative orders <span class="math notranslate nohighlight">\(0, 1, \dots, a\)</span>
-are computed together, since the order <span class="math notranslate nohighlight">\(a\)</span> requires the order <span class="math notranslate nohighlight">\(a - 1\)</span>.</p>
-<aside class="footnote-list brackets">
-<aside class="footnote brackets" id="id2" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
-<p>B. H. Shakibaei and R. Paramesran, “Recursive formula to compute Zernike radial polynomials,”
-Optics Letters 38(14), 2487 (2013). <a class="reference external" href="https://doi.org/10.1364/OL.38.002487">https://doi.org/10.1364/OL.38.002487</a></p>
-</aside>
-</aside>
-</section>
-</section>
-<section id="extension-of-zernike-polynomials-to-a-elliptic-annulus-domain">
-<h2><a class="toc-backref" href="#id10" role="doc-backlink">Extension of Zernike polynomials to a elliptic annulus domain</a><a class="headerlink" href="#extension-of-zernike-polynomials-to-a-elliptic-annulus-domain" title="Link to this heading">#</a></h2>
-<section id="definition-of-the-extended-zernike-polynomials">
-<h3><a class="toc-backref" href="#id11" role="doc-backlink">Definition of the extended Zernike polynomials</a><a class="headerlink" href="#definition-of-the-extended-zernike-polynomials" title="Link to this heading">#</a></h3>
-<p>The Zernike polynomials can be extended to a elliptical annulus domain <span class="math notranslate nohighlight">\(G\)</span> as follows:</p>
-<figure class="align-center" id="id5">
-<a class="reference internal image-reference" href="_images/elliptic_annulus_domain.png"><img alt="_images/elliptic_annulus_domain.png" src="_images/elliptic_annulus_domain.png" style="width: 400px;" />
-</a>
-<figcaption>
-<p><span class="caption-text">The parameters to define the extended domain of the Zernike polynomial.</span><a class="headerlink" href="#id5" title="Link to this image">#</a></p>
-</figcaption>
-</figure>
-<p>The elliptical domain <span class="math notranslate nohighlight">\(G\)</span> is defined by the following coefficients:</p>
-<ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(R_x\)</span> and <span class="math notranslate nohighlight">\(R_y\)</span> are the lengths of the semi-axis of the ellipse.</p></li>
-<li><p><span class="math notranslate nohighlight">\(x_0\)</span> and <span class="math notranslate nohighlight">\(y_0\)</span> are the coordinates of the center of the ellipse.</p></li>
-<li><p><span class="math notranslate nohighlight">\(\alpha\)</span> is the rotation angle of the ellipse in radians.</p></li>
-<li><p><span class="math notranslate nohighlight">\(h=\frac{a}{R_x}=\frac{b}{R_y}\)</span> defining the inner boundary of the ellipse.</p></li>
-</ul>
-<p>The applied mapping is as follows:</p>
-<div class="math notranslate nohighlight">
-\[Zxy_{n}^{m}(x, y) = Z_{n}^{m}\left(\rho_{eq} = \frac{r - h}{1 - h}, \theta_{eq} = \theta \right)\]</div>
-<p>Where:</p>
-<div class="math notranslate nohighlight">
-\[r = \sqrt{\left(\frac{X}{R_x}\right)^{2} + \left(\frac{Y}{R_y}\right)^{2}}\]</div>
-<div class="math notranslate nohighlight">
-\[\theta = \text{atan2} (\frac{Y}{R_y}, \frac{X}{R_x})\]</div>
-<div class="math notranslate nohighlight">
-\[X = \cos(\alpha) (x - x_0) + \sin(\alpha) (y - y_0)\]</div>
-<div class="math notranslate nohighlight">
-\[Y = -\sin(\alpha) (x - x_0) + \cos(\alpha) (y - y_0)\]</div>
-<p>For the mathematical development of the method, see Navarro et al. <a class="footnote-reference brackets" href="#id4" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>.</p>
-<aside class="footnote-list brackets">
-<aside class="footnote brackets" id="id4" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">2</a><span class="fn-bracket">]</span></span>
-<p>R. Navarro et al., “Generalization of Zernike polynomials for regular portions of circles
-and ellipses,” Optics Express 22(18), 21263-21279 (2014). <a class="reference external" href="https://doi.org/10.1364/OE.22.021263">https://doi.org/10.1364/OE.22.021263</a></p>
-</aside>
-</aside>
-</section>
-<section id="derivatives-of-the-extended-zernike-polynomials">
-<h3><a class="toc-backref" href="#id12" role="doc-backlink">Derivatives of the extended Zernike polynomials</a><a class="headerlink" href="#derivatives-of-the-extended-zernike-polynomials" title="Link to this heading">#</a></h3>
-<p>The derivatives with respect to x and y can be computed using the chain rule.</p>
-<div class="math notranslate nohighlight">
-\[\frac{\partial Zxy_{n}^{m}}{\partial z} = \frac{\partial Z_{n}^{m}}{\partial \rho_{eq}} \cdot \frac{\partial \rho_{eq}}{\partial z} + \frac{\partial Z_{n}^{m}}{\partial \theta_{eq}} \cdot \frac{\partial \theta_{eq}}{\partial z}\]</div>
-<div class="math notranslate nohighlight">
-\[\frac{\partial^{2} Zxy_{n}^{m}}{\partial \omega \partial z} = \left(\frac{\partial^{2} Z_{n}^{m}}{\partial \rho_{eq}^{2}} \cdot \frac{\partial \rho_{eq}}{\partial \omega} + \frac{\partial^{2} Z_{n}^{m}}{\partial \rho_{eq} \partial \theta_{eq}} \cdot \frac{\partial \theta_{eq}}{\partial \omega}\right) \cdot \frac{\partial \rho_{eq}}{\partial z} + \frac{\partial Z_{n}^{m}}{\partial \rho_{eq}} \cdot \frac{\partial^{2} \rho_{eq}}{\partial \omega \partial z} + \left(\frac{\partial^{2} Z_{n}^{m}}{\partial \theta_{eq} \partial \rho_{eq}} \cdot \frac{\partial \rho_{eq}}{\partial \omega} + \frac{\partial^{2} Z_{n}^{m}}{\partial \theta_{eq}^{2}} \cdot \frac{\partial \theta_{eq}}{\partial \omega}\right) \cdot \frac{\partial \theta_{eq}}{\partial z} + \frac{\partial Z_{n}^{m}}{\partial \theta_{eq}} \cdot \frac{\partial^{2} \theta_{eq}}{\partial \omega \partial z}\]</div>
-<p>where:</p>
-<div class="math notranslate nohighlight">
-\[\frac{\partial \rho_{eq}}{\partial z} = \frac{1}{1 - h} \cdot \frac{1}{r} \cdot \left( \frac{X}{R_x^2} \cdot \frac{\partial X}{\partial z} + \frac{Y}{R_y^2} \cdot \frac{\partial Y}{\partial z} \right)\]</div>
-<div class="math notranslate nohighlight">
-\[\frac{\partial \theta_{eq}}{\partial z} = \frac{1}{R_x R_y} \cdot \frac{1}{r^2} \cdot \left( X \cdot \frac{\partial Y}{\partial z} - Y \cdot \frac{\partial X}{\partial z} \right)\]</div>
-<p>And for the second order derivatives:</p>
-<div class="math notranslate nohighlight">
-\[\frac{\partial^{2} \rho_{eq}}{\partial \omega \partial z} = \frac{1}{1 - h} \cdot \left\{ \frac{1}{r} \cdot \left( \frac{1}{R_x^2} \frac{\partial X}{\partial \omega} \cdot \frac{\partial X}{\partial z} + \frac{1}{R_y^2} \frac{\partial Y}{\partial \omega} \cdot \frac{\partial Y}{\partial z} \right) - \frac{1}{r^3} \cdot \left( \frac{X}{R_x^2} \cdot \frac{\partial X}{\partial \omega} + \frac{Y}{R_y^2} \cdot \frac{\partial Y}{\partial \omega} \right) \cdot \left( \frac{X}{R_x^2} \cdot \frac{\partial X}{\partial z} + \frac{Y}{R_y^2} \cdot \frac{\partial Y}{\partial z} \right) \right\}\]</div>
-<div class="math notranslate nohighlight">
-\[\frac{\partial^{2} \theta_{eq}}{\partial \omega \partial z} = \frac{1}{R_x R_y} \cdot \left\{ \frac{1}{r^2} \cdot \left( \frac{\partial X}{\partial \omega} \cdot \frac{\partial Y}{\partial z} - \frac{\partial Y}{\partial \omega} \cdot \frac{\partial X}{\partial z} \right) - \frac{2}{r^4} \cdot \left( X \cdot \frac{\partial Y}{\partial z} - Y \cdot \frac{\partial X}{\partial z} \right) \cdot \left( \frac{X}{R_x^2} \cdot \frac{\partial X}{\partial \omega} + \frac{Y}{R_y^2} \cdot \frac{\partial Y}{\partial \omega} \right) \right\}\]</div>
-</section>
 </section>
 </section>
 
@@ -540,11 +461,11 @@ and ellipses,” Optics Express 22(18), 21263-21279 (2014). <a class="reference 
       </div>
     </a>
     <a class="right-next"
-       href="api.html"
+       href="mathematical_description/conventions.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">API Reference</p>
+        <p class="prev-next-title">Definition and conventions</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -555,7 +476,7 @@ and ellipses,” Optics Express 22(18), 21263-21279 (2014). <a class="reference 
             
             
               
-                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <dialog id="pst-secondary-sidebar-modal" tabindex="-1"></dialog>
                 <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
@@ -567,17 +488,7 @@ and ellipses,” Optics Express 22(18), 21263-21279 (2014). <a class="reference 
   </div>
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="pst-show_toc_level nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-zernike-polynomials-and-their-derivatives">The Zernike polynomials and their derivatives</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definition-of-the-zernike-polynomials">Definition of the Zernike polynomials</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#derivatives-of-the-zernike-polynomials">Derivatives of the Zernike polynomials</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recursive-computation-of-the-radial-polynomials">Recursive computation of the radial polynomials</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#extension-of-zernike-polynomials-to-a-elliptic-annulus-domain">Extension of Zernike polynomials to a elliptic annulus domain</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definition-of-the-extended-zernike-polynomials">Definition of the extended Zernike polynomials</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#derivatives-of-the-extended-zernike-polynomials">Derivatives of the extended Zernike polynomials</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#notations">Notations</a></li>
 </ul>
   </nav></div>
 
@@ -603,8 +514,8 @@ and ellipses,” Optics Express 22(18), 21263-21279 (2014). <a class="reference 
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5"></script>
-<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5"></script>
+  <script defer src="_static/scripts/bootstrap.js?digest=75c7c72ae941e8b558d8"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=75c7c72ae941e8b558d8"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -624,8 +535,7 @@ and ellipses,” Optics Express 22(18), 21263-21279 (2014). <a class="reference 
         <div class="footer-item">
 
   <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
-    <br/>
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.0.4.
   </p>
 </div>
       
@@ -638,7 +548,7 @@ and ellipses,” Optics Express 22(18), 21263-21279 (2014). <a class="reference 
         <div class="footer-item">
 <p class="theme-version">
   <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.19.0.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.24.0.
 </p></div>
       
     </div>

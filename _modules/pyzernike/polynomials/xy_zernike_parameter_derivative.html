@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pyzernike.polynomials.xy_zernike_parameter_derivative &#8212; pyzernike 4.0.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=75c7c72ae941e8b558d8" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=75c7c72ae941e8b558d8" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery.css?v=c83e6b79" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../../_static/scripts/fontawesome.js?digest=75c7c72ae941e8b558d8"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=75c7c72ae941e8b558d8" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=75c7c72ae941e8b558d8" />
+
+    <script src="../../../_static/documentation_options.js?v=3304f9e4"></script>
+    <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../_static/sg-tags.js?v=d80f6fa4"></script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/pyzernike/polynomials/xy_zernike_parameter_derivative';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="color-scheme" content="light dark"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../../_static/searchtools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
+    <script src="../../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button type="button" class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation" aria-expanded="false" aria-controls="pst-primary-sidebar-modal">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">pyzernike 4.0.0 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../installation.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../mathematical_description.html">
+    Mathematical description
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../api.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../usage.html">
+    Usage
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button type="button" class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button type="button" class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal" tabindex="-1"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../installation.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../mathematical_description.html">
+    Mathematical description
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../api.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../usage.html">
+    Usage
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-house"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">pyzernike.polynomials.xy_zernike_parameter_derivative</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for pyzernike.polynomials.xy_zernike_parameter_derivative</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2025 Artezaru</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the "License");</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an "AS IS" BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">numbers</span><span class="w"> </span><span class="kn">import</span> <span class="n">Integral</span><span class="p">,</span> <span class="n">Real</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">..core.parsing</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">_as_choices</span><span class="p">,</span>
+    <span class="n">_as_common_floating_arrays</span><span class="p">,</span>
+    <span class="n">_as_default_value</span><span class="p">,</span>
+    <span class="n">_as_ellipse_parameters</span><span class="p">,</span>
+    <span class="n">_as_integers</span><span class="p">,</span>
+    <span class="n">_broadcast_parsed</span><span class="p">,</span>
+    <span class="n">_check_boolean</span><span class="p">,</span>
+    <span class="n">_format_output</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..core.core_cartesian_to_elliptic_annulus</span><span class="w"> </span><span class="kn">import</span> <span class="n">_core_cartesian_to_elliptic_annulus</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..core.core_xy_polynomial</span><span class="w"> </span><span class="kn">import</span> <span class="n">ELLIPSE_PARAMETERS</span><span class="p">,</span> <span class="n">_core_xy_parameter_derivatives</span>
+
+
+<div class="viewcode-block" id="xy_zernike_parameter_derivative">
+<a class="viewcode-back" href="../../../api_doc/xy_zernike_parameter_derivative.html#pyzernike.xy_zernike_parameter_derivative">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">xy_zernike_parameter_derivative</span><span class="p">(</span>
+    <span class="n">x</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">y</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">n</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Integral</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Integral</span><span class="p">],</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
+    <span class="n">m</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Integral</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Integral</span><span class="p">],</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
+    <span class="n">parameter</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
+    <span class="n">Rx</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Real</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">Ry</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Real</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">x0</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Real</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+    <span class="n">y0</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Real</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Real</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+    <span class="n">h</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Real</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+    <span class="n">default</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">precompute</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">normalize</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">to_list</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""</span>
+<span class="sd">    Compute the first order derivatives of the Zernike polynomials on an elliptic annulus [1]_ with respect to</span>
+<span class="sd">    the parameters :math:`(x_0, y_0, R_x, R_y, \alpha, h)` of the annulus, at fixed Cartesian coordinates</span>
+<span class="sd">    :math:`(x, y)`.</span>
+
+<span class="sd">    .. figure:: ../../../pyzernike/resources/elliptic_annulus_domain.png</span>
+<span class="sd">        :width: 400px</span>
+<span class="sd">        :align: center</span>
+
+<span class="sd">        The parameters of the elliptic annulus domain.</span>
+
+<span class="sd">    The Zernike polynomials on the elliptic annulus are :math:`Zxy_{n}^{m}(x, y) = Z_{n}^{m}\left(\rho_{eq}, \theta_{eq}\right)`</span>
+<span class="sd">    (see :func:`pyzernike.xy_zernike_polynomial`). These derivatives are used to refine the domain of</span>
+<span class="sd">    definition, e.g. to fit the parameters of the annulus with a Gauss-Newton algorithm: for a surface</span>
+<span class="sd">    :math:`W = \sum_j c_j Zxy_{j}`, :math:`\frac{\partial W}{\partial p} = \sum_j c_j \frac{\partial Zxy_{j}}{\partial p}`.</span>
+<span class="sd">    The residual and Jacobian functions of such a fit are directly given by :func:`pyzernike.xy_zernike_least_squares`.</span>
+
+<span class="sd">    Let :math:`u = X / R_x` and :math:`v = Y / R_y`, where :math:`X = c (x - x_0) + s (y - y_0)` and</span>
+<span class="sd">    :math:`Y = -s (x - x_0) + c (y - y_0)` are the coordinates in the frame of the ellipse</span>
+<span class="sd">    (:math:`c = \cos\alpha`, :math:`s = \sin\alpha`). The polynomial depends on :math:`(x_0, y_0, R_x, R_y, \alpha)`</span>
+<span class="sd">    only through :math:`(u, v)`, so with :math:`Z_u = \partial_u Zxy_{n}^{m}` and :math:`Z_v = \partial_v Zxy_{n}^{m}`:</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \frac{\partial Zxy_{n}^{m}}{\partial x_0} = -\frac{c}{R_x} Z_u + \frac{s}{R_y} Z_v</span>
+<span class="sd">        \quad \text{and} \quad</span>
+<span class="sd">        \frac{\partial Zxy_{n}^{m}}{\partial y_0} = -\frac{s}{R_x} Z_u - \frac{c}{R_y} Z_v</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \frac{\partial Zxy_{n}^{m}}{\partial R_x} = -\frac{u}{R_x} Z_u</span>
+<span class="sd">        \quad \text{and} \quad</span>
+<span class="sd">        \frac{\partial Zxy_{n}^{m}}{\partial R_y} = -\frac{v}{R_y} Z_v</span>
+<span class="sd">        \quad \text{and} \quad</span>
+<span class="sd">        \frac{\partial Zxy_{n}^{m}}{\partial \alpha} = \frac{R_y}{R_x} v Z_u - \frac{R_x}{R_y} u Z_v</span>
+
+<span class="sd">    The parameter :math:`h` appears only in :math:`\rho_{eq} = \frac{r - h}{1 - h}` (:math:`r = \sqrt{u^2 + v^2}`), so:</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \frac{\partial Zxy_{n}^{m}}{\partial h} = \frac{\rho_{eq} - 1}{1 - h} \frac{\partial Z_{n}^{m}}{\partial \rho}(\rho_{eq}, \theta_{eq})</span>
+
+<span class="sd">    :math:`Z_u` and :math:`Z_v` are computed as in :func:`pyzernike.xy_zernike_polynomial`, without singularity</span>
+<span class="sd">    at the center of the ellipse.</span>
+
+<span class="sd">    - If :math:`|m| &gt; n` or :math:`n - m` is odd, the derivative is zero.</span>
+<span class="sd">    - Where the point is outside the elliptic annulus (:math:`\rho_{eq}` outside :math:`[0, 1]`), or the</span>
+<span class="sd">      coordinates are not finite, the output is set to ``default``.</span>
+
+<span class="sd">    .. note::</span>
+
+<span class="sd">        The derivatives are those of the value of the polynomial at a fixed point inside the annulus. The</span>
+<span class="sd">        domain itself depends on the parameters: when they change, points may enter or leave the annulus,</span>
+<span class="sd">        which is not differentiable. During an optimization, keep the set of points fixed within an iteration</span>
+<span class="sd">        (or discard the points close to the boundary), and keep :math:`h` in :math:`[0, 1)` (the derivative</span>
+<span class="sd">        with respect to :math:`h` at :math:`h = 0` is the right derivative). The parameters can not be estimated</span>
+<span class="sd">        together with the coefficients for a full ellipse (see the page :doc:`../../mathematical_description/fitting`).</span>
+
+<span class="sd">    **Shape of the inputs and of the output.** ``n``, ``m`` and ``parameter`` can each be a single value or</span>
+<span class="sd">    a sequence (list, tuple or 1D numpy array):</span>
+
+<span class="sd">    - If all of them are single values, a single derivative is computed and returned as an array with the</span>
+<span class="sd">      shape of ``x``.</span>
+<span class="sd">    - If at least one of them is a sequence, the single values are repeated to the length :math:`N` of the</span>
+<span class="sd">      sequences (which must all have the same length), and :math:`N` derivatives are computed. They are</span>
+<span class="sd">      returned as a list of :math:`N` arrays with the shape of ``x`` (``to_list=True``), or as a single</span>
+<span class="sd">      array of shape :math:`(N, \dots)` (``to_list=False``).</span>
+
+<span class="sd">    .. seealso::</span>
+
+<span class="sd">        - :func:`pyzernike.xy_zernike_polynomial` to compute the Zernike polynomials on the elliptic annulus and</span>
+<span class="sd">          their derivatives with respect to :math:`x` and :math:`y`.</span>
+<span class="sd">        - :func:`pyzernike.cartesian_to_elliptic_annulus` to compute the equivalent polar coordinates.</span>
+<span class="sd">        - :func:`pyzernike.xy_zernike_least_squares` for the residual and Jacobian functions of the fit of the</span>
+<span class="sd">          parameters of the annulus.</span>
+<span class="sd">        - The page :doc:`../../mathematical_description/elliptic_annulus` for the derivatives with respect to the parameters of the annulus.</span>
+<span class="sd">        - The page :doc:`../../mathematical_description/fitting` for the estimation of the parameters of the annulus.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x : numpy.ndarray</span>
+<span class="sd">        The x Cartesian coordinates with any shape ``(...)``.</span>
+
+<span class="sd">    y : numpy.ndarray</span>
+<span class="sd">        The y Cartesian coordinates with the same shape as ``x``.</span>
+<span class="sd">        If ``x`` and ``y`` are floating point arrays of the same dtype (e.g. ``numpy.float32``), this</span>
+<span class="sd">        dtype is kept. Otherwise, both are converted to ``numpy.float64``.</span>
+
+<span class="sd">    n : Union[Integral, Sequence[Integral], numpy.ndarray]</span>
+<span class="sd">        The radial order(s) :math:`n`.</span>
+
+<span class="sd">    m : Union[Integral, Sequence[Integral], numpy.ndarray]</span>
+<span class="sd">        The azimuthal frequency(ies) :math:`m`.</span>
+
+<span class="sd">    parameter : Union[str, Sequence[str], numpy.ndarray]</span>
+<span class="sd">        The parameter(s) with respect to which the polynomials are derived, among ``"x0"``, ``"y0"``,</span>
+<span class="sd">        ``"Rx"``, ``"Ry"``, ``"alpha"`` and ``"h"``.</span>
+
+<span class="sd">    Rx : Optional[Real], optional</span>
+<span class="sd">        The semi-axis :math:`R_x` of the ellipse along its x axis. Must be finite and strictly positive. Default is 1.0.</span>
+
+<span class="sd">    Ry : Optional[Real], optional</span>
+<span class="sd">        The semi-axis :math:`R_y` of the ellipse along its y axis. Must be finite and strictly positive. Default is 1.0.</span>
+
+<span class="sd">    x0 : Optional[Real], optional</span>
+<span class="sd">        The x coordinate :math:`x_0` of the center of the ellipse. Must be finite. Default is 0.0.</span>
+
+<span class="sd">    y0 : Optional[Real], optional</span>
+<span class="sd">        The y coordinate :math:`y_0` of the center of the ellipse. Must be finite. Default is 0.0.</span>
+
+<span class="sd">    alpha : Optional[Real], optional</span>
+<span class="sd">        The rotation angle :math:`\alpha` of the ellipse in radians. Must be finite. Default is 0.0.</span>
+
+<span class="sd">    h : Optional[Real], optional</span>
+<span class="sd">        The ratio :math:`h` of the inner to the outer semi-axes, in :math:`[0, 1)`. Default is 0.0 (full ellipse).</span>
+
+<span class="sd">    default : Union[int, float], optional</span>
+<span class="sd">        The value set outside the elliptic annulus or where the coordinates are not finite. Integers and floating</span>
+<span class="sd">        point numbers (Python or numpy, including ``numpy.nan`` and ``numpy.inf``) are accepted and converted to</span>
+<span class="sd">        float. Booleans are not accepted. Default is ``numpy.nan``.</span>
+
+<span class="sd">    precompute : bool, optional</span>
+<span class="sd">        If True, the powers of :math:`\rho_{eq}` and the cosine and sine terms are cached and shared between the</span>
+<span class="sd">        polynomials, which is faster when several derivatives are computed at once. If False, they are</span>
+<span class="sd">        recomputed for each polynomial, which uses less memory. Default is True.</span>
+
+<span class="sd">    normalize : bool, optional</span>
+<span class="sd">        If True, the derivatives are multiplied by the normalization factors of Noll</span>
+<span class="sd">        :math:`N_{n}^{m} = \sqrt{(2 - \delta_{m0})(n + 1)}` (see :func:`pyzernike.zernike_normalization`).</span>
+<span class="sd">        The value ``default`` is not normalized. Default is False.</span>
+
+<span class="sd">    to_list : bool, optional</span>
+<span class="sd">        Only used when several derivatives are computed. If True, the output is a list of arrays.</span>
+<span class="sd">        If False, the output is a single array of shape :math:`(N, \dots)`. Default is True.</span>
+
+<span class="sd">    None is accepted for all the parameters of the ellipse, and means the default value.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Union[numpy.ndarray, List[numpy.ndarray]]</span>
+<span class="sd">        - If ``n``, ``m`` and ``parameter`` are single values: an array with the shape of ``x``.</span>
+<span class="sd">        - Otherwise, if ``to_list`` is True: a list of :math:`N` arrays with the shape of ``x``.</span>
+<span class="sd">        - Otherwise: an array of shape :math:`(N, \dots)`, where ``output[i]`` is the derivative of the</span>
+<span class="sd">          polynomial ``(n[i], m[i])`` with respect to ``parameter[i]``.</span>
+
+<span class="sd">        The dtype is the common floating point dtype of ``x`` and ``y`` (``numpy.float64`` by default).</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    TypeError</span>
+<span class="sd">        If ``x`` or ``y`` can not be converted to a floating point array, if a parameter of the ellipse</span>
+<span class="sd">        is not a real number, if ``default`` is not an integer or a floating point number, if ``n`` or ``m``</span>
+<span class="sd">        is not an integer or a sequence of integers, if ``parameter`` is not a string or a sequence of</span>
+<span class="sd">        strings, or if ``precompute``, ``normalize`` or ``to_list`` is not a boolean.</span>
+
+<span class="sd">    ValueError</span>
+<span class="sd">        If ``x`` and ``y`` do not have the same shape, if a parameter of the ellipse is not finite, if</span>
+<span class="sd">        ``Rx`` or ``Ry`` is not strictly positive, if ``h`` is not in :math:`[0, 1)`, if ``parameter``</span>
+<span class="sd">        contains an unknown name, or if the sequences do not have the same length.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    .. [1] R. Navarro, J. L. López, J. A. Díaz and E. Pérez Sinusía, "Generalization of Zernike polynomials for</span>
+<span class="sd">       regular portions of circles and ellipses," Optics Express 22(18), 21263-21279 (2014).</span>
+<span class="sd">       https://doi.org/10.1364/OE.22.021263</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    Compute the derivative of the defocus :math:`Z_{2}^{0}` with respect to the center :math:`x_0` of a</span>
+<span class="sd">    circle of radius 10 centered at :math:`(1, 1)`:</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        import numpy</span>
+<span class="sd">        from pyzernike import xy_zernike_parameter_derivative</span>
+
+<span class="sd">        X, Y = numpy.meshgrid(numpy.linspace(-10, 10, 100), numpy.linspace(-10, 10, 100))</span>
+<span class="sd">        dZ_dx0 = xy_zernike_parameter_derivative(X, Y, n=2, m=0, parameter="x0", Rx=10, Ry=10, x0=1.0, y0=1.0)</span>
+
+<span class="sd">    Compute the gradient of :math:`Z_{2}^{0}` with respect to all the parameters (``n`` and ``m`` are repeated):</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        parameters = ["x0", "y0", "Rx", "Ry", "alpha", "h"]</span>
+<span class="sd">        gradient = xy_zernike_parameter_derivative(X, Y, n=2, m=0, parameter=parameters, Rx=10, Ry=10, x0=1.0, y0=1.0, to_list=False)</span>
+<span class="sd">        # array of shape (6, 100, 100)</span>
+
+<span class="sd">    """</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">_as_common_floating_arrays</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">Rx</span><span class="p">,</span> <span class="n">Ry</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">_as_ellipse_parameters</span><span class="p">(</span><span class="n">Rx</span><span class="p">,</span> <span class="n">Ry</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
+    <span class="n">default</span> <span class="o">=</span> <span class="n">_as_default_value</span><span class="p">(</span><span class="n">default</span><span class="p">)</span>
+    <span class="n">precompute</span> <span class="o">=</span> <span class="n">_check_boolean</span><span class="p">(</span><span class="n">precompute</span><span class="p">,</span> <span class="s2">"precompute"</span><span class="p">)</span>
+    <span class="n">normalize</span> <span class="o">=</span> <span class="n">_check_boolean</span><span class="p">(</span><span class="n">normalize</span><span class="p">,</span> <span class="s2">"normalize"</span><span class="p">)</span>
+    <span class="n">to_list</span> <span class="o">=</span> <span class="n">_check_boolean</span><span class="p">(</span><span class="n">to_list</span><span class="p">,</span> <span class="s2">"to_list"</span><span class="p">)</span>
+    <span class="n">indices</span><span class="p">,</span> <span class="n">single</span> <span class="o">=</span> <span class="n">_broadcast_parsed</span><span class="p">({</span>
+        <span class="s2">"n"</span><span class="p">:</span> <span class="n">_as_integers</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="s2">"n"</span><span class="p">),</span>
+        <span class="s2">"m"</span><span class="p">:</span> <span class="n">_as_integers</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="s2">"m"</span><span class="p">),</span>
+        <span class="s2">"parameter"</span><span class="p">:</span> <span class="n">_as_choices</span><span class="p">(</span><span class="n">parameter</span><span class="p">,</span> <span class="s2">"parameter"</span><span class="p">,</span> <span class="n">ELLIPSE_PARAMETERS</span><span class="p">),</span>
+    <span class="p">})</span>
+
+    <span class="n">float_type</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span>
+    <span class="n">rho_list</span><span class="p">,</span> <span class="n">theta_list</span> <span class="o">=</span> <span class="n">_core_cartesian_to_elliptic_annulus</span><span class="p">(</span>
+        <span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span>
+        <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span>
+        <span class="n">Rx</span><span class="o">=</span><span class="n">float_type</span><span class="p">(</span><span class="n">Rx</span><span class="p">),</span>
+        <span class="n">Ry</span><span class="o">=</span><span class="n">float_type</span><span class="p">(</span><span class="n">Ry</span><span class="p">),</span>
+        <span class="n">x0</span><span class="o">=</span><span class="n">float_type</span><span class="p">(</span><span class="n">x0</span><span class="p">),</span>
+        <span class="n">y0</span><span class="o">=</span><span class="n">float_type</span><span class="p">(</span><span class="n">y0</span><span class="p">),</span>
+        <span class="n">alpha</span><span class="o">=</span><span class="n">float_type</span><span class="p">(</span><span class="n">alpha</span><span class="p">),</span>
+        <span class="n">h</span><span class="o">=</span><span class="n">float_type</span><span class="p">(</span><span class="n">h</span><span class="p">),</span>
+        <span class="n">x_derivative</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+        <span class="n">y_derivative</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+    <span class="p">)</span>
+    <span class="n">rho_eq</span><span class="p">,</span> <span class="n">theta_eq</span> <span class="o">=</span> <span class="n">rho_list</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">theta_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="n">valid_mask</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">rho_eq</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">numpy</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">theta_eq</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">rho_eq</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">rho_eq</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">output</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">indices</span><span class="p">[</span><span class="s2">"n"</span><span class="p">]),)</span> <span class="o">+</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">default</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+    <span class="n">output</span><span class="p">[:,</span> <span class="n">valid_mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">_core_xy_parameter_derivatives</span><span class="p">(</span>
+        <span class="n">rho</span><span class="o">=</span><span class="n">rho_eq</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">],</span>
+        <span class="n">theta</span><span class="o">=</span><span class="n">theta_eq</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">],</span>
+        <span class="n">n</span><span class="o">=</span><span class="n">indices</span><span class="p">[</span><span class="s2">"n"</span><span class="p">],</span>
+        <span class="n">m</span><span class="o">=</span><span class="n">indices</span><span class="p">[</span><span class="s2">"m"</span><span class="p">],</span>
+        <span class="n">parameter</span><span class="o">=</span><span class="n">indices</span><span class="p">[</span><span class="s2">"parameter"</span><span class="p">],</span>
+        <span class="n">Rx</span><span class="o">=</span><span class="n">Rx</span><span class="p">,</span>
+        <span class="n">Ry</span><span class="o">=</span><span class="n">Ry</span><span class="p">,</span>
+        <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span>
+        <span class="n">h</span><span class="o">=</span><span class="n">h</span><span class="p">,</span>
+        <span class="n">precompute</span><span class="o">=</span><span class="n">precompute</span><span class="p">,</span>
+        <span class="n">normalize</span><span class="o">=</span><span class="n">normalize</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">_format_output</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">single</span><span class="p">,</span> <span class="n">to_list</span><span class="p">)</span></div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=75c7c72ae941e8b558d8"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=75c7c72ae941e8b558d8"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025-2026, Artezaru.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.0.4.
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.24.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

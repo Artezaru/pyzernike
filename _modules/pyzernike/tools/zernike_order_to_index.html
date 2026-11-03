@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 
 
@@ -7,7 +6,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pyzernike.tools.zernike_order_to_index &#8212; pyzernike 3.0.0 documentation</title>
+    <title>pyzernike.tools.zernike_order_to_index &#8212; pyzernike 4.0.0 documentation</title>
   
   
   
@@ -26,25 +25,33 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../../_static/styles/theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
-<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
+  <link href="../../../_static/styles/theme.css?digest=75c7c72ae941e8b558d8" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=75c7c72ae941e8b558d8" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery.css?v=c83e6b79" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- So that users can add custom icons -->
-  <script defer src="../../../_static/scripts/fontawesome.js?digest=a95f357e85573c9b56d5"></script>
+  <script defer src="../../../_static/scripts/fontawesome.js?digest=75c7c72ae941e8b558d8"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
-<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=75c7c72ae941e8b558d8" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=75c7c72ae941e8b558d8" />
 
-    <script src="../../../_static/documentation_options.js?v=acc74ff5"></script>
-    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/documentation_options.js?v=3304f9e4"></script>
+    <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../_static/sg-tags.js?v=d80f6fa4"></script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/pyzernike/tools/zernike_order_to_index';</script>
     <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="color-scheme" content="light dark"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
   
@@ -94,7 +101,7 @@
   
     <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
 <div class="bd-header__inner bd-page-width">
-  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+  <button type="button" class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation" aria-expanded="false" aria-controls="pst-primary-sidebar-modal">
     <span class="fa-solid fa-bars"></span>
   </button>
   
@@ -114,7 +121,7 @@
   
   
   
-    <p class="title logo__title">pyzernike 3.0.0 documentation</p>
+    <p class="title logo__title">pyzernike 4.0.0 documentation</p>
   
 </a></div>
     
@@ -166,7 +173,7 @@
         <div class="navbar-item navbar-persistent--container">
           
 
-<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button type="button" class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
  <i class="fa-solid fa-magnifying-glass"></i>
  <span class="search-button__default-text">Search</span>
  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
@@ -177,15 +184,15 @@
         <div class="navbar-item">
 
 <div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
-    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto" title="System Settings"></i>
   </button>
   <ul class="dropdown-menu dropdown-menu-end">
-    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
-    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
-    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg me-1"></i>Dark</button></li>
   </ul>
 </div></div>
       
@@ -196,7 +203,7 @@
   
     <div class="navbar-persistent--mobile">
 
-<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button type="button" class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
  <i class="fa-solid fa-magnifying-glass"></i>
  <span class="search-button__default-text">Search</span>
  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
@@ -217,7 +224,7 @@
       
         
       
-      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <dialog id="pst-primary-sidebar-modal" tabindex="-1"></dialog>
       <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
         
 
@@ -273,15 +280,15 @@
           <div class="navbar-item">
 
 <div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
-    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto" title="System Settings"></i>
   </button>
   <ul class="dropdown-menu dropdown-menu-end">
-    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
-    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
-    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg me-1"></i>Dark</button></li>
   </ul>
 </div></div>
         
@@ -321,7 +328,7 @@
     
     <li class="breadcrumb-item breadcrumb-home">
       <a href="../../../index.html" class="nav-link" aria-label="Home">
-        <i class="fa-solid fa-home"></i>
+        <i class="fa-solid fa-house"></i>
       </a>
     </li>
     
@@ -362,100 +369,49 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">numbers</span><span class="w"> </span><span class="kn">import</span> <span class="n">Integral</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">overload</span>
 
-
-<span class="k">def</span><span class="w"> </span><span class="nf">_zernike_order_to_index</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">m</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">"""</span>
-<span class="sd">    Convert lists of Zernike orders (n, m) to their OSA/ANSI indices without any check.</span>
-
-<span class="sd">    .. warning::</span>
-
-<span class="sd">        This method is an internal function of ``pyzernike`` that is not designed to be used by the users directly.</span>
-<span class="sd">        Please use :func:`pyzernike.zernike_order_to_index`.</span>
-
-<span class="sd">    .. math::</span>
-
-<span class="sd">        j = \frac{n(n + 2) + m}{2}</span>
-
-<span class="sd">    The division is an exact integer division since :math:`n(n+2) + m` is even for valid orders.</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    n : List[int]</span>
-<span class="sd">        The radial orders of the Zernike polynomials. Must be a list of Python integers.</span>
-
-<span class="sd">    m : List[int]</span>
-<span class="sd">        The azimuthal frequencies of the Zernike polynomials. Must be a list of Python integers</span>
-<span class="sd">        with the same length as ``n``, and each pair ``(n, m)`` must be valid.</span>
-
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">    List[int]</span>
-<span class="sd">        The indices of the Zernike polynomials in the OSA/ANSI ordering.</span>
-
-<span class="sd">    """</span>
-    <span class="k">return</span> <span class="p">[(</span><span class="n">n_i</span> <span class="o">*</span> <span class="p">(</span><span class="n">n_i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">m_i</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">n_i</span><span class="p">,</span> <span class="n">m_i</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">)]</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">_is_integer</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-    <span class="c1"># bool is excluded: True is an Integral but not a Zernike order</span>
-    <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">Integral</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">_as_integer_list</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">))</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="n">_is_integer</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">values</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> must be an integer or a sequence of integers."</span><span class="p">)</span>
-    <span class="k">return</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">values</span><span class="p">]</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..core.parsing</span><span class="w"> </span><span class="kn">import</span> <span class="n">_as_indexing</span><span class="p">,</span> <span class="n">_as_integers</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..core.core_indexing</span><span class="w"> </span><span class="kn">import</span> <span class="n">_core_order_to_index</span>
 
 
 <span class="nd">@overload</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">zernike_order_to_index</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="n">Integral</span><span class="p">,</span> <span class="n">m</span><span class="p">:</span> <span class="n">Integral</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span> <span class="o">...</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">zernike_order_to_index</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="n">Integral</span><span class="p">,</span> <span class="n">m</span><span class="p">:</span> <span class="n">Integral</span><span class="p">,</span> <span class="n">indexing</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"OSA"</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span> <span class="o">...</span>
 <span class="nd">@overload</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">zernike_order_to_index</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Integral</span><span class="p">],</span> <span class="n">m</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Integral</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span> <span class="o">...</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">zernike_order_to_index</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Integral</span><span class="p">],</span> <span class="n">m</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Integral</span><span class="p">],</span> <span class="n">indexing</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"OSA"</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span> <span class="o">...</span>
 
 <div class="viewcode-block" id="zernike_order_to_index">
 <a class="viewcode-back" href="../../../api_doc/zernike_order_to_index.html#pyzernike.zernike_order_to_index">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">zernike_order_to_index</span><span class="p">(</span>
     <span class="n">n</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Integral</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Integral</span><span class="p">]],</span>
     <span class="n">m</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Integral</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Integral</span><span class="p">]],</span>
+    <span class="n">indexing</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"OSA"</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">"""</span>
-<span class="sd">    Convert Zernike orders (n, m) to their corresponding indices in the OSA/ANSI Zernike polynomial ordering.</span>
+<span class="sd">    Convert Zernike orders :math:`(n, m)` to their corresponding indices in a Zernike polynomial ordering.</span>
 
-<span class="sd">    .. math::</span>
+<span class="sd">    Three indexing conventions are available (see the page :doc:`../../mathematical_description/conventions` for the</span>
+<span class="sd">    details, and :func:`pyzernike.zernike_index_to_order` for the table of the first indices):</span>
 
-<span class="sd">        j = \frac{n(n + 2) + m}{2}</span>
+<span class="sd">    - ``"OSA"`` (or ``"ANSI"``, default): the OSA/ANSI standard [1]_, starting at 0, with :math:`j = \frac{n(n + 2) + m}{2}`.</span>
+<span class="sd">    - ``"Noll"``: the indices of Noll [2]_, starting at 1, with :math:`j = \frac{n(n + 1)}{2} + |m| + s`, where</span>
+<span class="sd">      :math:`s \in \{0, 1\}` is chosen so that the even indices correspond to :math:`m &gt; 0` (cosine) and the odd</span>
+<span class="sd">      indices to :math:`m &lt; 0` (sine).</span>
+<span class="sd">    - ``"Fringe"``: the Fringe (University of Arizona) indices, starting at 1, with</span>
+<span class="sd">      :math:`j = \left(1 + \frac{n + |m|}{2}\right)^2 - 2|m| + [m &lt; 0]`.</span>
 
 <span class="sd">    If :math:`n &lt; 0`, :math:`|m| &gt; n` or :math:`(n - m)` is odd, an error is raised.</span>
 
-<span class="sd">    .. seealso::</span>
+<span class="sd">    **Shape of the inputs and of the output.** ``n`` and ``m`` can be two integers, or two sequences of integers</span>
+<span class="sd">    (lists, tuples or 1D numpy arrays) with the same length:</span>
 
-<span class="sd">        - :func:`pyzernike.zernike_polynomial` for computing the Zernike polynomial :math:`Z_{n}^{m}(\rho, \theta)`.</span>
-<span class="sd">        - :func:`pyzernike.zernike_index_to_order` for converting indices back to Zernike orders.</span>
-
-<span class="sd">    - ``n`` and ``m`` can be two integers, or two sequences of integers with the same length.</span>
 <span class="sd">    - If ``n`` and ``m`` are integers, a single integer index is returned.</span>
 <span class="sd">    - If ``n`` and ``m`` are sequences, a list of integer indices is returned.</span>
 <span class="sd">    - Mixing an integer and a sequence is not allowed.</span>
 
-<span class="sd">    The first few Zernike polynomials in the OSA/ANSI ordering are:</span>
+<span class="sd">    .. seealso::</span>
 
-<span class="sd">    +-----+-----+-----+</span>
-<span class="sd">    |  j  |  n  |  m  |</span>
-<span class="sd">    +=====+=====+=====+</span>
-<span class="sd">    |  0  |  0  |  0  |</span>
-<span class="sd">    +-----+-----+-----+</span>
-<span class="sd">    |  1  |  1  | -1  |</span>
-<span class="sd">    +-----+-----+-----+</span>
-<span class="sd">    |  2  |  1  |  1  |</span>
-<span class="sd">    +-----+-----+-----+</span>
-<span class="sd">    |  3  |  2  | -2  |</span>
-<span class="sd">    +-----+-----+-----+</span>
-<span class="sd">    |  4  |  2  |  0  |</span>
-<span class="sd">    +-----+-----+-----+</span>
-<span class="sd">    |  5  |  2  |  2  |</span>
-<span class="sd">    +-----+-----+-----+</span>
-<span class="sd">    | ... | ... | ... |</span>
-<span class="sd">    +-----+-----+-----+</span>
+<span class="sd">        - :func:`pyzernike.zernike_index_to_order` for the inverse conversion and the table of the first indices.</span>
+<span class="sd">        - :func:`pyzernike.zernike_coefficients_convert` to convert vectors of coefficients between the conventions.</span>
+<span class="sd">        - The page :doc:`../../mathematical_description/conventions` for the indexing conventions.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -466,22 +422,35 @@
 <span class="sd">        The azimuthal frequency, or the sequence of azimuthal frequencies, of the Zernike polynomials.</span>
 <span class="sd">        Must be of the same kind as ``n`` (integer or sequence) and, for sequences, of the same length.</span>
 
+<span class="sd">    indexing : str, optional</span>
+<span class="sd">        The indexing convention: ``"OSA"`` (or ``"ANSI"``), ``"Noll"`` or ``"Fringe"``, case insensitive.</span>
+<span class="sd">        Default is ``"OSA"``.</span>
+
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    Union[int, List[int]]</span>
-<span class="sd">        If ``n`` and ``m`` are integers, the index ``j`` of the Zernike polynomial.</span>
+<span class="sd">        If ``n`` and ``m`` are integers, the index ``j`` of the Zernike polynomial in the given convention.</span>
 
 <span class="sd">        If ``n`` and ``m`` are sequences, the list of the indices, in the same order as ``n`` and ``m``.</span>
 
 <span class="sd">    Raises</span>
 <span class="sd">    ------</span>
 <span class="sd">    TypeError</span>
-<span class="sd">        If ``n`` or ``m`` is not an integer or a sequence of integers, or if an integer is mixed</span>
-<span class="sd">        with a sequence.</span>
+<span class="sd">        If ``n`` or ``m`` is not an integer, a sequence of integers or a 1D numpy array of integers, if an</span>
+<span class="sd">        integer is mixed with a sequence, or if ``indexing`` is not a string.</span>
 
 <span class="sd">    ValueError</span>
-<span class="sd">        If ``n`` and ``m`` do not have the same length, or if a pair ``(n, m)`` is not a valid</span>
-<span class="sd">        Zernike order (:math:`n &lt; 0`, :math:`|m| &gt; n` or :math:`(n - m)` odd).</span>
+<span class="sd">        If ``n`` and ``m`` do not have the same length, if a pair ``(n, m)`` is not a valid</span>
+<span class="sd">        Zernike order (:math:`n &lt; 0`, :math:`|m| &gt; n` or :math:`(n - m)` odd), or if ``indexing`` is unknown.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    .. [1] L. N. Thibos, R. A. Applegate, J. T. Schwiegerling and R. Webb, "Standards for reporting the optical</span>
+<span class="sd">       aberrations of eyes," Journal of Refractive Surgery 18(5), S652-S660 (2002).</span>
+<span class="sd">       https://doi.org/10.3928/1081-597X-20020901-30</span>
+
+<span class="sd">    .. [2] R. J. Noll, "Zernike polynomials and atmospheric turbulence," Journal of the Optical Society</span>
+<span class="sd">       of America 66(3), 207-211 (1976). https://doi.org/10.1364/JOSA.66.000207</span>
 
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
@@ -514,23 +483,31 @@
 <span class="sd">        j = [0, 5, 12]</span>
 <span class="sd">        print(zernike_order_to_index(*zernike_index_to_order(j)))  # Output: [0, 5, 12]</span>
 
+<span class="sd">    Convert to Noll and Fringe indices:</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        print(zernike_order_to_index([2, 2, 4], [-2, 2, 0], indexing="Noll"))  # Output: [5, 6, 11]</span>
+<span class="sd">        print(zernike_order_to_index([2, 2, 4], [-2, 2, 0], indexing="Fringe"))  # Output: [6, 5, 9]</span>
+
 <span class="sd">    """</span>
-    <span class="n">scalar_n</span><span class="p">,</span> <span class="n">scalar_m</span> <span class="o">=</span> <span class="n">_is_integer</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">_is_integer</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+    <span class="n">indexing</span> <span class="o">=</span> <span class="n">_as_indexing</span><span class="p">(</span><span class="n">indexing</span><span class="p">)</span>
+    <span class="n">n_values</span><span class="p">,</span> <span class="n">m_values</span> <span class="o">=</span> <span class="n">_as_integers</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="s2">"n"</span><span class="p">),</span> <span class="n">_as_integers</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="s2">"m"</span><span class="p">)</span>
+    <span class="n">scalar_n</span><span class="p">,</span> <span class="n">scalar_m</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">n_values</span><span class="p">,</span> <span class="nb">int</span><span class="p">),</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">m_values</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">scalar_n</span> <span class="o">!=</span> <span class="n">scalar_m</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"n and m must be both integers or both sequences of integers."</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">scalar_n</span><span class="p">:</span>
-        <span class="n">n_list</span><span class="p">,</span> <span class="n">m_list</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="p">)],</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">m</span><span class="p">)]</span>
+        <span class="n">n_list</span><span class="p">,</span> <span class="n">m_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">n_values</span><span class="p">],</span> <span class="p">[</span><span class="n">m_values</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">n_list</span> <span class="o">=</span> <span class="n">_as_integer_list</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="s2">"n"</span><span class="p">)</span>
-        <span class="n">m_list</span> <span class="o">=</span> <span class="n">_as_integer_list</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="s2">"m"</span><span class="p">)</span>
+        <span class="n">n_list</span><span class="p">,</span> <span class="n">m_list</span> <span class="o">=</span> <span class="n">n_values</span><span class="p">,</span> <span class="n">m_values</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">n_list</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">m_list</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"n and m must have the same length."</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">n_i</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="nb">abs</span><span class="p">(</span><span class="n">m_i</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">n_i</span> <span class="ow">or</span> <span class="p">(</span><span class="n">n_i</span> <span class="o">-</span> <span class="n">m_i</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">!=</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">n_i</span><span class="p">,</span> <span class="n">m_i</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">n_list</span><span class="p">,</span> <span class="n">m_list</span><span class="p">)):</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Invalid Zernike orders: n must be non-negative, |m| must be &lt;= n, and (n - m) must be even."</span><span class="p">)</span>
 
-    <span class="n">indices</span> <span class="o">=</span> <span class="n">_zernike_order_to_index</span><span class="p">(</span><span class="n">n_list</span><span class="p">,</span> <span class="n">m_list</span><span class="p">)</span>
+    <span class="n">indices</span> <span class="o">=</span> <span class="n">_core_order_to_index</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">n_list</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="n">m_list</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="n">indexing</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">indices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">scalar_n</span> <span class="k">else</span> <span class="n">indices</span></div>
 
 </pre></div>
@@ -562,8 +539,8 @@
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../../../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5"></script>
-<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5"></script>
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=75c7c72ae941e8b558d8"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=75c7c72ae941e8b558d8"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -583,8 +560,7 @@
         <div class="footer-item">
 
   <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
-    <br/>
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.0.4.
   </p>
 </div>
       
@@ -597,7 +573,7 @@
         <div class="footer-item">
 <p class="theme-version">
   <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.19.0.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.24.0.
 </p></div>
       
     </div>

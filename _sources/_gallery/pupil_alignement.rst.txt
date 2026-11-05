@@ -18,8 +18,6 @@
 .. _sphx_glr__gallery_pupil_alignement.py:
 
 
-.. _sphx_glr__gallery_pupil_alignment.py:
-
 Alignment of an annular pupil
 ======================================================================================================
 
@@ -27,7 +25,7 @@ This example estimates the position and the size of an annular pupil (a telescop
 obscuration) from a measured wavefront, with the derivatives of the Zernike polynomials with respect to
 the parameters of the pupil.
 
-.. GENERATED FROM PYTHON SOURCE LINES 15-26
+.. GENERATED FROM PYTHON SOURCE LINES 12-23
 
 Measured wavefront
 -----------------------------------------------------------------
@@ -41,7 +39,7 @@ slightly scaled on the detector. The measured wavefront is:
 
 where the polynomials are defined on the elliptic annulus of parameters :math:`\vec{p}` and :math:`h = 0.3`.
 
-.. GENERATED FROM PYTHON SOURCE LINES 26-47
+.. GENERATED FROM PYTHON SOURCE LINES 23-44
 
 .. code-block:: Python
 
@@ -73,7 +71,7 @@ where the polynomials are defined on the elliptic annulus of parameters :math:`\
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 48-56
+.. GENERATED FROM PYTHON SOURCE LINES 45-53
 
 Gauss-Newton estimation of the parameters
 -----------------------------------------------------------------
@@ -84,7 +82,7 @@ The parameters minimize :math:`\frac{1}{2} \sum_k (W(x_k, y_k; \vec{p}) - W_k)^2
 The coefficients are known: they can not be estimated together with the position and the size of the pupil,
 whose changes would be compensated by changes of the coefficients.
 
-.. GENERATED FROM PYTHON SOURCE LINES 56-71
+.. GENERATED FROM PYTHON SOURCE LINES 53-68
 
 .. code-block:: Python
 
@@ -123,7 +121,7 @@ whose changes would be compensated by changes of the coefficients.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 72-77
+.. GENERATED FROM PYTHON SOURCE LINES 69-74
 
 Measured and estimated pupils
 -----------------------------------------------------------------
@@ -131,7 +129,7 @@ Measured and estimated pupils
 The outer and inner boundaries of the initial guess (dashed) and of the estimated pupil (solid) are drawn on
 the measured wavefront. After the estimation, the residuals contain only the noise of the measurement.
 
-.. GENERATED FROM PYTHON SOURCE LINES 77-101
+.. GENERATED FROM PYTHON SOURCE LINES 74-98
 
 .. code-block:: Python
 
@@ -174,7 +172,7 @@ the measured wavefront. After the estimation, the residuals contain only the noi
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.435 seconds)
+   **Total running time of the script:** (0 minutes 0.431 seconds)
 
 
 .. _sphx_glr_download__gallery_pupil_alignement.py:

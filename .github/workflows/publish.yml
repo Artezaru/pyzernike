@@ -14,6 +14,7 @@ on:
   push:
     tags:
       - "v*"
+  workflow_dispatch: {}
 
 env:
   # File that contains __version__ = "x.y.z". The tag (v x.y.z) is checked
